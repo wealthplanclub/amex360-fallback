@@ -1,8 +1,7 @@
-
 "use client"
 
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { staticTxnData } from "@/data/staticData"
@@ -64,13 +63,29 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
         return acc
       }, {} as Record<string, number>)
 
-    // Convert to array and sort by date
-    return Object.entries(dailySpending)
-      .map(([date, totalSpend]) => ({
-        date,
-        totalSpend: Math.round(totalSpend * 100) / 100 // Round to 2 decimal places
-      }))
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    // Get date range and fill missing dates with zero
+    const dates = Object.keys(dailySpending).sort()
+    if (dates.length === 0) return []
+
+    const startDate = new Date(dates[0])
+    const endDate = new Date(dates[dates.length - 1])
+    const filledData: Array<{date: string, totalSpend: number}> = []
+
+    // Fill all dates from start to end
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split('T')[0]
+      const totalSpend = dailySpending[dateStr] || 0
+      filledData.push({
+        date: dateStr,
+        totalSpend: Math.round(totalSpend * 100) / 100
+      })
+    }
+
+    console.log('Processed data sample:', filledData.slice(0, 5))
+    console.log('Min value:', Math.min(...filledData.map(d => d.totalSpend)))
+    console.log('Max value:', Math.max(...filledData.map(d => d.totalSpend)))
+
+    return filledData
   }, [])
 
   const filteredData = React.useMemo(() => {
@@ -92,10 +107,15 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
       startDate.setDate(startDate.getDate() - 7)
     }
     
-    return processedData.filter(item => {
+    const filtered = processedData.filter(item => {
       const itemDate = new Date(item.date)
       return itemDate >= startDate
     })
+
+    console.log('Filtered data sample:', filtered.slice(0, 5))
+    console.log('Filtered min value:', Math.min(...filtered.map(d => d.totalSpend)))
+
+    return filtered
   }, [processedData, timeRange])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
@@ -187,6 +207,12 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
                 })
               }}
             />
+            <YAxis
+              domain={[0, 'dataMax']}
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+            />
             <ChartTooltip
               cursor={false}
               defaultIndex={isMobile ? -1 : 10}
@@ -209,7 +235,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
             />
             <Area
               dataKey="totalSpend"
-              type="natural"
+              type="monotone"
               fill="url(#fillTotalSpend)"
               stroke="var(--color-totalSpend)"
             />
