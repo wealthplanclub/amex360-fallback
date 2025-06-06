@@ -1,3 +1,4 @@
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -27,7 +28,7 @@ export function CardSpendGrid() {
   // Convert to array and sort by spend amount (highest first)
   const cardData = Object.entries(cardExpenses)
     .map(([account, amount]) => ({
-      name: account.replace(/\bcard\b/gi, '').trim(),
+      name: account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1'),
       fullName: account,
       amount
     }))
@@ -40,7 +41,7 @@ export function CardSpendGrid() {
         {cardData.map((card) => (
           <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-medium leading-tight">
+              <CardTitle className="text-lg font-medium leading-tight whitespace-pre-line">
                 {card.name}
               </CardTitle>
             </CardHeader>
