@@ -1,4 +1,5 @@
 
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -119,7 +120,7 @@ export function CardSpendGrid() {
                           {card.name}
                         </div>
                       </div>
-                      <div className="flex items-center justify-between sm:justify-end">
+                      <div className="flex items-center justify-end sm:justify-end">
                         <div className="text-right">
                           <p className="text-xs text-muted-foreground">
                             Total spend
@@ -143,3 +144,4 @@ export function CardSpendGrid() {
     </div>
   )
 }
+
