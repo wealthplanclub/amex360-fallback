@@ -19,6 +19,8 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 6/4/2025	Online Payment - Thank You	$29.99	Business Gold Card (-1002)	
 6/4/2025	Online Payment - Thank You	$1,000.00	Business Platinum Card (-2007)	
 6/4/2025	Be More Do More App Glendale CA	-$1,000.00	Business Platinum Card (-2007)	
+6/4/2025	Online Payment - Thank You	$4,000.00	Hilton Honors Business Card (-1003)	
+6/4/2025	Be More Do More App Glendale CA	-$4,000.00	Hilton Honors Business Card (-1003)	
 6/3/2025	Twilio Inc San Francisco CA	-$591.50	Blue Business Plus Card (-1000)	SuperPhone
 6/3/2025	Twilio Inc San Francisco CA	-$590.41	Blue Business Plus Card (-1000)	SuperPhone
 6/3/2025	Twilio Inc San Francisco CA	-$256.25	Blue Business Plus Card (-1000)	SuperPhone
@@ -32,6 +34,7 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 6/2/2025	Twilio Inc San Francisco CA	-$590.32	Blue Business Plus Card (-1000)	SuperPhone
 6/2/2025	Rocket Dollar Solo40austin TX	-$30.00	Blue Business Plus Card (-1000)	
 6/2/2025	Paypal *wolt x4307 De	-$25.76	Business Platinum Card (-2007)	
+6/2/2025	Paypal *LINDAJANEKANx7733 De	-$4,750.00	Hilton Honors Business Card (-1003)	
 6/1/2025	Amazon Web Services Aws.amazon.com WA	-$4,626.46	Amazon Business Prime Card (-2003)	
 6/1/2025	Online Payment - Thank You	$4,626.46	Amazon Business Prime Card (-2003)	
 6/1/2025	Twilio Inc San Francisco CA	-$591.16	Blue Business Plus Card (-1000)	SuperPhone
