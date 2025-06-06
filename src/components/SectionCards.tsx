@@ -12,27 +12,13 @@ import {
 } from "@/components/ui/card"
 
 export function SectionCards() {
-  // Mock transaction data for calculating expenses
-  const mockTransactions = [
-    { amount: -150.00, description: "Groceries" },
-    { amount: -75.50, description: "Gas" },
-    { amount: -200.00, description: "Utilities" },
-    { amount: -45.25, description: "Coffee" },
-    { amount: -300.00, description: "Rent payment" },
-  ]
-
-  // Calculate total expenses from mock data
-  const totalExpenses = mockTransactions
-    .filter(transaction => transaction.amount < 0)
-    .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
-
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
         <CardHeader className="pb-6">
-          <CardDescription>Total Expenses</CardDescription>
+          <CardDescription>Total Revenue</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            ${totalExpenses.toLocaleString()}
+            $1,250.00
           </CardTitle>
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
@@ -41,12 +27,12 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Trending up this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">
-            Expenses for the last 6 months
+            Visitors for the last 6 months
           </div>
         </CardFooter>
       </Card>
@@ -64,7 +50,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Down 20% this period <TrendingDown className="h-4 w-4" />
           </div>
@@ -87,7 +73,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Strong user retention <TrendingUp className="h-4 w-4" />
           </div>
@@ -108,7 +94,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Steady performance increase <TrendingUp className="h-4 w-4" />
           </div>
