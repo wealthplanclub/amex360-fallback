@@ -8,13 +8,6 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
@@ -100,18 +93,23 @@ export function ChartAreaInteractive() {
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
 
+  const getTimeRangeLabel = () => {
+    if (timeRange === "90d") return "Last 3 months"
+    if (timeRange === "30d") return "Last 30 days"
+    if (timeRange === "7d") return "Last 7 days"
+    return "Last 3 months"
+  }
+
   return (
-    <Card className="@container/card">
-      <CardHeader>
-        <CardTitle>Daily Spending</CardTitle>
-        <CardDescription>
-          <span className="hidden @[540px]/card:block">
-            Total spending: ${totalSpendForPeriod.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </span>
-          <span className="@[540px]/card:hidden">
+    <div className="@container/card">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div>
+          <h3 className="text-2xl font-semibold leading-none tracking-tight">Daily Spending</h3>
+          <p className="text-3xl font-bold mt-2">
             ${totalSpendForPeriod.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </span>
-        </CardDescription>
+          </p>
+        </div>
         <div className="flex justify-end">
           <ToggleGroup
             type="single"
@@ -144,8 +142,10 @@ export function ChartAreaInteractive() {
             </SelectContent>
           </Select>
         </div>
-      </CardHeader>
-      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+      </div>
+
+      {/* Chart Section */}
+      <div className="px-2 sm:px-6">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
@@ -208,7 +208,7 @@ export function ChartAreaInteractive() {
             />
           </AreaChart>
         </ChartContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

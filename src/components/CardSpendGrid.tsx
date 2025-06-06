@@ -1,4 +1,3 @@
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -87,13 +86,7 @@ export function CardSpendGrid() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Analytics & Visualizations (2/3 width) */}
         <Card className="bg-white lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold">Analytics & Insights</CardTitle>
-            <CardDescription>
-              Daily spending trends and patterns
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <ChartAreaInteractive />
           </CardContent>
         </Card>
