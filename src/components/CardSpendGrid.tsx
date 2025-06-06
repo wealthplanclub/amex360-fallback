@@ -48,6 +48,16 @@ export function CardSpendGrid() {
     }, [] as Array<{ name: string; fullName: string; amount: number }>)
     .sort((a, b) => b.amount - a.amount);
 
+  const getCardImage = (cardName: string) => {
+    const lowerCardName = cardName.toLowerCase();
+    if (lowerCardName.includes('business platinum')) {
+      return "https://i.imgur.com/PO79ixr.jpeg";
+    } else if (lowerCardName.includes('business blue')) {
+      return "https://i.imgur.com/DOm8KGF.jpeg";
+    }
+    return "https://i.imgur.com/4zwqhph.jpeg"; // default image
+  };
+
   return (
     <div className="px-4 lg:px-6">
       <h2 className="text-xl font-semibold mb-4">Card Spending Breakdown</h2>
@@ -62,7 +72,7 @@ export function CardSpendGrid() {
             <CardContent className="pt-0">
               <div className="flex items-center gap-4">
                 <img 
-                  src="https://i.imgur.com/4zwqhph.jpeg" 
+                  src={getCardImage(card.fullName)} 
                   alt="Card placeholder" 
                   className="w-16 h-10 object-cover rounded"
                 />
