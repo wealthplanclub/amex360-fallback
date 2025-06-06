@@ -15,7 +15,6 @@ const Index = () => {
         <div className="text-center space-y-4">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
-            <p className="text-muted-foreground">YTD view of spending across all cards</p>
           </div>
         </div>
         
