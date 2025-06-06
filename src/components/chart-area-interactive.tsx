@@ -105,42 +105,50 @@ export function ChartAreaInteractive() {
 
   return (
     <div className="@container/card">
-      {/* Time Range Selector */}
-      <div className="flex justify-end mb-6">
-        <ToggleGroup
-          type="single"
-          value={timeRange}
-          onValueChange={setTimeRange}
-          variant="outline"
-          className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
-        >
-          <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
-          <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
-          <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
-          <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
-        </ToggleGroup>
-        <Select value={timeRange} onValueChange={setTimeRange}>
-          <SelectTrigger
-            className="flex w-40 @[767px]/card:hidden"
-            aria-label="Select a value"
+      {/* Header with title and time range selector */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-xl font-semibold">Daily Spending</h2>
+          <p className="text-sm text-muted-foreground">Daily spending trends and patterns</p>
+        </div>
+        
+        {/* Time Range Selector */}
+        <div className="flex justify-end">
+          <ToggleGroup
+            type="single"
+            value={timeRange}
+            onValueChange={setTimeRange}
+            variant="outline"
+            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
           >
-            <SelectValue placeholder="Last 90 days" />
-          </SelectTrigger>
-          <SelectContent className="rounded-xl">
-            <SelectItem value="ytd" className="rounded-lg">
-              YTD
-            </SelectItem>
-            <SelectItem value="90d" className="rounded-lg">
-              Last 90 days
-            </SelectItem>
-            <SelectItem value="30d" className="rounded-lg">
-              Last 30 days
-            </SelectItem>
-            <SelectItem value="7d" className="rounded-lg">
-              Last 7 days
-            </SelectItem>
-          </SelectContent>
-        </Select>
+            <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
+            <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
+            <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
+            <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
+          </ToggleGroup>
+          <Select value={timeRange} onValueChange={setTimeRange}>
+            <SelectTrigger
+              className="flex w-40 @[767px]/card:hidden"
+              aria-label="Select a value"
+            >
+              <SelectValue placeholder="Last 90 days" />
+            </SelectTrigger>
+            <SelectContent className="rounded-xl">
+              <SelectItem value="ytd" className="rounded-lg">
+                YTD
+              </SelectItem>
+              <SelectItem value="90d" className="rounded-lg">
+                Last 90 days
+              </SelectItem>
+              <SelectItem value="30d" className="rounded-lg">
+                Last 30 days
+              </SelectItem>
+              <SelectItem value="7d" className="rounded-lg">
+                Last 7 days
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Chart Section */}
