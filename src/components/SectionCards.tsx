@@ -62,7 +62,7 @@ export function SectionCards() {
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
               <TrendingUp className="h-3 w-3" />
-              +12.5%
+              +100%
             </Badge>
           </div>
         </CardHeader>
@@ -71,7 +71,7 @@ export function SectionCards() {
             Trending up this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">
-            Total combined spend YTD
+            Total spend YTD
           </div>
         </CardFooter>
       </Card>
