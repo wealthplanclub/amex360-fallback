@@ -101,9 +101,9 @@ export function CardSpendGrid() {
                 />
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground">
-                    Total spent
+                    Total spend
                   </p>
-                  <div className="text-2xl font-bold tabular-nums">
+                  <div className="text-xl font-bold tabular-nums">
                     ${card.amount.toLocaleString('en-US', { 
                       minimumFractionDigits: 2, 
                       maximumFractionDigits: 2 
