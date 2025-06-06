@@ -1,7 +1,5 @@
-
-
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardAction, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -112,12 +110,12 @@ const Index = () => {
               <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-destructive">
                 ${totalExpenses.toLocaleString()}
               </CardTitle>
-              <CardAction>
+              <div className="mt-2">
                 <Badge variant="outline">
-                  <TrendingDown className="size-4" />
+                  <TrendingDown className="size-4 mr-1" />
                   Expenses
                 </Badge>
-              </CardAction>
+              </div>
             </CardHeader>
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
               <div className="line-clamp-1 flex gap-2 font-medium">
@@ -135,12 +133,12 @@ const Index = () => {
               <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-green-500">
                 ${totalIncome.toLocaleString()}
               </CardTitle>
-              <CardAction>
+              <div className="mt-2">
                 <Badge variant="outline">
-                  <TrendingUp className="size-4" />
+                  <TrendingUp className="size-4 mr-1" />
                   Payments
                 </Badge>
-              </CardAction>
+              </div>
             </CardHeader>
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
               <div className="line-clamp-1 flex gap-2 font-medium">
@@ -158,12 +156,12 @@ const Index = () => {
               <CardTitle className={`text-2xl font-semibold tabular-nums @[250px]/card:text-3xl ${netCashFlow < 0 ? 'text-destructive' : 'text-green-500'}`}>
                 ${Math.abs(netCashFlow).toLocaleString()}
               </CardTitle>
-              <CardAction>
+              <div className="mt-2">
                 <Badge variant="outline">
-                  {netCashFlow < 0 ? <TrendingDown className="size-4" /> : <TrendingUp className="size-4" />}
+                  {netCashFlow < 0 ? <TrendingDown className="size-4 mr-1" /> : <TrendingUp className="size-4 mr-1" />}
                   {netCashFlow < 0 ? 'Outflow' : 'Inflow'}
                 </Badge>
-              </CardAction>
+              </div>
             </CardHeader>
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
               <div className="line-clamp-1 flex gap-2 font-medium">
@@ -181,12 +179,12 @@ const Index = () => {
               <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-primary">
                 ${aiSpending.toLocaleString()}
               </CardTitle>
-              <CardAction>
+              <div className="mt-2">
                 <Badge variant="outline">
-                  <CreditCard className="size-4" />
+                  <CreditCard className="size-4 mr-1" />
                   Tech
                 </Badge>
-              </CardAction>
+              </div>
             </CardHeader>
             <CardFooter className="flex-col items-start gap-1.5 text-sm">
               <div className="line-clamp-1 flex gap-2 font-medium">
@@ -328,4 +326,3 @@ const Index = () => {
 };
 
 export default Index;
-
