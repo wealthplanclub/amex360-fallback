@@ -24,6 +24,15 @@ const Index = () => {
           </div>
         </div>
         
+        {/* Image below header */}
+        <div className="text-center">
+          <img 
+            src="https://i.imgur.com/dZJ4pLl.png" 
+            alt="Amex Logo" 
+            className="mx-auto w-full max-w-[235px] h-auto"
+          />
+        </div>
+        
         {/* Section Cards */}
         <SectionCards />
       </div>
