@@ -1,6 +1,6 @@
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
-import { parseTransactions } from "@/utils/transactionParser"
+import { parseTransactionData } from "@/utils/transactionParser"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -14,7 +14,7 @@ import {
 
 export function SectionCards() {
   // Parse the CSV data and calculate total expenses
-  const transactions = parseTransactions(staticTxnData);
+  const transactions = parseTransactionData(staticTxnData);
   const totalExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
