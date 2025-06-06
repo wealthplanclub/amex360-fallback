@@ -1,4 +1,3 @@
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -85,41 +84,58 @@ export function CardSpendGrid() {
     <div className="px-4 lg:px-6">
       <Card className="bg-white">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
+          <CardTitle className="text-xl font-semibold">Card Spending Overview</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {cardData.map((card) => (
-              <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
-                <CardContent className="p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div className="flex items-center gap-4 flex-1">
-                      <img 
-                        src={getCardImage(card.fullName)} 
-                        alt="Card placeholder" 
-                        className="w-16 h-10 object-cover rounded"
-                      />
-                      <div className="text-lg font-medium leading-tight whitespace-pre-line">
-                        {card.name}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Left Column - Card List */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium mb-4">Card Spending Breakdown</h3>
+              {cardData.map((card) => (
+                <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-4 flex-1">
+                        <img 
+                          src={getCardImage(card.fullName)} 
+                          alt="Card placeholder" 
+                          className="w-16 h-10 object-cover rounded"
+                        />
+                        <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                          {card.name}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center justify-between sm:justify-end">
-                      <div className="text-right">
-                        <p className="text-sm text-muted-foreground">
-                          Total spend
-                        </p>
-                        <div className="text-xl font-bold tabular-nums">
-                          ${card.amount.toLocaleString('en-US', { 
-                            minimumFractionDigits: 2, 
-                            maximumFractionDigits: 2 
-                          })}
+                      <div className="flex items-center justify-between sm:justify-end">
+                        <div className="text-right">
+                          <p className="text-xs text-muted-foreground">
+                            Total spend
+                          </p>
+                          <div className="text-lg font-bold tabular-nums">
+                            ${card.amount.toLocaleString('en-US', { 
+                              minimumFractionDigits: 2, 
+                              maximumFractionDigits: 2 
+                            })}
+                          </div>
                         </div>
                       </div>
                     </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            {/* Right Column - Analytics & Visualizations */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium mb-4">Analytics & Insights</h3>
+              <Card className="bg-gradient-to-b from-white to-gray-50 h-96">
+                <CardContent className="p-6 flex items-center justify-center h-full">
+                  <div className="text-center text-muted-foreground">
+                    <div className="text-4xl mb-2">📊</div>
+                    <p>Analytics and visualizations will appear here</p>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            </div>
           </div>
         </CardContent>
       </Card>
