@@ -1,5 +1,6 @@
 
 import { SectionCards } from "@/components/SectionCards";
+import { CardSpendGrid } from "@/components/CardSpendGrid";
 
 const Index = () => {
   return (
@@ -23,6 +24,11 @@ const Index = () => {
         {/* Section Cards */}
         <div className="mt-8">
           <SectionCards />
+        </div>
+
+        {/* Card Spend Grid */}
+        <div className="mt-8">
+          <CardSpendGrid />
         </div>
       </div>
     </div>
