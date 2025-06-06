@@ -200,8 +200,8 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
                     })
                   }}
                   formatter={(value) => [
-                    `$${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-                    "Total Spend"
+                    `Total Spend: $${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+                    ""
                   ]}
                   indicator="dot"
                 />
