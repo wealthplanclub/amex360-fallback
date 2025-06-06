@@ -69,7 +69,7 @@ export function SectionCards() {
             Trending up this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">
-            Visitors for the last 6 months
+            Total spent on transactions YTD
           </div>
         </CardFooter>
       </Card>
@@ -92,7 +92,7 @@ export function SectionCards() {
             Steady incoming payments <TrendingUp className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">
-            Credits and refunds received
+            Payments and credits applied
           </div>
         </CardFooter>
       </Card>
