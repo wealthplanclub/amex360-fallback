@@ -56,6 +56,8 @@ export function CardSpendGrid() {
       return "https://i.imgur.com/DOm8KGF.jpeg";
     } else if (lowerCardName.includes('green')) {
       return "https://i.imgur.com/fAK8uEB.png";
+    } else if (lowerCardName.includes('schwab')) {
+      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000242_480x304_STRAIGHT_96.jpg";
     } else if (lowerCardName.includes('gold')) {
       if (lowerCardName.includes('-2008')) {
         return "https://i.imgur.com/4zwqhph.jpeg";
