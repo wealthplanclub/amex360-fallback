@@ -67,7 +67,7 @@ export function CardSpendGrid() {
                   className="w-16 h-10 object-cover rounded"
                 />
                 <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-1">
+                  <p className="text-sm text-muted-foreground">
                     Total spent
                   </p>
                   <div className="text-2xl font-bold tabular-nums">
