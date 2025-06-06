@@ -12,7 +12,7 @@ const Index = () => {
     >
       <div className="max-w-7xl mx-auto">
         {/* Image */}
-        <div className="text-center">
+        <div className="text-center mt-8">
           <img 
             src="https://i.imgur.com/dZJ4pLl.png" 
             alt="Amex Logo" 
