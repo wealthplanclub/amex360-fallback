@@ -88,10 +88,17 @@ export function CardSpendGrid() {
         {/* Left Column - Analytics & Visualizations (2/3 width) */}
         <Card className="bg-white lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-xl font-semibold">Daily Spending</CardTitle>
-            <CardDescription>
-              Daily spending trends and patterns
-            </CardDescription>
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+              <div>
+                <CardTitle className="text-xl font-semibold">Daily Spending</CardTitle>
+                <CardDescription>
+                  Daily spending trends and patterns
+                </CardDescription>
+              </div>
+              <div className="flex justify-end sm:justify-start">
+                <ChartAreaInteractive showTimeRangeOnly={true} />
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="p-6">
             <ChartAreaInteractive />
