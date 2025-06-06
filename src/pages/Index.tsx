@@ -14,7 +14,7 @@ const Index = () => {
         {/* Header */}
         <div className="text-center space-y-4">
           <img 
-            src="https://i.imgur.com/QHGSn1z.png" 
+            src="https://i.imgur.com/dZJ4pLl.png" 
             alt="Amex Logo" 
             className="mx-auto w-full max-w-[235px] h-auto"
           />
