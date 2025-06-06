@@ -52,7 +52,7 @@ export function CardSpendGrid() {
     const lowerCardName = cardName.toLowerCase();
     if (lowerCardName.includes('business platinum')) {
       return "https://i.imgur.com/PO79ixr.jpeg";
-    } else if (lowerCardName.includes('business blue')) {
+    } else if (lowerCardName.includes('blue')) {
       return "https://i.imgur.com/DOm8KGF.jpeg";
     }
     return "https://i.imgur.com/4zwqhph.jpeg"; // default image
