@@ -1,5 +1,12 @@
 
 export const staticTxnData = `Date	Description	Amount	Account	Category
+6/5/2025	Twilio Inc San Francisco CA	-$591.43	Blue Business Plus Card (-1000)	SuperPhone
+6/5/2025	Twilio Inc San Francisco CA	-$590.68	Blue Business Plus Card (-1000)	SuperPhone
+6/5/2025	Twilio Inc San Francisco CA	-$797.47	Blue Business Plus Card (-1000)	SuperPhone
+6/5/2025	Twilio Inc San Francisco CA	-$400.00	Blue Business Plus Card (-1009)	SuperPhone
+6/5/2025	Lovable Dover De	-$75.20	Blue Business Plus Card (-1009)	App Dev
+6/5/2025	Zapier.com/charge San Francisco CA	-$29.99	Business Gold Card (-1000)	
+6/5/2025	Abc*x959-crunch Fitnbrooklyn NY	-$87.67	Business Platinum Card (-2007)	
 6/4/2025	Amazon Pay Your Charges Credit	$241.54	Amazon Business Prime Card (-2003)	
 6/4/2025	Amazon Pay Your Charges Credit	$16.32	Amazon Business Prime Card (-2003)	
 6/4/2025	Twilio Inc San Francisco CA	-$591.63	Blue Business Plus Card (-1000)	SuperPhone
