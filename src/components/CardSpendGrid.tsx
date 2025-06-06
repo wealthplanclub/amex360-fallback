@@ -1,19 +1,36 @@
-
-
+import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
+
+import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
-export function CardSpendGrid() {
-  // Parse the CSV data and calculate totals per card
+interface CardSpendGridProps {
+  children?: React.ReactNode;
+}
+
+export function CardSpendGrid({ children }: CardSpendGridProps) {
+  // Parse the CSV data and calculate totals
   const transactions = parseTransactionData(staticTxnData);
+  const totalExpenses = transactions
+    .filter(transaction => transaction.amount < 0)
+    .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
   
+  const totalCredits = transactions
+    .filter(transaction => transaction.amount > 0)
+    .reduce((sum, transaction) => sum + transaction.amount, 0);
+
+  // Calculate payments to expenses ratio
+  const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
+
+  // Calculate top card spend
   const cardExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((acc, transaction) => {
@@ -25,123 +42,76 @@ export function CardSpendGrid() {
       return acc;
     }, {} as Record<string, number>);
 
-  const cardData = Object.entries(cardExpenses)
-    .reduce((acc, [account, amount]) => {
-      if (account.toLowerCase().includes('business green rewards')) {
-        const existingBusinessGreen = acc.find(card => card.name === 'Business Green\n(-2007)');
-        if (existingBusinessGreen) {
-          existingBusinessGreen.amount += amount;
-        } else {
-          acc.push({
-            name: 'Business Green\n(-2007)',
-            fullName: 'Business Green Rewards Combined',
-            amount
-          });
-        }
-      } else {
-        acc.push({
-          name: account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1'),
-          fullName: account,
-          amount
-        });
-      }
-      return acc;
-    }, [] as Array<{ name: string; fullName: string; amount: number }>)
-    .sort((a, b) => b.amount - a.amount);
+  const topCardSpend = Math.max(...Object.values(cardExpenses));
+  const lowestCardSpend = Math.min(...Object.values(cardExpenses));
+  const topCardPercentage = ((topCardSpend / totalExpenses) * 100).toFixed(1);
+  const lowestCardPercentage = ((lowestCardSpend / totalExpenses) * 100).toFixed(1);
 
-  const getCardImage = (cardName: string) => {
-    const lowerCardName = cardName.toLowerCase();
-    if (lowerCardName.includes('hilton')) {
-      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000336_480x304_STRAIGHT_96.jpg";
-    } else if (lowerCardName.includes('marriott')) {
-      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000314_480x304_STRAIGHT_96.jpg";
-    } else if (lowerCardName.includes('delta')) {
-      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000270_480x304_STRAIGHT_96.jpg";
-    } else if (lowerCardName.includes('amazon')) {
-      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000251_480x304_STRAIGHT_96.jpg";
-    } else if (lowerCardName.includes('business platinum')) {
-      return "https://i.imgur.com/PO79ixr.jpeg";
-    } else if (lowerCardName.includes('platinum') && !lowerCardName.includes('schwab')) {
-      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000237_480x304_STRAIGHT_96.jpg";
-    } else if (lowerCardName.includes('blue')) {
-      return "https://i.imgur.com/DOm8KGF.jpeg";
-    } else if (lowerCardName.includes('green')) {
-      return "https://i.imgur.com/fAK8uEB.png";
-    } else if (lowerCardName.includes('schwab')) {
-      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000242_480x304_STRAIGHT_96.jpg";
-    } else if (lowerCardName.includes('gold')) {
-      if (lowerCardName.includes('-2008')) {
-        return "https://i.imgur.com/4zwqhph.jpeg";
-      } else if (lowerCardName.includes('-1002')) {
-        return "https://i.imgur.com/QLjcloI.jpeg";
-      } else if (lowerCardName.includes('-1000')) {
-        return "https://i.imgur.com/BvemgNT.png";
-      }
-      return "https://i.imgur.com/QLjcloI.jpeg"; // fallback for other gold cards
-    }
-    return "https://i.imgur.com/4zwqhph.jpeg"; // default image
-  };
+  // Find the account names for highest and lowest spending
+  const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
+  const lowestCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "";
+
+  // Remove the word "card" from account names
+  const topCardDisplayName = topCardAccount.replace(/\bcard\b/gi, '').trim();
+  const lowestCardDisplayName = lowestCardAccount.replace(/\bcard\b/gi, '').trim();
 
   return (
-    <div className="px-4 lg:px-6">
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold">Card Spending Overview</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column - Analytics & Visualizations */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium mb-4">Analytics & Insights</h3>
-              <Card className="bg-gradient-to-b from-white to-gray-50 h-96">
-                <CardContent className="p-6 flex items-center justify-center h-full">
-                  <div className="text-center text-muted-foreground">
-                    <div className="text-4xl mb-2">📊</div>
-                    <p>Analytics and visualizations will appear here</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            {/* Right Column - Card List */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium mb-4">Card Spending Breakdown</h3>
-              {cardData.map((card) => (
-                <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                      <div className="flex items-center gap-4 flex-1">
-                        <img 
-                          src={getCardImage(card.fullName)} 
-                          alt="Card placeholder" 
-                          className="w-16 h-10 object-cover rounded"
-                        />
-                        <div className="text-sm font-medium leading-tight whitespace-pre-line">
-                          {card.name}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-end sm:justify-end">
-                        <div className="text-right">
-                          <p className="text-xs text-muted-foreground">
-                            Total spend
-                          </p>
-                          <div className="text-lg font-bold tabular-nums">
-                            ${card.amount.toLocaleString('en-US', { 
-                              minimumFractionDigits: 2, 
-                              maximumFractionDigits: 2 
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 lg:grid-cols-3">
+      {/* Analytics and Insights Card */}
+      <div className="lg:col-span-2">
+        <Card className="h-full bg-gradient-to-b from-white to-gray-100">
+          <CardHeader>
+            <CardTitle>Analytics and Insights</CardTitle>
+            <CardDescription>Daily spending trends and patterns</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {children}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Cards List */}
+      <div className="space-y-4">
+        {Object.entries(cardExpenses).map(([account, amount]) => {
+          const displayName = account.replace(/\bcard\b/gi, '').trim();
+          const percentage = ((amount / totalExpenses) * 100).toFixed(1);
+          const isHighest = amount === topCardSpend;
+          const isLowest = amount === lowestCardSpend;
+          
+          return (
+            <Card key={account} className="relative bg-gradient-to-b from-white to-gray-100">
+              <CardHeader className="pb-4">
+                <div className="flex justify-between items-start">
+                  <CardDescription className="text-xs uppercase tracking-wide font-medium text-muted-foreground">
+                    {displayName}
+                  </CardDescription>
+                  <Badge variant="outline" className="gap-1 text-xs">
+                    {isHighest ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                    {percentage}%
+                  </Badge>
+                </div>
+                <div className="flex justify-between items-end">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Total Spend
+                  </CardTitle>
+                  <CardTitle className="text-2xl font-semibold tabular-nums text-right">
+                    ${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-4">
+                <div className="flex gap-2 font-medium items-center text-xs">
+                  {isHighest ? "Highest spend" : isLowest ? "Lowest spend" : "Regular usage"} 
+                  {isHighest ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                </div>
+                <div className="text-muted-foreground text-xs">
+                  Account activity this period
+                </div>
+              </CardFooter>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   )
 }
-
