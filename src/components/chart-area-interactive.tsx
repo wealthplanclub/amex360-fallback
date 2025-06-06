@@ -13,6 +13,13 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -104,12 +111,11 @@ export function ChartAreaInteractive() {
   }
 
   return (
-    <div className="@container/card">
-      {/* Header with title and time range selector */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-xl font-semibold">Daily Spending</h2>
-          <p className="text-sm text-muted-foreground">Daily spending trends and patterns</p>
+    <Card className="bg-gradient-to-b from-white to-gray-100">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <div className="space-y-1">
+          <CardTitle className="text-xl font-semibold">Daily Spending</CardTitle>
+          <CardDescription>Daily spending trends and patterns</CardDescription>
         </div>
         
         {/* Time Range Selector */}
@@ -119,7 +125,7 @@ export function ChartAreaInteractive() {
             value={timeRange}
             onValueChange={setTimeRange}
             variant="outline"
-            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+            className="hidden *:data-[slot=toggle-group-item]:!px-4 md:flex"
           >
             <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
             <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
@@ -128,7 +134,7 @@ export function ChartAreaInteractive() {
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
-              className="flex w-40 @[767px]/card:hidden"
+              className="flex w-40 md:hidden"
               aria-label="Select a value"
             >
               <SelectValue placeholder="Last 90 days" />
@@ -149,10 +155,9 @@ export function ChartAreaInteractive() {
             </SelectContent>
           </Select>
         </div>
-      </div>
+      </CardHeader>
 
-      {/* Chart Section */}
-      <div className="px-2 sm:px-6">
+      <CardContent className="px-2 sm:px-6">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
@@ -215,7 +220,7 @@ export function ChartAreaInteractive() {
             />
           </AreaChart>
         </ChartContainer>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
