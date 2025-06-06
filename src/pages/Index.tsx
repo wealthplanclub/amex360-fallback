@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -93,10 +92,7 @@ const Index = () => {
       className="min-h-screen p-6"
       style={{
         backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundRepeat: 'repeat'
       }}
     >
       <div className="max-w-7xl mx-auto space-y-6">
