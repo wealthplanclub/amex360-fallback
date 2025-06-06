@@ -54,6 +54,8 @@ export function CardSpendGrid() {
       return "https://i.imgur.com/PO79ixr.jpeg";
     } else if (lowerCardName.includes('blue')) {
       return "https://i.imgur.com/DOm8KGF.jpeg";
+    } else if (lowerCardName.includes('green')) {
+      return "https://i.imgur.com/fAK8uEB.png";
     }
     return "https://i.imgur.com/4zwqhph.jpeg"; // default image
   };
