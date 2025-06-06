@@ -1,4 +1,3 @@
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -41,9 +40,6 @@ export function CardSpendGrid() {
         {cardData.map((card) => (
           <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
             <CardHeader className="pb-4">
-              <CardDescription className="text-xs uppercase tracking-wide">
-                Card Account
-              </CardDescription>
               <CardTitle className="text-lg font-medium leading-tight">
                 {card.name}
               </CardTitle>
