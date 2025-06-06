@@ -50,8 +50,18 @@ export function CardSpendGrid() {
 
   const getCardImage = (cardName: string) => {
     const lowerCardName = cardName.toLowerCase();
-    if (lowerCardName.includes('business platinum')) {
+    if (lowerCardName.includes('hilton')) {
+      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000336_480x304_STRAIGHT_96.jpg";
+    } else if (lowerCardName.includes('marriott')) {
+      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000314_480x304_STRAIGHT_96.jpg";
+    } else if (lowerCardName.includes('delta')) {
+      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000270_480x304_STRAIGHT_96.jpg";
+    } else if (lowerCardName.includes('amazon')) {
+      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000251_480x304_STRAIGHT_96.jpg";
+    } else if (lowerCardName.includes('business platinum')) {
       return "https://i.imgur.com/PO79ixr.jpeg";
+    } else if (lowerCardName.includes('platinum') && !lowerCardName.includes('schwab')) {
+      return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000237_480x304_STRAIGHT_96.jpg";
     } else if (lowerCardName.includes('blue')) {
       return "https://i.imgur.com/DOm8KGF.jpeg";
     } else if (lowerCardName.includes('green')) {
