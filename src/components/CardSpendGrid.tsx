@@ -91,27 +91,29 @@ export function CardSpendGrid() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {cardData.map((card) => (
               <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg font-medium leading-tight whitespace-pre-line">
-                    {card.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="flex items-center gap-4">
-                    <img 
-                      src={getCardImage(card.fullName)} 
-                      alt="Card placeholder" 
-                      className="w-16 h-10 object-cover rounded"
-                    />
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between gap-4">
                     <div className="flex-1">
-                      <p className="text-sm text-muted-foreground">
-                        Total spend
-                      </p>
-                      <div className="text-xl font-bold tabular-nums">
-                        ${card.amount.toLocaleString('en-US', { 
-                          minimumFractionDigits: 2, 
-                          maximumFractionDigits: 2 
-                        })}
+                      <div className="text-lg font-medium leading-tight whitespace-pre-line">
+                        {card.name}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src={getCardImage(card.fullName)} 
+                        alt="Card placeholder" 
+                        className="w-16 h-10 object-cover rounded"
+                      />
+                      <div className="text-right">
+                        <p className="text-sm text-muted-foreground">
+                          Total spend
+                        </p>
+                        <div className="text-xl font-bold tabular-nums">
+                          ${card.amount.toLocaleString('en-US', { 
+                            minimumFractionDigits: 2, 
+                            maximumFractionDigits: 2 
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
