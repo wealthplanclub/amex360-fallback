@@ -1,4 +1,6 @@
 
+import { SectionCards } from "@/components/SectionCards";
+
 const Index = () => {
   return (
     <div 
@@ -14,6 +16,9 @@ const Index = () => {
           <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
           <p className="text-muted-foreground">YTD view of spending across all cards</p>
         </div>
+        
+        {/* Section Cards */}
+        <SectionCards />
       </div>
     </div>
   );
