@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -106,50 +105,42 @@ export function ChartAreaInteractive() {
 
   return (
     <div className="@container/card">
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-          <h3 className="text-2xl font-semibold leading-none tracking-tight">Daily Spending</h3>
-          <p className="text-3xl font-bold mt-2">
-            ${totalSpendForPeriod.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </p>
-        </div>
-        <div className="flex justify-end">
-          <ToggleGroup
-            type="single"
-            value={timeRange}
-            onValueChange={setTimeRange}
-            variant="outline"
-            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+      {/* Time Range Selector */}
+      <div className="flex justify-end mb-6">
+        <ToggleGroup
+          type="single"
+          value={timeRange}
+          onValueChange={setTimeRange}
+          variant="outline"
+          className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
+        >
+          <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
+          <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
+          <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
+          <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
+        </ToggleGroup>
+        <Select value={timeRange} onValueChange={setTimeRange}>
+          <SelectTrigger
+            className="flex w-40 @[767px]/card:hidden"
+            aria-label="Select a value"
           >
-            <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
-            <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
-            <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
-            <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
-          </ToggleGroup>
-          <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger
-              className="flex w-40 @[767px]/card:hidden"
-              aria-label="Select a value"
-            >
-              <SelectValue placeholder="Last 90 days" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="ytd" className="rounded-lg">
-                YTD
-              </SelectItem>
-              <SelectItem value="90d" className="rounded-lg">
-                Last 90 days
-              </SelectItem>
-              <SelectItem value="30d" className="rounded-lg">
-                Last 30 days
-              </SelectItem>
-              <SelectItem value="7d" className="rounded-lg">
-                Last 7 days
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+            <SelectValue placeholder="Last 90 days" />
+          </SelectTrigger>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="ytd" className="rounded-lg">
+              YTD
+            </SelectItem>
+            <SelectItem value="90d" className="rounded-lg">
+              Last 90 days
+            </SelectItem>
+            <SelectItem value="30d" className="rounded-lg">
+              Last 30 days
+            </SelectItem>
+            <SelectItem value="7d" className="rounded-lg">
+              Last 7 days
+            </SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Chart Section */}
