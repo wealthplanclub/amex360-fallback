@@ -64,37 +64,20 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
         return acc
       }, {} as Record<string, number>)
 
-    // Get date range and fill missing dates with zero
-    const dates = Object.keys(dailySpending).sort()
-    if (dates.length === 0) return []
-
-    const startDate = new Date(dates[0])
-    const endDate = new Date(dates[dates.length - 1])
-    const filledData: Array<{date: string, totalSpend: number}> = []
-
-    // Fill all dates from start to end
-    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-      const dateStr = d.toISOString().split('T')[0]
-      const totalSpend = dailySpending[dateStr] || 0
-      filledData.push({
-        date: dateStr,
-        totalSpend: Math.round(totalSpend * 100) / 100
-      })
-    }
-
-    console.log('Processed data sample:', filledData.slice(0, 5))
-    console.log('Total processed data points:', filledData.length)
-    return filledData
+    // Convert to array and sort by date
+    return Object.entries(dailySpending)
+      .map(([date, totalSpend]) => ({
+        date,
+        totalSpend: Math.round(totalSpend * 100) / 100 // Round to 2 decimal places
+      }))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
   }, [])
 
   const filteredData = React.useMemo(() => {
-    console.log('Filtering data for time range:', timeRange)
-    
     if (processedData.length === 0) return []
     
     // Get the latest date from the data
     const latestDate = new Date(Math.max(...processedData.map(item => new Date(item.date).getTime())))
-    console.log('Latest date in data:', latestDate.toISOString().split('T')[0])
     
     let startDate = new Date(latestDate)
     
@@ -109,23 +92,11 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
       startDate.setDate(startDate.getDate() - 7)
     }
     
-    console.log('Start date for filtering:', startDate.toISOString().split('T')[0])
-    
-    const filtered = processedData.filter(item => {
+    return processedData.filter(item => {
       const itemDate = new Date(item.date)
       return itemDate >= startDate
     })
-
-    console.log('Filtered data points:', filtered.length)
-    console.log('Filtered data sample:', filtered.slice(0, 5))
-    
-    return filtered
   }, [processedData, timeRange])
-
-  // Add effect to log when timeRange changes
-  React.useEffect(() => {
-    console.log('Time range changed to:', timeRange)
-  }, [timeRange])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
 
@@ -137,18 +108,13 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
     return "Last 90 days"
   }
 
-  const handleTimeRangeChange = (value: string) => {
-    console.log('Time range change handler called with:', value)
-    setTimeRange(value)
-  }
-
   if (showTimeRangeOnly) {
     return (
       <div className="flex justify-end">
         <ToggleGroup
           type="single"
           value={timeRange}
-          onValueChange={handleTimeRangeChange}
+          onValueChange={setTimeRange}
           variant="outline"
           className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
         >
@@ -157,7 +123,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
           <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
           <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
         </ToggleGroup>
-        <Select value={timeRange} onValueChange={handleTimeRangeChange}>
+        <Select value={timeRange} onValueChange={setTimeRange}>
           <SelectTrigger
             className="flex w-40 @[767px]/card:hidden"
             aria-label="Select a value"
@@ -191,7 +157,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <AreaChart data={filteredData} key={`${timeRange}-${filteredData.length}`}>
+          <AreaChart data={filteredData}>
             <defs>
               <linearGradient id="fillTotalSpend" x1="0" y1="0" x2="0" y2="1">
                 <stop
@@ -243,7 +209,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
             />
             <Area
               dataKey="totalSpend"
-              type="monotone"
+              type="natural"
               fill="url(#fillTotalSpend)"
               stroke="var(--color-totalSpend)"
             />
