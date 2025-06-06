@@ -69,7 +69,7 @@ export function SectionCards() {
             Trending up this month <TrendingUp className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">
-            Total spent on transactions YTD
+            Total spend YTD
           </div>
         </CardFooter>
       </Card>
