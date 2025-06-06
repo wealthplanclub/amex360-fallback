@@ -12,7 +12,7 @@ const Index = () => {
     >
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-2">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
           </div>
