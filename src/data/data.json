@@ -1,0 +1,75 @@
+
+[
+  {
+    "id": 1,
+    "header": "Executive Summary",
+    "type": "Overview",
+    "status": "Done",
+    "target": "100",
+    "limit": "120",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 2,
+    "header": "Technical Approach",
+    "type": "Technical",
+    "status": "In Progress",
+    "target": "85",
+    "limit": "100",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 3,
+    "header": "Management Plan",
+    "type": "Management",
+    "status": "Done",
+    "target": "75",
+    "limit": "90",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 4,
+    "header": "Cost Analysis",
+    "type": "Financial",
+    "status": "In Progress",
+    "target": "60",
+    "limit": "80",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 5,
+    "header": "Risk Assessment",
+    "type": "Risk",
+    "status": "Pending",
+    "target": "45",
+    "limit": "60",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 6,
+    "header": "Quality Assurance",
+    "type": "Quality",
+    "status": "Done",
+    "target": "90",
+    "limit": "100",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 7,
+    "header": "Timeline & Milestones",
+    "type": "Schedule",
+    "status": "In Progress",
+    "target": "70",
+    "limit": "85",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 8,
+    "header": "Team Qualifications",
+    "type": "Personnel",
+    "status": "Done",
+    "target": "95",
+    "limit": "100",
+    "reviewer": "Jamik Tashpulatov"
+  }
+]
