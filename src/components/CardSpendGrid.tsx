@@ -84,9 +84,9 @@ export function CardSpendGrid() {
 
   return (
     <div className="px-4 lg:px-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left Column - Analytics & Visualizations */}
-        <Card className="bg-white">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Analytics & Visualizations (2/3 width) */}
+        <Card className="bg-white lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-xl font-semibold">Analytics & Insights</CardTitle>
             <CardDescription>
@@ -98,7 +98,7 @@ export function CardSpendGrid() {
           </CardContent>
         </Card>
         
-        {/* Right Column - Card List */}
+        {/* Right Column - Card List (1/3 width) */}
         <Card className="bg-white">
           <CardHeader>
             <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
