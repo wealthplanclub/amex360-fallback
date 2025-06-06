@@ -16,7 +16,7 @@ const Index = () => {
           <img 
             src="https://i.imgur.com/QHGSn1z.png" 
             alt="Amex Logo" 
-            className="mx-auto h-16 w-auto"
+            className="mx-auto w-full max-w-[235px] h-auto"
           />
           <div className="space-y-2">
             <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
