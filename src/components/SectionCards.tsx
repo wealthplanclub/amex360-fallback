@@ -1,5 +1,5 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
-import { transactions } from "@/data/staticData"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -12,8 +12,17 @@ import {
 } from "@/components/ui/card"
 
 export function SectionCards() {
-  // Calculate total expenses from static data
-  const totalExpenses = transactions
+  // Mock transaction data for calculating expenses
+  const mockTransactions = [
+    { amount: -150.00, description: "Groceries" },
+    { amount: -75.50, description: "Gas" },
+    { amount: -200.00, description: "Utilities" },
+    { amount: -45.25, description: "Coffee" },
+    { amount: -300.00, description: "Rent payment" },
+  ]
+
+  // Calculate total expenses from mock data
+  const totalExpenses = mockTransactions
     .filter(transaction => transaction.amount < 0)
     .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
 
