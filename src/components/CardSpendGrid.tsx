@@ -92,13 +92,13 @@ export function CardSpendGrid() {
             {cardData.map((card) => (
               <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex-1">
                       <div className="text-lg font-medium leading-tight whitespace-pre-line">
                         {card.name}
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-between sm:justify-end gap-4">
                       <img 
                         src={getCardImage(card.fullName)} 
                         alt="Card placeholder" 
