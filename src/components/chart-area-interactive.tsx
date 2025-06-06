@@ -83,17 +83,18 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
     }
 
     console.log('Processed data sample:', filledData.slice(0, 5))
-    console.log('Min value:', Math.min(...filledData.map(d => d.totalSpend)))
-    console.log('Max value:', Math.max(...filledData.map(d => d.totalSpend)))
-
+    console.log('Total processed data points:', filledData.length)
     return filledData
   }, [])
 
   const filteredData = React.useMemo(() => {
+    console.log('Filtering data for time range:', timeRange)
+    
     if (processedData.length === 0) return []
     
     // Get the latest date from the data
     const latestDate = new Date(Math.max(...processedData.map(item => new Date(item.date).getTime())))
+    console.log('Latest date in data:', latestDate.toISOString().split('T')[0])
     
     let startDate = new Date(latestDate)
     
@@ -108,16 +109,23 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
       startDate.setDate(startDate.getDate() - 7)
     }
     
+    console.log('Start date for filtering:', startDate.toISOString().split('T')[0])
+    
     const filtered = processedData.filter(item => {
       const itemDate = new Date(item.date)
       return itemDate >= startDate
     })
 
+    console.log('Filtered data points:', filtered.length)
     console.log('Filtered data sample:', filtered.slice(0, 5))
-    console.log('Filtered min value:', Math.min(...filtered.map(d => d.totalSpend)))
-
+    
     return filtered
   }, [processedData, timeRange])
+
+  // Add effect to log when timeRange changes
+  React.useEffect(() => {
+    console.log('Time range changed to:', timeRange)
+  }, [timeRange])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
 
@@ -129,13 +137,18 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
     return "Last 90 days"
   }
 
+  const handleTimeRangeChange = (value: string) => {
+    console.log('Time range change handler called with:', value)
+    setTimeRange(value)
+  }
+
   if (showTimeRangeOnly) {
     return (
       <div className="flex justify-end">
         <ToggleGroup
           type="single"
           value={timeRange}
-          onValueChange={setTimeRange}
+          onValueChange={handleTimeRangeChange}
           variant="outline"
           className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
         >
@@ -144,7 +157,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
           <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
           <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
         </ToggleGroup>
-        <Select value={timeRange} onValueChange={setTimeRange}>
+        <Select value={timeRange} onValueChange={handleTimeRangeChange}>
           <SelectTrigger
             className="flex w-40 @[767px]/card:hidden"
             aria-label="Select a value"
@@ -178,7 +191,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <AreaChart data={filteredData}>
+          <AreaChart data={filteredData} key={`${timeRange}-${filteredData.length}`}>
             <defs>
               <linearGradient id="fillTotalSpend" x1="0" y1="0" x2="0" y2="1">
                 <stop
