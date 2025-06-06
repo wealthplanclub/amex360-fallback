@@ -67,15 +67,15 @@ export function CardSpendGrid() {
                   className="w-16 h-10 object-cover rounded"
                 />
                 <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Total spent
+                  </p>
                   <div className="text-2xl font-bold tabular-nums">
                     ${card.amount.toLocaleString('en-US', { 
                       minimumFractionDigits: 2, 
                       maximumFractionDigits: 2 
                     })}
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Total spent
-                  </p>
                 </div>
               </div>
             </CardContent>
