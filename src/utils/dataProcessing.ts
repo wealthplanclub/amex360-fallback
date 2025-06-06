@@ -27,8 +27,8 @@ export const getAccountData = (transactions: any[]) => {
   }, {} as Record<string, number>);
 
   return Object.entries(accountData)
-    .filter(([_, value]) => value > 0)
-    .map(([name, value]) => ({ name, value }))
+    .filter(([_, value]: [string, number]) => value > 0)
+    .map(([name, value]: [string, number]) => ({ name, value }))
     .sort((a, b) => b.value - a.value);
 };
 
