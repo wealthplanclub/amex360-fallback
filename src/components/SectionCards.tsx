@@ -15,7 +15,7 @@ export function SectionCards() {
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-8">
+        <CardHeader className="pb-6">
           <CardDescription>Total Revenue</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
             $1,250.00
@@ -38,7 +38,7 @@ export function SectionCards() {
       </Card>
       
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-8">
+        <CardHeader className="pb-6">
           <CardDescription>New Customers</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
             1,234
@@ -61,7 +61,7 @@ export function SectionCards() {
       </Card>
       
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-8">
+        <CardHeader className="pb-6">
           <CardDescription>Active Accounts</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
             45,678
@@ -82,7 +82,7 @@ export function SectionCards() {
       </Card>
       
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-8">
+        <CardHeader className="pb-6">
           <CardDescription>Growth Rate</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
             4.5%
