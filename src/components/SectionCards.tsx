@@ -1,3 +1,4 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -62,7 +63,7 @@ export function SectionCards() {
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
               <TrendingUp className="h-3 w-3" />
-              +12.5%
+              100%
             </Badge>
           </div>
         </CardHeader>
