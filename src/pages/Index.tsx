@@ -104,7 +104,7 @@ const Index = () => {
               <TrendingDown className="h-4 w-4 text-destructive" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-destructive">${totalExpenses.toLocaleString()}</div>
+              <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-destructive">${totalExpenses.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">Across all accounts</p>
             </CardContent>
           </Card>
@@ -115,7 +115,7 @@ const Index = () => {
               <TrendingUp className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-500">${totalIncome.toLocaleString()}</div>
+              <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-green-500">${totalIncome.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">Credit card payments</p>
             </CardContent>
           </Card>
@@ -126,7 +126,7 @@ const Index = () => {
               <DollarSign className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className={`text-2xl font-bold ${netCashFlow < 0 ? 'text-destructive' : 'text-green-500'}`}>
+              <div className={`text-2xl font-semibold tabular-nums @[250px]/card:text-3xl ${netCashFlow < 0 ? 'text-destructive' : 'text-green-500'}`}>
                 ${Math.abs(netCashFlow).toLocaleString()}
               </div>
               <p className="text-xs text-muted-foreground">
@@ -141,7 +141,7 @@ const Index = () => {
               <CreditCard className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary">${aiSpending.toLocaleString()}</div>
+              <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-primary">${aiSpending.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">AI-related expenses</p>
             </CardContent>
           </Card>
