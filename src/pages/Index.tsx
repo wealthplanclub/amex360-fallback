@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,37 +6,26 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from 'recharts';
 import { TrendingUp, TrendingDown, CreditCard, DollarSign, Calendar, Filter } from "lucide-react";
+import { staticTxnData } from "@/data/staticData";
 
-// Raw transaction data
-const rawTransactions = [
-  { date: "1/27/2025", description: "Chronosai Atlanta GA", amount: -2000.00, account: "Business Gold Card (-1002)", category: "CreditMax" },
-  { date: "1/27/2025", description: "Twentyfour Ai New York NY", amount: -4000.00, account: "Business Gold Card (-1002)", category: "" },
-  { date: "1/26/2025", description: "The Promptshopai Austin TX", amount: -97.00, account: "Blue Business Plus Card (-1000)", category: "CreditMax" },
-  { date: "1/26/2025", description: "Topsteptrader Llc Chicago IL", amount: -49.00, account: "Business Green Rewards Card (-1009)", category: "" },
-  { date: "1/26/2025", description: "Paypal *webull Tech x7018 Hk", amount: -11.99, account: "Business Platinum Card (-2007)", category: "" },
-  { date: "1/26/2025", description: "Online Payment - Thank You", amount: 36.16, account: "Charles Schwab Platinum Card (-1000)", category: "" },
-  { date: "1/26/2025", description: "Online Payment - Thank You", amount: 103.93, account: "Charles Schwab Platinum Card (-1000)", category: "" },
-  { date: "1/26/2025", description: "Online Payment - Thank You", amount: 174.08, account: "Charles Schwab Platinum Card (-1000)", category: "" },
-  { date: "1/26/2025", description: "Online Payment - Thank You", amount: 153.31, account: "Delta SkyMiles Reserve Card (-1006)", category: "" },
-  { date: "1/26/2025", description: "Renewal Membership Fee", amount: -695.00, account: "Platinum Card (-1003)", category: "" },
-  { date: "1/25/2025", description: "Expressvpn.com Wilmington De", amount: -12.95, account: "Business Gold Card (-1000)", category: "" },
-  { date: "1/25/2025", description: "Zapier.com/charge San Francisco CA", amount: -29.99, account: "Business Gold Card (-1000)", category: "" },
-  { date: "1/25/2025", description: "Twilio Inc San Francisco CA", amount: -590.36, account: "Business Gold Card (-2008)", category: "SuperPhone" },
-  { date: "1/25/2025", description: "Twilio Inc San Francisco CA", amount: -412.93, account: "Business Gold Card (-2008)", category: "SuperPhone" },
-  { date: "1/25/2025", description: "Online Payment - Thank You", amount: 123.70, account: "Platinum Card (-1003)", category: "" },
-  { date: "1/25/2025", description: "Online Payment - Thank You", amount: 147.57, account: "Platinum Card (-1003)", category: "" },
-  { date: "1/25/2025", description: "Online Payment - Thank You", amount: 196.07, account: "Platinum Card (-1003)", category: "" },
-  { date: "1/25/2025", description: "Online Payment - Thank You", amount: 392.74, account: "Platinum Card (-1003)", category: "" },
-  { date: "1/24/2025", description: "Vital Ai Peekskill NY", amount: -582.48, account: "Business Gold Card (-1000)", category: "" },
-  { date: "1/24/2025", description: "Twilio Inc San Francisco CA", amount: -401.08, account: "Business Gold Card (-2008)", category: "SuperPhone" },
-  { date: "1/24/2025", description: "Twilio Inc San Francisco CA", amount: -616.95, account: "Business Gold Card (-2008)", category: "SuperPhone" },
-  { date: "1/24/2025", description: "Con-struc-tion Culver City CA", amount: -100.00, account: "Business Green Rewards Card (-1009)", category: "CreditMax" },
-  { date: "1/24/2025", description: "Acrelytics.ai Clayton NC", amount: -100.00, account: "Business Green Rewards Card (-1009)", category: "CreditMax" },
-  { date: "1/24/2025", description: "Paypal *factor Meal x2977 Nl", amount: -41.54, account: "Business Platinum Card (-2007)", category: "" },
-  { date: "1/23/2025", description: "Twilio Inc San Francisco CA", amount: -608.45, account: "Business Gold Card (-1002)", category: "SuperPhone" },
-  { date: "1/23/2025", description: "Online Payment - Thank You", amount: 608.45, account: "Business Gold Card (-1002)", category: "" },
-  { date: "1/23/2025", description: "Chargebee Walnut CA", amount: -1474.00, account: "Business Gold Card (-1002)", category: "SuperPhone" }
-];
+// Parse the static data
+const parseTransactionData = (data: string) => {
+  const lines = data.trim().split('\n');
+  const headers = lines[0].split('\t');
+  
+  return lines.slice(1).map(line => {
+    const values = line.split('\t');
+    return {
+      date: values[0],
+      description: values[1],
+      amount: parseFloat(values[2].replace(/[$,]/g, '')),
+      account: values[3],
+      category: values[4] || ""
+    };
+  });
+};
+
+const rawTransactions = parseTransactionData(staticTxnData);
 
 const Index = () => {
   const [selectedAccount, setSelectedAccount] = useState("all");
