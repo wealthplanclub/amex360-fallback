@@ -1,4 +1,3 @@
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -44,6 +43,12 @@ export function SectionCards() {
   // Find the account names for highest and lowest spending
   const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
   const lowestCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "";
+
+  // Format account names: remove "card" and keep last 4 characters
+  const formatCardName = (accountName: string) => {
+    const withoutCard = accountName.toLowerCase().replace(/card/g, '').trim();
+    return withoutCard.slice(-4);
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
@@ -108,7 +113,7 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
-            {topCardAccount} <TrendingUp className="h-4 w-4" />
+            {formatCardName(topCardAccount)} <TrendingUp className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">Account with most expenses</div>
         </CardFooter>
@@ -129,7 +134,7 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
-            {lowestCardAccount} <TrendingDown className="h-4 w-4" />
+            {formatCardName(lowestCardAccount)} <TrendingDown className="h-4 w-4" />
           </div>
           <div className="text-muted-foreground">Account with least expenses</div>
         </CardFooter>
