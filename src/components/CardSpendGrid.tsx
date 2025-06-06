@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 
 export function CardSpendGrid() {
   // Parse the CSV data and calculate totals per card
@@ -84,65 +83,49 @@ export function CardSpendGrid() {
 
   return (
     <div className="px-4 lg:px-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Analytics & Visualizations (2/3 width) */}
-        <Card className="bg-white lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold">Daily Spending</CardTitle>
-            <CardDescription>
-              Daily spending trends and patterns
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            <ChartAreaInteractive />
-          </CardContent>
-        </Card>
-        
-        {/* Right Column - Card List (1/3 width) */}
-        <Card className="bg-white">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
-            <CardDescription>
-              Total spending by credit card
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {cardData.map((card) => (
-                <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                      <div className="flex items-center gap-4 flex-1">
-                        <img 
-                          src={getCardImage(card.fullName)} 
-                          alt="Card placeholder" 
-                          className="w-16 h-10 object-cover rounded"
-                        />
-                        <div className="text-sm font-medium leading-tight whitespace-pre-line">
-                          {card.name}
-                        </div>
+      <Card className="bg-white">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
+          <CardDescription>
+            Total spending by credit card
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {cardData.map((card) => (
+              <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
+                <CardContent className="p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex items-center gap-4 flex-1">
+                      <img 
+                        src={getCardImage(card.fullName)} 
+                        alt="Card placeholder" 
+                        className="w-16 h-10 object-cover rounded"
+                      />
+                      <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                        {card.name}
                       </div>
-                      <div className="flex items-center justify-end sm:justify-end">
-                        <div className="text-right">
-                          <p className="text-xs text-muted-foreground">
-                            Total spend
-                          </p>
-                          <div className="text-lg font-bold tabular-nums">
-                            ${card.amount.toLocaleString('en-US', { 
-                              minimumFractionDigits: 2, 
-                              maximumFractionDigits: 2 
-                            })}
-                          </div>
+                    </div>
+                    <div className="flex items-center justify-end sm:justify-end">
+                      <div className="text-right">
+                        <p className="text-xs text-muted-foreground">
+                          Total spend
+                        </p>
+                        <div className="text-lg font-bold tabular-nums">
+                          ${card.amount.toLocaleString('en-US', { 
+                            minimumFractionDigits: 2, 
+                            maximumFractionDigits: 2 
+                          })}
                         </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
