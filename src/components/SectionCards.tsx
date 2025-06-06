@@ -27,7 +27,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Trending up this month <TrendingUp className="h-4 w-4" />
           </div>
@@ -50,7 +50,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Down 20% this period <TrendingDown className="h-4 w-4" />
           </div>
@@ -73,7 +73,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Strong user retention <TrendingUp className="h-4 w-4" />
           </div>
@@ -94,7 +94,7 @@ export function SectionCards() {
             </Badge>
           </div>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-8">
+        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
             Steady performance increase <TrendingUp className="h-4 w-4" />
           </div>
