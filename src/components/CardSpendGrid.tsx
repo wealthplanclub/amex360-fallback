@@ -1,5 +1,4 @@
 
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -14,7 +13,6 @@ export function CardSpendGrid() {
   // Parse the CSV data and calculate totals per card
   const transactions = parseTransactionData(staticTxnData);
   
-  // Calculate expenses by card account
   const cardExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((acc, transaction) => {
@@ -26,12 +24,9 @@ export function CardSpendGrid() {
       return acc;
     }, {} as Record<string, number>);
 
-  // Convert to array and apply special handling for Business Green cards
   const cardData = Object.entries(cardExpenses)
     .reduce((acc, [account, amount]) => {
-      // Check if this is a Business Green Rewards card
       if (account.toLowerCase().includes('business green rewards')) {
-        // Find existing Business Green entry or create new one
         const existingBusinessGreen = acc.find(card => card.name === 'Business Green\n(-2007)');
         if (existingBusinessGreen) {
           existingBusinessGreen.amount += amount;
@@ -43,7 +38,6 @@ export function CardSpendGrid() {
           });
         }
       } else {
-        // Regular card handling
         acc.push({
           name: account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1'),
           fullName: account,
@@ -66,15 +60,24 @@ export function CardSpendGrid() {
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <div className="text-2xl font-bold tabular-nums">
-                ${card.amount.toLocaleString('en-US', { 
-                  minimumFractionDigits: 2, 
-                  maximumFractionDigits: 2 
-                })}
+              <div className="flex items-center gap-4">
+                <img 
+                  src="https://i.imgur.com/4zwqhph.jpeg" 
+                  alt="Card placeholder" 
+                  className="w-16 h-10 object-cover rounded"
+                />
+                <div className="flex-1">
+                  <div className="text-2xl font-bold tabular-nums">
+                    ${card.amount.toLocaleString('en-US', { 
+                      minimumFractionDigits: 2, 
+                      maximumFractionDigits: 2 
+                    })}
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Total spent
+                  </p>
+                </div>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
-                Total spent
-              </p>
             </CardContent>
           </Card>
         ))}
@@ -82,4 +85,3 @@ export function CardSpendGrid() {
     </div>
   )
 }
-
