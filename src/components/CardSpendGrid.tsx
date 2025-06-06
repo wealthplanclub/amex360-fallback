@@ -1,5 +1,4 @@
 
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -9,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 
 export function CardSpendGrid() {
   // Parse the CSV data and calculate totals per card
@@ -84,28 +84,30 @@ export function CardSpendGrid() {
 
   return (
     <div className="px-4 lg:px-6">
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold">Card Spending Overview</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column - Analytics & Visualizations */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Column - Analytics & Visualizations */}
+        <Card className="bg-white">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold">Analytics & Insights</CardTitle>
+            <CardDescription>
+              Daily spending trends and patterns
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChartAreaInteractive />
+          </CardContent>
+        </Card>
+        
+        {/* Right Column - Card List */}
+        <Card className="bg-white">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
+            <CardDescription>
+              Total spending by credit card
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
             <div className="space-y-4">
-              <h3 className="text-lg font-medium mb-4">Analytics & Insights</h3>
-              <Card className="bg-gradient-to-b from-white to-gray-50 h-96">
-                <CardContent className="p-6 flex items-center justify-center h-full">
-                  <div className="text-center text-muted-foreground">
-                    <div className="text-4xl mb-2">📊</div>
-                    <p>Analytics and visualizations will appear here</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            {/* Right Column - Card List */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium mb-4">Card Spending Breakdown</h3>
               {cardData.map((card) => (
                 <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
                   <CardContent className="p-4">
@@ -138,10 +140,9 @@ export function CardSpendGrid() {
                 </Card>
               ))}
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
-
