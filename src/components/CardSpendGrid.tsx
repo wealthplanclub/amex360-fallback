@@ -1,3 +1,4 @@
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -88,7 +89,20 @@ export function CardSpendGrid() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column - Card List */}
+            {/* Left Column - Analytics & Visualizations */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium mb-4">Analytics & Insights</h3>
+              <Card className="bg-gradient-to-b from-white to-gray-50 h-96">
+                <CardContent className="p-6 flex items-center justify-center h-full">
+                  <div className="text-center text-muted-foreground">
+                    <div className="text-4xl mb-2">📊</div>
+                    <p>Analytics and visualizations will appear here</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            {/* Right Column - Card List */}
             <div className="space-y-4">
               <h3 className="text-lg font-medium mb-4">Card Spending Breakdown</h3>
               {cardData.map((card) => (
@@ -122,19 +136,6 @@ export function CardSpendGrid() {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-            
-            {/* Right Column - Analytics & Visualizations */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium mb-4">Analytics & Insights</h3>
-              <Card className="bg-gradient-to-b from-white to-gray-50 h-96">
-                <CardContent className="p-6 flex items-center justify-center h-full">
-                  <div className="text-center text-muted-foreground">
-                    <div className="text-4xl mb-2">📊</div>
-                    <p>Analytics and visualizations will appear here</p>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </CardContent>
