@@ -88,7 +88,7 @@ export function CardSpendGrid() {
           <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {cardData.map((card) => (
               <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
                 <CardHeader className="pb-4">
