@@ -1,7 +1,7 @@
 
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardAction, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -105,53 +105,97 @@ const Index = () => {
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-muted-foreground text-sm font-normal">Total Expenses</CardTitle>
-              <TrendingDown className="h-4 w-4 text-destructive" />
+        <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4 md:grid-cols-4">
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription>Total Expenses</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-destructive">
+                ${totalExpenses.toLocaleString()}
+              </CardTitle>
+              <CardAction>
+                <Badge variant="outline">
+                  <TrendingDown className="size-4" />
+                  Expenses
+                </Badge>
+              </CardAction>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-destructive">${totalExpenses.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">Across all accounts</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-muted-foreground text-sm font-normal">Total Payments</CardTitle>
-              <TrendingUp className="h-4 w-4 text-green-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-green-500">${totalIncome.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">Credit card payments</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-muted-foreground text-sm font-normal">Net Cash Flow</CardTitle>
-              <DollarSign className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className={`text-2xl font-semibold tabular-nums @[250px]/card:text-3xl ${netCashFlow < 0 ? 'text-destructive' : 'text-green-500'}`}>
-                ${Math.abs(netCashFlow).toLocaleString()}
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                Across all accounts <TrendingDown className="size-4" />
               </div>
-              <p className="text-xs text-muted-foreground">
-                {netCashFlow < 0 ? 'Net outflow' : 'Net inflow'}
-              </p>
-            </CardContent>
+              <div className="text-muted-foreground">
+                Year-to-date spending
+              </div>
+            </CardFooter>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-muted-foreground text-sm font-normal">AI/Tech Spending</CardTitle>
-              <CreditCard className="h-4 w-4 text-primary" />
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription>Total Payments</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-green-500">
+                ${totalIncome.toLocaleString()}
+              </CardTitle>
+              <CardAction>
+                <Badge variant="outline">
+                  <TrendingUp className="size-4" />
+                  Payments
+                </Badge>
+              </CardAction>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-primary">${aiSpending.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">AI-related expenses</p>
-            </CardContent>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                Credit card payments <TrendingUp className="size-4" />
+              </div>
+              <div className="text-muted-foreground">
+                Total payments received
+              </div>
+            </CardFooter>
+          </Card>
+
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription>Net Cash Flow</CardDescription>
+              <CardTitle className={`text-2xl font-semibold tabular-nums @[250px]/card:text-3xl ${netCashFlow < 0 ? 'text-destructive' : 'text-green-500'}`}>
+                ${Math.abs(netCashFlow).toLocaleString()}
+              </CardTitle>
+              <CardAction>
+                <Badge variant="outline">
+                  {netCashFlow < 0 ? <TrendingDown className="size-4" /> : <TrendingUp className="size-4" />}
+                  {netCashFlow < 0 ? 'Outflow' : 'Inflow'}
+                </Badge>
+              </CardAction>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                {netCashFlow < 0 ? 'Net outflow' : 'Net inflow'} {netCashFlow < 0 ? <TrendingDown className="size-4" /> : <TrendingUp className="size-4" />}
+              </div>
+              <div className="text-muted-foreground">
+                Income vs expenses balance
+              </div>
+            </CardFooter>
+          </Card>
+
+          <Card className="@container/card">
+            <CardHeader>
+              <CardDescription>AI/Tech Spending</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-primary">
+                ${aiSpending.toLocaleString()}
+              </CardTitle>
+              <CardAction>
+                <Badge variant="outline">
+                  <CreditCard className="size-4" />
+                  Tech
+                </Badge>
+              </CardAction>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">
+              <div className="line-clamp-1 flex gap-2 font-medium">
+                AI-related expenses <CreditCard className="size-4" />
+              </div>
+              <div className="text-muted-foreground">
+                Technology investments
+              </div>
+            </CardFooter>
           </Card>
         </div>
 
@@ -284,3 +328,4 @@ const Index = () => {
 };
 
 export default Index;
+
