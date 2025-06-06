@@ -1,12 +1,11 @@
-
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { flexRender, Row } from "@tanstack/react-table"
 import { TableCell, TableRow } from "@/components/ui/table"
-import { TableRow as TableRowType } from "./types"
+import { DataTableRow } from "./types"
 
 interface DraggableRowProps {
-  row: Row<TableRowType>
+  row: Row<DataTableRow>
 }
 
 export function DraggableRow({ row }: DraggableRowProps) {

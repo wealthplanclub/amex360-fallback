@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -74,14 +73,14 @@ import {
 } from "@/components/ui/tabs"
 import { columns } from "./DataTable/columns"
 import { DraggableRow } from "./DataTable/DraggableRow"
-import { schema, TableRow } from "./DataTable/types"
+import { schema, DataTableRow } from "./DataTable/types"
 
 export { schema }
 
 export function DataTable({
   data: initialData,
 }: {
-  data: TableRow[]
+  data: DataTableRow[]
 }) {
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})

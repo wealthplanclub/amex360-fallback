@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { TrendingUp } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -29,7 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { TableRow } from "./types"
+import { DataTableRow } from "./types"
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -52,7 +51,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface TableCellViewerProps {
-  item: TableRow
+  item: DataTableRow
 }
 
 export function TableCellViewer({ item }: TableCellViewerProps) {

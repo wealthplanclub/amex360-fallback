@@ -11,4 +11,4 @@ export const schema = z.object({
   reviewer: z.string(),
 })
 
-export type TableRow = z.infer<typeof schema>
+export type DataTableRow = z.infer<typeof schema>

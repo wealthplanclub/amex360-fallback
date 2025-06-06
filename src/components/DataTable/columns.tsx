@@ -1,4 +1,3 @@
-
 import { ColumnDef } from "@tanstack/react-table"
 import {
   CheckCircle,
@@ -27,9 +26,9 @@ import {
 } from "@/components/ui/select"
 import { DragHandle } from "./DragHandle"
 import { TableCellViewer } from "./TableCellViewer"
-import { TableRow } from "./types"
+import { DataTableRow } from "./types"
 
-export const columns: ColumnDef<TableRow>[] = [
+export const columns: ColumnDef<DataTableRow>[] = [
   {
     id: "drag",
     header: () => null,
