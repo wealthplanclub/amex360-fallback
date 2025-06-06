@@ -75,15 +75,18 @@ export function ChartAreaInteractive() {
     // Get the latest date from the data
     const latestDate = new Date(Math.max(...processedData.map(item => new Date(item.date).getTime())))
     
-    let daysToSubtract = 90
-    if (timeRange === "30d") {
-      daysToSubtract = 30
-    } else if (timeRange === "7d") {
-      daysToSubtract = 7
-    }
+    let startDate = new Date(latestDate)
     
-    const startDate = new Date(latestDate)
-    startDate.setDate(startDate.getDate() - daysToSubtract)
+    if (timeRange === "ytd") {
+      // Year to date - start from January 1st of the current year
+      startDate = new Date(latestDate.getFullYear(), 0, 1)
+    } else if (timeRange === "90d") {
+      startDate.setDate(startDate.getDate() - 90)
+    } else if (timeRange === "30d") {
+      startDate.setDate(startDate.getDate() - 30)
+    } else if (timeRange === "7d") {
+      startDate.setDate(startDate.getDate() - 7)
+    }
     
     return processedData.filter(item => {
       const itemDate = new Date(item.date)
@@ -94,10 +97,11 @@ export function ChartAreaInteractive() {
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
 
   const getTimeRangeLabel = () => {
-    if (timeRange === "90d") return "Last 3 months"
+    if (timeRange === "ytd") return "YTD"
+    if (timeRange === "90d") return "Last 90 days"
     if (timeRange === "30d") return "Last 30 days"
     if (timeRange === "7d") return "Last 7 days"
-    return "Last 3 months"
+    return "Last 90 days"
   }
 
   return (
@@ -118,7 +122,8 @@ export function ChartAreaInteractive() {
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
           >
-            <ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
+            <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
+            <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
             <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
             <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
           </ToggleGroup>
@@ -127,11 +132,14 @@ export function ChartAreaInteractive() {
               className="flex w-40 @[767px]/card:hidden"
               aria-label="Select a value"
             >
-              <SelectValue placeholder="Last 3 months" />
+              <SelectValue placeholder="Last 90 days" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
+              <SelectItem value="ytd" className="rounded-lg">
+                YTD
+              </SelectItem>
               <SelectItem value="90d" className="rounded-lg">
-                Last 3 months
+                Last 90 days
               </SelectItem>
               <SelectItem value="30d" className="rounded-lg">
                 Last 30 days
