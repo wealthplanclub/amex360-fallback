@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -34,11 +33,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-interface ChartAreaInteractiveProps {
-  showTimeRangeOnly?: boolean;
-}
-
-export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInteractiveProps) {
+export function ChartAreaInteractive() {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
 
@@ -108,9 +103,10 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
     return "Last 90 days"
   }
 
-  if (showTimeRangeOnly) {
-    return (
-      <div className="flex justify-end">
+  return (
+    <div className="@container/card">
+      {/* Time Range Selector */}
+      <div className="flex justify-end mb-6">
         <ToggleGroup
           type="single"
           value={timeRange}
@@ -146,11 +142,7 @@ export function ChartAreaInteractive({ showTimeRangeOnly = false }: ChartAreaInt
           </SelectContent>
         </Select>
       </div>
-    );
-  }
 
-  return (
-    <div className="@container/card">
       {/* Chart Section */}
       <div className="px-2 sm:px-6">
         <ChartContainer
