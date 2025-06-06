@@ -23,6 +23,20 @@ export function SectionCards() {
     .filter(transaction => transaction.amount > 0)
     .reduce((sum, transaction) => sum + transaction.amount, 0);
 
+  // Calculate top card spend
+  const cardExpenses = transactions
+    .filter(transaction => transaction.amount < 0)
+    .reduce((acc, transaction) => {
+      const account = transaction.account;
+      if (!acc[account]) {
+        acc[account] = 0;
+      }
+      acc[account] += Math.abs(transaction.amount);
+      return acc;
+    }, {} as Record<string, number>);
+
+  const topCardSpend = Math.max(...Object.values(cardExpenses));
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
@@ -73,22 +87,22 @@ export function SectionCards() {
       
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
         <CardHeader className="pb-6">
-          <CardDescription>Active Accounts</CardDescription>
+          <CardDescription>Top Card Spend</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            45,678
+            ${topCardSpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </CardTitle>
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
               <TrendingUp className="h-3 w-3" />
-              +12.5%
+              +15.3%
             </Badge>
           </div>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
           <div className="flex gap-2 font-medium items-center">
-            Strong user retention <TrendingUp className="h-4 w-4" />
+            Highest spending card <TrendingUp className="h-4 w-4" />
           </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
+          <div className="text-muted-foreground">Account with most expenses</div>
         </CardFooter>
       </Card>
       
