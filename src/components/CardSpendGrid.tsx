@@ -1,4 +1,5 @@
 
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -25,13 +26,32 @@ export function CardSpendGrid() {
       return acc;
     }, {} as Record<string, number>);
 
-  // Convert to array and sort by spend amount (highest first)
+  // Convert to array and apply special handling for Business Green cards
   const cardData = Object.entries(cardExpenses)
-    .map(([account, amount]) => ({
-      name: account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1'),
-      fullName: account,
-      amount
-    }))
+    .reduce((acc, [account, amount]) => {
+      // Check if this is a Business Green Rewards card
+      if (account.toLowerCase().includes('business green rewards')) {
+        // Find existing Business Green entry or create new one
+        const existingBusinessGreen = acc.find(card => card.name === 'Business Green\n(-2007)');
+        if (existingBusinessGreen) {
+          existingBusinessGreen.amount += amount;
+        } else {
+          acc.push({
+            name: 'Business Green\n(-2007)',
+            fullName: 'Business Green Rewards Combined',
+            amount
+          });
+        }
+      } else {
+        // Regular card handling
+        acc.push({
+          name: account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1'),
+          fullName: account,
+          amount
+        });
+      }
+      return acc;
+    }, [] as Array<{ name: string; fullName: string; amount: number }>)
     .sort((a, b) => b.amount - a.amount);
 
   return (
@@ -62,3 +82,4 @@ export function CardSpendGrid() {
     </div>
   )
 }
+
