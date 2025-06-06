@@ -11,12 +11,7 @@ const Index = () => {
       }}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-2">
-          <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
-        </div>
-        
-        {/* Image below header */}
+        {/* Image */}
         <div className="text-center">
           <img 
             src="https://i.imgur.com/dZJ4pLl.png" 
