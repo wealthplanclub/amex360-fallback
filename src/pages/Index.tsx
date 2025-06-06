@@ -92,8 +92,8 @@ const Index = () => {
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold text-foreground">Financial Analysis Dashboard</h1>
-          <p className="text-muted-foreground">January 23-27, 2025 Transaction Analysis</p>
+          <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
+          <p className="text-muted-foreground">YTD view of spending across all cards</p>
         </div>
 
         {/* Summary Cards */}
