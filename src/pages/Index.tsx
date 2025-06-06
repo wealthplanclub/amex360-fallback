@@ -155,11 +155,10 @@ const Index = () => {
 
         {/* Analysis Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="categories">Categories</TabsTrigger>
             <TabsTrigger value="accounts">Accounts</TabsTrigger>
-            <TabsTrigger value="insights">Key Insights</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -275,75 +274,6 @@ const Index = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-
-          <TabsContent value="insights" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Key Findings</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <Badge variant="secondary">AI Investment</Badge>
-                    <div>
-                      <p className="font-medium">Heavy AI Tool Investment</p>
-                      <p className="text-sm text-muted-foreground">
-                        ${aiSpending.toLocaleString()} spent on AI platforms (Chronosai, Twentyfour Ai, etc.)
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3">
-                    <Badge variant="secondary">Communication</Badge>
-                    <div>
-                      <p className="font-medium">SuperPhone Platform Usage</p>
-                      <p className="text-sm text-muted-foreground">
-                        ${superPhoneSpending.toLocaleString()} in Twilio/SuperPhone charges
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <Badge variant="secondary">Cash Management</Badge>
-                    <div>
-                      <p className="font-medium">Active Credit Management</p>
-                      <p className="text-sm text-muted-foreground">
-                        ${totalIncome.toLocaleString()} in credit card payments made
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recommendations</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="p-4 bg-yellow-50 rounded-lg">
-                    <h4 className="font-medium text-yellow-800">Consolidate AI Subscriptions</h4>
-                    <p className="text-sm text-yellow-700">
-                      Consider evaluating AI tool ROI and consolidating similar services
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-blue-800">Monitor SuperPhone Costs</h4>
-                    <p className="text-sm text-blue-700">
-                      Track communication platform usage to optimize costs
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-green-50 rounded-lg">
-                    <h4 className="font-medium text-green-800">Cash Flow Positive</h4>
-                    <p className="text-sm text-green-700">
-                      Good payment discipline with regular credit card payments
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
           </TabsContent>
         </Tabs>
       </div>
