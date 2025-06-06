@@ -1,5 +1,3 @@
-
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -39,6 +37,7 @@ export function SectionCards() {
 
   const topCardSpend = Math.max(...Object.values(cardExpenses));
   const lowestCardSpend = Math.min(...Object.values(cardExpenses));
+  const topCardPercentage = ((topCardSpend / totalExpenses) * 100).toFixed(1);
   const lowestCardPercentage = ((lowestCardSpend / totalExpenses) * 100).toFixed(1);
 
   return (
@@ -98,7 +97,7 @@ export function SectionCards() {
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
               <TrendingUp className="h-3 w-3" />
-              +15.3%
+              {topCardPercentage}%
             </Badge>
           </div>
         </CardHeader>
@@ -133,4 +132,3 @@ export function SectionCards() {
     </div>
   )
 }
-
