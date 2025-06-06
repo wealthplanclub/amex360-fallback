@@ -1,4 +1,3 @@
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -23,6 +22,9 @@ export function SectionCards() {
   const totalCredits = transactions
     .filter(transaction => transaction.amount > 0)
     .reduce((sum, transaction) => sum + transaction.amount, 0);
+
+  // Calculate payments to expenses ratio
+  const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
   // Calculate top card spend
   const cardExpenses = transactions
@@ -83,7 +85,7 @@ export function SectionCards() {
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
               <TrendingUp className="h-3 w-3" />
-              +8.2%
+              {paymentsToExpensesRatio}%
             </Badge>
           </div>
         </CardHeader>
