@@ -25,7 +25,7 @@ export function SectionCards() {
         <CardHeader className="pb-6">
           <CardDescription>Total Expenses</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            ${totalExpenses.toFixed(2)}
+            ${totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </CardTitle>
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
