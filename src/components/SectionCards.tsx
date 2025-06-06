@@ -1,5 +1,6 @@
 
 import { TrendingDown, TrendingUp } from "lucide-react"
+import { staticTxnData } from "@/data/staticData"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -12,13 +13,18 @@ import {
 } from "@/components/ui/card"
 
 export function SectionCards() {
+  // Calculate total expenses from staticTxnData
+  const totalExpenses = staticTxnData
+    .filter(transaction => transaction.amount < 0)
+    .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       <Card className="relative bg-gradient-to-b from-white to-gray-100">
         <CardHeader className="pb-6">
-          <CardDescription>Total Revenue</CardDescription>
+          <CardDescription>Total Expenses</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            $1,250.00
+            ${totalExpenses.toFixed(2)}
           </CardTitle>
           <div className="absolute top-4 right-4">
             <Badge variant="outline" className="gap-1">
