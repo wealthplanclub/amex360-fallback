@@ -56,8 +56,15 @@ export function CardSpendGrid() {
       return "https://i.imgur.com/DOm8KGF.jpeg";
     } else if (lowerCardName.includes('green')) {
       return "https://i.imgur.com/fAK8uEB.png";
-    } else if (lowerCardName.includes('gold') || lowerCardName.includes('-1002')) {
-      return "https://i.imgur.com/QLjcloI.jpeg";
+    } else if (lowerCardName.includes('gold')) {
+      if (lowerCardName.includes('-2008')) {
+        return "https://i.imgur.com/4zwqhph.jpeg";
+      } else if (lowerCardName.includes('-1002')) {
+        return "https://i.imgur.com/QLjcloI.jpeg";
+      } else if (lowerCardName.includes('-1000')) {
+        return "https://i.imgur.com/BvemgNT.png";
+      }
+      return "https://i.imgur.com/QLjcloI.jpeg"; // fallback for other gold cards
     }
     return "https://i.imgur.com/4zwqhph.jpeg"; // default image
   };
