@@ -10,7 +10,7 @@ const Index = () => {
         backgroundRepeat: 'repeat'
       }}
     >
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center">
           <h1 className="text-4xl font-bold text-foreground">R's Amex 360°</h1>
@@ -26,7 +26,9 @@ const Index = () => {
         </div>
         
         {/* Section Cards */}
-        <SectionCards />
+        <div className="mt-8">
+          <SectionCards />
+        </div>
       </div>
     </div>
   );
