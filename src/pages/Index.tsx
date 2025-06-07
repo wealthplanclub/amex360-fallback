@@ -53,6 +53,17 @@ const Index = () => {
         selectedCard: topCardAccount
       });
     }
+
+    // Scroll to transaction card section
+    setTimeout(() => {
+      const transactionSection = document.getElementById('transaction-section');
+      if (transactionSection) {
+        transactionSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100); // Small delay to ensure state updates are processed
   };
 
   const handleClearStatCardFilter = () => {
@@ -126,7 +137,7 @@ const Index = () => {
         </div>
 
         {/* Transaction Card and Card Spend Grid */}
-        <div className="mt-8 px-4 lg:px-6">
+        <div id="transaction-section" className="mt-8 px-4 lg:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <TransactionCard 
