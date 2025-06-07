@@ -145,14 +145,13 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
 
   // Get time range description
   const getTimeRangeDescription = () => {
-    if (selectedTimeRange === "ytd") return "YTD";
-    if (selectedTimeRange === "90d") return "Last 90 days";
-    if (selectedTimeRange === "30d") return "Last 30 days";
-    if (selectedTimeRange === "7d") return "Last 7 days";
-    return "YTD";
+    if (selectedTimeRange === "ytd") return "(YTD)";
+    if (selectedTimeRange === "90d") return "(90d)";
+    if (selectedTimeRange === "30d") return "(30d)";
+    if (selectedTimeRange === "7d") return "(7d)";
+    return "(YTD)";
   };
 
-  // ... keep existing code (cardData array and component render)
   const cardData = [
     {
       title: "Total Expenses",
