@@ -117,7 +117,7 @@ export function RewardCardList({ filters, onCardClick }: RewardCardListProps) {
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Breakdown</CardTitle>
         <CardDescription>
-          Reward points by card {getTimeRangeDescription()}
+          Bonus awards by card {getTimeRangeDescription()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
