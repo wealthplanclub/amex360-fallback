@@ -20,7 +20,7 @@ const menuItems = [
     url: "/dashboard",
   },
   {
-    title: "Rewards",
+    title: "Bonus Awards",
     icon: Award,
     url: "/rewards",
   },
