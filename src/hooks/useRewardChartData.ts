@@ -16,7 +16,8 @@ export function useRewardChartData(filters: FilterState) {
           date: dateKey,
           totalPoints: 0,
           employeePoints: 0,
-          referralPoints: 0
+          referralPoints: 0,
+          welcome: 0
         }
       }
       
@@ -28,6 +29,10 @@ export function useRewardChartData(filters: FilterState) {
       
       if (reward.reward_description.toLowerCase().includes('referral')) {
         acc[dateKey].referralPoints += reward.points
+      }
+      
+      if (reward.reward_description.toLowerCase().includes('welcome')) {
+        acc[dateKey].welcome += reward.points
       }
       
       return acc

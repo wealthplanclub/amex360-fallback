@@ -20,6 +20,10 @@ const chartConfig = {
     label: "Referral:",
     color: "hsl(var(--chart-3))",
   },
+  welcome: {
+    label: "Welcome:",
+    color: "hsl(var(--chart-4))",
+  },
 } satisfies ChartConfig
 
 interface RewardChartProps {
@@ -28,6 +32,7 @@ interface RewardChartProps {
     totalPoints: number
     employeePoints: number
     referralPoints: number
+    welcome: number
   }>
 }
 
@@ -79,6 +84,18 @@ export function RewardChart({ data }: RewardChartProps) {
               stopOpacity={0.1}
             />
           </linearGradient>
+          <linearGradient id="fillWelcome" x1="0" y1="0" x2="0" y2="1">
+            <stop
+              offset="5%"
+              stopColor="var(--color-welcome)"
+              stopOpacity={0.8}
+            />
+            <stop
+              offset="95%"
+              stopColor="var(--color-welcome)"
+              stopOpacity={0.1}
+            />
+          </linearGradient>
         </defs>
         <CartesianGrid vertical={false} />
         <XAxis
@@ -111,11 +128,13 @@ export function RewardChart({ data }: RewardChartProps) {
                   return null;
                 }
                 
-                // Only show total when there are both referral and employee points
+                // Only show total when there are multiple point types
                 if (name === 'totalPoints') {
                   const hasEmployee = props.payload.employeePoints > 0;
                   const hasReferral = props.payload.referralPoints > 0;
-                  if (!(hasEmployee && hasReferral)) {
+                  const hasWelcome = props.payload.welcome > 0;
+                  const pointTypeCount = [hasEmployee, hasReferral, hasWelcome].filter(Boolean).length;
+                  if (pointTypeCount < 2) {
                     return null;
                   }
                 }
@@ -128,6 +147,14 @@ export function RewardChart({ data }: RewardChartProps) {
               indicator="dot"
             />
           }
+        />
+        <Area
+          dataKey="welcome"
+          type="monotone"
+          fill="url(#fillWelcome)"
+          stroke="var(--color-welcome)"
+          strokeWidth={1}
+          stackId="a"
         />
         <Area
           dataKey="referralPoints"
