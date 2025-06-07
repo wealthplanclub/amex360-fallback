@@ -26,6 +26,7 @@ interface TransactionCardProps {
   onClearStatCardFilter?: () => void;
   selectedTimeRange?: string;
   onClearTimeRangeFilter?: () => void;
+  onDropdownChange?: (cardSelection: string) => void;
 }
 
 export function TransactionCard({ 
@@ -35,7 +36,8 @@ export function TransactionCard({
   statCardFilter,
   onClearStatCardFilter,
   selectedTimeRange,
-  onClearTimeRangeFilter
+  onClearTimeRangeFilter,
+  onDropdownChange
 }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -79,6 +81,9 @@ export function TransactionCard({
 
   const handleCardChange = (card: string) => {
     setSelectedCard(card);
+    if (onDropdownChange) {
+      onDropdownChange(card);
+    }
   };
 
   // Filter transactions using the custom hook

@@ -6,11 +6,10 @@ import { CardData } from "@/utils/cardDataUtils";
 interface CardAccountItemProps {
   card: CardData;
   index: number;
-  selectedCard?: string | null;
   onCardClick: (cardName: string) => void;
 }
 
-export function CardAccountItem({ card, index, selectedCard, onCardClick }: CardAccountItemProps) {
+export function CardAccountItem({ card, index, onCardClick }: CardAccountItemProps) {
   const handleClick = () => {
     if (card.name === 'Business Green\n(-2007)') {
       onCardClick('BUSINESS_GREEN_COMBINED');
@@ -19,14 +18,9 @@ export function CardAccountItem({ card, index, selectedCard, onCardClick }: Card
     }
   };
 
-  const isSelected = selectedCard === card.fullName || 
-    (selectedCard === 'BUSINESS_GREEN_COMBINED' && card.name === 'Business Green\n(-2007)');
-
   return (
     <Card 
-      className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in ${
-        isSelected ? 'bg-accent' : ''
-      }`}
+      className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in focus:outline-none"
       style={{
         animationDelay: `${index * 100}ms`,
         animationFillMode: 'both'

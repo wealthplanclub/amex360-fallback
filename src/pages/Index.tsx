@@ -18,14 +18,19 @@ const Index = () => {
   
   const isMobile = useIsMobile();
 
-  // State to track which card was clicked from CardAccounts
-  const [cardAccountSelection, setCardAccountSelection] = useState<string | null>(null);
+  // State to track the dropdown selection from TransactionCard
+  const [transactionDropdownSelection, setTransactionDropdownSelection] = useState<string>("all");
 
   const handleCardAccountClick = (cardName: string) => {
     console.log("Card account clicked:", cardName);
-    setCardAccountSelection(cardName);
+    setTransactionDropdownSelection(cardName);
     // Clear stat card filter when manually selecting a card
     setStatCardFilter(null);
+  };
+
+  const handleTransactionDropdownChange = (cardSelection: string) => {
+    console.log("Transaction dropdown changed:", cardSelection);
+    setTransactionDropdownSelection(cardSelection);
   };
 
   const handleDateClick = (date: string) => {
@@ -51,8 +56,8 @@ const Index = () => {
   const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string) => {
     console.log("Stat card clicked:", cardType, timeRange, topCardAccount);
     setStatCardFilter({ cardType, timeRange, topCardAccount });
-    // Reset card account selection when stat card is clicked
-    setCardAccountSelection(null);
+    // Reset dropdown selection when stat card is clicked
+    setTransactionDropdownSelection("all");
     setSelectedDate("");
   };
 
@@ -109,20 +114,21 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <TransactionCard 
-                cardAccountSelection={cardAccountSelection}
+                cardAccountSelection={transactionDropdownSelection}
                 selectedDate={selectedDate}
                 onClearDateFilter={clearDateFilter}
                 statCardFilter={statCardFilter}
                 onClearStatCardFilter={clearStatCardFilter}
                 selectedTimeRange={selectedTimeRange}
                 onClearTimeRangeFilter={clearTimeRangeFilter}
+                onDropdownChange={handleTransactionDropdownChange}
               />
             </div>
             <div className="lg:col-span-1">
               <CardAccounts 
                 onCardClick={handleCardAccountClick} 
-                cardAccountSelection={cardAccountSelection}
                 selectedTimeRange={selectedTimeRange}
+                transactionDropdownSelection={transactionDropdownSelection}
               />
             </div>
           </div>

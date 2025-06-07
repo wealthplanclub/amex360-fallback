@@ -16,22 +16,33 @@ interface CardAccountsProps {
   onCardClick?: (cardName: string) => void;
   cardAccountSelection?: string | null;
   selectedTimeRange?: string;
+  transactionDropdownSelection?: string;
 }
 
-export function CardAccounts({ onCardClick, cardAccountSelection, selectedTimeRange = "ytd" }: CardAccountsProps) {
-  const cardData = React.useMemo(() => {
+export function CardAccounts({ 
+  onCardClick, 
+  cardAccountSelection, 
+  selectedTimeRange = "ytd",
+  transactionDropdownSelection = "all"
+}: CardAccountsProps) {
+  const allCardData = React.useMemo(() => {
     return processCardData(staticTxnData, selectedTimeRange);
   }, [selectedTimeRange]);
 
-  // Track internal selected state for visual feedback
-  const [internalSelectedCard, setInternalSelectedCard] = React.useState<string | null>(null);
+  // Filter cards based on transaction dropdown selection
+  const cardData = React.useMemo(() => {
+    if (transactionDropdownSelection === "all") {
+      return allCardData;
+    }
+    
+    if (transactionDropdownSelection === 'BUSINESS_GREEN_COMBINED') {
+      return allCardData.filter(card => card.name === 'Business Green\n(-2007)');
+    }
+    
+    return allCardData.filter(card => card.fullName === transactionDropdownSelection);
+  }, [allCardData, transactionDropdownSelection]);
 
-  // Update internal state when external selection changes
-  React.useEffect(() => {
-    setInternalSelectedCard(cardAccountSelection);
-  }, [cardAccountSelection]);
-
-  // Calculate dynamic height based on card count
+  // Calculate dynamic height based on filtered card count
   const dynamicHeight = React.useMemo(() => {
     const baseHeight = 200; // Minimum height for header and padding
     const cardHeight = 120; // Approximate height per card including spacing
@@ -43,14 +54,7 @@ export function CardAccounts({ onCardClick, cardAccountSelection, selectedTimeRa
 
   const handleCardClick = (cardName: string) => {
     if (onCardClick) {
-      // If the clicked card is already selected, toggle it off (show all cards)
-      if (internalSelectedCard === cardName) {
-        setInternalSelectedCard(null);
-        onCardClick("all");
-      } else {
-        setInternalSelectedCard(cardName);
-        onCardClick(cardName);
-      }
+      onCardClick(cardName);
     }
   };
 
@@ -73,7 +77,6 @@ export function CardAccounts({ onCardClick, cardAccountSelection, selectedTimeRa
                 key={card.fullName}
                 card={card}
                 index={index}
-                selectedCard={internalSelectedCard}
                 onCardClick={handleCardClick}
               />
             ))}
