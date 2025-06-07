@@ -28,6 +28,11 @@ const Rewards = () => {
     updateFilter('selectedCard', cardSelection);
   };
 
+  const handleRewardCardClick = (cardSelection: string) => {
+    console.log("Reward card clicked:", cardSelection);
+    updateFilter('selectedCard', cardSelection);
+  };
+
   const clearDateFilter = () => {
     updateMultipleFilters({
       selectedDate: undefined,
@@ -102,7 +107,10 @@ const Rewards = () => {
               />
             </div>
             <div className="lg:col-span-1">
-              <RewardCardList filters={filters} />
+              <RewardCardList 
+                filters={filters} 
+                onCardClick={handleRewardCardClick}
+              />
             </div>
           </div>
         </div>
