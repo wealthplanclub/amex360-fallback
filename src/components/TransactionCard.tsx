@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -65,6 +64,9 @@ export function TransactionCard({
 
   const [selectedCard, setSelectedCard] = React.useState<string>("all")
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
+
+  // Check if any filter is active
+  const hasActiveFilter = selectedDate || statCardFilter || (selectedTimeRange && selectedTimeRange !== "ytd");
 
   // Sync with the card selected from the grid OR from stat card filter
   React.useEffect(() => {
@@ -193,9 +195,11 @@ export function TransactionCard({
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Transaction History</CardTitle>
-        <CardDescription className="mb-0">
-          Latest transaction activity with advanced filtering and sorting
-        </CardDescription>
+        {!hasActiveFilter && (
+          <CardDescription className="mb-0">
+            Transaction activity (YTD)
+          </CardDescription>
+        )}
         {selectedDate && onClearDateFilter && (
           <DateFilterIndicator 
             selectedDate={selectedDate} 
