@@ -66,15 +66,6 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
       ),
     },
     {
-      accessorKey: "category",
-      header: "Category",
-      cell: ({ row }) => (
-        <div className="text-sm text-muted-foreground">
-          {row.getValue("category") || "—"}
-        </div>
-      ),
-    },
-    {
       accessorKey: "amount",
       header: () => <div className="text-right">Amount</div>,
       cell: ({ row }) => {
