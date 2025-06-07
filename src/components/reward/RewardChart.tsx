@@ -20,6 +20,10 @@ const chartConfig = {
     label: "Referral:",
     color: "hsl(var(--chart-3))",
   },
+  welcome: {
+    label: "Welcome:",
+    color: "hsl(var(--chart-4))",
+  },
 } satisfies ChartConfig
 
 interface RewardChartProps {
