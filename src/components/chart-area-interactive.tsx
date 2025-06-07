@@ -131,11 +131,11 @@ export function ChartAreaInteractive({
   const averageDailySpend = filteredData.length > 0 ? totalSpendForPeriod / filteredData.length : 0
 
   const getTimeRangeLabel = () => {
-    if (timeRange === "ytd") return "YTD"
-    if (timeRange === "90d") return "Last 90 days"
-    if (timeRange === "30d") return "Last 30 days"
-    if (timeRange === "7d") return "Last 7 days"
-    return "Last 90 days"
+    if (timeRange === "ytd") return "(YTD)"
+    if (timeRange === "90d") return "(90d)"
+    if (timeRange === "30d") return "(30d)"
+    if (timeRange === "7d") return "(7d)"
+    return "(90d)"
   }
 
   const handleChartClick = (data: any) => {
@@ -152,7 +152,7 @@ export function ChartAreaInteractive({
         <div className="space-y-1">
           <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
           <CardDescription>
-            Average daily spend ({getTimeRangeLabel()}): ${averageDailySpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            Average daily spend {getTimeRangeLabel()}: ${averageDailySpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </CardDescription>
         </div>
         
