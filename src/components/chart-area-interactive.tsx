@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { staticTxnData } from "@/data/staticData"
@@ -194,6 +194,10 @@ export function ChartAreaInteractive() {
                   day: "numeric",
                 })
               }}
+            />
+            <YAxis
+              hide={true}
+              domain={[0, 'dataMax']}
             />
             <ChartTooltip
               cursor={false}
