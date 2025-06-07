@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -42,10 +43,9 @@ const chartConfig = {
 
 interface ChartAreaInteractiveProps {
   onDateClick?: (date: string) => void;
-  onTimeRangeChange?: (timeRange: string) => void;
 }
 
-export function ChartAreaInteractive({ onDateClick, onTimeRangeChange }: ChartAreaInteractiveProps) {
+export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("ytd")
 
@@ -54,13 +54,6 @@ export function ChartAreaInteractive({ onDateClick, onTimeRangeChange }: ChartAr
       setTimeRange("7d")
     }
   }, [isMobile])
-
-  // Notify parent component when time range changes
-  React.useEffect(() => {
-    if (onTimeRangeChange) {
-      onTimeRangeChange(timeRange);
-    }
-  }, [timeRange, onTimeRangeChange]);
 
   // Process transaction data to get daily spending totals
   const processedData = React.useMemo(() => {

@@ -1,4 +1,3 @@
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -14,11 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-interface SectionCardsProps {
-  selectedTimeRange: string;
-}
-
-export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
+export function SectionCards() {
   const [isVisible, setIsVisible] = React.useState(false)
 
   React.useEffect(() => {
@@ -30,75 +25,21 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     return () => clearTimeout(timer)
   }, [])
 
-  // Filter transactions based on selected time range
-  const filteredTransactions = React.useMemo(() => {
-    const allTransactions = parseTransactionData(staticTxnData);
-    
-    console.log("SectionCards - selectedTimeRange:", selectedTimeRange);
-    console.log("SectionCards - all transactions count:", allTransactions.length);
-    
-    if (!allTransactions.length) return allTransactions;
-    
-    // Get the latest date from the data
-    const latestDate = allTransactions[allTransactions.length - 1].date;
-    console.log("SectionCards - latest date:", latestDate);
-    
-    let startDate: string;
-    const latestDateObj = new Date(latestDate + 'T00:00:00'); // Add time to prevent timezone issues
-    
-    if (selectedTimeRange === "ytd") {
-      // Year to date - start from January 1st of the current year
-      startDate = `${latestDateObj.getFullYear()}-01-01`;
-    } else if (selectedTimeRange === "90d") {
-      const date90DaysAgo = new Date(latestDateObj);
-      date90DaysAgo.setDate(date90DaysAgo.getDate() - 90);
-      startDate = date90DaysAgo.toISOString().split('T')[0];
-    } else if (selectedTimeRange === "30d") {
-      const date30DaysAgo = new Date(latestDateObj);
-      date30DaysAgo.setDate(date30DaysAgo.getDate() - 30);
-      startDate = date30DaysAgo.toISOString().split('T')[0];
-    } else if (selectedTimeRange === "7d") {
-      const date7DaysAgo = new Date(latestDateObj);
-      date7DaysAgo.setDate(date7DaysAgo.getDate() - 7);
-      startDate = date7DaysAgo.toISOString().split('T')[0];
-    } else {
-      startDate = allTransactions[0].date;
-    }
-    
-    console.log("SectionCards - start date:", startDate);
-    console.log("SectionCards - sample transaction dates:", allTransactions.slice(0, 5).map(t => t.date));
-    
-    const filtered = allTransactions.filter(transaction => {
-      const includeTransaction = transaction.date >= startDate;
-      if (!includeTransaction) {
-        console.log("SectionCards - excluding transaction:", transaction.date, "start:", startDate);
-      }
-      return includeTransaction;
-    });
-    console.log("SectionCards - filtered transactions count:", filtered.length);
-    console.log("SectionCards - first few filtered dates:", filtered.slice(0, 5).map(t => t.date));
-    console.log("SectionCards - last few filtered dates:", filtered.slice(-5).map(t => t.date));
-    
-    return filtered;
-  }, [selectedTimeRange]);
-
-  // Calculate totals for the filtered period
-  const totalExpenses = filteredTransactions
+  // Parse the CSV data and calculate totals
+  const transactions = parseTransactionData(staticTxnData);
+  const totalExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
   
-  const totalCredits = filteredTransactions
+  const totalCredits = transactions
     .filter(transaction => transaction.amount > 0)
     .reduce((sum, transaction) => sum + transaction.amount, 0);
-
-  console.log("SectionCards - total expenses:", totalExpenses);
-  console.log("SectionCards - total credits:", totalCredits);
 
   // Calculate payments to expenses ratio
   const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
   // Calculate top card spend
-  const cardExpenses = filteredTransactions
+  const cardExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((acc, transaction) => {
       const account = transaction.account;
@@ -109,10 +50,10 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       return acc;
     }, {} as Record<string, number>);
 
-  const topCardSpend = Object.values(cardExpenses).length > 0 ? Math.max(...Object.values(cardExpenses)) : 0;
-  const lowestCardSpend = Object.values(cardExpenses).length > 0 ? Math.min(...Object.values(cardExpenses)) : 0;
-  const topCardPercentage = totalExpenses > 0 ? ((topCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
-  const lowestCardPercentage = totalExpenses > 0 ? ((lowestCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
+  const topCardSpend = Math.max(...Object.values(cardExpenses));
+  const lowestCardSpend = Math.min(...Object.values(cardExpenses));
+  const topCardPercentage = ((topCardSpend / totalExpenses) * 100).toFixed(1);
+  const lowestCardPercentage = ((lowestCardSpend / totalExpenses) * 100).toFixed(1);
 
   // Find the account names for highest and lowest spending
   const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
@@ -122,15 +63,6 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
   const topCardDisplayName = topCardAccount.replace(/\bcard\b/gi, '').trim();
   const lowestCardDisplayName = lowestCardAccount.replace(/\bcard\b/gi, '').trim();
 
-  // Get time range display label
-  const getTimeRangeLabel = () => {
-    if (selectedTimeRange === "ytd") return "YTD";
-    if (selectedTimeRange === "90d") return "90d";
-    if (selectedTimeRange === "30d") return "30d";
-    if (selectedTimeRange === "7d") return "7d";
-    return "YTD";
-  };
-
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       {[
@@ -139,8 +71,8 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
           value: totalExpenses,
           badge: "+100%",
           icon: TrendingUp,
-          footer: "Trending up this period",
-          description: `Total spend ${getTimeRangeLabel()}`
+          footer: "Trending up this month",
+          description: "Total spend YTD"
         },
         {
           title: "Total Payments/Credits",
@@ -155,7 +87,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
           value: topCardSpend,
           badge: `${topCardPercentage}%`,
           icon: TrendingUp,
-          footer: topCardDisplayName || "No data",
+          footer: topCardDisplayName,
           description: "Account with most expenses"
         },
         {
@@ -163,7 +95,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
           value: lowestCardSpend,
           badge: `${lowestCardPercentage}%`,
           icon: TrendingDown,
-          footer: lowestCardDisplayName || "No data",
+          footer: lowestCardDisplayName,
           description: "Account with least expenses"
         }
       ].map((card, index) => {
