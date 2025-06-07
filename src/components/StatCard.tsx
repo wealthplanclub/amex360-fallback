@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -108,7 +109,8 @@ export function StatCard({
           key={`${title}-${numbersKey}`}
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
             isVisible ? 'animate-fade-in' : 'opacity-0'
-          } ${variant === 'reward' ? 'text-blue-600' : ''}`}
+          }`}
+          style={variant === 'reward' ? { color: '#00175a' } : {}}
         >
           {formatValue(value)}
         </CardTitle>
