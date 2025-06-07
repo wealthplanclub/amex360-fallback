@@ -26,7 +26,7 @@ export const Sidebar = React.forwardRef<
         <div className="flex items-center justify-between p-4 border-b">
           <div className="ml-4">
             <img 
-              src="/amex-favicon.png" 
+              src="https://i.imgur.com/dZJ4pLl.png" 
               alt="Amex Logo" 
               className="h-8 w-8"
             />
