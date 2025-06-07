@@ -1,6 +1,7 @@
+
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { ArrowUpDown } from "lucide-react"
+import { ChevronUp, ChevronDown } from "lucide-react"
 import { Reward } from "@/types/reward"
 
 export function useRewardColumns(): ColumnDef<Reward>[] {
@@ -8,6 +9,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
     {
       accessorKey: "date",
       header: ({ column }) => {
+        const isSorted = column.getIsSorted()
         return (
           <Button
             variant="ghost"
@@ -15,7 +17,16 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
             className="hover:bg-gray-100"
           >
             Date
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {isSorted === "asc" ? (
+              <ChevronUp className="ml-2 h-4 w-4" />
+            ) : isSorted === "desc" ? (
+              <ChevronDown className="ml-2 h-4 w-4" />
+            ) : (
+              <div className="ml-2 h-4 w-4 flex flex-col">
+                <ChevronUp className="h-2 w-4" />
+                <ChevronDown className="h-2 w-4" />
+              </div>
+            )}
           </Button>
         )
       },
@@ -54,6 +65,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
     {
       accessorKey: "points",
       header: ({ column }) => {
+        const isSorted = column.getIsSorted()
         return (
           <Button
             variant="ghost"
@@ -61,7 +73,16 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
             className="hover:bg-gray-100"
           >
             Points
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {isSorted === "asc" ? (
+              <ChevronUp className="ml-2 h-4 w-4" />
+            ) : isSorted === "desc" ? (
+              <ChevronDown className="ml-2 h-4 w-4" />
+            ) : (
+              <div className="ml-2 h-4 w-4 flex flex-col">
+                <ChevronUp className="h-2 w-4" />
+                <ChevronDown className="h-2 w-4" />
+              </div>
+            )}
           </Button>
         )
       },
