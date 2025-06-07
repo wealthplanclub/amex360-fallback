@@ -4,7 +4,7 @@ export const getCardImage = (cardName: string) => {
   if (lowerCardName.includes('hilton')) {
     return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000336_480x304_STRAIGHT_96.jpg";
   } else if (lowerCardName.includes('marriott')) {
-    return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000314_480x304_STRAIGHT_96.jpg";
+    return "https://i.imgur.com/5MsJHUL.jpeg";
   } else if (lowerCardName.includes('delta')) {
     return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000270_480x304_STRAIGHT_96.jpg";
   } else if (lowerCardName.includes('amazon')) {
