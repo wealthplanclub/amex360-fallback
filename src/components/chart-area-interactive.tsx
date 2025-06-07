@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -128,7 +129,7 @@ export function ChartAreaInteractive() {
     <Card className="pt-0">
       <CardHeader className="flex items-center gap-2 space-y-0 py-5 sm:flex-row">
         <div className="grid flex-1 gap-1">
-          <CardTitle>Daily Spend by Time Period</CardTitle>
+          <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
           <CardDescription>
             Average daily spend ({getTimeRangeLabel()}): ${averageDailySpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </CardDescription>
