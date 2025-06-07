@@ -1,9 +1,7 @@
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import * as React from "react"
-import { useTrail, animated } from "@react-spring/web"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -189,29 +187,26 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     }
   ];
 
-  // Create trail animation for the number values only
-  const trail = useTrail(cardData.length, {
-    config: { mass: 1, tension: 200, friction: 100 },
-    opacity: 1,
-    x: 0,
-    from: { opacity: 0, x: 20 },
-    reset: true,
-    key: selectedTimeRange, // Reset animation when time range changes
-  });
-
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       {cardData.map((card, index) => {
         const IconComponent = card.icon;
-        const style = trail[index];
         return (
-          <Card key={card.title} className="relative bg-gradient-to-b from-white to-gray-100">
+          <Card 
+            key={card.title}
+            className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
+              isVisible 
+                ? 'translate-y-0 opacity-100' 
+                : 'translate-y-8 opacity-0'
+            }`}
+            style={{
+              transitionDelay: `${index * 150}ms`
+            }}
+          >
             <CardHeader className="pb-6">
               <CardDescription>{card.title}</CardDescription>
               <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-                <animated.span style={{ opacity: style.opacity, transform: style.x.to(x => `translateX(${x}px)`) }}>
-                  ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </animated.span>
+                ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </CardTitle>
               <div className="absolute top-4 right-4">
                 <Badge variant="outline" className="gap-1">
