@@ -10,11 +10,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Index = () => {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTimeRange, setSelectedTimeRange] = useState<string>("ytd");
-  const [statCardFilter, setStatCardFilter] = useState<{
-    cardType: string;
-    timeRange: string;
-    topCardAccount?: string;
-  } | null>(null);
   
   const isMobile = useIsMobile();
 
@@ -24,8 +19,6 @@ const Index = () => {
   const handleCardAccountClick = (cardName: string) => {
     console.log("Card account clicked:", cardName);
     setTransactionDropdownSelection(cardName);
-    // Clear stat card filter when manually selecting a card
-    setStatCardFilter(null);
   };
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
@@ -51,18 +44,6 @@ const Index = () => {
   const clearTimeRangeFilter = () => {
     console.log("Clearing time range filter, isMobile:", isMobile);
     setSelectedTimeRange("ytd");
-  };
-
-  const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string) => {
-    console.log("Stat card clicked:", cardType, timeRange, topCardAccount);
-    setStatCardFilter({ cardType, timeRange, topCardAccount });
-    // Reset dropdown selection when stat card is clicked
-    setTransactionDropdownSelection("all");
-    setSelectedDate("");
-  };
-
-  const clearStatCardFilter = () => {
-    setStatCardFilter(null);
   };
 
   // Add effect to log time range changes
@@ -94,10 +75,7 @@ const Index = () => {
         
         {/* Section Cards */}
         <div className="mt-8">
-          <SectionCards 
-            selectedTimeRange={selectedTimeRange} 
-            onStatCardClick={handleStatCardClick}
-          />
+          <SectionCards selectedTimeRange={selectedTimeRange} />
         </div>
 
         {/* Daily Spending Chart */}
@@ -117,8 +95,6 @@ const Index = () => {
                 cardAccountSelection={transactionDropdownSelection}
                 selectedDate={selectedDate}
                 onClearDateFilter={clearDateFilter}
-                statCardFilter={statCardFilter}
-                onClearStatCardFilter={clearStatCardFilter}
                 selectedTimeRange={selectedTimeRange}
                 onClearTimeRangeFilter={clearTimeRangeFilter}
                 onDropdownChange={handleTransactionDropdownChange}

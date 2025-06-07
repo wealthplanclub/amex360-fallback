@@ -18,12 +18,6 @@ interface TransactionCardProps {
   cardAccountSelection?: string | null;
   selectedDate?: string;
   onClearDateFilter?: () => void;
-  statCardFilter?: {
-    cardType: string;
-    timeRange: string;
-    topCardAccount?: string;
-  } | null;
-  onClearStatCardFilter?: () => void;
   selectedTimeRange?: string;
   onClearTimeRangeFilter?: () => void;
   onDropdownChange?: (cardSelection: string) => void;
@@ -33,8 +27,6 @@ export function TransactionCard({
   cardAccountSelection,
   selectedDate, 
   onClearDateFilter,
-  statCardFilter,
-  onClearStatCardFilter,
   selectedTimeRange,
   onClearTimeRangeFilter,
   onDropdownChange
@@ -70,15 +62,6 @@ export function TransactionCard({
     }
   }, [cardAccountSelection]);
 
-  // Sync with stat card filter
-  React.useEffect(() => {
-    if (statCardFilter?.cardType === "top-card" && statCardFilter.topCardAccount) {
-      setSelectedCard(statCardFilter.topCardAccount);
-    } else if (statCardFilter?.cardType === "lowest-card" && statCardFilter.topCardAccount) {
-      setSelectedCard(statCardFilter.topCardAccount);
-    }
-  }, [statCardFilter]);
-
   const handleCardChange = (card: string) => {
     setSelectedCard(card);
     if (onDropdownChange) {
@@ -91,7 +74,7 @@ export function TransactionCard({
     allTransactions,
     selectedCard,
     selectedDate,
-    statCardFilter,
+    statCardFilter: null,
     selectedTimeRange
   })
 
@@ -100,8 +83,8 @@ export function TransactionCard({
       <TransactionCardHeader
         selectedDate={selectedDate}
         onClearDateFilter={onClearDateFilter}
-        statCardFilter={statCardFilter}
-        onClearStatCardFilter={onClearStatCardFilter}
+        statCardFilter={null}
+        onClearStatCardFilter={undefined}
         selectedTimeRange={selectedTimeRange}
         onClearTimeRangeFilter={onClearTimeRangeFilter}
       />
@@ -113,7 +96,7 @@ export function TransactionCard({
             selectedCard={selectedCard}
             creditCards={creditCards}
             onCardChange={handleCardChange}
-            statCardFilter={statCardFilter}
+            statCardFilter={null}
           />
           <TransactionTable
             transactions={transactions}

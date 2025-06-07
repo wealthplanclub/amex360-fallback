@@ -16,13 +16,9 @@ interface StatCardProps {
   icon: React.ComponentType<{ className?: string }>
   footer: string
   description: string
-  clickable: boolean
-  cardType: string
-  topCardAccount?: string
   index: number
   isVisible: boolean
   numbersKey: number
-  onClick?: (cardType: string, topCardAccount?: string) => void
 }
 
 export function StatCard({
@@ -32,31 +28,20 @@ export function StatCard({
   icon: IconComponent,
   footer,
   description,
-  clickable,
-  cardType,
-  topCardAccount,
   index,
   isVisible,
-  numbersKey,
-  onClick
+  numbersKey
 }: StatCardProps) {
-  const handleClick = () => {
-    if (clickable && onClick) {
-      onClick(cardType, topCardAccount);
-    }
-  };
-
   return (
     <Card 
       className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
         isVisible 
           ? 'translate-y-0 opacity-100' 
           : 'translate-y-8 opacity-0'
-      } ${clickable ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
+      }`}
       style={{
         transitionDelay: `${index * 150}ms`
       }}
-      onClick={clickable ? handleClick : undefined}
     >
       <CardHeader className="pb-6">
         <CardDescription>{title}</CardDescription>
