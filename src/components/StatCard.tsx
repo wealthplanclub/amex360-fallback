@@ -25,7 +25,6 @@ interface StatCardProps {
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
-  variant?: 'default' | 'reward'
 }
 
 export function StatCard({
@@ -43,8 +42,7 @@ export function StatCard({
   cardType,
   topCardAccount,
   onClick,
-  formatAsPoints = false,
-  variant = 'default'
+  formatAsPoints = false
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -60,9 +58,7 @@ export function StatCard({
   };
 
   const getCardClasses = () => {
-    const baseClasses = variant === 'reward' 
-      ? "relative bg-gradient-to-b from-white to-gray-100 overflow-hidden"
-      : "relative bg-gradient-to-b from-white to-gray-100";
+    const baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
     
     if (clickable) {
       return `${baseClasses} cursor-pointer hover:shadow-lg transition-shadow duration-200`;
@@ -73,47 +69,18 @@ export function StatCard({
     return baseClasses;
   };
 
-  // Only show SVG and gradient overlay on the first reward card
-  const showSvgBackground = variant === 'reward' && index === 0;
-
   return (
     <Card 
       className={getCardClasses()}
       onClick={handleClick}
     >
-      {showSvgBackground && (
-        <>
-          <div 
-            className="absolute"
-            style={{
-              backgroundImage: 'url(https://www.aexp-static.com/cdaas/one/statics/@americanexpress/static-assets/2.28.0/package/dist/img/brand/flourish.svg)',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: '660px 249px',
-              filter: 'invert(31%) sepia(41%) saturate(2993%) hue-rotate(187deg) brightness(93%) contrast(109%)',
-              height: '249px',
-              overflow: 'hidden',
-              position: 'absolute',
-              right: '-1.5rem',
-              top: '3.5rem',
-              width: '660px'
-            }}
-          />
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.97) 30%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.6) 100%)'
-            }}
-          />
-        </>
-      )}
-      <CardHeader className="pb-6 relative z-10">
+      <CardHeader className="pb-6">
         <CardDescription>{title}</CardDescription>
         <CardTitle 
           key={`${title}-${numbersKey}`}
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
             isVisible ? 'animate-fade-in' : 'opacity-0'
           }`}
-          style={variant === 'reward' ? { color: '#00175a' } : {}}
         >
           {formatValue(value)}
         </CardTitle>
@@ -124,7 +91,7 @@ export function StatCard({
           </Badge>
         </div>
       </CardHeader>
-      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6 relative z-10">
+      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
         <div className="flex gap-2 font-medium items-center">
           {footer} <IconComponent className="h-4 w-4" />
         </div>
