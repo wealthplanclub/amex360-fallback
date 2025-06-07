@@ -16,6 +16,13 @@ const Index = () => {
   // State to track the dropdown selection from TransactionCard
   const [transactionDropdownSelection, setTransactionDropdownSelection] = useState<string>("all");
 
+  // State to track stat card filter
+  const [statCardFilter, setStatCardFilter] = useState<{
+    cardType: string
+    timeRange: string
+    topCardAccount?: string
+  } | null>(null);
+
   const handleCardAccountClick = (cardName: string) => {
     console.log("Card account clicked:", cardName);
     setTransactionDropdownSelection(cardName);
@@ -24,6 +31,19 @@ const Index = () => {
   const handleTransactionDropdownChange = (cardSelection: string) => {
     console.log("Transaction dropdown changed:", cardSelection);
     setTransactionDropdownSelection(cardSelection);
+  };
+
+  const handleStatCardClick = (cardType: string, topCardAccount?: string) => {
+    console.log("Stat card clicked:", cardType, topCardAccount);
+    setStatCardFilter({
+      cardType,
+      timeRange: selectedTimeRange,
+      topCardAccount
+    });
+  };
+
+  const handleClearStatCardFilter = () => {
+    setStatCardFilter(null);
   };
 
   const handleDateClick = (date: string) => {
@@ -75,7 +95,10 @@ const Index = () => {
         
         {/* Main Cards */}
         <div className="mt-8">
-          <MainCards selectedTimeRange={selectedTimeRange} />
+          <MainCards 
+            selectedTimeRange={selectedTimeRange} 
+            onStatCardClick={handleStatCardClick}
+          />
         </div>
 
         {/* Daily Spending Chart */}
@@ -98,6 +121,8 @@ const Index = () => {
                 selectedTimeRange={selectedTimeRange}
                 onClearTimeRangeFilter={clearTimeRangeFilter}
                 onDropdownChange={handleTransactionDropdownChange}
+                statCardFilter={statCardFilter}
+                onClearStatCardFilter={handleClearStatCardFilter}
               />
             </div>
             <div className="lg:col-span-1">

@@ -21,6 +21,12 @@ interface TransactionCardProps {
   selectedTimeRange?: string;
   onClearTimeRangeFilter?: () => void;
   onDropdownChange?: (cardSelection: string) => void;
+  statCardFilter?: {
+    cardType: string
+    timeRange: string
+    topCardAccount?: string
+  } | null;
+  onClearStatCardFilter?: () => void;
 }
 
 export function TransactionCard({ 
@@ -29,7 +35,9 @@ export function TransactionCard({
   onClearDateFilter,
   selectedTimeRange,
   onClearTimeRangeFilter,
-  onDropdownChange
+  onDropdownChange,
+  statCardFilter,
+  onClearStatCardFilter
 }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -74,7 +82,7 @@ export function TransactionCard({
     allTransactions,
     selectedCard,
     selectedDate,
-    statCardFilter: null,
+    statCardFilter,
     selectedTimeRange
   })
 
@@ -83,8 +91,8 @@ export function TransactionCard({
       <TransactionCardHeader
         selectedDate={selectedDate}
         onClearDateFilter={onClearDateFilter}
-        statCardFilter={null}
-        onClearStatCardFilter={undefined}
+        statCardFilter={statCardFilter}
+        onClearStatCardFilter={onClearStatCardFilter}
         selectedTimeRange={selectedTimeRange}
         onClearTimeRangeFilter={onClearTimeRangeFilter}
       />
@@ -96,7 +104,7 @@ export function TransactionCard({
             selectedCard={selectedCard}
             creditCards={creditCards}
             onCardChange={handleCardChange}
-            statCardFilter={null}
+            statCardFilter={statCardFilter}
           />
           <TransactionTable
             transactions={transactions}

@@ -19,6 +19,10 @@ interface StatCardProps {
   index: number
   isVisible: boolean
   numbersKey: number
+  clickable?: boolean
+  cardType?: string
+  topCardAccount?: string
+  onClick?: (cardType: string, topCardAccount?: string) => void
 }
 
 export function StatCard({
@@ -30,18 +34,33 @@ export function StatCard({
   description,
   index,
   isVisible,
-  numbersKey
+  numbersKey,
+  clickable = false,
+  cardType,
+  topCardAccount,
+  onClick
 }: StatCardProps) {
+  const handleClick = () => {
+    if (clickable && cardType && onClick) {
+      onClick(cardType, topCardAccount);
+    }
+  };
+
   return (
     <Card 
       className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
         isVisible 
           ? 'translate-y-0 opacity-100' 
           : 'translate-y-8 opacity-0'
+      } ${
+        clickable 
+          ? 'cursor-pointer hover:shadow-lg transition-shadow duration-200' 
+          : ''
       }`}
       style={{
         transitionDelay: `${index * 150}ms`
       }}
+      onClick={handleClick}
     >
       <CardHeader className="pb-6">
         <CardDescription>{title}</CardDescription>

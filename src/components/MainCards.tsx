@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { useTransactionCalculations } from "@/hooks/useTransactionCalculations"
 import { generateCardData } from "@/utils/statCardUtils"
@@ -5,9 +6,10 @@ import { StatCard } from "@/components/StatCard"
 
 interface MainCardsProps {
   selectedTimeRange: string;
+  onStatCardClick?: (cardType: string, topCardAccount?: string) => void;
 }
 
-export function MainCards({ selectedTimeRange }: MainCardsProps) {
+export function MainCards({ selectedTimeRange, onStatCardClick }: MainCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const [numbersKey, setNumbersKey] = React.useState(0)
 
@@ -42,6 +44,10 @@ export function MainCards({ selectedTimeRange }: MainCardsProps) {
           index={index}
           isVisible={isVisible}
           numbersKey={numbersKey}
+          clickable={index === 0} // Only make the first card (Total Expenses) clickable
+          cardType={card.cardType}
+          topCardAccount={card.topCardAccount}
+          onClick={onStatCardClick}
         />
       ))}
     </div>
