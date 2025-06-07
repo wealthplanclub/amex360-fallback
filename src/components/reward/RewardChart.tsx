@@ -1,3 +1,4 @@
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -117,38 +118,13 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              formatter={(value, name, props) => {
-                const config = chartConfig[name as keyof typeof chartConfig];
-                const label = config?.label || name;
-                const numValue = Number(value);
-                
-                // Don't show zero values
-                if (numValue === 0) {
-                  return null;
-                }
-                
-                // Only show total when there are multiple point types
-                if (name === 'totalPoints') {
-                  const hasEmployee = props.payload.employeePoints > 0;
-                  const hasReferral = props.payload.referralPoints > 0;
-                  const hasWelcome = props.payload.welcome > 0;
-                  const pointTypeCount = [hasEmployee, hasReferral, hasWelcome].filter(Boolean).length;
-                  if (pointTypeCount < 2) {
-                    return null;
-                  }
-                }
-                
-                return (
-                  <div className="flex items-center justify-between w-full min-w-[120px]">
-                    <span className="text-muted-foreground">{label}</span>
-                    <span className="font-mono font-medium tabular-nums text-foreground ml-4">
-                      {numValue.toLocaleString()} pts
-                    </span>
-                  </div>
-                );
+              labelFormatter={(value) => {
+                return new Date(value).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })
               }}
               indicator="dot"
-              className="grid gap-1.5"
             />
           }
         />
