@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -13,7 +12,7 @@ const chartConfig = {
     color: "hsl(var(--chart-1))",
   },
   employeePoints: {
-    label: "Employee Points",
+    label: "Employee Card Points",
     color: "hsl(var(--chart-2))",
   },
   referralPoints: {
@@ -101,10 +100,14 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              formatter={(value) => [
-                `${Number(value).toLocaleString()} pts`,
-                ""
-              ]}
+              formatter={(value, name) => {
+                const config = chartConfig[name as keyof typeof chartConfig];
+                const label = config?.label || name;
+                return [
+                  `${Number(value).toLocaleString()} pts`,
+                  label
+                ];
+              }}
               indicator="dot"
             />
           }
