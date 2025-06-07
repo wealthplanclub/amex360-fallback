@@ -40,7 +40,40 @@ export function RewardCardHeader({
   const hasTimeRangeFilter = selectedTimeRange && selectedTimeRange !== "ytd"
   const hasDateFilter = selectedDate
 
-  // If there's a selected date, use the DateFilterIndicator component
+  // If there's a selected date and card filter, show combined filter
+  if (hasDateFilter && hasCardFilter && onClearDateFilter && onClearCardFilter) {
+    const cardDisplayName = getCardDisplayName(filters.selectedCard)
+    const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric'
+    })
+    
+    const handleClearAll = () => {
+      if (onClearDateFilter) onClearDateFilter()
+      if (onClearCardFilter) onClearCardFilter()
+    }
+
+    return (
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
+        <div className="mt-2">
+          <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+            Filtered by: {formattedDate}, {cardDisplayName}
+            <button 
+              onClick={handleClearAll}
+              className="hover:bg-gray-200 rounded p-0.5"
+              title="Clear filters"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          </span>
+        </div>
+      </CardHeader>
+    )
+  }
+
+  // If there's only a selected date, use the DateFilterIndicator component
   if (hasDateFilter && onClearDateFilter) {
     return (
       <CardHeader className="pb-2">
