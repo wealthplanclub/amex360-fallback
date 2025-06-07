@@ -97,6 +97,8 @@ export const ChartTooltipContent = React.forwardRef<
           indicatorColor = colorMap[key as keyof typeof colorMap] || '#8884d8'
         }
 
+        console.log('Indicator debug:', { key, indicatorColor, hideIndicator, indicator });
+
         if (formatter && item?.value !== undefined && item.name) {
           const formatterResult = formatter(item.value, item.name, item, index, item.payload)
           if (formatterResult === null || formatterResult === undefined) {
@@ -152,7 +154,7 @@ export const ChartTooltipContent = React.forwardRef<
                             }
                           )}
                           style={{
-                            backgroundColor: indicatorColor,
+                            backgroundColor: indicator === "dot" ? indicatorColor : undefined,
                             borderColor: indicatorColor,
                           }}
                         />
