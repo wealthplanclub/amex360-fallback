@@ -12,7 +12,7 @@ export const AppHeader = () => {
   };
 
   return (
-    <div className="flex justify-end items-center w-full px-6 py-2">
+    <div className="flex justify-end items-center w-full px-6 py-4">
       <Button
         variant="outline"
         size="sm"
