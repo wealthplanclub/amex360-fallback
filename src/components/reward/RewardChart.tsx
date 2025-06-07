@@ -33,7 +33,7 @@ interface RewardChartProps {
 
 export function RewardChart({ data }: RewardChartProps) {
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="h-[400px]">
       <AreaChart
         accessibilityLayer
         data={data}
