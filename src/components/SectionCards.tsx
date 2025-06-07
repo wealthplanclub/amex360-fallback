@@ -191,7 +191,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
 
   // Create trail animation for the number values only
   const trail = useTrail(cardData.length, {
-    config: { mass: 5, tension: 2000, friction: 200 },
+    config: { mass: 1, tension: 200, friction: 100 },
     opacity: 1,
     x: 0,
     from: { opacity: 0, x: 20 },
