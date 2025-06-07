@@ -1,4 +1,3 @@
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -41,21 +40,25 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     console.log("Latest date from data:", latestDate);
     console.log("Selected time range:", selectedTimeRange);
     
-    // Parse the latest date properly
-    const latestDateObj = new Date(latestDate + 'T00:00:00'); // Add time to prevent timezone issues
+    // Parse the latest date properly - this should be our reference point (2025-01-23)
+    const latestDateObj = new Date(latestDate + 'T00:00:00');
+    console.log("Latest date object:", latestDateObj.toISOString());
     
     let startDate: Date;
     
     if (selectedTimeRange === "ytd") {
-      // Year to date - start from January 1st of the current year
-      startDate = new Date(latestDateObj.getFullYear(), 0, 1); // January 1st
+      // Year to date - start from January 1st of the latest year (2025)
+      startDate = new Date(latestDateObj.getFullYear(), 0, 1); // January 1st, 2025
     } else if (selectedTimeRange === "90d") {
+      // 90 days before the latest date
       startDate = new Date(latestDateObj);
       startDate.setDate(startDate.getDate() - 90);
     } else if (selectedTimeRange === "30d") {
+      // 30 days before the latest date
       startDate = new Date(latestDateObj);
       startDate.setDate(startDate.getDate() - 30);
     } else if (selectedTimeRange === "7d") {
+      // 7 days before the latest date
       startDate = new Date(latestDateObj);
       startDate.setDate(startDate.getDate() - 7);
     } else {
@@ -64,23 +67,19 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     
     // Convert start date back to ISO string format for comparison
     const startDateString = startDate.toISOString().split('T')[0];
-    console.log("Filtering from start date:", startDateString);
-    console.log("Latest date object:", latestDateObj);
-    console.log("Start date object:", startDate);
+    console.log("Start date string for filtering:", startDateString);
+    console.log("Start date object:", startDate.toISOString());
+    console.log("Days between start and latest:", Math.floor((latestDateObj.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
     
     const filtered = transactions.filter(transaction => {
       const transactionDate = transaction.date;
       const isIncluded = transactionDate >= startDateString;
-      if (!isIncluded) {
-        console.log(`Filtering out transaction from ${transactionDate} (before ${startDateString})`);
-      }
       return isIncluded;
     });
     
     console.log("Total transactions:", transactions.length);
     console.log("Filtered transactions:", filtered.length);
-    console.log("First few filtered dates:", filtered.slice(0, 5).map(t => t.date));
-    console.log("Last few filtered dates:", filtered.slice(-5).map(t => t.date));
+    console.log("Date range:", startDateString, "to", latestDate);
     
     return filtered;
   }, [selectedTimeRange]);
@@ -156,6 +155,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     return "YTD";
   };
 
+  // ... keep existing code (cardData array and component render)
   const cardData = [
     {
       title: "Total Expenses",
