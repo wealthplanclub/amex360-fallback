@@ -114,6 +114,7 @@ export function TransactionCard() {
           {row.getValue("description")}
         </div>
       ),
+      filterFn: "includesString",
     },
     {
       accessorKey: "account",
