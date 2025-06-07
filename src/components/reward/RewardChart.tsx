@@ -24,7 +24,7 @@ const chartConfig = {
 
 interface RewardChartProps {
   data: Array<{
-    month: string
+    date: string
     totalPoints: number
     employeePoints: number
     referralPoints: number
@@ -78,12 +78,12 @@ export function RewardChart({ data }: RewardChartProps) {
         </defs>
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey="month"
+          dataKey="date"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
           minTickGap={32}
-          tickFormatter={(value) => value.slice(0, 3)}
+          tickFormatter={(value) => value}
         />
         <ChartTooltip
           cursor={false}
