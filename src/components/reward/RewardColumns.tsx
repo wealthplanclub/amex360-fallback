@@ -30,9 +30,13 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       },
     },
     {
-      accessorKey: "award_code",
-      header: "Award Code",
-      cell: ({ row }) => <div className="font-mono text-xs">{row.getValue("award_code")}</div>,
+      accessorKey: "reward_description",
+      header: "Description",
+      cell: ({ row }) => {
+        const description = row.getValue("reward_description") as string
+        const cleanDescription = description.replace(/\bspend\b/gi, '').replace(/\s+/g, ' ').trim()
+        return <div className="max-w-[300px] truncate">{cleanDescription}</div>
+      },
     },
     {
       accessorKey: "card",
@@ -44,13 +48,9 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       },
     },
     {
-      accessorKey: "reward_description",
-      header: "Description",
-      cell: ({ row }) => {
-        const description = row.getValue("reward_description") as string
-        const cleanDescription = description.replace(/\bspend\b/gi, '').replace(/\s+/g, ' ').trim()
-        return <div className="max-w-[300px] truncate">{cleanDescription}</div>
-      },
+      accessorKey: "award_code",
+      header: "Award Code",
+      cell: ({ row }) => <div className="font-mono text-xs">{row.getValue("award_code")}</div>,
     },
     {
       accessorKey: "points",
