@@ -1,5 +1,4 @@
 
-
 import { Card, CardContent } from "@/components/ui/card";
 import { getCardImage } from "@/utils/cardImageUtils";
 import { CardData } from "@/utils/cardDataUtils";
@@ -7,7 +6,7 @@ import { CardData } from "@/utils/cardDataUtils";
 interface CardAccountItemProps {
   card: CardData;
   index: number;
-  selectedCard?: string;
+  selectedCard?: string | null;
   onCardClick: (cardName: string) => void;
 }
 
@@ -64,4 +63,3 @@ export function CardAccountItem({ card, index, selectedCard, onCardClick }: Card
     </Card>
   );
 }
-

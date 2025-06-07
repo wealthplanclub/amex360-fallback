@@ -1,5 +1,4 @@
 
-
 import { staticTxnData } from "@/data/staticData";
 import { processCardData, getTimeRangeDescription } from "@/utils/cardDataUtils";
 import {
@@ -15,44 +14,43 @@ import * as React from "react";
 
 interface CardAccountsProps {
   onCardClick?: (cardName: string) => void;
-  selectedCard?: string;
+  cardAccountSelection?: string | null;
   selectedTimeRange?: string;
 }
 
-export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "ytd" }: CardAccountsProps) {
+export function CardAccounts({ onCardClick, cardAccountSelection, selectedTimeRange = "ytd" }: CardAccountsProps) {
   const cardData = React.useMemo(() => {
     return processCardData(staticTxnData, selectedTimeRange);
   }, [selectedTimeRange]);
 
-  // Filter cards based on selectedCard
-  const filteredCardData = React.useMemo(() => {
-    if (!selectedCard || selectedCard === "all") {
-      return cardData;
-    }
-    
-    // Handle special case for Business Green Combined
-    if (selectedCard === "BUSINESS_GREEN_COMBINED") {
-      return cardData.filter(card => card.name === 'Business Green\n(-2007)');
-    }
-    
-    // Filter by matching fullName with selectedCard
-    return cardData.filter(card => card.fullName === selectedCard);
-  }, [cardData, selectedCard]);
+  // Track internal selected state for visual feedback
+  const [internalSelectedCard, setInternalSelectedCard] = React.useState<string | null>(null);
 
-  // Calculate dynamic height based on filtered card count
+  // Update internal state when external selection changes
+  React.useEffect(() => {
+    setInternalSelectedCard(cardAccountSelection);
+  }, [cardAccountSelection]);
+
+  // Calculate dynamic height based on card count
   const dynamicHeight = React.useMemo(() => {
     const baseHeight = 200; // Minimum height for header and padding
     const cardHeight = 120; // Approximate height per card including spacing
     const maxHeight = 830; // Original maximum height
     
-    const calculatedHeight = baseHeight + (filteredCardData.length * cardHeight);
+    const calculatedHeight = baseHeight + (cardData.length * cardHeight);
     return Math.min(calculatedHeight, maxHeight);
-  }, [filteredCardData.length]);
+  }, [cardData.length]);
 
   const handleCardClick = (cardName: string) => {
     if (onCardClick) {
-      // Simply pass the card selection to parent
-      onCardClick(cardName);
+      // If the clicked card is already selected, toggle it off (show all cards)
+      if (internalSelectedCard === cardName) {
+        setInternalSelectedCard(null);
+        onCardClick("all");
+      } else {
+        setInternalSelectedCard(cardName);
+        onCardClick(cardName);
+      }
     }
   };
 
@@ -70,12 +68,12 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4 pb-6">
-            {filteredCardData.map((card, index) => (
+            {cardData.map((card, index) => (
               <CardAccountItem
                 key={card.fullName}
                 card={card}
                 index={index}
-                selectedCard={selectedCard}
+                selectedCard={internalSelectedCard}
                 onCardClick={handleCardClick}
               />
             ))}
@@ -85,4 +83,3 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
     </Card>
   );
 }
-

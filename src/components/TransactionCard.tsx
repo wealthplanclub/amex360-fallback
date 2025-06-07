@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -14,7 +15,7 @@ import { useTransactionFilters } from "@/components/transaction/TransactionFilte
 import { TransactionTable } from "@/components/transaction/TransactionTable"
 
 interface TransactionCardProps {
-  selectedCardFromGrid?: string;
+  cardAccountSelection?: string | null;
   selectedDate?: string;
   onClearDateFilter?: () => void;
   statCardFilter?: {
@@ -25,18 +26,16 @@ interface TransactionCardProps {
   onClearStatCardFilter?: () => void;
   selectedTimeRange?: string;
   onClearTimeRangeFilter?: () => void;
-  onCardSelectionChange?: (card: string) => void;
 }
 
 export function TransactionCard({ 
-  selectedCardFromGrid, 
+  cardAccountSelection,
   selectedDate, 
   onClearDateFilter,
   statCardFilter,
   onClearStatCardFilter,
   selectedTimeRange,
-  onClearTimeRangeFilter,
-  onCardSelectionChange
+  onClearTimeRangeFilter
 }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -61,23 +60,22 @@ export function TransactionCard({
   const [selectedCard, setSelectedCard] = React.useState<string>("all")
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
 
-  // Sync with the card selected from the grid OR from stat card filter
+  // Handle card account selection from CardAccounts component
+  React.useEffect(() => {
+    if (cardAccountSelection) {
+      console.log("Card account selection received:", cardAccountSelection);
+      setSelectedCard(cardAccountSelection);
+    }
+  }, [cardAccountSelection]);
+
+  // Sync with stat card filter
   React.useEffect(() => {
     if (statCardFilter?.cardType === "top-card" && statCardFilter.topCardAccount) {
       setSelectedCard(statCardFilter.topCardAccount);
     } else if (statCardFilter?.cardType === "lowest-card" && statCardFilter.topCardAccount) {
       setSelectedCard(statCardFilter.topCardAccount);
-    } else if (selectedCardFromGrid && selectedCardFromGrid !== "all") {
-      setSelectedCard(selectedCardFromGrid);
     }
-  }, [selectedCardFromGrid, statCardFilter]);
-
-  // Notify parent component when card selection changes
-  React.useEffect(() => {
-    if (onCardSelectionChange) {
-      onCardSelectionChange(selectedCard);
-    }
-  }, [selectedCard, onCardSelectionChange]);
+  }, [statCardFilter]);
 
   const handleCardChange = (card: string) => {
     setSelectedCard(card);

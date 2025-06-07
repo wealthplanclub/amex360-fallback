@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -7,7 +8,6 @@ import { AppHeader } from "@/components/AppHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
-  const [selectedCard, setSelectedCard] = useState<string>("all");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTimeRange, setSelectedTimeRange] = useState<string>("ytd");
   const [statCardFilter, setStatCardFilter] = useState<{
@@ -15,16 +15,15 @@ const Index = () => {
     timeRange: string;
     topCardAccount?: string;
   } | null>(null);
-  const [selectedCardFromDropdown, setSelectedCardFromDropdown] = useState<string>("all");
   
   const isMobile = useIsMobile();
 
-  const handleCardClick = (cardName: string) => {
-    console.log("Card clicked:", cardName);
-    // Simply set the card selection - no toggle logic
-    setSelectedCard(cardName);
-    setSelectedCardFromDropdown(cardName);
-    
+  // State to track which card was clicked from CardAccounts
+  const [cardAccountSelection, setCardAccountSelection] = useState<string | null>(null);
+
+  const handleCardAccountClick = (cardName: string) => {
+    console.log("Card account clicked:", cardName);
+    setCardAccountSelection(cardName);
     // Clear stat card filter when manually selecting a card
     setStatCardFilter(null);
   };
@@ -52,20 +51,13 @@ const Index = () => {
   const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string) => {
     console.log("Stat card clicked:", cardType, timeRange, topCardAccount);
     setStatCardFilter({ cardType, timeRange, topCardAccount });
-    // Reset other filters when stat card is clicked
-    setSelectedCard("all");
-    setSelectedCardFromDropdown("all");
+    // Reset card account selection when stat card is clicked
+    setCardAccountSelection(null);
     setSelectedDate("");
   };
 
   const clearStatCardFilter = () => {
     setStatCardFilter(null);
-  };
-
-  const handleCardSelectionFromDropdown = (card: string) => {
-    setSelectedCardFromDropdown(card);
-    // Also update the grid selection to keep them in sync
-    setSelectedCard(card);
   };
 
   // Add effect to log time range changes
@@ -117,20 +109,19 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <TransactionCard 
-                selectedCardFromGrid={selectedCard} 
+                cardAccountSelection={cardAccountSelection}
                 selectedDate={selectedDate}
                 onClearDateFilter={clearDateFilter}
                 statCardFilter={statCardFilter}
                 onClearStatCardFilter={clearStatCardFilter}
                 selectedTimeRange={selectedTimeRange}
                 onClearTimeRangeFilter={clearTimeRangeFilter}
-                onCardSelectionChange={handleCardSelectionFromDropdown}
               />
             </div>
             <div className="lg:col-span-1">
               <CardAccounts 
-                onCardClick={handleCardClick} 
-                selectedCard={selectedCard} 
+                onCardClick={handleCardAccountClick} 
+                cardAccountSelection={cardAccountSelection}
                 selectedTimeRange={selectedTimeRange}
               />
             </div>
