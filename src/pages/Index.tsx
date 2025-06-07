@@ -30,7 +30,7 @@ const Index = () => {
     <div 
       className="min-h-screen p-6"
       style={{
-        backgroundImage: 'url(https://i.imgur.com/1fFddP4.png)',
+        backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
         backgroundRepeat: 'repeat'
       }}
     >
