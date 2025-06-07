@@ -1,4 +1,3 @@
-
 import { Transaction } from "@/types/transaction"
 import { FilterState } from "@/hooks/useFilterState"
 import { staticTxnData } from "@/data/staticData"
@@ -36,17 +35,20 @@ export class TransactionFilterService {
     console.log("All transactions count:", filtered.length)
     console.log("Current filters:", filters)
     
-    // Apply time range filter first
-    filtered = this.applyTimeRangeFilter(filtered, filters.selectedTimeRange)
-    console.log("After time range filter:", filtered.length)
+    // Apply either time range OR date filter (mutually exclusive)
+    if (filters.selectedDate) {
+      // If a specific date is selected, use only that date
+      filtered = this.applyDateFilter(filtered, filters.selectedDate)
+      console.log("After date filter:", filtered.length)
+    } else {
+      // Otherwise, apply time range filter
+      filtered = this.applyTimeRangeFilter(filtered, filters.selectedTimeRange)
+      console.log("After time range filter:", filtered.length)
+    }
     
     // Apply card filter
     filtered = this.applyCardFilter(filtered, filters.selectedCard)
     console.log("After card filter:", filtered.length)
-    
-    // Apply date filter
-    filtered = this.applyDateFilter(filtered, filters.selectedDate)
-    console.log("After date filter:", filtered.length)
     
     // Apply expense/credit filters
     filtered = this.applyExpenseCreditFilters(filtered, filters)

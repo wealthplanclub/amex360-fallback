@@ -75,16 +75,28 @@ const Index = () => {
   };
 
   const handleDateClick = (date: string) => {
-    updateFilter('selectedDate', date);
+    // When a specific date is selected, clear the time range filter
+    updateMultipleFilters({
+      selectedDate: date,
+      selectedTimeRange: undefined
+    });
   };
 
   const clearDateFilter = () => {
-    clearFilter('selectedDate');
+    // When clearing date filter, restore default time range
+    updateMultipleFilters({
+      selectedDate: undefined,
+      selectedTimeRange: 'ytd'
+    });
   };
 
   const handleTimeRangeChange = (timeRange: string) => {
     console.log("Time range change requested:", timeRange, "isMobile:", isMobile);
-    updateFilter('selectedTimeRange', timeRange);
+    // When a time range is selected, clear the specific date filter
+    updateMultipleFilters({
+      selectedTimeRange: timeRange,
+      selectedDate: undefined
+    });
   };
 
   const clearTimeRangeFilter = () => {
@@ -122,7 +134,7 @@ const Index = () => {
         {/* Main Cards */}
         <div className="mt-8">
           <MainCards 
-            selectedTimeRange={filters.selectedTimeRange} 
+            selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
             onStatCardClick={handleStatCardClick}
           />
         </div>
@@ -131,7 +143,7 @@ const Index = () => {
         <div className="mt-8 px-4 lg:px-6">
           <ChartAreaInteractive 
             onDateClick={handleDateClick} 
-            selectedTimeRange={filters.selectedTimeRange}
+            selectedTimeRange={filters.selectedTimeRange || 'ytd'}
             onTimeRangeChange={handleTimeRangeChange}
           />
         </div>
@@ -152,7 +164,7 @@ const Index = () => {
             <div className="lg:col-span-1">
               <CardAccounts 
                 onCardClick={handleCardAccountClick} 
-                selectedTimeRange={filters.selectedTimeRange}
+                selectedTimeRange={filters.selectedTimeRange || 'ytd'}
                 transactionDropdownSelection={filters.selectedCard}
               />
             </div>
