@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -68,13 +67,12 @@ const globalFilterFn = (row: any, columnId: string, value: string) => {
 }
 
 export function TransactionCard() {
-  // Parse the CSV data and get recent transactions - memoize this to prevent re-parsing
+  // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
     
     return rawTransactions
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 50)
       .map((transaction, index) => ({
         id: `txn-${index}`,
         ...transaction
