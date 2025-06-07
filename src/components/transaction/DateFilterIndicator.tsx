@@ -16,11 +16,11 @@ export function DateFilterIndicator({ selectedDate, onClear }: DateFilterIndicat
 
   return (
     <div className="mt-2">
-      <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-md">
+      <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-600 text-gray-300 rounded-md">
         Filtered by: {formattedDate}
         <button 
           onClick={onClear}
-          className="hover:bg-blue-200 rounded p-0.5"
+          className="hover:bg-gray-500 rounded p-0.5"
           title="Clear date filter"
         >
           <X className="h-3 w-3" />
