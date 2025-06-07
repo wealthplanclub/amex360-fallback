@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -99,6 +100,13 @@ export function ChartAreaInteractive() {
       return itemDate >= startDate
     })
   }, [processedData, timeRange])
+
+  // Calculate the Y-axis domain based on filtered data
+  const yAxisDomain = React.useMemo(() => {
+    if (filteredData.length === 0) return [0, 100]
+    const maxValue = Math.max(...filteredData.map(item => item.totalSpend))
+    return [0, Math.ceil(maxValue * 1.1)] // Add 10% padding above the max value
+  }, [filteredData])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
   const averageDailySpend = filteredData.length > 0 ? totalSpendForPeriod / filteredData.length : 0
@@ -203,7 +211,7 @@ export function ChartAreaInteractive() {
                 })
               }}
             />
-            <YAxis hide domain={[0, 'dataMax + 100']} />
+            <YAxis hide domain={yAxisDomain} />
             <ChartTooltip
               cursor={false}
               defaultIndex={isMobile ? -1 : 10}
