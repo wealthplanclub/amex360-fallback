@@ -29,7 +29,7 @@ const menuItems = [
     url: "#",
   },
   {
-    title: "Settings",
+    title: "CreditMax Swaps",
     icon: Settings,
     url: "#",
   },
