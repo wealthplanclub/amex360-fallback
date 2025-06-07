@@ -51,7 +51,7 @@ export function ChartAreaInteractive({
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div className="space-y-1">
-          <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
+          <CardTitle className="text-xl font-semibold">Daily spend by time period</CardTitle>
           <CardDescription>
             Average daily spend {getTimeRangeLabel()}: ${averageDailySpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </CardDescription>
