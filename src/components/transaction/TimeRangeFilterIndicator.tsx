@@ -10,9 +10,9 @@ export function TimeRangeFilterIndicator({ timeRange, onClear }: TimeRangeFilter
   const getTimeRangeLabel = (range: string) => {
     switch (range) {
       case "ytd": return "YTD";
-      case "90d": return "90 days";
-      case "30d": return "30 days";
-      case "7d": return "7 days";
+      case "90d": return "90d";
+      case "30d": return "30d";
+      case "7d": return "7d";
       default: return range;
     }
   };
