@@ -78,12 +78,6 @@ export class RewardFilterService {
       return rewards
     }
     
-    if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
-      return rewards.filter(reward => 
-        reward.card.toLowerCase().includes('business green rewards')
-      )
-    }
-    
     return rewards.filter(reward => 
       reward.card === selectedCard
     )

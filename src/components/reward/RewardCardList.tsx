@@ -48,10 +48,6 @@ export function RewardCardList({ filters, onCardClick }: RewardCardListProps) {
       return allCardData
     }
     
-    if (filters.selectedCard === 'BUSINESS_GREEN_COMBINED') {
-      return allCardData.filter(card => card.fullName.toLowerCase().includes('business green rewards'))
-    }
-    
     return allCardData.filter(card => card.fullName === filters.selectedCard)
   }, [allCardData, filters.selectedCard])
 
@@ -68,25 +64,20 @@ export function RewardCardList({ filters, onCardClick }: RewardCardListProps) {
   const handleCardClick = (card: any) => {
     if (!onCardClick) return
     
-    const isSelected = getSelectedCard(card)
+    const isSelected = card.fullName === filters.selectedCard
     
     if (isSelected) {
       // If this card is already selected, toggle to "all"
       onCardClick('all')
     } else {
       // If this card is not selected, select it
-      if (card.fullName.toLowerCase().includes('business green rewards')) {
-        onCardClick('BUSINESS_GREEN_COMBINED')
-      } else {
-        onCardClick(card.fullName)
-      }
+      onCardClick(card.fullName)
     }
   }
 
   // Determine which card is selected
   const getSelectedCard = (card: any) => {
     if (filters.selectedCard === "all") return false
-    if (filters.selectedCard === 'BUSINESS_GREEN_COMBINED' && card.fullName.toLowerCase().includes('business green rewards')) return true
     return card.fullName === filters.selectedCard
   }
 

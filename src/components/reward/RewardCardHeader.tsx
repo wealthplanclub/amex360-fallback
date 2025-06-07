@@ -23,7 +23,6 @@ export function RewardCardHeader({
   onClearCardFilter
 }: RewardCardHeaderProps) {
   const getCardDisplayName = (cardName: string) => {
-    if (cardName === 'BUSINESS_GREEN_COMBINED') return 'Business Green'
     return cardName.replace(/\b(card|Rewards)\b/gi, '').trim()
   }
 
