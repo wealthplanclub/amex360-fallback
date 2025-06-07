@@ -60,13 +60,7 @@ export function StatCard({
   };
 
   const getCardClasses = () => {
-    let baseClasses;
-    
-    if (variant === 'rewards') {
-      baseClasses = "relative bg-gradient-to-b from-white to-blue-50";
-    } else {
-      baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
-    }
+    const baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
     
     if (clickable) {
       return `${baseClasses} cursor-pointer hover:shadow-lg transition-shadow duration-200`;
