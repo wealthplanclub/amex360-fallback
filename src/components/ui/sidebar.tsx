@@ -1,5 +1,6 @@
+
 import * as React from "react"
-import { X, Menu } from "lucide-react"
+import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 // Context for sidebar state
@@ -58,7 +59,7 @@ export const SidebarProvider = ({ children }: SidebarProviderProps) => {
   )
 }
 
-// Sidebar Trigger (Hamburger Menu)
+// Sidebar Trigger (Using DLS Logo)
 export const SidebarTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
@@ -75,7 +76,11 @@ export const SidebarTrigger = React.forwardRef<
       )}
       {...props}
     >
-      <Menu className="h-6 w-6" />
+      <img 
+        src="/dls-logo-bluebox-solid.svg" 
+        alt="Menu" 
+        className="h-6 w-6"
+      />
       <span className="sr-only">Open sidebar</span>
     </button>
   )
