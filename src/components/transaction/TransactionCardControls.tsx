@@ -31,13 +31,11 @@ export function TransactionCardControls({
         onChange={(event) => onGlobalFilterChange(event.target.value)}
         className="max-w-sm"
       />
-      {!statCardFilter && (
-        <CardFilterDropdown
-          selectedCard={selectedCard}
-          creditCards={creditCards}
-          onCardChange={onCardChange}
-        />
-      )}
+      <CardFilterDropdown
+        selectedCard={selectedCard}
+        creditCards={creditCards}
+        onCardChange={onCardChange}
+      />
     </div>
   )
 }
