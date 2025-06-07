@@ -1,6 +1,6 @@
 
 import React from "react"
-import { Home, BarChart3, CreditCard, Settings, LogOut } from "lucide-react"
+import { Home, Award, CreditCard, Settings, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import {
   Sidebar,
@@ -20,8 +20,8 @@ const menuItems = [
     url: "/dashboard",
   },
   {
-    title: "Analytics",
-    icon: BarChart3,
+    title: "Rewards",
+    icon: Award,
     url: "#",
   },
   {
