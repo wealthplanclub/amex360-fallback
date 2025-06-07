@@ -60,11 +60,10 @@ export function StatCard({
   };
 
   const getCardClasses = () => {
-    let baseClasses = "relative";
+    let baseClasses = "relative overflow-hidden";
     
     if (variant === 'reward') {
-      baseClasses += " bg-gradient-to-b from-white to-gray-100";
-      baseClasses += " bg-[url('/flourish.svg')] bg-no-repeat bg-right bg-contain";
+      baseClasses += " bg-gradient-to-br from-white via-blue-50/30 to-blue-100/50";
     } else {
       baseClasses += " bg-gradient-to-b from-white to-gray-100";
     }
@@ -87,7 +86,18 @@ export function StatCard({
       className={getCardClasses()}
       onClick={handleClick}
     >
-      <CardHeader className="pb-6">
+      {variant === 'reward' && (
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'url(/flourish.svg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right bottom',
+            backgroundSize: '60%'
+          }}
+        />
+      )}
+      <CardHeader className="pb-6 relative z-10">
         <CardDescription>{title}</CardDescription>
         <CardTitle 
           key={`${title}-${numbersKey}`}
@@ -104,7 +114,7 @@ export function StatCard({
           </Badge>
         </div>
       </CardHeader>
-      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
+      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6 relative z-10">
         <div className="flex gap-2 font-medium items-center">
           {footer} <IconComponent className="h-4 w-4" />
         </div>
