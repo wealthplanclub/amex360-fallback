@@ -37,9 +37,9 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
       }));
   }, []);
 
-  // Extract unique credit cards
+  // Extract unique credit cards - store original account names for filtering
   const creditCards = React.useMemo(() => {
-    const uniqueCards = Array.from(new Set(allTransactions.map(t => formatAccountName(t.account))))
+    const uniqueCards = Array.from(new Set(allTransactions.map(t => t.account)))
       .filter(card => card.length > 0)
       .sort()
     return uniqueCards
@@ -60,6 +60,7 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     let filtered = allTransactions;
     
     console.log("All transactions count:", filtered.length);
+    console.log("Selected card:", selectedCard);
     console.log("Selected date:", selectedDate);
     
     // Filter by card
@@ -69,6 +70,7 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
           transaction.account.toLowerCase().includes('business green rewards')
         )
       } else {
+        // Direct comparison using the original account name
         filtered = filtered.filter(transaction => 
           transaction.account === selectedCard
         )
