@@ -66,7 +66,6 @@ const Index = () => {
                 selectedCardFromGrid={selectedCard} 
                 selectedDate={selectedDate}
                 onClearDateFilter={clearDateFilter}
-                selectedTimeRange={selectedTimeRange}
               />
             </div>
             <div className="lg:col-span-1">
