@@ -200,9 +200,9 @@ export function TransactionCard() {
 
   return (
     <Card className="bg-white">
-      <CardHeader>
+      <CardHeader className="pb-4">
         <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
-        <CardDescription>
+        <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
         </CardDescription>
       </CardHeader>
