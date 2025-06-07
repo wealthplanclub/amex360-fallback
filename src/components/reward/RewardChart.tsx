@@ -159,7 +159,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           type="monotone"
           fill="url(#fillWelcome)"
           stroke="#00175a"
-          strokeWidth={1}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -167,7 +167,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           type="monotone"
           fill="url(#fillReferral)"
           stroke="#00175a"
-          strokeWidth={1}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -175,7 +175,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           type="monotone"
           fill="url(#fillEmployee)"
           stroke="#00175a"
-          strokeWidth={1}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -183,7 +183,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           type="monotone"
           fill="url(#fillTotal)"
           stroke="#00175a"
-          strokeWidth={1}
+          strokeWidth={0}
         />
       </AreaChart>
     </ChartContainer>
