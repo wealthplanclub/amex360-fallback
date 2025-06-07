@@ -44,7 +44,7 @@ export function RewardMetricsCards({
       badge: `${calculations.employeeCardPercentage}%`,
       icon: Users,
       footer: `From ${calculations.employeeCardCount} employee cards`,
-      description: `Employee card bonuses ${getTimeRangeDescription(filters.selectedTimeRange)}`,
+      description: `Employee bonus points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
       cardType: "employee-rewards"
     },
