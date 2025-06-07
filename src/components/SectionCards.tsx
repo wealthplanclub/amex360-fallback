@@ -1,3 +1,4 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -135,7 +136,8 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       lowestCardSpend,
       topCardDisplayName,
       lowestCardDisplayName,
-      topCardAccount
+      topCardAccount,
+      lowestCardAccount
     });
 
     return {
@@ -148,7 +150,8 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       lowestCardPercentage,
       topCardDisplayName,
       lowestCardDisplayName,
-      topCardAccount
+      topCardAccount,
+      lowestCardAccount
     };
   }, [filteredTransactions]);
 
