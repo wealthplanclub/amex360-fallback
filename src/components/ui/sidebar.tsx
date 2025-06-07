@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { X, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -33,7 +32,7 @@ export const SidebarProvider = ({ children }: SidebarProviderProps) => {
   const close = () => setIsOpen(false)
   const open = () => setIsOpen(true)
 
-  // Close sidebar when clicking outside or pressing escape
+  // Close sidebar when pressing escape
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") close()
@@ -83,21 +82,19 @@ export const SidebarTrigger = React.forwardRef<
 })
 SidebarTrigger.displayName = "SidebarTrigger"
 
-// Sidebar Overlay
+// Sidebar Overlay with improved fade transition
 const SidebarOverlay = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const { isOpen, close } = useSidebar()
 
-  if (!isOpen) return null
-
   return (
     <div
       ref={ref}
       className={cn(
-        "fixed inset-0 bg-black/50 z-40 transition-opacity",
-        isOpen ? "opacity-100" : "opacity-0",
+        "fixed inset-0 bg-black/50 z-40 transition-all duration-300 ease-out",
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none",
         className
       )}
       onClick={close}
@@ -107,7 +104,7 @@ const SidebarOverlay = React.forwardRef<
 })
 SidebarOverlay.displayName = "SidebarOverlay"
 
-// Main Sidebar Component
+// Main Sidebar Component with improved animation
 export const Sidebar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -120,8 +117,8 @@ export const Sidebar = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-0" : "-translate-x-full",
+          "fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-all duration-300 ease-out",
+          isOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-95",
           className
         )}
         {...props}
@@ -130,7 +127,7 @@ export const Sidebar = React.forwardRef<
           <h2 className="text-lg font-semibold">Menu</h2>
           <button
             onClick={close}
-            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
           >
             <X className="h-5 w-5" />
             <span className="sr-only">Close sidebar</span>
