@@ -25,7 +25,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         
-        return <div className="font-medium">{monthNames[month - 1]} {day}, {year}</div>
+        return <div className="font-medium">{monthNames[month - 1]} {day}</div>
       },
     },
     {
