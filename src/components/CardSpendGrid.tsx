@@ -95,7 +95,7 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
   };
 
   return (
-    <Card className="bg-white h-[800px] flex flex-col">
+    <Card className="bg-gradient-to-b from-white to-gray-100 h-[800px] flex flex-col">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
         <CardDescription>
