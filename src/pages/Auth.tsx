@@ -24,7 +24,7 @@ const Auth = () => {
         backgroundRepeat: 'repeat'
       }}
     >
-      <Card className="bg-gradient-to-b from-white to-gray-100">
+      <Card className="bg-gradient-to-b from-white to-gray-100" style={{ width: '276px' }}>
         <CardHeader className="text-center">
           <div className="mb-4 mt-6">
             <img 
@@ -35,7 +35,7 @@ const Auth = () => {
             />
           </div>
         </CardHeader>
-        <CardContent className="px-12">
+        <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">User ID</Label>
