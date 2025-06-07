@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import * as React from "react"
@@ -219,9 +217,10 @@ export function ChartAreaInteractive() {
             />
             <Area
               dataKey="totalSpend"
-              type="natural"
+              type="monotone"
               fill="url(#fillTotalSpend)"
               stroke="var(--color-totalSpend)"
+              strokeWidth={1}
             />
           </AreaChart>
         </ChartContainer>
@@ -229,4 +228,3 @@ export function ChartAreaInteractive() {
     </Card>
   )
 }
-
