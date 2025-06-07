@@ -1,3 +1,4 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -19,6 +20,7 @@ interface SectionCardsProps {
 
 export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
+  const [numbersKey, setNumbersKey] = React.useState(0)
 
   React.useEffect(() => {
     // Trigger animation after component mounts
@@ -28,6 +30,11 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     
     return () => clearTimeout(timer)
   }, [])
+
+  React.useEffect(() => {
+    // Reset and re-trigger number animation when time range changes
+    setNumbersKey(prev => prev + 1)
+  }, [selectedTimeRange])
 
   // Filter transactions based on selected time range
   const filteredTransactions = React.useMemo(() => {
@@ -205,7 +212,10 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
           >
             <CardHeader className="pb-6">
               <CardDescription>{card.title}</CardDescription>
-              <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
+              <CardTitle 
+                key={`${card.title}-${numbersKey}`}
+                className="text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-500 ease-in-out animate-fade-in"
+              >
                 ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </CardTitle>
               <div className="absolute top-4 right-4">
