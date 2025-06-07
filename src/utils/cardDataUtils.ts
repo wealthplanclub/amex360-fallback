@@ -1,5 +1,5 @@
 
-import { parseTransactionData } from "@/utils/transactionParser";
+import { transactionFilterService } from "@/services/transactionFilterService"
 
 export interface CardData {
   name: string;
@@ -7,37 +7,9 @@ export interface CardData {
   amount: number;
 }
 
-export const filterTransactionsByTimeRange = (transactions: any[], selectedTimeRange: string) => {
-  if (transactions.length === 0) return transactions;
-  
-  const today = new Date();
-  let startDate: Date;
-  
-  if (selectedTimeRange === "ytd") {
-    startDate = new Date(today.getFullYear(), 0, 1);
-  } else if (selectedTimeRange === "90d") {
-    startDate = new Date(today);
-    startDate.setDate(startDate.getDate() - 90);
-  } else if (selectedTimeRange === "30d") {
-    startDate = new Date(today);
-    startDate.setDate(startDate.getDate() - 30);
-  } else if (selectedTimeRange === "7d") {
-    startDate = new Date(today);
-    startDate.setDate(startDate.getDate() - 7);
-  } else {
-    return transactions;
-  }
-  
-  const startDateString = startDate.toISOString().split('T')[0];
-  
-  return transactions.filter(transaction => {
-    return transaction.date >= startDateString;
-  });
-};
-
 export const processCardData = (staticTxnData: string, selectedTimeRange: string): CardData[] => {
-  const transactions = parseTransactionData(staticTxnData);
-  const filteredTransactions = filterTransactionsByTimeRange(transactions, selectedTimeRange);
+  // Use the centralized service to get filtered transactions
+  const filteredTransactions = transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
   
   const cardExpenses = filteredTransactions
     .filter(transaction => transaction.amount < 0)

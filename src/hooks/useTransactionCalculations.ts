@@ -1,59 +1,11 @@
 
 import * as React from "react"
-import { staticTxnData } from "@/data/staticData"
-import { parseTransactionData } from "@/utils/transactionParser"
+import { transactionFilterService } from "@/services/transactionFilterService"
 
 export const useTransactionCalculations = (selectedTimeRange: string) => {
-  // Filter transactions based on selected time range
+  // Get filtered transactions from the centralized service
   const filteredTransactions = React.useMemo(() => {
-    const transactions = parseTransactionData(staticTxnData);
-    
-    if (transactions.length === 0) return transactions;
-    
-    // Use today's date as the reference point instead of latest date from data
-    const today = new Date();
-    const todayString = today.toISOString().split('T')[0];
-    console.log("Today's date (reference point):", todayString);
-    console.log("Selected time range:", selectedTimeRange);
-    
-    let startDate: Date;
-    
-    if (selectedTimeRange === "ytd") {
-      // Year to date - start from January 1st of the current year
-      startDate = new Date(today.getFullYear(), 0, 1);
-    } else if (selectedTimeRange === "90d") {
-      // 90 days before today
-      startDate = new Date(today);
-      startDate.setDate(startDate.getDate() - 90);
-    } else if (selectedTimeRange === "30d") {
-      // 30 days before today
-      startDate = new Date(today);
-      startDate.setDate(startDate.getDate() - 30);
-    } else if (selectedTimeRange === "7d") {
-      // 7 days before today
-      startDate = new Date(today);
-      startDate.setDate(startDate.getDate() - 7);
-    } else {
-      return transactions;
-    }
-    
-    // Convert start date back to ISO string format for comparison
-    const startDateString = startDate.toISOString().split('T')[0];
-    console.log("Start date string for filtering:", startDateString);
-    console.log("Start date object:", startDate.toISOString());
-    console.log("Days between start and today:", Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
-    
-    const filtered = transactions.filter(transaction => {
-      const transactionDate = transaction.date;
-      const isIncluded = transactionDate >= startDateString;
-      return isIncluded;
-    });
-    
-    console.log("Total transactions:", transactions.length);
-    console.log("Filtered transactions:", filtered.length);
-    console.log("Date range:", startDateString, "to", todayString);
-    
-    return filtered;
+    return transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
   }, [selectedTimeRange]);
 
   // Calculate totals based on filtered transactions only

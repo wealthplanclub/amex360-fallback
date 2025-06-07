@@ -1,32 +1,11 @@
 
 import * as React from "react"
-import { staticTxnData } from "@/data/staticData"
-import { parseTransactionData } from "@/utils/transactionParser"
+import { transactionFilterService } from "@/services/transactionFilterService"
 
 export const useChartData = (timeRange: string) => {
-  // Process transaction data to get daily spending totals
+  // Get daily spending data from the centralized service
   const processedData = React.useMemo(() => {
-    const transactions = parseTransactionData(staticTxnData)
-    
-    // Group transactions by date and calculate daily spending
-    const dailySpending = transactions
-      .filter(transaction => transaction.amount < 0) // Only expenses
-      .reduce((acc, transaction) => {
-        const date = transaction.date // Date is already in YYYY-MM-DD format
-        if (!acc[date]) {
-          acc[date] = 0
-        }
-        acc[date] += Math.abs(transaction.amount)
-        return acc
-      }, {} as Record<string, number>)
-
-    // Convert to array and sort by date
-    return Object.entries(dailySpending)
-      .map(([date, totalSpend]) => ({
-        date,
-        totalSpend: Math.round(totalSpend * 100) / 100 // Round to 2 decimal places
-      }))
-      .sort((a, b) => a.date.localeCompare(b.date)) // Simple string comparison for ISO dates
+    return transactionFilterService.getDailySpendingData("ytd") // Get all YTD data first
   }, [])
 
   const filteredData = React.useMemo(() => {
