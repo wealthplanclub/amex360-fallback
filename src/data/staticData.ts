@@ -517,16 +517,12 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/16/2025	Twilio Inc San Francisco CA	-$391.02	Business Gold Card (-2008)	SuperPhone
 4/16/2025	Twilio Inc San Francisco CA	-$591.02	Business Gold Card (-2008)	SuperPhone
 4/16/2025	Twilio Inc San Francisco CA	-$450.26	Business Gold Card (-2008)	SuperPhone
-4/16/2025	Intuit *turbotax x-x-8848 CA	-$221.02	Business Green Rewards Card (-1009)	
 4/16/2025	Online Payment - Thank You	$2,329.84	Business Platinum Card (-2007)	
 4/16/2025	Uber One Https://help.uber.conl	-$5.68	Charles Schwab Platinum Card (-1000)	
 4/16/2025	Openai *chatgpt Subssan Francisco CA	-$21.78	Platinum Card (-1003)	
 4/16/2025	Intuit *turbotax x-x-8848 CA	-$221.02	Business Green Rewards Card (-2007)	
 4/15/2025	Twilio Inc San Francisco CA	-$20.85	Business Gold Card (-1000)	SuperPhone
 4/15/2025	Twilio Inc San Francisco CA	-$601.24	Business Gold Card (-2008)	SuperPhone
-4/15/2025	Paypal *miriamstoll x7733 De	-$1,025.00	Business Green Rewards Card (-1009)	
-4/15/2025	Paypal *miriamstoll x7733 De	-$875.00	Business Green Rewards Card (-1009)	
-4/15/2025	Online Payment - Thank You	$875.00	Business Green Rewards Card (-1009)	
 4/15/2025	Sprouts Farmers Markmesa AZ	-$37.79	Platinum Card (-1003)	
 4/15/2025	Online Payment - Thank You	$875.00	Business Green Rewards Card (-2007)	
 4/15/2025	Paypal *miriamstoll x7733 De	-$1,025.00	Business Green Rewards Card (-2007)	
