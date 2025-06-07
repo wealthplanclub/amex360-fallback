@@ -1,4 +1,5 @@
 
+
 import * as React from "react"
 import { X, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -126,7 +127,7 @@ export const Sidebar = React.forwardRef<
       >
         <div className="flex items-center justify-between p-4 border-b">
           <img 
-            src="/dls-logo-bluebox-solid.svg" 
+            src="https://i.imgur.com/9LhkmD4.png" 
             alt="DLS Logo" 
             className="h-8"
           />
