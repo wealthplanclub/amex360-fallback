@@ -29,12 +29,12 @@ export function RewardMetricsCards({
 
   const cardData = [
     {
-      title: "Total Bonus Awards",
+      title: "Bonus Awards",
       value: calculations.totalRewardPoints,
       badge: "+100%",
       icon: TrendingUp,
       footer: "Points earned",
-      description: `Total rewards ${getTimeRangeDescription(filters.selectedTimeRange)}`,
+      description: `Total bonus points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: false,
       showHover: true,
       cardType: "total-rewards"
@@ -55,7 +55,7 @@ export function RewardMetricsCards({
       badge: `${calculations.referralPercentage}%`,
       icon: UserPlus,
       footer: `${calculations.referralCount} total referrals`,
-      description: `Referral points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
+      description: `Referral bonus points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
       cardType: "referral-rewards"
     },
