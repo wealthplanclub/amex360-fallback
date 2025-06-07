@@ -1,21 +1,45 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+// Preload main app components in the background
+const preloadComponents = async () => {
+  try {
+    await Promise.all([
+      import("../components/SectionCards"),
+      import("../components/CardAccounts"),
+      import("../components/TransactionCard"),
+      import("../components/chart-area-interactive"),
+    ]);
+    console.log("Main app components preloaded");
+  } catch (error) {
+    console.log("Preloading failed, but components will load on demand");
+  }
+};
+
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPreloaded, setIsPreloaded] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Start preloading components immediately when Auth page loads
+    preloadComponents().then(() => {
+      setIsPreloaded(true);
+    });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Accept any credentials and redirect to home
     console.log("Auth attempt:", { email, password, isLogin });
+    console.log("Components preloaded:", isPreloaded);
     navigate("/");
   };
 
