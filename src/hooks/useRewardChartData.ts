@@ -1,4 +1,3 @@
-
 import { useMemo } from 'react'
 import { rewardFilterService } from '@/services/rewardFilterService'
 import { FilterState } from '@/hooks/useFilterState'
@@ -43,13 +42,10 @@ export function useRewardChartData(filters: FilterState) {
       a.date.localeCompare(b.date)
     )
     
-    // Format date labels for display
+    // Keep ISO date format for proper date handling
     return chartData.map((item: any) => ({
       ...item,
-      date: new Date(item.date).toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric'
-      })
+      date: item.date // Keep as ISO date string
     }))
   }, [filters])
 }
