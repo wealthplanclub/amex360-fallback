@@ -10,19 +10,19 @@ import {
 const chartConfig = {
   totalPoints: {
     label: "Total:",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(220, 70%, 50%)",
   },
   employeePoints: {
     label: "Employee:",
-    color: "hsl(142, 76%, 36%)", // Green
+    color: "hsl(120, 60%, 50%)", // Green
   },
   referralPoints: {
     label: "Referral:",
-    color: "hsl(221, 83%, 53%)", // Blue
+    color: "hsl(210, 100%, 60%)", // Blue
   },
   welcome: {
     label: "Welcome:",
-    color: "hsl(48, 96%, 53%)", // Yellow
+    color: "hsl(45, 100%, 60%)", // Yellow
   },
 } satisfies ChartConfig
 
@@ -40,18 +40,6 @@ export function RewardChart({ data }: RewardChartProps) {
   // Calculate the maximum value to set an optimal Y-axis domain
   const maxValue = Math.max(...data.map(d => d.totalPoints))
   const yAxisMax = maxValue > 0 ? Math.ceil(maxValue * 1.05) : 100
-
-  const formatDateForDisplay = (dateString: string) => {
-    try {
-      const date = new Date(dateString)
-      return date.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric'
-      })
-    } catch {
-      return dateString
-    }
-  }
 
   return (
     <ChartContainer
@@ -116,7 +104,7 @@ export function RewardChart({ data }: RewardChartProps) {
           axisLine={false}
           tickMargin={8}
           minTickGap={32}
-          tickFormatter={formatDateForDisplay}
+          tickFormatter={(value) => value}
         />
         <YAxis
           domain={[0, yAxisMax]}
@@ -154,7 +142,6 @@ export function RewardChart({ data }: RewardChartProps) {
                 return `${label} ${numValue.toLocaleString()} pts`;
               }}
               indicator="dot"
-              labelFormatter={(label) => formatDateForDisplay(String(label))}
             />
           }
         />
@@ -163,7 +150,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillWelcome)"
           stroke="var(--color-welcome)"
-          strokeWidth={0}
+          strokeWidth={1}
           stackId="a"
         />
         <Area
@@ -171,7 +158,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillReferral)"
           stroke="var(--color-referralPoints)"
-          strokeWidth={0}
+          strokeWidth={1}
           stackId="a"
         />
         <Area
@@ -179,7 +166,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillEmployee)"
           stroke="var(--color-employeePoints)"
-          strokeWidth={0}
+          strokeWidth={1}
           stackId="a"
         />
         <Area
@@ -187,7 +174,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillTotal)"
           stroke="var(--color-totalPoints)"
-          strokeWidth={0}
+          strokeWidth={1}
         />
       </AreaChart>
     </ChartContainer>
