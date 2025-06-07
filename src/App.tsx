@@ -1,4 +1,5 @@
 
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -64,9 +65,9 @@ const DashboardWrapper = () => {
     return <DashboardLoader onLoadingComplete={handleLoadingComplete} />;
   }
 
-  // Show dashboard loading fallback briefly, then show dashboard
+  // Show dashboard without any loading fallback text
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading dashboard...</div>}>
+    <Suspense fallback={null}>
       {startDashboardLoad && <Dashboard />}
     </Suspense>
   );
@@ -89,3 +90,4 @@ const App = () => (
 );
 
 export default App;
+
