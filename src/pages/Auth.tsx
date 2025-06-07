@@ -26,7 +26,7 @@ const Auth = () => {
     >
       <Card className="w-full max-w-md bg-gradient-to-b from-white to-gray-100">
         <CardHeader className="text-center">
-          <div className="mb-4">
+          <div className="mb-4 mt-6">
             <img 
               src="https://i.imgur.com/1fFddP4.png" 
               alt="Amex Logo" 
