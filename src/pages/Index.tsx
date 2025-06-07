@@ -41,7 +41,7 @@ const Index = () => {
         
         {/* Section Cards */}
         <div className="mt-8">
-          <SectionCards />
+          <SectionCards selectedDate={selectedDate} />
         </div>
 
         {/* Daily Spending Chart */}

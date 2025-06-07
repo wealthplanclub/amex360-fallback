@@ -1,3 +1,4 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -13,7 +14,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export function SectionCards() {
+interface SectionCardsProps {
+  selectedDate?: string;
+}
+
+export function SectionCards({ selectedDate }: SectionCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
 
   React.useEffect(() => {
@@ -25,8 +30,12 @@ export function SectionCards() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Parse the CSV data and calculate totals
-  const transactions = parseTransactionData(staticTxnData);
+  // Parse the CSV data and filter by date if selected
+  const allTransactions = parseTransactionData(staticTxnData);
+  const transactions = selectedDate 
+    ? allTransactions.filter(transaction => transaction.date === selectedDate)
+    : allTransactions;
+
   const totalExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
@@ -38,7 +47,7 @@ export function SectionCards() {
   // Calculate payments to expenses ratio
   const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
-  // Calculate top card spend
+  // Calculate top card spend for the filtered data
   const cardExpenses = transactions
     .filter(transaction => transaction.amount < 0)
     .reduce((acc, transaction) => {
@@ -50,10 +59,10 @@ export function SectionCards() {
       return acc;
     }, {} as Record<string, number>);
 
-  const topCardSpend = Math.max(...Object.values(cardExpenses));
-  const lowestCardSpend = Math.min(...Object.values(cardExpenses));
-  const topCardPercentage = ((topCardSpend / totalExpenses) * 100).toFixed(1);
-  const lowestCardPercentage = ((lowestCardSpend / totalExpenses) * 100).toFixed(1);
+  const topCardSpend = Object.keys(cardExpenses).length > 0 ? Math.max(...Object.values(cardExpenses)) : 0;
+  const lowestCardSpend = Object.keys(cardExpenses).length > 0 ? Math.min(...Object.values(cardExpenses)) : 0;
+  const topCardPercentage = totalExpenses > 0 ? ((topCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
+  const lowestCardPercentage = totalExpenses > 0 ? ((lowestCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
 
   // Find the account names for highest and lowest spending
   const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
@@ -63,40 +72,44 @@ export function SectionCards() {
   const topCardDisplayName = topCardAccount.replace(/\bcard\b/gi, '').trim();
   const lowestCardDisplayName = lowestCardAccount.replace(/\bcard\b/gi, '').trim();
 
+  // Update labels based on whether we're showing filtered data
+  const timeLabel = selectedDate ? "for selected date" : "YTD";
+  const trendLabel = selectedDate ? "For this date" : "Trending up this month";
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       {[
         {
           title: "Total Expenses",
           value: totalExpenses,
-          badge: "+100%",
+          badge: selectedDate ? "Daily" : "+100%",
           icon: TrendingUp,
-          footer: "Trending up this month",
-          description: "Total spend YTD"
+          footer: trendLabel,
+          description: `Total spend ${timeLabel}`
         },
         {
           title: "Total Payments/Credits",
           value: totalCredits,
           badge: `${paymentsToExpensesRatio}%`,
           icon: TrendingUp,
-          footer: "Steady incoming payments",
-          description: "Payments and credits applied"
+          footer: selectedDate ? "Credits for date" : "Steady incoming payments",
+          description: `Payments and credits applied ${timeLabel}`
         },
         {
           title: "Top Card Spend",
           value: topCardSpend,
           badge: `${topCardPercentage}%`,
           icon: TrendingUp,
-          footer: topCardDisplayName,
-          description: "Account with most expenses"
+          footer: topCardDisplayName || "No transactions",
+          description: `Account with most expenses ${timeLabel}`
         },
         {
           title: "Lowest Card Spend",
           value: lowestCardSpend,
           badge: `${lowestCardPercentage}%`,
           icon: TrendingDown,
-          footer: lowestCardDisplayName,
-          description: "Account with least expenses"
+          footer: lowestCardDisplayName || "No transactions",
+          description: `Account with least expenses ${timeLabel}`
         }
       ].map((card, index) => {
         const IconComponent = card.icon;
