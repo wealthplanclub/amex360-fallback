@@ -40,7 +40,7 @@ const Index = () => {
       
       <div className="max-w-7xl mx-auto px-6">
         {/* Header with Logo */}
-        <div className="flex justify-center items-center mt-4">
+        <div className="flex justify-center items-center">
           <img 
             src="https://i.imgur.com/1fFddP4.png" 
             alt="Amex Logo" 
