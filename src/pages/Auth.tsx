@@ -27,7 +27,7 @@ const Auth = () => {
         backgroundRepeat: 'repeat'
       }}
     >
-      <Card className="bg-gradient-to-b from-white to-gray-100">
+      <Card className="bg-gradient-to-b from-white to-gray-100 animate-fade-in">
         <CardHeader className="text-center px-12">
           <div className="mb-4 mt-6">
             <img 
