@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -114,7 +115,7 @@ export function ChartAreaInteractive() {
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="space-y-1">
-          <CardTitle className="text-xl font-semibold">Daily Spending</CardTitle>
+          <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
           <CardDescription>Daily spending trends and patterns</CardDescription>
         </div>
         
