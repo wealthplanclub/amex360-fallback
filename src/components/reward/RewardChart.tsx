@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -139,10 +138,7 @@ export function RewardChart({ data }: RewardChartProps) {
                   }
                 }
                 
-                return [
-                  `${label} ${numValue.toLocaleString()} pts`,
-                  ""
-                ];
+                return `${label} ${numValue.toLocaleString()} pts`;
               }}
               indicator="dot"
             />
