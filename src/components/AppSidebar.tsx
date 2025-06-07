@@ -1,4 +1,3 @@
-
 import React from "react"
 import { ChartNoAxesColumn, Award, CreditCard, Repeat, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -57,7 +56,7 @@ export function AppSidebar() {
       <SidebarContent>
         {/* Navigation Menu */}
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel>MAIN</SidebarGroupLabel>
           <SidebarMenu>
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.title}>
