@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import {
   ColumnDef,
@@ -47,13 +46,15 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
         )
       },
       cell: ({ row }) => {
-        const date = new Date(row.getValue("date"));
+        const dateString = row.getValue("date") as string;
+        // Parse ISO date string directly without timezone conversion
+        const [year, month, day] = dateString.split('-').map(Number);
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
         return (
           <div className="text-sm text-center">
-            {date.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric"
-            })}
+            {monthNames[month - 1]} {day}
           </div>
         );
       },
