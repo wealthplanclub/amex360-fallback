@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -126,6 +125,7 @@ export function TransactionCard() {
           </div>
         );
       },
+      size: 80,
     },
     {
       accessorKey: "description",
