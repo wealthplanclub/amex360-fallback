@@ -29,13 +29,24 @@ export function RewardChartDisplay({ filters, onTimeRangeChange }: RewardChartDi
     }
   }
 
+  const getAverageDailyRewards = () => {
+    if (chartData.length === 0) return 0
+    
+    const totalRewards = chartData.reduce((sum, day) => sum + day.totalPoints, 0)
+    const daysWithData = chartData.filter(day => day.totalPoints > 0).length
+    
+    if (daysWithData === 0) return 0
+    
+    return Math.round(totalRewards / daysWithData)
+  }
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div className="space-y-1">
           <CardTitle className="text-xl font-semibold">Rewards Over Time</CardTitle>
           <CardDescription>
-            Showing reward points earned {getTimeRangeLabel()}
+            Average daily bonus awards {getTimeRangeLabel()}: {getAverageDailyRewards().toLocaleString()} pts
           </CardDescription>
         </div>
         
