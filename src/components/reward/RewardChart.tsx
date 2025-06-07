@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -101,25 +100,13 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              formatter={(value, name, item) => {
-                // Define the order we want
-                const order = ['totalPoints', 'employeePoints', 'referralPoints'];
-                
-                // Get all payload items and sort them by our desired order
-                const sortedPayload = item.payload ? 
-                  order
-                    .map(key => ({
-                      name: key,
-                      value: item.payload[key],
-                      config: chartConfig[key as keyof typeof chartConfig]
-                    }))
-                    .filter(item => item.value !== undefined) : [];
-
-                // Return all items formatted
-                return sortedPayload.map(payloadItem => [
-                  `${payloadItem.config?.label || payloadItem.name} ${Number(payloadItem.value).toLocaleString()} pts`,
+              formatter={(value, name) => {
+                const config = chartConfig[name as keyof typeof chartConfig];
+                const label = config?.label || name;
+                return [
+                  `${label} ${Number(value).toLocaleString()} pts`,
                   ""
-                ]);
+                ];
               }}
               indicator="dot"
             />
