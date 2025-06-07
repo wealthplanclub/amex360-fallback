@@ -99,11 +99,11 @@ export function RewardCardList({ filters, onCardClick }: RewardCardListProps) {
     }
     
     switch (filters.selectedTimeRange) {
-      case "ytd": return "year to date"
-      case "90d": return "last 90 days"
-      case "30d": return "last 30 days"
-      case "7d": return "last 7 days"
-      default: return "year to date"
+      case "ytd": return "(YTD)"
+      case "90d": return "(90d)"
+      case "30d": return "(30d)"
+      case "7d": return "(7d)"
+      default: return "(YTD)"
     }
   }
 
