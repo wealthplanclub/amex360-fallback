@@ -44,6 +44,10 @@ const Rewards = () => {
     updateFilter('selectedTimeRange', 'ytd');
   };
 
+  const clearCardFilter = () => {
+    updateFilter('selectedCard', 'all');
+  };
+
   const handleTimeRangeChange = (timeRange: string) => {
     updateFilter('selectedTimeRange', timeRange);
   };
@@ -104,6 +108,7 @@ const Rewards = () => {
                 onClearTimeRangeFilter={clearTimeRangeFilter}
                 onDropdownChange={handleTransactionDropdownChange}
                 onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+                onClearCardFilter={clearCardFilter}
               />
             </div>
             <div className="lg:col-span-1">

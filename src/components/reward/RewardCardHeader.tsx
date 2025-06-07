@@ -3,6 +3,7 @@ import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DateFilterIndicator } from "../transaction/DateFilterIndicator"
 import { TimeRangeFilterIndicator } from "../transaction/TimeRangeFilterIndicator"
 import { FilterState } from "@/hooks/useFilterState"
+import { X } from "lucide-react"
 
 interface RewardCardHeaderProps {
   selectedDate?: string
@@ -10,6 +11,7 @@ interface RewardCardHeaderProps {
   selectedTimeRange?: string
   onClearTimeRangeFilter?: () => void
   filters: FilterState
+  onClearCardFilter?: () => void
 }
 
 export function RewardCardHeader({
@@ -17,84 +19,70 @@ export function RewardCardHeader({
   onClearDateFilter,
   selectedTimeRange,
   onClearTimeRangeFilter,
-  filters
+  filters,
+  onClearCardFilter
 }: RewardCardHeaderProps) {
   const hasActiveFilter = selectedDate || (selectedTimeRange && selectedTimeRange !== "ytd") || (filters.selectedCard && filters.selectedCard !== "all")
 
-  const getTimeRangeLabel = (range: string) => {
-    switch (range) {
-      case "ytd": return "YTD"
-      case "90d": return "90d"
-      case "30d": return "30d"
-      case "7d": return "7d"
-      default: return range.toUpperCase()
+  // If there's a selected date, use the DateFilterIndicator component
+  if (selectedDate && onClearDateFilter) {
+    return (
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl font-semibold">Rewards History</CardTitle>
+        <DateFilterIndicator 
+          selectedDate={selectedDate}
+          onClear={onClearDateFilter}
+        />
+      </CardHeader>
+    )
+  }
+
+  // If there's a time range filter (not YTD), use the TimeRangeFilterIndicator
+  if (selectedTimeRange && selectedTimeRange !== "ytd" && onClearTimeRangeFilter) {
+    return (
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl font-semibold">Rewards History</CardTitle>
+        <TimeRangeFilterIndicator 
+          selectedTimeRange={selectedTimeRange}
+          onClear={onClearTimeRangeFilter}
+        />
+      </CardHeader>
+    )
+  }
+
+  // If there's a card filter, show card filter indicator
+  if (filters.selectedCard && filters.selectedCard !== "all" && onClearCardFilter) {
+    const getCardDisplayName = (cardName: string) => {
+      if (cardName === 'BUSINESS_GREEN_COMBINED') return 'Business Green'
+      return cardName.replace(/\b(card|Rewards)\b/gi, '').trim()
     }
-  }
 
-  const getCardDisplayName = (cardName: string) => {
-    if (cardName === 'BUSINESS_GREEN_COMBINED') return 'Business Green'
-    return cardName.replace(/\b(card|Rewards)\b/gi, '').trim()
-  }
-
-  const formatDate = (dateString: string) => {
-    const [year, month, day] = dateString.split('-').map(Number);
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${monthNames[month - 1]} ${day}, ${year}`;
-  }
-
-  const getCombinedFilterLabel = () => {
-    const parts = []
-    
-    // Add date or time range
-    if (selectedDate) {
-      parts.push(formatDate(selectedDate))
-    } else if (selectedTimeRange && selectedTimeRange !== "ytd") {
-      parts.push(getTimeRangeLabel(selectedTimeRange))
-    } else {
-      parts.push("YTD")
-    }
-    
-    // Add card filter if present and not "all"
-    if (filters.selectedCard && filters.selectedCard !== "all") {
-      parts.push(getCardDisplayName(filters.selectedCard))
-    }
-    
-    return parts.join(", ")
-  }
-
-  const handleClearAllFilters = () => {
-    if (selectedDate && onClearDateFilter) {
-      onClearDateFilter()
-    } else if (selectedTimeRange && selectedTimeRange !== "ytd" && onClearTimeRangeFilter) {
-      onClearTimeRangeFilter()
-    }
-  }
-
-  return (
-    <CardHeader className="pb-2">
-      <CardTitle className="text-xl font-semibold">Rewards History</CardTitle>
-      {!hasActiveFilter && (
-        <CardDescription className="mb-0">
-          Rewards activity (YTD)
-        </CardDescription>
-      )}
-      {hasActiveFilter && (
+    return (
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl font-semibold">Rewards History</CardTitle>
         <div className="mt-2">
           <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-            Filtered by: {getCombinedFilterLabel()}
+            Filtered by: {getCardDisplayName(filters.selectedCard)}
             <button 
-              onClick={handleClearAllFilters}
+              onClick={onClearCardFilter}
               className="hover:bg-gray-200 rounded p-0.5"
-              title="Clear filters"
+              title="Clear card filter"
             >
-              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="h-3 w-3" />
             </button>
           </span>
         </div>
-      )}
+      </CardHeader>
+    )
+  }
+
+  // Default state with no active filters
+  return (
+    <CardHeader className="pb-2">
+      <CardTitle className="text-xl font-semibold">Rewards History</CardTitle>
+      <CardDescription className="mb-0">
+        Rewards activity (YTD)
+      </CardDescription>
     </CardHeader>
   )
 }

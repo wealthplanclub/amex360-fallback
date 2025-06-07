@@ -20,6 +20,7 @@ interface RewardCardProps {
   onClearTimeRangeFilter?: () => void;
   onDropdownChange?: (cardSelection: string) => void;
   onGlobalFilterChange?: (value: string) => void;
+  onClearCardFilter?: () => void;
 }
 
 export function RewardCard({ 
@@ -27,7 +28,8 @@ export function RewardCard({
   onClearDateFilter,
   onClearTimeRangeFilter,
   onDropdownChange,
-  onGlobalFilterChange
+  onGlobalFilterChange,
+  onClearCardFilter
 }: RewardCardProps) {
   // Get unique credit cards from the service
   const creditCards = React.useMemo(() => {
@@ -51,6 +53,7 @@ export function RewardCard({
         selectedTimeRange={filters.selectedTimeRange}
         onClearTimeRangeFilter={onClearTimeRangeFilter}
         filters={filters}
+        onClearCardFilter={onClearCardFilter}
       />
       <CardContent>
         <div className="w-full">
