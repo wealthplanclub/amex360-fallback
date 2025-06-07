@@ -1,4 +1,5 @@
 
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -150,7 +151,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillWelcome)"
           stroke="var(--color-welcome)"
-          strokeWidth={1}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -158,7 +159,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillReferral)"
           stroke="var(--color-referralPoints)"
-          strokeWidth={1}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -166,7 +167,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillEmployee)"
           stroke="var(--color-employeePoints)"
-          strokeWidth={1}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -174,9 +175,10 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillTotal)"
           stroke="var(--color-totalPoints)"
-          strokeWidth={1}
+          strokeWidth={0}
         />
       </AreaChart>
     </ChartContainer>
   )
 }
+
