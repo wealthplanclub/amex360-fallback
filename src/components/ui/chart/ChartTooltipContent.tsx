@@ -85,32 +85,16 @@ export const ChartTooltipContent = React.forwardRef<
         const key = `${nameKey || item.name || item.dataKey || "value"}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
         
-        // Get the raw color value from config, avoiding CSS variables
+        // Use simple hex colors based on data key
         let indicatorColor = color
-        if (!indicatorColor && itemConfig?.color) {
-          // Use the raw color value directly
-          indicatorColor = itemConfig.color
-        } else if (!indicatorColor && config[key]?.color) {
-          // Use the raw color value directly
-          indicatorColor = config[key].color
-        }
-
-        // If we still have a CSS variable, extract the fallback color or use a default
-        if (!indicatorColor || indicatorColor.startsWith('var(')) {
-          // Use stroke color from the item as fallback, removing 'var(' prefix if present
-          const strokeColor = item.stroke
-          if (strokeColor && !strokeColor.startsWith('var(')) {
-            indicatorColor = strokeColor
-          } else {
-            // Fallback colors based on data key
-            const fallbackColors = {
-              'totalPoints': 'hsl(var(--chart-1))',
-              'employeePoints': 'hsl(142, 76%, 36%)',
-              'referralPoints': 'hsl(221, 83%, 53%)',
-              'welcome': 'hsl(48, 96%, 53%)'
-            }
-            indicatorColor = fallbackColors[key as keyof typeof fallbackColors] || '#8884d8'
+        if (!indicatorColor) {
+          const colorMap = {
+            'totalPoints': '#8884d8',
+            'employeePoints': '#22c55e',
+            'referralPoints': '#3b82f6',
+            'welcome': '#eab308'
           }
+          indicatorColor = colorMap[key as keyof typeof colorMap] || '#8884d8'
         }
 
         if (formatter && item?.value !== undefined && item.name) {
