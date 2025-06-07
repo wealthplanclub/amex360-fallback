@@ -98,7 +98,7 @@ export function StatCard({
           <div 
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.4) 70%, rgba(255, 255, 255, 0.1) 100%)'
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.6) 70%, rgba(255, 255, 255, 0.3) 100%)'
             }}
           />
         </>
