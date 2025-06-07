@@ -1,4 +1,3 @@
-
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -116,15 +115,9 @@ const Index = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <SidebarInset 
-          className="flex-1"
-          style={{
-            backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-            backgroundRepeat: 'repeat'
-          }}
-        >
-          {/* Header with Reset and Logout buttons */}
-          <div className="flex items-center gap-2 p-4 border-b">
+        <SidebarInset className="flex-1">
+          {/* Header with transparent background */}
+          <div className="flex items-center gap-2 p-4 bg-transparent">
             <SidebarTrigger />
             <AppHeader />
           </div>
