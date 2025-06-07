@@ -1,5 +1,3 @@
-
-
 import * as React from "react"
 import { X, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -129,7 +127,7 @@ export const Sidebar = React.forwardRef<
           <img 
             src="https://i.imgur.com/9LhkmD4.png" 
             alt="DLS Logo" 
-            className="h-8"
+            className="h-8 w-8"
           />
           <button
             onClick={close}
