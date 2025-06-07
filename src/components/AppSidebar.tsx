@@ -1,5 +1,6 @@
+
 import React from "react"
-import { ChartNoAxesColumn, Award, CreditCard, Settings, LogOut } from "lucide-react"
+import { ChartNoAxesColumn, Award, CreditCard, Repeat, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import {
   Sidebar,
@@ -30,7 +31,7 @@ const menuItems = [
   },
   {
     title: "CreditMax Swaps",
-    icon: Settings,
+    icon: Repeat,
     url: "#",
   },
 ]
