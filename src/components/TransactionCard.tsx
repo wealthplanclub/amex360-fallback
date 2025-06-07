@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -26,6 +25,7 @@ interface TransactionCardProps {
   onClearStatCardFilter?: () => void;
   selectedTimeRange?: string;
   onClearTimeRangeFilter?: () => void;
+  onCardSelectionChange?: (card: string) => void;
 }
 
 export function TransactionCard({ 
@@ -35,7 +35,8 @@ export function TransactionCard({
   statCardFilter,
   onClearStatCardFilter,
   selectedTimeRange,
-  onClearTimeRangeFilter
+  onClearTimeRangeFilter,
+  onCardSelectionChange
 }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -71,6 +72,17 @@ export function TransactionCard({
     }
   }, [selectedCardFromGrid, statCardFilter]);
 
+  // Notify parent component when card selection changes
+  React.useEffect(() => {
+    if (onCardSelectionChange) {
+      onCardSelectionChange(selectedCard);
+    }
+  }, [selectedCard, onCardSelectionChange]);
+
+  const handleCardChange = (card: string) => {
+    setSelectedCard(card);
+  };
+
   // Filter transactions using the custom hook
   const transactions = useTransactionFilters({
     allTransactions,
@@ -97,7 +109,7 @@ export function TransactionCard({
             onGlobalFilterChange={setGlobalFilter}
             selectedCard={selectedCard}
             creditCards={creditCards}
-            onCardChange={setSelectedCard}
+            onCardChange={handleCardChange}
             statCardFilter={statCardFilter}
           />
           <TransactionTable

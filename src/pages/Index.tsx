@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -16,6 +15,7 @@ const Index = () => {
     timeRange: string;
     topCardAccount?: string;
   } | null>(null);
+  const [selectedCardFromDropdown, setSelectedCardFromDropdown] = useState<string>("all");
   
   const isMobile = useIsMobile();
 
@@ -55,6 +55,10 @@ const Index = () => {
 
   const clearStatCardFilter = () => {
     setStatCardFilter(null);
+  };
+
+  const handleCardSelectionFromDropdown = (card: string) => {
+    setSelectedCardFromDropdown(card);
   };
 
   // Add effect to log time range changes
@@ -113,12 +117,13 @@ const Index = () => {
                 onClearStatCardFilter={clearStatCardFilter}
                 selectedTimeRange={selectedTimeRange}
                 onClearTimeRangeFilter={clearTimeRangeFilter}
+                onCardSelectionChange={handleCardSelectionFromDropdown}
               />
             </div>
             <div className="lg:col-span-1">
               <CardAccounts 
                 onCardClick={handleCardClick} 
-                selectedCard={selectedCard} 
+                selectedCard={selectedCardFromDropdown} 
                 selectedTimeRange={selectedTimeRange}
               />
             </div>
