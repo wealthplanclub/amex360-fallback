@@ -8,15 +8,15 @@ import {
 
 const chartConfig = {
   totalPoints: {
-    label: "Total Points",
+    label: "Total points:",
     color: "hsl(var(--chart-1))",
   },
   employeePoints: {
-    label: "Employee Card Points",
+    label: "Employee:",
     color: "hsl(var(--chart-2))",
   },
   referralPoints: {
-    label: "Referral Points",
+    label: "Referral:",
     color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig
@@ -104,8 +104,8 @@ export function RewardChart({ data }: RewardChartProps) {
                 const config = chartConfig[name as keyof typeof chartConfig];
                 const label = config?.label || name;
                 return [
-                  `${Number(value).toLocaleString()} pts`,
-                  label
+                  `${label} ${Number(value).toLocaleString()} pts`,
+                  ""
                 ];
               }}
               indicator="dot"
