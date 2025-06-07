@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -49,22 +50,27 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
 };
 
 const App = () => {
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(() => {
+    // Check if animation has been shown before in this session
+    return sessionStorage.getItem('lottieShown') === 'true';
+  });
   const [dashboardReady, setDashboardReady] = useState(false);
 
   const handleLoadingComplete = () => {
     setAnimationComplete(true);
+    // Mark animation as shown in session storage
+    sessionStorage.setItem('lottieShown', 'true');
   };
 
-  // Start loading dashboard when animation starts
+  // Start loading dashboard when animation starts or if already completed
   useEffect(() => {
-    if (!animationComplete) {
+    if (!dashboardReady) {
       // Preload the dashboard component
       import("./pages/Index").then(() => {
         setDashboardReady(true);
       });
     }
-  }, [animationComplete]);
+  }, [dashboardReady]);
 
   return (
     <QueryClientProvider client={queryClient}>
