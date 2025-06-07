@@ -1,3 +1,4 @@
+
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -33,14 +34,27 @@ const Index = () => {
         lowestCardFilter: undefined
       });
     } else if (cardType === "credits") {
-      // Add credit filter to existing filters
-      updateFilter('creditFilter', true);
+      // Clear any previous stat card filters and add credit filter
+      updateMultipleFilters({
+        expenseFilter: undefined,
+        creditFilter: true,
+        topCardFilter: undefined,
+        lowestCardFilter: undefined
+      });
     } else if (cardType === "top-card" && topCardAccount) {
-      // Add top card filter to existing filters
-      updateFilter('topCardFilter', topCardAccount);
+      updateMultipleFilters({
+        expenseFilter: undefined,
+        creditFilter: undefined,
+        topCardFilter: topCardAccount,
+        lowestCardFilter: undefined
+      });
     } else if (cardType === "lowest-card" && topCardAccount) {
-      // Add lowest card filter to existing filters
-      updateFilter('lowestCardFilter', topCardAccount);
+      updateMultipleFilters({
+        expenseFilter: undefined,
+        creditFilter: undefined,
+        topCardFilter: undefined,
+        lowestCardFilter: topCardAccount
+      });
     }
   };
 

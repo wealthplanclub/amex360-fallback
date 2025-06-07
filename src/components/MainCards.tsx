@@ -44,7 +44,7 @@ export function MainCards({ selectedTimeRange, onStatCardClick }: MainCardsProps
           index={index}
           isVisible={isVisible}
           numbersKey={numbersKey}
-          clickable={true} // Make all cards clickable
+          clickable={index === 0 || index === 1} // Make first two cards clickable
           cardType={card.cardType}
           topCardAccount={card.topCardAccount}
           onClick={onStatCardClick}
