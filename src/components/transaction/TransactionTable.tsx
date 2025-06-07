@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import {
   ColumnDef,
@@ -163,6 +162,8 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
     table.setPageSize(10) // Reset to 10 rows per page
   }
 
+  const filteredRowCount = table.getFilteredRowModel().rows.length
+
   const tableContent = (
     <Table>
       <TableHeader>
@@ -225,8 +226,8 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
       <div className="flex items-center justify-between space-x-2 py-4">
         <div className="text-sm text-muted-foreground">
           {showAll 
-            ? `Showing all ${table.getFilteredRowModel().rows.length} results`
-            : `Showing ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to ${Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of ${table.getFilteredRowModel().rows.length} results`
+            ? `Showing all ${filteredRowCount} results`
+            : `Showing ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to ${Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, filteredRowCount)} of ${filteredRowCount} results`
           }
         </div>
         <div className="space-x-2">
@@ -256,13 +257,15 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
               >
                 Next
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleShowAll}
-              >
-                All
-              </Button>
+              {filteredRowCount > 10 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleShowAll}
+                >
+                  All
+                </Button>
+              )}
             </>
           )}
         </div>
