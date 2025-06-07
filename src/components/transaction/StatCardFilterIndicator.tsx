@@ -1,14 +1,14 @@
-
 import { X } from "lucide-react"
 
 interface StatCardFilterIndicatorProps {
   cardType: string
   timeRange: string
   topCardAccount?: string
+  lowestCardAccount?: string
   onClear: () => void
 }
 
-export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, onClear }: StatCardFilterIndicatorProps) {
+export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, lowestCardAccount, onClear }: StatCardFilterIndicatorProps) {
   const getTimeRangeLabel = (range: string) => {
     switch (range) {
       case "ytd": return "YTD"
@@ -24,7 +24,7 @@ export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, o
       case "expenses": return "Expenses"
       case "credits": return "Credits"
       case "top-card": return "Top card"
-      case "lowest-card": return "Lowest Card"
+      case "lowest-card": return "Lowest card"
       default: return type
     }
   }
@@ -32,6 +32,9 @@ export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, o
   const getCardName = () => {
     if (cardType === "top-card" && topCardAccount) {
       return topCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
+    }
+    if (cardType === "lowest-card" && lowestCardAccount) {
+      return lowestCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
     }
     return "All cards"
   }

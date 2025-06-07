@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -14,6 +13,7 @@ const Index = () => {
     cardType: string;
     timeRange: string;
     topCardAccount?: string;
+    lowestCardAccount?: string;
   } | null>(null);
 
   const handleCardClick = (cardName: string) => {
@@ -34,9 +34,9 @@ const Index = () => {
     setSelectedTimeRange(timeRange);
   };
 
-  const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string) => {
-    console.log("Stat card clicked:", cardType, timeRange, topCardAccount);
-    setStatCardFilter({ cardType, timeRange, topCardAccount });
+  const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string, lowestCardAccount?: string) => {
+    console.log("Stat card clicked:", cardType, timeRange, topCardAccount, lowestCardAccount);
+    setStatCardFilter({ cardType, timeRange, topCardAccount, lowestCardAccount });
     // Reset other filters when stat card is clicked
     setSelectedCard("all");
     setSelectedDate("");

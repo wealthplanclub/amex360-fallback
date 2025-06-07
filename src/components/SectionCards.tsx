@@ -15,7 +15,7 @@ import {
 
 interface SectionCardsProps {
   selectedTimeRange: string;
-  onStatCardClick?: (cardType: string, timeRange: string, topCardAccount?: string) => void;
+  onStatCardClick?: (cardType: string, timeRange: string, topCardAccount?: string, lowestCardAccount?: string) => void;
 }
 
 export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCardsProps) {
@@ -135,7 +135,8 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       lowestCardSpend,
       topCardDisplayName,
       lowestCardDisplayName,
-      topCardAccount
+      topCardAccount,
+      lowestCardAccount
     });
 
     return {
@@ -148,7 +149,8 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       lowestCardPercentage,
       topCardDisplayName,
       lowestCardDisplayName,
-      topCardAccount
+      topCardAccount,
+      lowestCardAccount
     };
   }, [filteredTransactions]);
 
@@ -200,14 +202,15 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       icon: TrendingDown,
       footer: calculations.lowestCardDisplayName,
       description: `Account with least expenses ${getTimeRangeDescription()}`,
-      clickable: false,
-      cardType: "lowest-card"
+      clickable: true,
+      cardType: "lowest-card",
+      lowestCardAccount: calculations.lowestCardAccount
     }
   ];
 
-  const handleCardClick = (cardType: string, topCardAccount?: string) => {
+  const handleCardClick = (cardType: string, topCardAccount?: string, lowestCardAccount?: string) => {
     if (onStatCardClick) {
-      onStatCardClick(cardType, selectedTimeRange, topCardAccount);
+      onStatCardClick(cardType, selectedTimeRange, topCardAccount, lowestCardAccount);
     }
   };
 
@@ -226,7 +229,7 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
             style={{
               transitionDelay: `${index * 150}ms`
             }}
-            onClick={card.clickable ? () => handleCardClick(card.cardType, card.topCardAccount) : undefined}
+            onClick={card.clickable ? () => handleCardClick(card.cardType, card.topCardAccount, card.lowestCardAccount) : undefined}
           >
             <CardHeader className="pb-6">
               <CardDescription>{card.title}</CardDescription>
