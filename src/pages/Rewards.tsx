@@ -1,3 +1,4 @@
+
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -81,9 +82,12 @@ const Rewards = () => {
       scrollToTable();
       updateFilter('globalFilter', 'employee card');
     } else if (cardType === "referral-rewards") {
-      // Scroll to table and add referral filter
+      // Scroll to table, clear card filter, and add referral description filter
       scrollToTable();
-      updateFilter('globalFilter', 'referral');
+      updateMultipleFilters({
+        globalFilter: 'referral',
+        selectedCard: 'all'
+      });
     } else if (cardType === "top-card") {
       // Scroll to table, clear description filter, and add top card selection
       scrollToTable();
