@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -34,9 +35,6 @@ const Auth = () => {
               style={{ width: '276px' }}
             />
           </div>
-          <CardTitle className="text-2xl font-semibold">
-            {isLogin ? "Sign In" : "Sign Up"}
-          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,3 +80,4 @@ const Auth = () => {
 };
 
 export default Auth;
+
