@@ -10,10 +10,14 @@ export function useRewardCalculations(filters: FilterState) {
     // Calculate total reward points
     const totalRewardPoints = filteredRewards.reduce((sum, reward) => sum + reward.points, 0)
     
-    // Calculate employee card rewards
+    // Calculate employee card rewards and count
     const employeeCardRewards = filteredRewards
       .filter(reward => reward.reward_description.toLowerCase().includes('employee card'))
       .reduce((sum, reward) => sum + reward.points, 0)
+    
+    const employeeCardCount = filteredRewards
+      .filter(reward => reward.reward_description.toLowerCase().includes('employee card'))
+      .length
     
     // Calculate referral rewards
     const referralRewards = filteredRewards
@@ -44,6 +48,7 @@ export function useRewardCalculations(filters: FilterState) {
     return {
       totalRewardPoints,
       employeeCardRewards,
+      employeeCardCount,
       referralRewards,
       topCardRewards: topCardEntry.points,
       topCardDisplayName,
