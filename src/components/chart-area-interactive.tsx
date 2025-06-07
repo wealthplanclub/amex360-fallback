@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -63,8 +62,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
     const dailySpending = transactions
       .filter(transaction => transaction.amount < 0) // Only expenses
       .reduce((acc, transaction) => {
-        // Since dates are already in ISO format, use them directly
-        const date = transaction.date
+        const date = new Date(transaction.date).toISOString().split('T')[0]
         if (!acc[date]) {
           acc[date] = 0
         }
@@ -120,7 +118,6 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
   const handleChartClick = (data: any) => {
     if (data && data.activePayload && data.activePayload[0] && onDateClick) {
       const clickedDate = data.activePayload[0].payload.date;
-      console.log("Chart clicked, date:", clickedDate);
       onDateClick(clickedDate);
     }
   };

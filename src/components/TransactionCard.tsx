@@ -79,12 +79,14 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     
     // Filter by date if selected
     if (selectedDate) {
-      console.log("Target date for filtering:", selectedDate);
+      // Convert selectedDate to the same format as transaction dates
+      const targetDate = new Date(selectedDate).toISOString().split('T')[0];
+      console.log("Target date for filtering:", targetDate);
       
-      // Since dates are now in ISO format, we can compare them directly
       filtered = filtered.filter(transaction => {
-        console.log("Comparing:", transaction.date, "with", selectedDate);
-        return transaction.date === selectedDate;
+        const transactionDate = new Date(transaction.date).toISOString().split('T')[0];
+        console.log("Comparing:", transactionDate, "with", targetDate);
+        return transactionDate === targetDate;
       });
       
       console.log("After date filter:", filtered.length);
