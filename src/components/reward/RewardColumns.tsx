@@ -21,8 +21,10 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       },
       cell: ({ row }) => {
         const date = row.getValue("date") as string
-        // Use the same formatting logic as the chart
-        const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+        // Parse ISO date correctly to avoid timezone issues
+        const [year, month, day] = date.split('-').map(Number)
+        const dateObj = new Date(year, month - 1, day) // Create date in local timezone
+        const formattedDate = dateObj.toLocaleDateString('en-US', { 
           month: 'short', 
           day: 'numeric'
         })
