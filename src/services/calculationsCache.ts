@@ -15,7 +15,6 @@ interface CacheKey {
 export class CalculationsCacheService {
   private static instance: CalculationsCacheService
   private cache = new Map<string, CachedCalculations>()
-  private readonly CACHE_DURATION = 1000 * 60 * 60 // 1 hour
 
   private constructor() {}
 
@@ -46,12 +45,9 @@ export class CalculationsCacheService {
     const cacheKey = this.generateCacheKey(type, filters)
     const dataHash = this.generateDataHash(currentData)
     const cached = this.cache.get(cacheKey)
-    const now = Date.now()
 
-    // Check if cache is valid
-    if (cached && 
-        cached.dataHash === dataHash && 
-        (now - cached.timestamp) < this.CACHE_DURATION) {
+    // Check if cache is valid (only based on data hash, no time expiration)
+    if (cached && cached.dataHash === dataHash) {
       console.log(`Using cached ${type} calculations for:`, filters)
       return cached.calculations
     }
@@ -62,7 +58,7 @@ export class CalculationsCacheService {
 
     // Store in cache
     this.cache.set(cacheKey, {
-      timestamp: now,
+      timestamp: Date.now(),
       dataHash,
       calculations
     })
