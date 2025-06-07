@@ -38,7 +38,7 @@ const Index = () => {
         {/* Image */}
         <div className="text-center mt-4">
           <img 
-            src="https://i.imgur.com/dZJ4pLl.png" 
+            src="https://i.imgur.com/1fFddP4.png" 
             alt="Amex Logo" 
             className="mx-auto w-full max-w-[235px] h-auto"
           />
