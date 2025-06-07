@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -125,6 +124,27 @@ export function RewardChart({ data }: RewardChartProps) {
                 })
               }}
               indicator="dot"
+              formatter={(value, name, item, index, payload) => {
+                // Filter out zero values
+                if (value === 0) return null
+                
+                // Check if there are multiple non-zero point types
+                const nonZeroValues = payload?.filter(p => 
+                  p.dataKey !== 'totalPoints' && p.value > 0
+                ).length || 0
+                
+                // Only show total if there are multiple point types
+                if (name === 'totalPoints' && nonZeroValues <= 1) {
+                  return null
+                }
+                
+                return [
+                  <span className="font-mono font-medium tabular-nums text-foreground">
+                    {value.toLocaleString()}
+                  </span>,
+                  name
+                ]
+              }}
             />
           }
         />
