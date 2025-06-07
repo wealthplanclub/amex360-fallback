@@ -48,15 +48,6 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="p-4">
-        <div className="flex items-center gap-2">
-          <img 
-            src="https://i.imgur.com/1fFddP4.png" 
-            alt="Amex Logo" 
-            className="h-8 w-auto"
-          />
-        </div>
-      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
