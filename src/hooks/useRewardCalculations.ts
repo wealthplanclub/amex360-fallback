@@ -1,13 +1,14 @@
+
 import { useMemo } from 'react'
 import { rewardFilterService } from '@/services/rewardFilterService'
 import { FilterState } from '@/hooks/useFilterState'
-import { calculationsCacheService } from '@/services/calculationsCache'
+import { rewardCacheService } from '@/services/calculationsCache'
 
 export function useRewardCalculations(filters: FilterState) {
   return useMemo(() => {
     const filteredRewards = rewardFilterService.getFilteredRewards(filters)
     
-    return calculationsCacheService.getCachedCalculations(
+    return rewardCacheService.getCachedCalculations(
       'reward',
       filters,
       filteredRewards,

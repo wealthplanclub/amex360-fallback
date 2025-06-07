@@ -1,7 +1,7 @@
 
 import * as React from "react"
 import { transactionFilterService } from "@/services/transactionFilterService"
-import { calculationsCacheService } from "@/services/calculationsCache"
+import { transactionCacheService } from "@/services/calculationsCache"
 
 export const useTransactionCalculations = (selectedTimeRange: string) => {
   // Get filtered transactions from the centralized service
@@ -9,9 +9,9 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
     return transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
   }, [selectedTimeRange]);
 
-  // Calculate totals based on filtered transactions only - with caching
+  // Calculate totals based on filtered transactions only - with page-specific caching
   const calculations = React.useMemo(() => {
-    return calculationsCacheService.getCachedCalculations(
+    return transactionCacheService.getCachedCalculations(
       'transaction',
       { selectedTimeRange },
       filteredTransactions,
