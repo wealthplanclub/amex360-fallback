@@ -1,4 +1,3 @@
-
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -81,6 +80,10 @@ const Rewards = () => {
       // Scroll to table and add employee card filter
       scrollToTable();
       updateFilter('globalFilter', 'employee card');
+    } else if (cardType === "referral-rewards") {
+      // Scroll to table and add referral filter
+      scrollToTable();
+      updateFilter('globalFilter', 'referral');
     }
   };
 
