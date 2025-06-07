@@ -25,7 +25,6 @@ interface StatCardProps {
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
-  variant?: 'default' | 'reward'
 }
 
 export function StatCard({
@@ -43,8 +42,7 @@ export function StatCard({
   cardType,
   topCardAccount,
   onClick,
-  formatAsPoints = false,
-  variant = 'default'
+  formatAsPoints = false
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -60,13 +58,7 @@ export function StatCard({
   };
 
   const getCardClasses = () => {
-    let baseClasses = "relative overflow-hidden";
-    
-    if (variant === 'reward') {
-      baseClasses += " bg-gradient-to-br from-white via-blue-50/30 to-blue-100/50";
-    } else {
-      baseClasses += " bg-gradient-to-b from-white to-gray-100";
-    }
+    const baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
     
     if (clickable) {
       return `${baseClasses} cursor-pointer hover:shadow-lg transition-shadow duration-200`;
@@ -77,33 +69,18 @@ export function StatCard({
     return baseClasses;
   };
 
-  const getTitleColor = () => {
-    return variant === 'reward' ? 'text-[#00175a]' : '';
-  };
-
   return (
     <Card 
       className={getCardClasses()}
       onClick={handleClick}
     >
-      {variant === 'reward' && (
-        <div 
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: 'url(/flourish.svg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right bottom',
-            backgroundSize: '60%'
-          }}
-        />
-      )}
-      <CardHeader className="pb-6 relative z-10">
+      <CardHeader className="pb-6">
         <CardDescription>{title}</CardDescription>
         <CardTitle 
           key={`${title}-${numbersKey}`}
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
             isVisible ? 'animate-fade-in' : 'opacity-0'
-          } ${getTitleColor()}`}
+          }`}
         >
           {formatValue(value)}
         </CardTitle>
@@ -114,7 +91,7 @@ export function StatCard({
           </Badge>
         </div>
       </CardHeader>
-      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6 relative z-10">
+      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
         <div className="flex gap-2 font-medium items-center">
           {footer} <IconComponent className="h-4 w-4" />
         </div>
