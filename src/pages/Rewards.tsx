@@ -5,9 +5,23 @@ import { AppHeader } from "@/components/AppHeader";
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useFilterState } from "@/hooks/useFilterState";
+import { RewardMetricsCards } from "@/components/reward/RewardMetricsCards";
+import { RewardChartDisplay } from "@/components/reward/RewardChartDisplay";
+import { CardAccounts } from "@/components/CardAccounts";
 
 const Rewards = () => {
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [numbersKey, setNumbersKey] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    setNumbersKey(prev => prev + 1);
+  }, [filters.selectedTimeRange, filters.selectedDate, filters.selectedCard]);
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
     console.log("Reward dropdown changed:", cardSelection);
@@ -23,6 +37,15 @@ const Rewards = () => {
 
   const clearTimeRangeFilter = () => {
     updateFilter('selectedTimeRange', 'ytd');
+  };
+
+  const handleTimeRangeChange = (timeRange: string) => {
+    updateFilter('selectedTimeRange', timeRange);
+  };
+
+  const handleCardClick = (cardType: string, topCardAccount?: string) => {
+    console.log("Card clicked:", cardType, topCardAccount);
+    // Handle card click logic here if needed
   };
 
   return (
@@ -47,6 +70,29 @@ const Rewards = () => {
               className="mx-auto"
               style={{ width: '276px' }}
             />
+          </div>
+          
+          {/* Metrics Cards */}
+          <div className="mt-8 px-4 lg:px-6">
+            <RewardMetricsCards
+              filters={filters}
+              isVisible={isVisible}
+              numbersKey={numbersKey}
+              onCardClick={handleCardClick}
+            />
+          </div>
+          
+          {/* Chart and Card Accounts */}
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
+            <div className="lg:col-span-2">
+              <RewardChartDisplay
+                filters={filters}
+                onTimeRangeChange={handleTimeRangeChange}
+              />
+            </div>
+            <div className="lg:col-span-1">
+              <CardAccounts filters={filters} />
+            </div>
           </div>
           
           {/* Rewards Card */}
