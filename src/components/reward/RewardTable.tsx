@@ -15,6 +15,7 @@ import { rewardGlobalFilterFn } from "@/utils/rewardUtils"
 import { useRewardColumns } from "./RewardColumns"
 import { RewardTableContent } from "./RewardTableContent"
 import { RewardPagination } from "./RewardPagination"
+import { useDebounce } from "@/hooks/useDebounce"
 
 interface RewardTableProps {
   rewards: Reward[]
@@ -25,6 +26,9 @@ interface RewardTableProps {
 export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: RewardTableProps) {
   const [showAll, setShowAll] = React.useState(false)
   const columns = useRewardColumns()
+  
+  // Debounce the global filter to improve performance
+  const debouncedGlobalFilter = useDebounce(globalFilter, 300)
   
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -46,7 +50,7 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
       sorting,
       columnFilters,
       columnVisibility,
-      globalFilter,
+      globalFilter: debouncedGlobalFilter, // Use debounced value for table state
     },
     initialState: {
       pagination: {

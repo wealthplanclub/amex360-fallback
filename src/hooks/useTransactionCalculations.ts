@@ -12,26 +12,36 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
   const calculations = React.useMemo(() => {
     console.log("Calculating stats from filtered transactions:", filteredTransactions.length);
     
-    // Calculate expenses (negative amounts)
-    const expenses = filteredTransactions.filter(transaction => transaction.amount < 0);
-    const totalExpenses = expenses.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
+    // Memoize expense and credit filtering
+    const expenses = React.useMemo(() => 
+      filteredTransactions.filter(transaction => transaction.amount < 0),
+      [filteredTransactions]
+    )
     
-    // Calculate credits (positive amounts)
-    const credits = filteredTransactions.filter(transaction => transaction.amount > 0);
-    const totalCredits = credits.reduce((sum, transaction) => sum + transaction.amount, 0);
+    const credits = React.useMemo(() =>
+      filteredTransactions.filter(transaction => transaction.amount > 0),
+      [filteredTransactions]
+    )
+    
+    // Calculate totals
+    const totalExpenses = expenses.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
+    const totalCredits = credits.reduce((sum, transaction) => sum + transaction.amount, 0)
 
     // Calculate payments to expenses ratio
     const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
-    // Calculate card expenses grouped by account
-    const cardExpenses = expenses.reduce((acc, transaction) => {
-      const account = transaction.account;
-      if (!acc[account]) {
-        acc[account] = 0;
-      }
-      acc[account] += Math.abs(transaction.amount);
-      return acc;
-    }, {} as Record<string, number>);
+    // Calculate card expenses grouped by account (memoized)
+    const cardExpenses = React.useMemo(() => 
+      expenses.reduce((acc, transaction) => {
+        const account = transaction.account;
+        if (!acc[account]) {
+          acc[account] = 0;
+        }
+        acc[account] += Math.abs(transaction.amount);
+        return acc;
+      }, {} as Record<string, number>),
+      [expenses]
+    )
 
     console.log("Card expenses by account:", cardExpenses);
 
@@ -40,9 +50,16 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
     const topCardPercentage = totalExpenses > 0 ? ((topCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
     const lowestCardPercentage = totalExpenses > 0 ? ((lowestCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
 
-    // Find the account names for highest and lowest spending
-    const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
-    const lowestCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "";
+    // Find the account names for highest and lowest spending (memoized)
+    const topCardAccount = React.useMemo(() =>
+      Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "",
+      [cardExpenses, topCardSpend]
+    )
+    
+    const lowestCardAccount = React.useMemo(() =>
+      Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "",
+      [cardExpenses, lowestCardSpend]
+    )
 
     // Remove "card" and "Rewards" from account names
     const topCardDisplayName = topCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim();
