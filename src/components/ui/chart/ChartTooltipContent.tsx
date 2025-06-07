@@ -142,8 +142,8 @@ export const ChartTooltipContent = React.forwardRef<
                           )}
                           style={
                             {
-                              "--color-bg": indicator === "dot" ? "#00175a" : indicatorColor,
-                              "--color-border": indicator === "dot" ? "#00175a" : indicatorColor,
+                              "--color-bg": indicatorColor,
+                              "--color-border": indicatorColor,
                             } as React.CSSProperties
                           }
                         />
