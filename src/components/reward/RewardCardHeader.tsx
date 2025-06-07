@@ -56,7 +56,7 @@ export function RewardCardHeader({
 
     return (
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
+        <CardTitle className="text-xl font-semibold">Award history</CardTitle>
         <div className="mt-2">
           <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
             Filtered by: {formattedDate}, {cardDisplayName}
@@ -77,7 +77,7 @@ export function RewardCardHeader({
   if (hasDateFilter && onClearDateFilter) {
     return (
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
+        <CardTitle className="text-xl font-semibold">Award history</CardTitle>
         <DateFilterIndicator 
           selectedDate={selectedDate}
           onClear={onClearDateFilter}
@@ -98,7 +98,7 @@ export function RewardCardHeader({
 
     return (
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
+        <CardTitle className="text-xl font-semibold">Award history</CardTitle>
         <div className="mt-2">
           <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
             Filtered by: {timeRangeLabel}, {cardDisplayName}
@@ -119,7 +119,7 @@ export function RewardCardHeader({
   if (hasTimeRangeFilter && onClearTimeRangeFilter) {
     return (
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
+        <CardTitle className="text-xl font-semibold">Award history</CardTitle>
         <TimeRangeFilterIndicator 
           timeRange={selectedTimeRange}
           onClear={onClearTimeRangeFilter}
@@ -131,7 +131,7 @@ export function RewardCardHeader({
   // Default state with no active filters
   return (
     <CardHeader className="pb-2">
-      <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
+      <CardTitle className="text-xl font-semibold">Award history</CardTitle>
       <CardDescription className="mb-0">
         Bonus points awarded (YTD)
       </CardDescription>
