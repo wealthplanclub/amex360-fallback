@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -62,7 +63,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
     const dailySpending = transactions
       .filter(transaction => transaction.amount < 0) // Only expenses
       .reduce((acc, transaction) => {
-        const date = new Date(transaction.date).toISOString().split('T')[0]
+        const date = transaction.date // Date is already in YYYY-MM-DD format
         if (!acc[date]) {
           acc[date] = 0
         }
@@ -76,32 +77,38 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
         date,
         totalSpend: Math.round(totalSpend * 100) / 100 // Round to 2 decimal places
       }))
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      .sort((a, b) => a.date.localeCompare(b.date)) // Simple string comparison for ISO dates
   }, [])
 
   const filteredData = React.useMemo(() => {
     if (processedData.length === 0) return []
     
     // Get the latest date from the data
-    const latestDate = new Date(Math.max(...processedData.map(item => new Date(item.date).getTime())))
+    const latestDate = processedData[processedData.length - 1].date
     
-    let startDate = new Date(latestDate)
+    let startDate: string
+    const today = new Date(latestDate)
     
     if (timeRange === "ytd") {
       // Year to date - start from January 1st of the current year
-      startDate = new Date(latestDate.getFullYear(), 0, 1)
+      startDate = `${today.getFullYear()}-01-01`
     } else if (timeRange === "90d") {
-      startDate.setDate(startDate.getDate() - 90)
+      const date90DaysAgo = new Date(today)
+      date90DaysAgo.setDate(date90DaysAgo.getDate() - 90)
+      startDate = date90DaysAgo.toISOString().split('T')[0]
     } else if (timeRange === "30d") {
-      startDate.setDate(startDate.getDate() - 30)
+      const date30DaysAgo = new Date(today)
+      date30DaysAgo.setDate(date30DaysAgo.getDate() - 30)
+      startDate = date30DaysAgo.toISOString().split('T')[0]
     } else if (timeRange === "7d") {
-      startDate.setDate(startDate.getDate() - 7)
+      const date7DaysAgo = new Date(today)
+      date7DaysAgo.setDate(date7DaysAgo.getDate() - 7)
+      startDate = date7DaysAgo.toISOString().split('T')[0]
+    } else {
+      startDate = processedData[0].date
     }
     
-    return processedData.filter(item => {
-      const itemDate = new Date(item.date)
-      return itemDate >= startDate
-    })
+    return processedData.filter(item => item.date >= startDate)
   }, [processedData, timeRange])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
@@ -118,6 +125,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
   const handleChartClick = (data: any) => {
     if (data && data.activePayload && data.activePayload[0] && onDateClick) {
       const clickedDate = data.activePayload[0].payload.date;
+      console.log("Chart clicked, date:", clickedDate);
       onDateClick(clickedDate);
     }
   };
@@ -199,7 +207,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                const date = new Date(value)
+                const date = new Date(value + 'T00:00:00') // Add time to prevent timezone issues
                 return date.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -212,7 +220,8 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                    const date = new Date(value + 'T00:00:00') // Add time to prevent timezone issues
+                    return date.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",

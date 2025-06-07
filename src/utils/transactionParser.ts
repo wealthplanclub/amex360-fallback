@@ -6,7 +6,7 @@ export const parseTransactionData = (data: string) => {
   return lines.slice(1).map(line => {
     const values = line.split('\t');
     return {
-      date: values[0],
+      date: values[0], // Date is already in YYYY-MM-DD format from static data
       description: values[1],
       amount: parseFloat(values[2].replace(/[$,]/g, '')),
       account: values[3],

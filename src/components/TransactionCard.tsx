@@ -30,7 +30,7 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     const rawTransactions = parseTransactionData(staticTxnData);
     
     return rawTransactions
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => b.date.localeCompare(a.date)) // Simple string comparison for ISO dates
       .map((transaction, index) => ({
         id: `txn-${index}`,
         ...transaction
@@ -77,16 +77,13 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     
     console.log("After card filter:", filtered.length);
     
-    // Filter by date if selected
+    // Filter by date if selected - now using simple string comparison since dates are in ISO format
     if (selectedDate) {
-      // Convert selectedDate to the same format as transaction dates
-      const targetDate = new Date(selectedDate).toISOString().split('T')[0];
-      console.log("Target date for filtering:", targetDate);
+      console.log("Target date for filtering:", selectedDate);
       
       filtered = filtered.filter(transaction => {
-        const transactionDate = new Date(transaction.date).toISOString().split('T')[0];
-        console.log("Comparing:", transactionDate, "with", targetDate);
-        return transactionDate === targetDate;
+        console.log("Comparing:", transaction.date, "with", selectedDate);
+        return transaction.date === selectedDate;
       });
       
       console.log("After date filter:", filtered.length);
