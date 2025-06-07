@@ -21,6 +21,8 @@ const Index = () => {
 
   const handleCardClick = (cardName: string) => {
     setSelectedCard(cardName);
+    // When a card is selected/deselected from the grid, sync it with the dropdown
+    setSelectedCardFromDropdown(cardName);
     // Clear stat card filter when manually selecting a card
     setStatCardFilter(null);
   };
@@ -50,6 +52,7 @@ const Index = () => {
     setStatCardFilter({ cardType, timeRange, topCardAccount });
     // Reset other filters when stat card is clicked
     setSelectedCard("all");
+    setSelectedCardFromDropdown("all");
     setSelectedDate("");
   };
 
@@ -59,6 +62,8 @@ const Index = () => {
 
   const handleCardSelectionFromDropdown = (card: string) => {
     setSelectedCardFromDropdown(card);
+    // Also update the grid selection to keep them in sync
+    setSelectedCard(card);
   };
 
   // Add effect to log time range changes
@@ -123,7 +128,7 @@ const Index = () => {
             <div className="lg:col-span-1">
               <CardAccounts 
                 onCardClick={handleCardClick} 
-                selectedCard={selectedCardFromDropdown} 
+                selectedCard={selectedCard} 
                 selectedTimeRange={selectedTimeRange}
               />
             </div>
