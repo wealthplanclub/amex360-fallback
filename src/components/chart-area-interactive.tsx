@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -237,7 +238,7 @@ export function ChartAreaInteractive() {
             />
             <Area
               dataKey="totalSpend"
-              type="natural"
+              type="monotone"
               fill="url(#fillTotalSpend)"
               stroke="#000000"
               strokeWidth={1}
