@@ -34,7 +34,7 @@ export function TransactionPagination({
             size="sm"
             onClick={onShowPaginated}
           >
-            Show Pages
+            Show Paginated
           </Button>
         ) : (
           <>
