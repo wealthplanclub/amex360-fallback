@@ -29,7 +29,7 @@ export function RewardMetricsCards({
 
   const cardData = [
     {
-      title: "Total Reward Points",
+      title: "Total Bonus Awards",
       value: calculations.totalRewardPoints,
       badge: "+100%",
       icon: TrendingUp,
