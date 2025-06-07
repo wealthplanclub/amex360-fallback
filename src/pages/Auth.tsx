@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 const preloadComponents = async () => {
   try {
     await Promise.all([
-      import("../components/SectionCards"),
+      import("../components/MainCards"),
       import("../components/CardAccounts"),
       import("../components/TransactionCard"),
       import("../components/chart-area-interactive"),
