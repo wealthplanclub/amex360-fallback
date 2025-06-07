@@ -1,5 +1,3 @@
-
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -90,7 +88,12 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
 
   const handleCardClick = (cardName: string) => {
     if (onCardClick) {
-      onCardClick(cardName);
+      // For Business Green, pass a special identifier to show all Business Green transactions
+      if (cardName === 'Business Green Rewards Combined') {
+        onCardClick('BUSINESS_GREEN_COMBINED');
+      } else {
+        onCardClick(cardName);
+      }
     }
   };
 
@@ -148,4 +151,3 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
     </Card>
   )
 }
-

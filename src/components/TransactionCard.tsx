@@ -120,6 +120,14 @@ export function TransactionCard({ selectedCardFromGrid }: TransactionCardProps) 
     if (selectedCard === "all") {
       return allTransactions
     }
+    
+    // Special handling for combined Business Green cards
+    if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
+      return allTransactions.filter(transaction => 
+        transaction.account.toLowerCase().includes('business green rewards')
+      )
+    }
+    
     return allTransactions.filter(transaction => 
       transaction.account === selectedCard
     )
@@ -264,7 +272,9 @@ export function TransactionCard({ selectedCardFromGrid }: TransactionCardProps) 
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
                   <CreditCard className="mr-2 h-4 w-4" />
-                  {selectedCard === "all" ? "All Cards" : formatAccountName(selectedCard)}
+                  {selectedCard === "all" ? "All Cards" : 
+                   selectedCard === "BUSINESS_GREEN_COMBINED" ? "Business Green Combined" :
+                   formatAccountName(selectedCard)}
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
