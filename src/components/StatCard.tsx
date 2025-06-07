@@ -79,21 +79,29 @@ export function StatCard({
       onClick={handleClick}
     >
       {variant === 'reward' && (
-        <div 
-          className="absolute"
-          style={{
-            backgroundImage: 'url(https://www.aexp-static.com/cdaas/one/statics/@americanexpress/static-assets/2.28.0/package/dist/img/brand/flourish.svg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '660px 249px',
-            filter: 'invert(31%) sepia(41%) saturate(2993%) hue-rotate(187deg) brightness(93%) contrast(109%)',
-            height: '249px',
-            overflow: 'hidden',
-            position: 'absolute',
-            right: '-1.5rem',
-            top: '3.5rem',
-            width: '660px'
-          }}
-        />
+        <>
+          <div 
+            className="absolute"
+            style={{
+              backgroundImage: 'url(https://www.aexp-static.com/cdaas/one/statics/@americanexpress/static-assets/2.28.0/package/dist/img/brand/flourish.svg)',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '660px 249px',
+              filter: 'invert(31%) sepia(41%) saturate(2993%) hue-rotate(187deg) brightness(93%) contrast(109%)',
+              height: '249px',
+              overflow: 'hidden',
+              position: 'absolute',
+              right: '-1.5rem',
+              top: '3.5rem',
+              width: '660px'
+            }}
+          />
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.4) 70%, rgba(255, 255, 255, 0.1) 100%)'
+            }}
+          />
+        </>
       )}
       <CardHeader className="pb-6 relative z-10">
         <CardDescription>{title}</CardDescription>
