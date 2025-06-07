@@ -40,7 +40,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
             checked={selectedCard === card}
             onCheckedChange={() => onCardChange(card)}
           >
-            {formatAccountName(card)}
+            {card}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
