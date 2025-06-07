@@ -267,7 +267,7 @@ export function TransactionCard() {
                     >
                       No results.
                     </TableCell>
-                  )
+                  </TableRow>
                 )}
               </TableBody>
             </Table>
