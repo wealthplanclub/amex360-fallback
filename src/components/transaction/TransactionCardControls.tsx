@@ -20,7 +20,7 @@ export function TransactionCardControls({
   return (
     <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
       <Input
-        placeholder="Search descriptions and amounts..."
+        placeholder="Search descriptions..."
         value={globalFilter ?? ""}
         onChange={(event) => onGlobalFilterChange(event.target.value)}
         className="max-w-sm"
