@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -63,8 +62,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
     const dailySpending = transactions
       .filter(transaction => transaction.amount < 0) // Only expenses
       .reduce((acc, transaction) => {
-        // Use the date string directly to avoid timezone issues
-        const date = transaction.date.split('T')[0] // Get YYYY-MM-DD format
+        const date = new Date(transaction.date).toISOString().split('T')[0]
         if (!acc[date]) {
           acc[date] = 0
         }
@@ -120,7 +118,6 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
   const handleChartClick = (data: any) => {
     if (data && data.activePayload && data.activePayload[0] && onDateClick) {
       const clickedDate = data.activePayload[0].payload.date;
-      console.log("Chart clicked date:", clickedDate);
       onDateClick(clickedDate);
     }
   };
@@ -202,8 +199,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                // Use the date string directly to avoid timezone conversion
-                const date = new Date(value + 'T00:00:00')
+                const date = new Date(value)
                 return date.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -216,23 +212,11 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    // Ensure we have a valid date string in YYYY-MM-DD format
-                    const dateString = typeof value === 'string' ? value : String(value);
-                    console.log("Tooltip date value:", dateString);
-                    
-                    // Parse the date string properly
-                    const [year, month, day] = dateString.split('-').map(Number);
-                    if (!year || !month || !day) {
-                      console.error("Invalid date format:", dateString);
-                      return dateString; // Return original value if parsing fails
-                    }
-                    
-                    const date = new Date(year, month - 1, day); // month is 0-indexed
-                    return date.toLocaleDateString("en-US", {
+                    return new Date(value).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
-                    });
+                    })
                   }}
                   formatter={(value) => [
                     `Total Spend: $${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
