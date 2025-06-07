@@ -103,13 +103,13 @@ export function ChartAreaInteractive() {
 
   // Calculate the Y-axis domain based on filtered data
   const yAxisDomain = React.useMemo(() => {
-    if (filteredData.length === 0) return [-10, 100]
+    if (filteredData.length === 0) return [-50, 100]
     const maxValue = Math.max(...filteredData.map(item => item.totalSpend))
     const minValue = Math.min(...filteredData.map(item => item.totalSpend))
     
-    // Add 10% padding above the max value and below zero
+    // Add 10% padding above the max value and more padding below zero
     const upperBound = Math.ceil(maxValue * 1.1)
-    const lowerBound = Math.min(-10, minValue * 0.1) // At least -10 for padding below zero
+    const lowerBound = Math.min(-50, minValue * 0.1) // Increased from -10 to -50 for more padding below zero
     
     return [lowerBound, upperBound]
   }, [filteredData])
