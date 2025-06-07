@@ -1,3 +1,4 @@
+
 import { X } from "lucide-react"
 
 interface StatCardFilterIndicatorProps {
@@ -39,10 +40,22 @@ export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, l
     return "All cards"
   }
 
+  const getFilterText = () => {
+    if (cardType === "top-card" && topCardAccount) {
+      const cardName = topCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
+      return `${cardName}, ${getCardTypeLabel(cardType)}, ${getTimeRangeLabel(timeRange)}`
+    }
+    if (cardType === "lowest-card" && lowestCardAccount) {
+      const cardName = lowestCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
+      return `${cardName}, ${getCardTypeLabel(cardType)}, ${getTimeRangeLabel(timeRange)}`
+    }
+    return `${getCardName()}, ${getCardTypeLabel(cardType)}, ${getTimeRangeLabel(timeRange)}`
+  }
+
   return (
     <div className="mt-2">
       <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-        Filtered by: {getCardName()}, {getCardTypeLabel(cardType)}, {getTimeRangeLabel(timeRange)}
+        Filtered by: {getFilterText()}
         <button 
           onClick={onClear}
           className="hover:bg-gray-200 rounded p-0.5"
