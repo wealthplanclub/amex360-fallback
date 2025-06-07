@@ -94,7 +94,7 @@ export function TransactionCardHeader({
 
   return (
     <CardHeader className="pb-2">
-      <CardTitle className="text-xl font-semibold">Transaction History</CardTitle>
+      <CardTitle className="text-xl font-semibold">Transaction history</CardTitle>
       {!hasActiveFilter && (
         <CardDescription className="mb-0">
           Transaction activity (YTD)
