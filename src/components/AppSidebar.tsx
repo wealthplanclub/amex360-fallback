@@ -1,5 +1,6 @@
+
 import React from "react"
-import { ChartNoAxesColumn, Award, CreditCard, Repeat, LogOut, TrendingUp, BarChart3 } from "lucide-react"
+import { ChartNoAxesColumn, Award, CreditCard, Repeat, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import {
   Sidebar,
@@ -28,22 +29,9 @@ const menuItems = [
     icon: CreditCard,
     url: "#",
   },
-]
-
-const creditMaxItems = [
   {
     title: "CreditMax Swaps",
     icon: Repeat,
-    url: "#",
-  },
-  {
-    title: "CreditMax Points",
-    icon: TrendingUp,
-    url: "#",
-  },
-  {
-    title: "CreditMax Insights",
-    icon: BarChart3,
     url: "#",
   },
 ]
@@ -72,24 +60,6 @@ export function AppSidebar() {
           <SidebarGroupLabel>AMEX 360°</SidebarGroupLabel>
           <SidebarMenu>
             {menuItems.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton 
-                  onClick={() => handleItemClick(item.url)}
-                  className="gap-3"
-                >
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.title}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
-
-        {/* CreditMax Section */}
-        <SidebarGroup>
-          <SidebarGroupLabel>CREDITMAX</SidebarGroupLabel>
-          <SidebarMenu>
-            {creditMaxItems.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton 
                   onClick={() => handleItemClick(item.url)}
