@@ -1,5 +1,4 @@
 
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -52,23 +51,29 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
 // Wrapper component with controlled loading sequence
 const DashboardWrapper = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
-  const [startDashboardLoad, setStartDashboardLoad] = useState(false);
+  const [dashboardReady, setDashboardReady] = useState(false);
 
   const handleLoadingComplete = () => {
     setAnimationComplete(true);
-    // Start loading the dashboard after animation completes
-    setStartDashboardLoad(true);
   };
+
+  // Start loading dashboard immediately when wrapper mounts
+  useEffect(() => {
+    // Preload the dashboard component
+    import("./pages/Index").then(() => {
+      setDashboardReady(true);
+    });
+  }, []);
 
   // Show loader until animation is complete
   if (!animationComplete) {
     return <DashboardLoader onLoadingComplete={handleLoadingComplete} />;
   }
 
-  // Show dashboard without any loading fallback text
+  // Show dashboard only when both animation is complete AND dashboard is ready
   return (
     <Suspense fallback={null}>
-      {startDashboardLoad && <Dashboard />}
+      {dashboardReady && <Dashboard />}
     </Suspense>
   );
 };
@@ -90,4 +95,3 @@ const App = () => (
 );
 
 export default App;
-
