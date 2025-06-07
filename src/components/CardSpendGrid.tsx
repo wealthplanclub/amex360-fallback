@@ -1,3 +1,4 @@
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -7,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface CardSpendGridProps {
   onCardClick?: (cardName: string) => void;
@@ -92,53 +94,55 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
   };
 
   return (
-    <Card className="bg-white">
+    <Card className="bg-white h-[600px] flex flex-col">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
         <CardDescription>
           Total spending by credit card
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {cardData.map((card) => (
-            <Card 
-              key={card.fullName} 
-              className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md ${
-                selectedCard === card.fullName ? 'ring-2 ring-primary' : ''
-              }`}
-              onClick={() => handleCardClick(card.fullName)}
-            >
-              <CardContent className="p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex items-center gap-4 flex-1">
-                    <img 
-                      src={getCardImage(card.fullName)} 
-                      alt="Card placeholder" 
-                      className="w-16 h-10 object-cover rounded"
-                    />
-                    <div className="text-sm font-medium leading-tight whitespace-pre-line">
-                      {card.name}
+      <CardContent className="flex-1 overflow-hidden">
+        <ScrollArea className="h-full pr-4">
+          <div className="space-y-4">
+            {cardData.map((card) => (
+              <Card 
+                key={card.fullName} 
+                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md ${
+                  selectedCard === card.fullName ? 'ring-2 ring-primary' : ''
+                }`}
+                onClick={() => handleCardClick(card.fullName)}
+              >
+                <CardContent className="p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex items-center gap-4 flex-1">
+                      <img 
+                        src={getCardImage(card.fullName)} 
+                        alt="Card placeholder" 
+                        className="w-16 h-10 object-cover rounded"
+                      />
+                      <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                        {card.name}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center justify-end sm:justify-end">
-                    <div className="text-right">
-                      <p className="text-xs text-muted-foreground">
-                        Total spend
-                      </p>
-                      <div className="text-lg font-bold tabular-nums">
-                        ${card.amount.toLocaleString('en-US', { 
-                          minimumFractionDigits: 2, 
-                          maximumFractionDigits: 2 
-                        })}
+                    <div className="flex items-center justify-end sm:justify-end">
+                      <div className="text-right">
+                        <p className="text-xs text-muted-foreground">
+                          Total spend
+                        </p>
+                        <div className="text-lg font-bold tabular-nums">
+                          ${card.amount.toLocaleString('en-US', { 
+                            minimumFractionDigits: 2, 
+                            maximumFractionDigits: 2 
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </ScrollArea>
       </CardContent>
     </Card>
   )
