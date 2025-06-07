@@ -1,5 +1,5 @@
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
   ChartContainer,
@@ -32,12 +32,16 @@ interface RewardChartProps {
 }
 
 export function RewardChart({ data }: RewardChartProps) {
+  // Calculate the maximum value to set an optimal Y-axis domain
+  const maxValue = Math.max(...data.map(d => d.totalPoints))
+  const yAxisMax = maxValue > 0 ? Math.ceil(maxValue * 1.05) : 100
+
   return (
     <ChartContainer
       config={chartConfig}
       className="aspect-auto h-[250px] w-full"
     >
-      <AreaChart data={data}>
+      <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
         <defs>
           <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
             <stop
@@ -84,6 +88,13 @@ export function RewardChart({ data }: RewardChartProps) {
           tickMargin={8}
           minTickGap={32}
           tickFormatter={(value) => value}
+        />
+        <YAxis
+          domain={[0, yAxisMax]}
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+          hide
         />
         <ChartTooltip
           cursor={false}
