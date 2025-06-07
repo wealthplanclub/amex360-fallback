@@ -1,3 +1,4 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -188,7 +189,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     }
   ];
 
-  // Create trail animation for the cards to appear
+  // Create trail animation for the number values only
   const trail = useTrail(cardData.length, {
     config: { mass: 5, tension: 2000, friction: 200 },
     opacity: 1,
@@ -200,34 +201,34 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
-      {trail.map((style, index) => {
-        const card = cardData[index];
+      {cardData.map((card, index) => {
         const IconComponent = card.icon;
+        const style = trail[index];
         return (
-          <animated.div key={card.title} style={{ opacity: style.opacity, transform: style.x.to(x => `translateX(${x}px)`) }}>
-            <Card className="relative bg-gradient-to-b from-white to-gray-100">
-              <CardHeader className="pb-6">
-                <CardDescription>{card.title}</CardDescription>
-                <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
+          <Card key={card.title} className="relative bg-gradient-to-b from-white to-gray-100">
+            <CardHeader className="pb-6">
+              <CardDescription>{card.title}</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
+                <animated.span style={{ opacity: style.opacity, transform: style.x.to(x => `translateX(${x}px)`) }}>
                   ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </CardTitle>
-                <div className="absolute top-4 right-4">
-                  <Badge variant="outline" className="gap-1">
-                    <IconComponent className="h-3 w-3" />
-                    {card.badge}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-                <div className="flex gap-2 font-medium items-center">
-                  {card.footer} <IconComponent className="h-4 w-4" />
-                </div>
-                <div className="text-muted-foreground">
-                  {card.description}
-                </div>
-              </CardFooter>
-            </Card>
-          </animated.div>
+                </animated.span>
+              </CardTitle>
+              <div className="absolute top-4 right-4">
+                <Badge variant="outline" className="gap-1">
+                  <IconComponent className="h-3 w-3" />
+                  {card.badge}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
+              <div className="flex gap-2 font-medium items-center">
+                {card.footer} <IconComponent className="h-4 w-4" />
+              </div>
+              <div className="text-muted-foreground">
+                {card.description}
+              </div>
+            </CardFooter>
+          </Card>
         );
       })}
     </div>
