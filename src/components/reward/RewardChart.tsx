@@ -61,48 +61,48 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="var(--color-totalPoints)"
+              stopColor="#00175a"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="var(--color-totalPoints)"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
           <linearGradient id="fillEmployee" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="var(--color-employeePoints)"
+              stopColor="#00175a"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="var(--color-employeePoints)"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
           <linearGradient id="fillReferral" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="var(--color-referralPoints)"
+              stopColor="#00175a"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="var(--color-referralPoints)"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
           <linearGradient id="fillWelcome" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="var(--color-welcome)"
+              stopColor="#00175a"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="var(--color-welcome)"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
@@ -158,7 +158,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           dataKey="welcome"
           type="monotone"
           fill="url(#fillWelcome)"
-          stroke="var(--color-welcome)"
+          stroke="#00175a"
           strokeWidth={1}
           stackId="a"
         />
@@ -166,7 +166,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           dataKey="referralPoints"
           type="monotone"
           fill="url(#fillReferral)"
-          stroke="var(--color-referralPoints)"
+          stroke="#00175a"
           strokeWidth={1}
           stackId="a"
         />
@@ -174,7 +174,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           dataKey="employeePoints"
           type="monotone"
           fill="url(#fillEmployee)"
-          stroke="var(--color-employeePoints)"
+          stroke="#00175a"
           strokeWidth={1}
           stackId="a"
         />
@@ -182,7 +182,7 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           dataKey="totalPoints"
           type="monotone"
           fill="url(#fillTotal)"
-          stroke="var(--color-totalPoints)"
+          stroke="#00175a"
           strokeWidth={1}
         />
       </AreaChart>
