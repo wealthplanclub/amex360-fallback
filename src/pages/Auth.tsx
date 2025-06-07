@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ const Auth = () => {
         backgroundRepeat: 'repeat'
       }}
     >
-      <Card className="bg-gradient-to-b from-white to-gray-100" style={{ width: '276px' }}>
+      <Card className="bg-gradient-to-b from-white to-gray-100 px-6" style={{ width: '276px' }}>
         <CardHeader className="text-center">
           <div className="mb-4 mt-6">
             <img 
