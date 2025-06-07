@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -103,15 +102,13 @@ export function ChartAreaInteractive() {
 
   // Calculate the Y-axis domain based on filtered data
   const yAxisDomain = React.useMemo(() => {
-    if (filteredData.length === 0) return [-50, 100]
+    if (filteredData.length === 0) return [0, 100]
     const maxValue = Math.max(...filteredData.map(item => item.totalSpend))
-    const minValue = Math.min(...filteredData.map(item => item.totalSpend))
     
-    // Add 10% padding above the max value and more padding below zero
+    // Start from 0 and add 10% padding above the max value
     const upperBound = Math.ceil(maxValue * 1.1)
-    const lowerBound = Math.min(-50, minValue * 0.1) // Increased from -10 to -50 for more padding below zero
     
-    return [lowerBound, upperBound]
+    return [0, upperBound]
   }, [filteredData])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
