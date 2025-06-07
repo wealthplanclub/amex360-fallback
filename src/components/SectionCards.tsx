@@ -44,21 +44,21 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     console.log("SectionCards - latest date:", latestDate);
     
     let startDate: string;
-    const today = new Date(latestDate);
+    const latestDateObj = new Date(latestDate + 'T00:00:00'); // Add time to prevent timezone issues
     
     if (selectedTimeRange === "ytd") {
       // Year to date - start from January 1st of the current year
-      startDate = `${today.getFullYear()}-01-01`;
+      startDate = `${latestDateObj.getFullYear()}-01-01`;
     } else if (selectedTimeRange === "90d") {
-      const date90DaysAgo = new Date(today);
+      const date90DaysAgo = new Date(latestDateObj);
       date90DaysAgo.setDate(date90DaysAgo.getDate() - 90);
       startDate = date90DaysAgo.toISOString().split('T')[0];
     } else if (selectedTimeRange === "30d") {
-      const date30DaysAgo = new Date(today);
+      const date30DaysAgo = new Date(latestDateObj);
       date30DaysAgo.setDate(date30DaysAgo.getDate() - 30);
       startDate = date30DaysAgo.toISOString().split('T')[0];
     } else if (selectedTimeRange === "7d") {
-      const date7DaysAgo = new Date(today);
+      const date7DaysAgo = new Date(latestDateObj);
       date7DaysAgo.setDate(date7DaysAgo.getDate() - 7);
       startDate = date7DaysAgo.toISOString().split('T')[0];
     } else {
@@ -66,9 +66,18 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     }
     
     console.log("SectionCards - start date:", startDate);
+    console.log("SectionCards - sample transaction dates:", allTransactions.slice(0, 5).map(t => t.date));
     
-    const filtered = allTransactions.filter(transaction => transaction.date >= startDate);
+    const filtered = allTransactions.filter(transaction => {
+      const includeTransaction = transaction.date >= startDate;
+      if (!includeTransaction) {
+        console.log("SectionCards - excluding transaction:", transaction.date, "start:", startDate);
+      }
+      return includeTransaction;
+    });
     console.log("SectionCards - filtered transactions count:", filtered.length);
+    console.log("SectionCards - first few filtered dates:", filtered.slice(0, 5).map(t => t.date));
+    console.log("SectionCards - last few filtered dates:", filtered.slice(-5).map(t => t.date));
     
     return filtered;
   }, [selectedTimeRange]);
