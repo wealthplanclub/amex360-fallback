@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -99,5 +100,8 @@
 
   body {
     @apply bg-background text-foreground;
+    background-image: url('https://i.imgur.com/MsHNAik.png');
+    background-repeat: repeat;
+    background-attachment: fixed;
   }
 }

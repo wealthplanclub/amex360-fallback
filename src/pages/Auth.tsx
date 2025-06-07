@@ -48,7 +48,8 @@ const Auth = () => {
       className="min-h-screen p-6 flex items-center justify-center"
       style={{
         backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-        backgroundRepeat: 'repeat'
+        backgroundRepeat: 'repeat',
+        backgroundAttachment: 'fixed'
       }}
     >
       <Card className="bg-gradient-to-b from-white to-gray-100 animate-fade-in">
