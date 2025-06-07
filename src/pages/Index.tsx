@@ -36,7 +36,18 @@ const Index = () => {
 
   const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string, lowestCardAccount?: string) => {
     console.log("Stat card clicked:", cardType, timeRange, topCardAccount, lowestCardAccount);
-    setStatCardFilter({ cardType, timeRange, topCardAccount, lowestCardAccount });
+    
+    // Ensure we're passing the actual string values, not objects
+    const cleanTopCardAccount = typeof topCardAccount === 'string' ? topCardAccount : undefined;
+    const cleanLowestCardAccount = typeof lowestCardAccount === 'string' ? lowestCardAccount : undefined;
+    
+    setStatCardFilter({ 
+      cardType, 
+      timeRange, 
+      topCardAccount: cleanTopCardAccount, 
+      lowestCardAccount: cleanLowestCardAccount 
+    });
+    
     // Reset other filters when stat card is clicked
     setSelectedCard("all");
     setSelectedDate("");
