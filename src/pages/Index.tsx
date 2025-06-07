@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
