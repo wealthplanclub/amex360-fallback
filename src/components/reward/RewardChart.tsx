@@ -33,24 +33,11 @@ interface RewardChartProps {
 
 export function RewardChart({ data }: RewardChartProps) {
   return (
-    <ChartContainer config={chartConfig} className="h-[400px]">
-      <AreaChart
-        accessibilityLayer
-        data={data}
-        margin={{
-          left: 12,
-          right: 12,
-        }}
-      >
-        <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="month"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          tickFormatter={(value) => value.slice(0, 3)}
-        />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[250px] w-full"
+    >
+      <AreaChart data={data}>
         <defs>
           <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
             <stop
@@ -89,28 +76,50 @@ export function RewardChart({ data }: RewardChartProps) {
             />
           </linearGradient>
         </defs>
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+          minTickGap={32}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip
+          cursor={false}
+          defaultIndex={-1}
+          content={
+            <ChartTooltipContent
+              formatter={(value) => [
+                `${Number(value).toLocaleString()} pts`,
+                ""
+              ]}
+              indicator="dot"
+            />
+          }
+        />
         <Area
           dataKey="referralPoints"
-          type="natural"
+          type="monotone"
           fill="url(#fillReferral)"
-          fillOpacity={0.4}
           stroke="var(--color-referralPoints)"
+          strokeWidth={1}
           stackId="a"
         />
         <Area
           dataKey="employeePoints"
-          type="natural"
+          type="monotone"
           fill="url(#fillEmployee)"
-          fillOpacity={0.4}
           stroke="var(--color-employeePoints)"
+          strokeWidth={1}
           stackId="a"
         />
         <Area
           dataKey="totalPoints"
-          type="natural"
+          type="monotone"
           fill="url(#fillTotal)"
-          fillOpacity={0.4}
           stroke="var(--color-totalPoints)"
+          strokeWidth={1}
         />
       </AreaChart>
     </ChartContainer>
