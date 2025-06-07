@@ -1,4 +1,5 @@
 
+
 import { Card, CardContent } from "@/components/ui/card";
 import { getCardImage } from "@/utils/cardImageUtils";
 import { CardData } from "@/utils/cardDataUtils";
@@ -63,3 +64,4 @@ export function CardAccountItem({ card, index, selectedCard, onCardClick }: Card
     </Card>
   );
 }
+

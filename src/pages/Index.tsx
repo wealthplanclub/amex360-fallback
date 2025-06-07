@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -21,16 +20,10 @@ const Index = () => {
   const isMobile = useIsMobile();
 
   const handleCardClick = (cardName: string) => {
-    console.log("Card clicked:", cardName, "Current selected:", selectedCard);
-    
-    // If clicking the same card that's already selected, show all cards
-    if (selectedCard === cardName) {
-      setSelectedCard("all");
-      setSelectedCardFromDropdown("all");
-    } else {
-      setSelectedCard(cardName);
-      setSelectedCardFromDropdown(cardName);
-    }
+    console.log("Card clicked:", cardName);
+    // Simply set the card selection - no toggle logic
+    setSelectedCard(cardName);
+    setSelectedCardFromDropdown(cardName);
     
     // Clear stat card filter when manually selecting a card
     setStatCardFilter(null);

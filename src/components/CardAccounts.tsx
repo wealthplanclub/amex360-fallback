@@ -1,4 +1,5 @@
 
+
 import { staticTxnData } from "@/data/staticData";
 import { processCardData, getTimeRangeDescription } from "@/utils/cardDataUtils";
 import {
@@ -50,12 +51,8 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
 
   const handleCardClick = (cardName: string) => {
     if (onCardClick) {
-      // If the clicked card is already selected, toggle it off (show all cards)
-      if (selectedCard === cardName) {
-        onCardClick("all");
-      } else {
-        onCardClick(cardName);
-      }
+      // Simply pass the card selection to parent
+      onCardClick(cardName);
     }
   };
 
@@ -88,3 +85,4 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
     </Card>
   );
 }
+
