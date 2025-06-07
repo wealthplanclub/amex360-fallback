@@ -4,9 +4,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Lottie from "lottie-react";
-import tripleCardAnimation from "/public/triple-card.json";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -16,19 +15,32 @@ const Dashboard = lazy(() => import("./pages/Index"));
 const queryClient = new QueryClient();
 
 // Simple loading component for the dashboard with Lottie animation
-const DashboardLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="text-center">
-      <Lottie
-        animationData={tripleCardAnimation}
-        className="w-24 h-24 mx-auto mb-4"
-        loop={true}
-        autoplay={true}
-      />
-      <p className="text-muted-foreground">Loading dashboard...</p>
+const DashboardLoader = () => {
+  const [animationData, setAnimationData] = useState(null);
+
+  useEffect(() => {
+    fetch("/triple-card.json")
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error("Failed to load animation:", error));
+  }, []);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        {animationData && (
+          <Lottie
+            animationData={animationData}
+            className="w-24 h-24 mx-auto mb-4"
+            loop={true}
+            autoplay={true}
+          />
+        )}
+        <p className="text-muted-foreground">Loading dashboard...</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
