@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -118,6 +117,7 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
+              className="[&>*]:leading-tight"
               labelFormatter={(value) => {
                 return new Date(value).toLocaleDateString("en-US", {
                   month: "short",
