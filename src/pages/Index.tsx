@@ -25,22 +25,36 @@ const Index = () => {
   const handleStatCardClick = (cardType: string, topCardAccount?: string) => {
     console.log("Stat card clicked:", cardType, topCardAccount);
     
-    // Clear previous stat card filters first
-    const clearedFilters = { ...filters };
-    delete clearedFilters.expenseFilter;
-    delete clearedFilters.creditFilter;
-    delete clearedFilters.topCardFilter;
-    delete clearedFilters.lowestCardFilter;
-    
-    // Add the new filter based on card type
     if (cardType === "expenses") {
-      updateMultipleFilters({ ...clearedFilters, expenseFilter: true });
+      // Clear any previous stat card filters and add expense filter
+      updateMultipleFilters({
+        expenseFilter: true,
+        creditFilter: undefined,
+        topCardFilter: undefined,
+        lowestCardFilter: undefined
+      });
     } else if (cardType === "credits") {
-      updateMultipleFilters({ ...clearedFilters, creditFilter: true });
+      // Clear any previous stat card filters and add credit filter
+      updateMultipleFilters({
+        expenseFilter: undefined,
+        creditFilter: true,
+        topCardFilter: undefined,
+        lowestCardFilter: undefined
+      });
     } else if (cardType === "top-card" && topCardAccount) {
-      updateMultipleFilters({ ...clearedFilters, topCardFilter: topCardAccount });
+      updateMultipleFilters({
+        expenseFilter: undefined,
+        creditFilter: undefined,
+        topCardFilter: topCardAccount,
+        lowestCardFilter: undefined
+      });
     } else if (cardType === "lowest-card" && topCardAccount) {
-      updateMultipleFilters({ ...clearedFilters, lowestCardFilter: topCardAccount });
+      updateMultipleFilters({
+        expenseFilter: undefined,
+        creditFilter: undefined,
+        topCardFilter: undefined,
+        lowestCardFilter: topCardAccount
+      });
     }
   };
 
