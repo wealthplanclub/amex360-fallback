@@ -85,18 +85,33 @@ export const ChartTooltipContent = React.forwardRef<
         const key = `${nameKey || item.name || item.dataKey || "value"}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
         
-        // Get the actual color from the config instead of relying on CSS variables
+        // Get the raw color value from config, avoiding CSS variables
         let indicatorColor = color
         if (!indicatorColor && itemConfig?.color) {
+          // Use the raw color value directly
           indicatorColor = itemConfig.color
         } else if (!indicatorColor && config[key]?.color) {
+          // Use the raw color value directly
           indicatorColor = config[key].color
-        } else if (!indicatorColor) {
-          // Fallback to the item color
-          indicatorColor = item.color
         }
 
-        console.log('Color resolution:', { key, itemConfigColor: itemConfig?.color, configColor: config[key]?.color, finalColor: indicatorColor });
+        // If we still have a CSS variable, extract the fallback color or use a default
+        if (!indicatorColor || indicatorColor.startsWith('var(')) {
+          // Use stroke color from the item as fallback, removing 'var(' prefix if present
+          const strokeColor = item.stroke
+          if (strokeColor && !strokeColor.startsWith('var(')) {
+            indicatorColor = strokeColor
+          } else {
+            // Fallback colors based on data key
+            const fallbackColors = {
+              'totalPoints': 'hsl(var(--chart-1))',
+              'employeePoints': 'hsl(142, 76%, 36%)',
+              'referralPoints': 'hsl(221, 83%, 53%)',
+              'welcome': 'hsl(48, 96%, 53%)'
+            }
+            indicatorColor = fallbackColors[key as keyof typeof fallbackColors] || '#8884d8'
+          }
+        }
 
         if (formatter && item?.value !== undefined && item.name) {
           const formatterResult = formatter(item.value, item.name, item, index, item.payload)
@@ -143,7 +158,7 @@ export const ChartTooltipContent = React.forwardRef<
                       !hideIndicator && (
                         <div
                           className={cn(
-                            "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
+                            "shrink-0 rounded-[2px]",
                             {
                               "h-2.5 w-2.5": indicator === "dot",
                               "w-1": indicator === "line",
@@ -152,12 +167,10 @@ export const ChartTooltipContent = React.forwardRef<
                               "my-0.5": nestLabel && indicator === "dashed",
                             }
                           )}
-                          style={
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as React.CSSProperties
-                          }
+                          style={{
+                            backgroundColor: indicatorColor,
+                            borderColor: indicatorColor,
+                          }}
                         />
                       )
                     )}
