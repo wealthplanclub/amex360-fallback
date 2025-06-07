@@ -1,5 +1,3 @@
-
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -162,7 +160,7 @@ export function RewardChart({ data }: RewardChartProps) {
                   </div>
                 );
               }}
-              indicator="none"
+              hideIndicator={true}
               labelFormatter={(label) => formatDateForDisplay(String(label))}
             />
           }
@@ -202,4 +200,3 @@ export function RewardChart({ data }: RewardChartProps) {
     </ChartContainer>
   )
 }
-
