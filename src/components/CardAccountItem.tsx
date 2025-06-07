@@ -25,6 +25,14 @@ export function CardAccountItem({ card, index, onCardClick, isSelected }: CardAc
     }
   };
 
+  // Map display name for specific cards
+  const getDisplayName = (cardName: string) => {
+    if (cardName === 'Bonvoy Business Amex\n(-1009)') {
+      return 'Marriott Bonvoy Business\n(-1009)';
+    }
+    return cardName;
+  };
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in"
@@ -43,7 +51,7 @@ export function CardAccountItem({ card, index, onCardClick, isSelected }: CardAc
               className="w-16 h-10 object-cover rounded"
             />
             <div className="text-sm font-medium leading-tight whitespace-pre-line">
-              {card.name}
+              {getDisplayName(card.name)}
             </div>
           </div>
           <div className="flex items-center justify-end sm:justify-end">
