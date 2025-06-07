@@ -113,7 +113,7 @@ export function StatCard({
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
             isVisible ? 'animate-fade-in' : 'opacity-0'
           }`}
-          style={variant === 'reward' && index === 0 ? { color: '#00175a' } : {}}
+          style={variant === 'reward' ? { color: '#00175a' } : {}}
         >
           {formatValue(value)}
         </CardTitle>
