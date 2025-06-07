@@ -26,6 +26,7 @@ interface TransactionCardProps {
   statCardFilter?: {
     cardType: string;
     timeRange: string;
+    topCardAccount?: string;
   } | null;
   onClearStatCardFilter?: () => void;
 }
@@ -60,12 +61,14 @@ export function TransactionCard({
   const [selectedCard, setSelectedCard] = React.useState<string>("all")
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
 
-  // Sync with the card selected from the grid
+  // Sync with the card selected from the grid OR from stat card filter
   React.useEffect(() => {
-    if (selectedCardFromGrid && selectedCardFromGrid !== "all") {
+    if (statCardFilter?.cardType === "top-card" && statCardFilter.topCardAccount) {
+      setSelectedCard(statCardFilter.topCardAccount);
+    } else if (selectedCardFromGrid && selectedCardFromGrid !== "all") {
       setSelectedCard(selectedCardFromGrid);
     }
-  }, [selectedCardFromGrid]);
+  }, [selectedCardFromGrid, statCardFilter]);
 
   // Filter transactions by selected card, date, and stat card filter
   const transactions = React.useMemo(() => {
@@ -105,6 +108,11 @@ export function TransactionCard({
         filtered = filtered.filter(transaction => transaction.amount < 0);
       } else if (statCardFilter.cardType === "credits") {
         filtered = filtered.filter(transaction => transaction.amount > 0);
+      } else if (statCardFilter.cardType === "top-card") {
+        // Filter by expenses AND by the top card account
+        filtered = filtered.filter(transaction => 
+          transaction.amount < 0 && transaction.account === statCardFilter.topCardAccount
+        );
       }
       
       console.log("After stat card filter:", filtered.length);
@@ -161,6 +169,7 @@ export function TransactionCard({
           <StatCardFilterIndicator
             cardType={statCardFilter.cardType}
             timeRange={statCardFilter.timeRange}
+            topCardAccount={statCardFilter.topCardAccount}
             onClear={onClearStatCardFilter}
           />
         )}

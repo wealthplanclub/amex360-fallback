@@ -13,6 +13,7 @@ const Index = () => {
   const [statCardFilter, setStatCardFilter] = useState<{
     cardType: string;
     timeRange: string;
+    topCardAccount?: string;
   } | null>(null);
 
   const handleCardClick = (cardName: string) => {
@@ -33,9 +34,9 @@ const Index = () => {
     setSelectedTimeRange(timeRange);
   };
 
-  const handleStatCardClick = (cardType: string, timeRange: string) => {
-    console.log("Stat card clicked:", cardType, timeRange);
-    setStatCardFilter({ cardType, timeRange });
+  const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string) => {
+    console.log("Stat card clicked:", cardType, timeRange, topCardAccount);
+    setStatCardFilter({ cardType, timeRange, topCardAccount });
     // Reset other filters when stat card is clicked
     setSelectedCard("all");
     setSelectedDate("");
