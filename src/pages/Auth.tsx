@@ -70,7 +70,7 @@ const Auth = () => {
             </Button>
           </form>
           <div className="mt-4 text-center">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               © {currentYear} Black Phoenix Enterprises LLC
             </p>
           </div>
