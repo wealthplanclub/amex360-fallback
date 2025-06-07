@@ -1,4 +1,3 @@
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { ChevronsUpDown } from "lucide-react"
@@ -72,7 +71,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       },
       cell: ({ row }) => {
         const points = row.getValue("points") as number
-        return <div className="text-right font-medium" style={{ color: '#006fcf' }}>+{points.toLocaleString()}</div>
+        return <div className="text-right font-medium text-green-600">+{points.toLocaleString()}</div>
       },
     },
   ]
