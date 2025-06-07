@@ -29,7 +29,10 @@ export function RewardPagination({
     <div className="flex items-center justify-between px-2 py-4">
       <div className="flex items-center space-x-2">
         <p className="text-sm text-muted-foreground">
-          {filteredRowCount} reward{filteredRowCount !== 1 ? 's' : ''} found
+          {showAll 
+            ? `Showing all ${filteredRowCount} results`
+            : `Showing ${table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to ${Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, filteredRowCount)} of ${filteredRowCount} results`
+          }
         </p>
         {!showAll && filteredRowCount > 10 && (
           <Button
