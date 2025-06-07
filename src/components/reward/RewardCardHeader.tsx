@@ -43,7 +43,7 @@ export function RewardCardHeader({
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Rewards History</CardTitle>
         <TimeRangeFilterIndicator 
-          selectedTimeRange={selectedTimeRange}
+          timeRange={selectedTimeRange}
           onClear={onClearTimeRangeFilter}
         />
       </CardHeader>
