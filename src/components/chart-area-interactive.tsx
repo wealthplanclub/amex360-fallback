@@ -219,7 +219,8 @@ export function ChartAreaInteractive() {
               dataKey="totalSpend"
               type="natural"
               fill="url(#fillTotalSpend)"
-              stroke="var(--color-totalSpend)"
+              stroke="#000000"
+              strokeWidth={2}
             />
           </AreaChart>
         </ChartContainer>
