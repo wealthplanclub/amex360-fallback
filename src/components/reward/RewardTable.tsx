@@ -15,6 +15,7 @@ import { rewardGlobalFilterFn } from "@/utils/rewardUtils"
 import { useRewardColumns } from "./RewardColumns"
 import { RewardTableContent } from "./RewardTableContent"
 import { RewardPagination } from "./RewardPagination"
+import { useDebounce } from "@/hooks/useDebounce"
 
 interface RewardTableProps {
   rewards: Reward[]
@@ -29,6 +30,9 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+
+  // Debounce the global filter
+  const debouncedGlobalFilter = useDebounce(globalFilter, 300)
 
   const table = useReactTable({
     data: rewards,
@@ -46,7 +50,7 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
       sorting,
       columnFilters,
       columnVisibility,
-      globalFilter,
+      globalFilter: debouncedGlobalFilter,
     },
     initialState: {
       pagination: {
@@ -57,7 +61,7 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
 
   const handleShowAll = () => {
     setShowAll(true)
-    table.setPageSize(rewards.length)
+    // Don't change pageSize - virtualization will handle showing all rows
   }
 
   const handleShowPaginated = () => {

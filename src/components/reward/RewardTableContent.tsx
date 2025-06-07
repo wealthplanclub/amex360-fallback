@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Reward } from "@/types/reward"
+import { VirtualizedRewardTableContent } from "./VirtualizedRewardTableContent"
 
 interface RewardTableContentProps {
   table: TanstackTable<Reward>
@@ -17,7 +18,22 @@ interface RewardTableContentProps {
   columnsLength: number
 }
 
+const VIRTUALIZATION_THRESHOLD = 100
+
 export function RewardTableContent({ table, showAll, columnsLength }: RewardTableContentProps) {
+  const rowCount = table.getRowModel().rows.length
+  
+  // Use virtualization for large datasets when showing all
+  if (showAll && rowCount > VIRTUALIZATION_THRESHOLD) {
+    return (
+      <VirtualizedRewardTableContent 
+        table={table} 
+        columnsLength={columnsLength} 
+      />
+    )
+  }
+
+  // Regular table for pagination or small datasets
   return (
     <div className="rounded-md border">
       <Table>

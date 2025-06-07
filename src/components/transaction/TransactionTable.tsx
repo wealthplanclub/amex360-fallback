@@ -57,7 +57,7 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
 
   const handleShowAll = () => {
     setShowAll(true)
-    table.setPageSize(transactions.length) // Show all rows
+    // Don't change pageSize - virtualization will handle showing all rows
   }
 
   const handleShowPaginated = () => {

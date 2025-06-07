@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Transaction } from "@/types/transaction"
+import { VirtualizedTransactionTableContent } from "./VirtualizedTransactionTableContent"
 
 interface TransactionTableContentProps {
   table: ReactTable<Transaction>
@@ -18,7 +18,22 @@ interface TransactionTableContentProps {
   columnsLength: number
 }
 
+const VIRTUALIZATION_THRESHOLD = 100
+
 export function TransactionTableContent({ table, showAll, columnsLength }: TransactionTableContentProps) {
+  const rowCount = table.getRowModel().rows.length
+  
+  // Use virtualization for large datasets when showing all
+  if (showAll && rowCount > VIRTUALIZATION_THRESHOLD) {
+    return (
+      <VirtualizedTransactionTableContent 
+        table={table} 
+        columnsLength={columnsLength} 
+      />
+    )
+  }
+
+  // Regular table for pagination or small datasets
   const tableContent = (
     <Table>
       <TableHeader>
@@ -69,13 +84,7 @@ export function TransactionTableContent({ table, showAll, columnsLength }: Trans
 
   return (
     <div className="rounded-md border">
-      {showAll ? (
-        <ScrollArea className="h-[600px]">
-          {tableContent}
-        </ScrollArea>
-      ) : (
-        tableContent
-      )}
+      {tableContent}
     </div>
   )
 }
