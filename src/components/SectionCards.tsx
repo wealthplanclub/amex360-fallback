@@ -15,9 +15,10 @@ import {
 
 interface SectionCardsProps {
   selectedTimeRange: string;
+  onStatCardClick?: (cardType: string, timeRange: string) => void;
 }
 
-export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
+export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const [numbersKey, setNumbersKey] = React.useState(0)
 
@@ -165,7 +166,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: "+100%",
       icon: TrendingUp,
       footer: "Trending up this month",
-      description: `Total spend ${getTimeRangeDescription()}`
+      description: `Total spend ${getTimeRangeDescription()}`,
+      clickable: true,
+      cardType: "expenses"
     },
     {
       title: "Total Payments/Credits",
@@ -173,7 +176,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: `${calculations.paymentsToExpensesRatio}%`,
       icon: TrendingUp,
       footer: "Steady incoming payments",
-      description: `Payments and credits ${getTimeRangeDescription()}`
+      description: `Payments and credits ${getTimeRangeDescription()}`,
+      clickable: false,
+      cardType: "credits"
     },
     {
       title: "Top Card Spend",
@@ -181,7 +186,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: `${calculations.topCardPercentage}%`,
       icon: TrendingUp,
       footer: calculations.topCardDisplayName,
-      description: `Account with most expenses ${getTimeRangeDescription()}`
+      description: `Account with most expenses ${getTimeRangeDescription()}`,
+      clickable: false,
+      cardType: "top-card"
     },
     {
       title: "Lowest Card Spend",
@@ -189,9 +196,17 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: `${calculations.lowestCardPercentage}%`,
       icon: TrendingDown,
       footer: calculations.lowestCardDisplayName,
-      description: `Account with least expenses ${getTimeRangeDescription()}`
+      description: `Account with least expenses ${getTimeRangeDescription()}`,
+      clickable: false,
+      cardType: "lowest-card"
     }
   ];
+
+  const handleCardClick = (cardType: string) => {
+    if (onStatCardClick) {
+      onStatCardClick(cardType, selectedTimeRange);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
@@ -204,10 +219,11 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
               isVisible 
                 ? 'translate-y-0 opacity-100' 
                 : 'translate-y-8 opacity-0'
-            }`}
+            } ${card.clickable ? 'cursor-pointer hover:shadow-lg hover:scale-105 transition-transform' : ''}`}
             style={{
               transitionDelay: `${index * 150}ms`
             }}
+            onClick={card.clickable ? () => handleCardClick(card.cardType) : undefined}
           >
             <CardHeader className="pb-6">
               <CardDescription>{card.title}</CardDescription>

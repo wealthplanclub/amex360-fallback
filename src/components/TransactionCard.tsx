@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -15,6 +14,7 @@ import {
 import { Transaction } from "@/types/transaction"
 import { formatAccountName } from "@/utils/transactionUtils"
 import { DateFilterIndicator } from "@/components/transaction/DateFilterIndicator"
+import { StatCardFilterIndicator } from "@/components/transaction/StatCardFilterIndicator"
 import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { TransactionTable } from "@/components/transaction/TransactionTable"
 
@@ -22,9 +22,20 @@ interface TransactionCardProps {
   selectedCardFromGrid?: string;
   selectedDate?: string;
   onClearDateFilter?: () => void;
+  statCardFilter?: {
+    cardType: string;
+    timeRange: string;
+  } | null;
+  onClearStatCardFilter?: () => void;
 }
 
-export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDateFilter }: TransactionCardProps) {
+export function TransactionCard({ 
+  selectedCardFromGrid, 
+  selectedDate, 
+  onClearDateFilter,
+  statCardFilter,
+  onClearStatCardFilter 
+}: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
@@ -55,14 +66,49 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     }
   }, [selectedCardFromGrid]);
 
-  // Filter transactions by selected card and date
+  // Filter transactions by selected card, date, and stat card filter
   const transactions = React.useMemo(() => {
     let filtered = allTransactions;
     
     console.log("All transactions count:", filtered.length);
     console.log("Selected card:", selectedCard);
     console.log("Selected date:", selectedDate);
+    console.log("Stat card filter:", statCardFilter);
     
+    // Apply stat card filter first if it exists
+    if (statCardFilter) {
+      // Filter by time range
+      const today = new Date();
+      let startDate: Date;
+      
+      if (statCardFilter.timeRange === "ytd") {
+        startDate = new Date(today.getFullYear(), 0, 1);
+      } else if (statCardFilter.timeRange === "90d") {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 90);
+      } else if (statCardFilter.timeRange === "30d") {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 30);
+      } else if (statCardFilter.timeRange === "7d") {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 7);
+      } else {
+        startDate = new Date(today.getFullYear(), 0, 1); // Default to YTD
+      }
+      
+      const startDateString = startDate.toISOString().split('T')[0];
+      filtered = filtered.filter(transaction => transaction.date >= startDateString);
+      
+      // Filter by card type
+      if (statCardFilter.cardType === "expenses") {
+        filtered = filtered.filter(transaction => transaction.amount < 0);
+      }
+      
+      console.log("After stat card filter:", filtered.length);
+      return filtered;
+    }
+    
+    // Regular filtering logic when no stat card filter is active
     // Filter by card
     if (selectedCard !== "all") {
       if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
@@ -93,7 +139,7 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     }
     
     return filtered;
-  }, [allTransactions, selectedCard, selectedDate]);
+  }, [allTransactions, selectedCard, selectedDate, statCardFilter]);
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
@@ -108,6 +154,13 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
             onClear={onClearDateFilter}
           />
         )}
+        {statCardFilter && onClearStatCardFilter && (
+          <StatCardFilterIndicator
+            cardType={statCardFilter.cardType}
+            timeRange={statCardFilter.timeRange}
+            onClear={onClearStatCardFilter}
+          />
+        )}
       </CardHeader>
       <CardContent>
         <div className="w-full">
@@ -118,11 +171,13 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
               onChange={(event) => setGlobalFilter(event.target.value)}
               className="max-w-sm"
             />
-            <CardFilterDropdown
-              selectedCard={selectedCard}
-              creditCards={creditCards}
-              onCardChange={setSelectedCard}
-            />
+            {!statCardFilter && (
+              <CardFilterDropdown
+                selectedCard={selectedCard}
+                creditCards={creditCards}
+                onCardChange={setSelectedCard}
+              />
+            )}
           </div>
           <TransactionTable
             transactions={transactions}
