@@ -2,7 +2,6 @@ import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import * as React from "react"
-import { useAnimatedNumber } from "@/hooks/useAnimatedNumber"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -17,61 +16,6 @@ import {
 interface SectionCardsProps {
   selectedTimeRange: string;
 }
-
-interface AnimatedCardProps {
-  title: string;
-  value: number;
-  badge: string;
-  icon: typeof TrendingUp;
-  footer: string;
-  description: string;
-  index: number;
-  isVisible: boolean;
-}
-
-const AnimatedCard = ({ title, value, badge, icon: IconComponent, footer, description, index, isVisible }: AnimatedCardProps) => {
-  const { displayValue, isAnimating } = useAnimatedNumber({ 
-    value, 
-    duration: 500, 
-    delay: index * 100 
-  });
-
-  return (
-    <Card 
-      className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
-        isVisible 
-          ? 'translate-y-0 opacity-100' 
-          : 'translate-y-8 opacity-0'
-      }`}
-      style={{
-        transitionDelay: `${index * 150}ms`
-      }}
-    >
-      <CardHeader className="pb-6">
-        <CardDescription>{title}</CardDescription>
-        <CardTitle className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-all duration-300 ${
-          isAnimating ? 'scale-105' : 'scale-100'
-        }`}>
-          ${displayValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </CardTitle>
-        <div className="absolute top-4 right-4">
-          <Badge variant="outline" className="gap-1">
-            <IconComponent className="h-3 w-3" />
-            {badge}
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-        <div className="flex gap-2 font-medium items-center">
-          {footer} <IconComponent className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground">
-          {description}
-        </div>
-      </CardFooter>
-    </Card>
-  );
-};
 
 export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
@@ -245,14 +189,43 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
-      {cardData.map((card, index) => (
-        <AnimatedCard
-          key={card.title}
-          {...card}
-          index={index}
-          isVisible={isVisible}
-        />
-      ))}
+      {cardData.map((card, index) => {
+        const IconComponent = card.icon;
+        return (
+          <Card 
+            key={card.title}
+            className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
+              isVisible 
+                ? 'translate-y-0 opacity-100' 
+                : 'translate-y-8 opacity-0'
+            }`}
+            style={{
+              transitionDelay: `${index * 150}ms`
+            }}
+          >
+            <CardHeader className="pb-6">
+              <CardDescription>{card.title}</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
+                ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </CardTitle>
+              <div className="absolute top-4 right-4">
+                <Badge variant="outline" className="gap-1">
+                  <IconComponent className="h-3 w-3" />
+                  {card.badge}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
+              <div className="flex gap-2 font-medium items-center">
+                {card.footer} <IconComponent className="h-4 w-4" />
+              </div>
+              <div className="text-muted-foreground">
+                {card.description}
+              </div>
+            </CardFooter>
+          </Card>
+        );
+      })}
     </div>
   )
 }
