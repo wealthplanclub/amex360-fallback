@@ -1,3 +1,4 @@
+
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -19,17 +20,6 @@ interface SectionCardsProps {
 }
 
 export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
-  const [isVisible, setIsVisible] = React.useState(false)
-
-  React.useEffect(() => {
-    // Trigger animation after component mounts
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-    }, 100)
-    
-    return () => clearTimeout(timer)
-  }, [])
-
   // Filter transactions based on selected time range
   const filteredTransactions = React.useMemo(() => {
     const transactions = parseTransactionData(staticTxnData);
@@ -188,15 +178,12 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     }
   ];
 
-  // Create trail animation for the card values
+  // Create trail animation for the cards - simplified without the isVisible dependency
   const trail = useTrail(cardData.length, {
     from: { opacity: 0, transform: 'translateY(20px)' },
-    to: { 
-      opacity: isVisible ? 1 : 0, 
-      transform: isVisible ? 'translateY(0px)' : 'translateY(20px)' 
-    },
+    to: { opacity: 1, transform: 'translateY(0px)' },
     config: { tension: 280, friction: 60 },
-    delay: 200,
+    delay: 100,
   })
 
   return (
@@ -210,9 +197,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
               <CardHeader className="pb-6">
                 <CardDescription>{card.title}</CardDescription>
                 <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-                  <animated.span>
-                    ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </animated.span>
+                  ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </CardTitle>
                 <div className="absolute top-4 right-4">
                   <Badge variant="outline" className="gap-1">
