@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -120,8 +121,7 @@ export function TransactionCard() {
           <div className="text-sm">
             {date.toLocaleDateString("en-US", {
               month: "short",
-              day: "numeric",
-              year: "numeric"
+              day: "numeric"
             })}
           </div>
         );
