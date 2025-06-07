@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import * as React from "react"
@@ -102,6 +103,7 @@ export function ChartAreaInteractive() {
   }, [processedData, timeRange])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
+  const averageDailySpend = filteredData.length > 0 ? totalSpendForPeriod / filteredData.length : 0
 
   const getTimeRangeLabel = () => {
     if (timeRange === "ytd") return "YTD"
@@ -116,7 +118,9 @@ export function ChartAreaInteractive() {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="space-y-1">
           <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
-          <CardDescription>Daily spending trends and patterns</CardDescription>
+          <CardDescription>
+            Average daily spend ({getTimeRangeLabel()}): ${averageDailySpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </CardDescription>
         </div>
         
         {/* Time Range Selector */}
@@ -225,3 +229,4 @@ export function ChartAreaInteractive() {
     </Card>
   )
 }
+
