@@ -27,11 +27,16 @@ export function CardAccountItem({ card, index, onCardClick, isSelected }: CardAc
 
   // Map display name for specific cards
   const getDisplayName = (cardName: string) => {
+    console.log("Card name being processed:", JSON.stringify(cardName));
     if (cardName === 'Bonvoy Business Amex\n(-1009)') {
       return 'Marriott Bonvoy Business\n(-1009)';
     }
     if (cardName === 'Amazon Prime\n(-2003)') {
       return 'Amazon Business Prime\n(-2003)';
+    }
+    // Also check for the version without line break
+    if (cardName === 'Amazon Prime (-2003)') {
+      return 'Amazon Business Prime (-2003)';
     }
     return cardName;
   };
