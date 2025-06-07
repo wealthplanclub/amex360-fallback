@@ -8,7 +8,6 @@ import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 const Index = () => {
   const [selectedCard, setSelectedCard] = useState<string>("all");
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedTimeRange, setSelectedTimeRange] = useState<string>("ytd");
 
   const handleCardClick = (cardName: string) => {
     setSelectedCard(cardName);
@@ -20,10 +19,6 @@ const Index = () => {
 
   const clearDateFilter = () => {
     setSelectedDate("");
-  };
-
-  const handleTimeRangeChange = (timeRange: string) => {
-    setSelectedTimeRange(timeRange);
   };
 
   return (
@@ -46,16 +41,12 @@ const Index = () => {
         
         {/* Section Cards */}
         <div className="mt-8">
-          <SectionCards selectedTimeRange={selectedTimeRange} />
+          <SectionCards />
         </div>
 
         {/* Daily Spending Chart */}
         <div className="mt-8 px-4 lg:px-6">
-          <ChartAreaInteractive 
-            onDateClick={handleDateClick} 
-            selectedTimeRange={selectedTimeRange}
-            onTimeRangeChange={handleTimeRangeChange}
-          />
+          <ChartAreaInteractive onDateClick={handleDateClick} />
         </div>
 
         {/* Transaction Card and Card Spend Grid */}

@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -42,34 +43,17 @@ const chartConfig = {
 
 interface ChartAreaInteractiveProps {
   onDateClick?: (date: string) => void;
-  selectedTimeRange?: string;
-  onTimeRangeChange?: (timeRange: string) => void;
 }
 
-export function ChartAreaInteractive({ 
-  onDateClick, 
-  selectedTimeRange = "ytd", 
-  onTimeRangeChange 
-}: ChartAreaInteractiveProps) {
+export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps) {
   const isMobile = useIsMobile()
-  const [timeRange, setTimeRange] = React.useState(selectedTimeRange)
+  const [timeRange, setTimeRange] = React.useState("ytd")
 
   React.useEffect(() => {
     if (isMobile) {
-      const newTimeRange = "7d";
-      setTimeRange(newTimeRange);
-      onTimeRangeChange?.(newTimeRange);
+      setTimeRange("7d")
     }
-  }, [isMobile, onTimeRangeChange])
-
-  React.useEffect(() => {
-    setTimeRange(selectedTimeRange);
-  }, [selectedTimeRange])
-
-  const handleTimeRangeChange = (newTimeRange: string) => {
-    setTimeRange(newTimeRange);
-    onTimeRangeChange?.(newTimeRange);
-  };
+  }, [isMobile])
 
   // Process transaction data to get daily spending totals
   const processedData = React.useMemo(() => {
@@ -161,7 +145,7 @@ export function ChartAreaInteractive({
           <ToggleGroup
             type="single"
             value={timeRange}
-            onValueChange={handleTimeRangeChange}
+            onValueChange={setTimeRange}
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:!px-4 md:flex"
           >
@@ -170,7 +154,7 @@ export function ChartAreaInteractive({
             <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
             <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
           </ToggleGroup>
-          <Select value={timeRange} onValueChange={handleTimeRangeChange}>
+          <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
               className="flex w-40 md:hidden"
               aria-label="Select a value"
