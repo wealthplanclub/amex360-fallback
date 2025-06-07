@@ -30,6 +30,9 @@ export function CardAccountItem({ card, index, onCardClick, isSelected }: CardAc
     if (cardName === 'Bonvoy Business Amex\n(-1009)') {
       return 'Marriott Bonvoy Business\n(-1009)';
     }
+    if (cardName === 'Amazon Prime\n(-2003)') {
+      return 'Amazon Business Prime\n(-2003)';
+    }
     return cardName;
   };
 
