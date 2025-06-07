@@ -38,6 +38,8 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     
     // Get the latest date from the data
     const latestDate = transactions[transactions.length - 1].date;
+    console.log("Latest date from data:", latestDate);
+    console.log("Selected time range:", selectedTimeRange);
     
     let startDate: string;
     const today = new Date(latestDate);
@@ -61,25 +63,31 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       return transactions;
     }
     
-    return transactions.filter(transaction => transaction.date >= startDate);
+    console.log("Filtering from start date:", startDate);
+    const filtered = transactions.filter(transaction => transaction.date >= startDate);
+    console.log("Total transactions:", transactions.length);
+    console.log("Filtered transactions:", filtered.length);
+    
+    return filtered;
   }, [selectedTimeRange]);
 
-  // Calculate totals based on filtered transactions
-  const totalExpenses = filteredTransactions
-    .filter(transaction => transaction.amount < 0)
-    .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
-  
-  const totalCredits = filteredTransactions
-    .filter(transaction => transaction.amount > 0)
-    .reduce((sum, transaction) => sum + transaction.amount, 0);
+  // Calculate totals based on filtered transactions only
+  const calculations = React.useMemo(() => {
+    console.log("Calculating stats from filtered transactions:", filteredTransactions.length);
+    
+    // Calculate expenses (negative amounts)
+    const expenses = filteredTransactions.filter(transaction => transaction.amount < 0);
+    const totalExpenses = expenses.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
+    
+    // Calculate credits (positive amounts)
+    const credits = filteredTransactions.filter(transaction => transaction.amount > 0);
+    const totalCredits = credits.reduce((sum, transaction) => sum + transaction.amount, 0);
 
-  // Calculate payments to expenses ratio
-  const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
+    // Calculate payments to expenses ratio
+    const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
-  // Calculate top card spend
-  const cardExpenses = filteredTransactions
-    .filter(transaction => transaction.amount < 0)
-    .reduce((acc, transaction) => {
+    // Calculate card expenses grouped by account
+    const cardExpenses = expenses.reduce((acc, transaction) => {
       const account = transaction.account;
       if (!acc[account]) {
         acc[account] = 0;
@@ -88,18 +96,42 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       return acc;
     }, {} as Record<string, number>);
 
-  const topCardSpend = Object.keys(cardExpenses).length > 0 ? Math.max(...Object.values(cardExpenses)) : 0;
-  const lowestCardSpend = Object.keys(cardExpenses).length > 0 ? Math.min(...Object.values(cardExpenses)) : 0;
-  const topCardPercentage = totalExpenses > 0 ? ((topCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
-  const lowestCardPercentage = totalExpenses > 0 ? ((lowestCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
+    console.log("Card expenses by account:", cardExpenses);
 
-  // Find the account names for highest and lowest spending
-  const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
-  const lowestCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "";
+    const topCardSpend = Object.keys(cardExpenses).length > 0 ? Math.max(...Object.values(cardExpenses)) : 0;
+    const lowestCardSpend = Object.keys(cardExpenses).length > 0 ? Math.min(...Object.values(cardExpenses)) : 0;
+    const topCardPercentage = totalExpenses > 0 ? ((topCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
+    const lowestCardPercentage = totalExpenses > 0 ? ((lowestCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
 
-  // Remove the word "card" from account names
-  const topCardDisplayName = topCardAccount.replace(/\bcard\b/gi, '').trim();
-  const lowestCardDisplayName = lowestCardAccount.replace(/\bcard\b/gi, '').trim();
+    // Find the account names for highest and lowest spending
+    const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
+    const lowestCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "";
+
+    // Remove the word "card" from account names
+    const topCardDisplayName = topCardAccount.replace(/\bcard\b/gi, '').trim();
+    const lowestCardDisplayName = lowestCardAccount.replace(/\bcard\b/gi, '').trim();
+
+    console.log("Calculation results:", {
+      totalExpenses,
+      totalCredits,
+      topCardSpend,
+      lowestCardSpend,
+      topCardDisplayName,
+      lowestCardDisplayName
+    });
+
+    return {
+      totalExpenses,
+      totalCredits,
+      paymentsToExpensesRatio,
+      topCardSpend,
+      lowestCardSpend,
+      topCardPercentage,
+      lowestCardPercentage,
+      topCardDisplayName,
+      lowestCardDisplayName
+    };
+  }, [filteredTransactions]);
 
   // Get time range description
   const getTimeRangeDescription = () => {
@@ -110,42 +142,44 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     return "YTD";
   };
 
+  const cardData = [
+    {
+      title: "Total Expenses",
+      value: calculations.totalExpenses,
+      badge: "+100%",
+      icon: TrendingUp,
+      footer: "Trending up this month",
+      description: `Total spend ${getTimeRangeDescription()}`
+    },
+    {
+      title: "Total Payments/Credits",
+      value: calculations.totalCredits,
+      badge: `${calculations.paymentsToExpensesRatio}%`,
+      icon: TrendingUp,
+      footer: "Steady incoming payments",
+      description: `Payments and credits ${getTimeRangeDescription()}`
+    },
+    {
+      title: "Top Card Spend",
+      value: calculations.topCardSpend,
+      badge: `${calculations.topCardPercentage}%`,
+      icon: TrendingUp,
+      footer: calculations.topCardDisplayName,
+      description: `Account with most expenses ${getTimeRangeDescription()}`
+    },
+    {
+      title: "Lowest Card Spend",
+      value: calculations.lowestCardSpend,
+      badge: `${calculations.lowestCardPercentage}%`,
+      icon: TrendingDown,
+      footer: calculations.lowestCardDisplayName,
+      description: `Account with least expenses ${getTimeRangeDescription()}`
+    }
+  ];
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
-      {[
-        {
-          title: "Total Expenses",
-          value: totalExpenses,
-          badge: "+100%",
-          icon: TrendingUp,
-          footer: "Trending up this month",
-          description: `Total spend ${getTimeRangeDescription()}`
-        },
-        {
-          title: "Total Payments/Credits",
-          value: totalCredits,
-          badge: `${paymentsToExpensesRatio}%`,
-          icon: TrendingUp,
-          footer: "Steady incoming payments",
-          description: `Payments and credits ${getTimeRangeDescription()}`
-        },
-        {
-          title: "Top Card Spend",
-          value: topCardSpend,
-          badge: `${topCardPercentage}%`,
-          icon: TrendingUp,
-          footer: topCardDisplayName,
-          description: `Account with most expenses ${getTimeRangeDescription()}`
-        },
-        {
-          title: "Lowest Card Spend",
-          value: lowestCardSpend,
-          badge: `${lowestCardPercentage}%`,
-          icon: TrendingDown,
-          footer: lowestCardDisplayName,
-          description: `Account with least expenses ${getTimeRangeDescription()}`
-        }
-      ].map((card, index) => {
+      {cardData.map((card, index) => {
         const IconComponent = card.icon;
         return (
           <Card 
