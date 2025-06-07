@@ -219,7 +219,7 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
               isVisible 
                 ? 'translate-y-0 opacity-100' 
                 : 'translate-y-8 opacity-0'
-            } ${card.clickable ? 'cursor-pointer hover:shadow-lg hover:scale-105 transition-transform' : ''}`}
+            } ${card.clickable ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
             style={{
               transitionDelay: `${index * 150}ms`
             }}
