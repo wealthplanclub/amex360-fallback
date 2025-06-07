@@ -1,6 +1,6 @@
 
 import React from "react"
-import { Home, Award, CreditCard, Settings, LogOut } from "lucide-react"
+import { ChartNoAxesColumn, Award, CreditCard, Settings, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import {
   Sidebar,
@@ -16,7 +16,7 @@ import {
 const menuItems = [
   {
     title: "Dashboard",
-    icon: Home,
+    icon: ChartNoAxesColumn,
     url: "/dashboard",
   },
   {
