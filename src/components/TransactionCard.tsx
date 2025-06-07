@@ -16,6 +16,7 @@ import { Transaction } from "@/types/transaction"
 import { formatAccountName } from "@/utils/transactionUtils"
 import { DateFilterIndicator } from "@/components/transaction/DateFilterIndicator"
 import { StatCardFilterIndicator } from "@/components/transaction/StatCardFilterIndicator"
+import { TimeRangeFilterIndicator } from "@/components/transaction/TimeRangeFilterIndicator"
 import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { TransactionTable } from "@/components/transaction/TransactionTable"
 
@@ -29,6 +30,8 @@ interface TransactionCardProps {
     topCardAccount?: string;
   } | null;
   onClearStatCardFilter?: () => void;
+  selectedTimeRange?: string;
+  onClearTimeRangeFilter?: () => void;
 }
 
 export function TransactionCard({ 
@@ -36,7 +39,9 @@ export function TransactionCard({
   selectedDate, 
   onClearDateFilter,
   statCardFilter,
-  onClearStatCardFilter 
+  onClearStatCardFilter,
+  selectedTimeRange,
+  onClearTimeRangeFilter
 }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -72,7 +77,7 @@ export function TransactionCard({
     }
   }, [selectedCardFromGrid, statCardFilter]);
 
-  // Filter transactions by selected card, date, and stat card filter
+  // Filter transactions by selected card, date, stat card filter, and time range
   const transactions = React.useMemo(() => {
     let filtered = allTransactions;
     
@@ -80,6 +85,7 @@ export function TransactionCard({
     console.log("Selected card:", selectedCard);
     console.log("Selected date:", selectedDate);
     console.log("Stat card filter:", statCardFilter);
+    console.log("Selected time range:", selectedTimeRange);
     
     // Apply stat card filter first if it exists
     if (statCardFilter) {
@@ -125,6 +131,30 @@ export function TransactionCard({
       console.log("After stat card filter:", filtered.length);
       return filtered;
     }
+
+    // Apply time range filter if selected (when no stat card filter is active)
+    if (selectedTimeRange && selectedTimeRange !== "ytd") {
+      const today = new Date();
+      let startDate: Date;
+      
+      if (selectedTimeRange === "90d") {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 90);
+      } else if (selectedTimeRange === "30d") {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 30);
+      } else if (selectedTimeRange === "7d") {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 7);
+      } else {
+        startDate = new Date(today.getFullYear(), 0, 1); // Default to YTD
+      }
+      
+      const startDateString = startDate.toISOString().split('T')[0];
+      filtered = filtered.filter(transaction => transaction.date >= startDateString);
+      
+      console.log("After time range filter:", filtered.length);
+    }
     
     // Regular filtering logic when no stat card filter is active
     // Filter by card
@@ -157,7 +187,7 @@ export function TransactionCard({
     }
     
     return filtered;
-  }, [allTransactions, selectedCard, selectedDate, statCardFilter]);
+  }, [allTransactions, selectedCard, selectedDate, statCardFilter, selectedTimeRange]);
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
@@ -178,6 +208,12 @@ export function TransactionCard({
             timeRange={statCardFilter.timeRange}
             topCardAccount={statCardFilter.topCardAccount}
             onClear={onClearStatCardFilter}
+          />
+        )}
+        {selectedTimeRange && selectedTimeRange !== "ytd" && !statCardFilter && onClearTimeRangeFilter && (
+          <TimeRangeFilterIndicator
+            timeRange={selectedTimeRange}
+            onClear={onClearTimeRangeFilter}
           />
         )}
       </CardHeader>

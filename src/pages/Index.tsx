@@ -34,6 +34,10 @@ const Index = () => {
     setSelectedTimeRange(timeRange);
   };
 
+  const clearTimeRangeFilter = () => {
+    setSelectedTimeRange("ytd");
+  };
+
   const handleStatCardClick = (cardType: string, timeRange: string, topCardAccount?: string) => {
     console.log("Stat card clicked:", cardType, timeRange, topCardAccount);
     setStatCardFilter({ cardType, timeRange, topCardAccount });
@@ -95,6 +99,8 @@ const Index = () => {
                 onClearDateFilter={clearDateFilter}
                 statCardFilter={statCardFilter}
                 onClearStatCardFilter={clearStatCardFilter}
+                selectedTimeRange={selectedTimeRange}
+                onClearTimeRangeFilter={clearTimeRangeFilter}
               />
             </div>
             <div className="lg:col-span-1">
