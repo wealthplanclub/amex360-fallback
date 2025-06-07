@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import Auth from "./pages/Auth";
@@ -48,8 +48,7 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
   );
 };
 
-// Wrapper component with controlled loading sequence
-const DashboardWrapper = () => {
+const App = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
   const [dashboardReady, setDashboardReady] = useState(false);
 
@@ -57,41 +56,42 @@ const DashboardWrapper = () => {
     setAnimationComplete(true);
   };
 
-  // Start loading dashboard immediately when wrapper mounts
+  // Start loading dashboard when animation starts
   useEffect(() => {
-    // Preload the dashboard component
-    import("./pages/Index").then(() => {
-      setDashboardReady(true);
-    });
-  }, []);
+    if (!animationComplete) {
+      // Preload the dashboard component
+      import("./pages/Index").then(() => {
+        setDashboardReady(true);
+      });
+    }
+  }, [animationComplete]);
 
-  // Show loader until animation is complete
-  if (!animationComplete) {
-    return <DashboardLoader onLoadingComplete={handleLoadingComplete} />;
-  }
-
-  // Show dashboard only when both animation is complete AND dashboard is ready
   return (
-    <Suspense fallback={null}>
-      {dashboardReady && <Dashboard />}
-    </Suspense>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Auth />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                !animationComplete ? (
+                  <DashboardLoader onLoadingComplete={handleLoadingComplete} />
+                ) : (
+                  <Suspense fallback={null}>
+                    {dashboardReady && <Dashboard />}
+                  </Suspense>
+                )
+              } 
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 };
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Auth />} />
-          <Route path="/dashboard" element={<DashboardWrapper />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
 
 export default App;
