@@ -55,15 +55,6 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        {/* Logo Section */}
-        <div className="px-3 py-4 border-b">
-          <img 
-            src="https://i.imgur.com/1fFddP4.png" 
-            alt="Amex Logo" 
-            className="h-8"
-          />
-        </div>
-
         {/* Navigation Menu */}
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
@@ -89,7 +80,7 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton 
                 onClick={handleLogout}
-                className="gap-3 text-red-600 hover:text-red-700 hover:bg-red-50"
+                className="gap-3"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Log Out</span>
