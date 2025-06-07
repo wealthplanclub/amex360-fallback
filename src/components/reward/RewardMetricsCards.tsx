@@ -59,7 +59,7 @@ export function RewardMetricsCards({
       cardType: "referral-rewards"
     },
     {
-      title: "Top Card Rewards",
+      title: "Top Bonus Card",
       value: calculations.topCardRewards,
       badge: `${calculations.topCardPercentage}%`,
       icon: Trophy,
