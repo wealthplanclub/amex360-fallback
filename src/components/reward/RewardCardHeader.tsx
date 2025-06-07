@@ -100,7 +100,7 @@ export function RewardCardHeader({
     <CardHeader className="pb-2">
       <CardTitle className="text-xl font-semibold">Bonus History</CardTitle>
       <CardDescription className="mb-0">
-        Rewards activity (YTD)
+        Bonus points awarded (YTD)
       </CardDescription>
     </CardHeader>
   )
