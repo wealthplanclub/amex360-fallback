@@ -56,26 +56,31 @@ export type Transaction = {
 }
 
 export function TransactionCard() {
-  // Parse the CSV data and get recent transactions
-  const rawTransactions = parseTransactionData(staticTxnData);
-  
-  // Transform data to include ID for table
-  const transactions: Transaction[] = rawTransactions
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 50) // Show more transactions for table
-    .map((transaction, index) => ({
-      id: `txn-${index}`,
-      ...transaction
-    }));
+  // Parse the CSV data and get recent transactions - memoize this to prevent re-parsing
+  const transactions: Transaction[] = React.useMemo(() => {
+    const rawTransactions = parseTransactionData(staticTxnData);
+    
+    return rawTransactions
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 50)
+      .map((transaction, index) => ({
+        id: `txn-${index}`,
+        ...transaction
+      }));
+  }, []);
 
-  const columns: ColumnDef<Transaction>[] = [
+  // Memoize columns to prevent recreation on every render
+  const columns: ColumnDef<Transaction>[] = React.useMemo(() => [
     {
       id: "select",
       header: ({ table }) => (
         <Checkbox
           checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() ? "indeterminate" : false)
+            table.getIsAllPageRowsSelected()
+              ? true
+              : table.getIsSomePageRowsSelected()
+              ? "indeterminate"
+              : false
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
@@ -203,7 +208,7 @@ export function TransactionCard() {
         )
       },
     },
-  ]
+  ], []);
 
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -226,6 +231,11 @@ export function TransactionCard() {
       columnFilters,
       columnVisibility,
       rowSelection,
+    },
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
     },
   })
 
