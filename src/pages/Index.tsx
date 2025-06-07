@@ -38,7 +38,7 @@ const Index = () => {
       {/* Header with Reset and Logout buttons */}
       <AppHeader />
       
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 mb-8">
         {/* Header with Logo */}
         <div className="flex justify-center items-center">
           <img 
