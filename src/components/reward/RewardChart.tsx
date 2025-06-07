@@ -132,6 +132,7 @@ export function RewardChart({ data }: RewardChartProps) {
             <ChartTooltipContent
               formatter={(value, name, props) => {
                 console.log('Tooltip formatter called:', { value, name, props });
+                console.log('Item color:', props?.color, 'Payload fill:', props?.payload?.fill);
                 const numValue = Number(value);
                 
                 // Don't show zero values
@@ -156,6 +157,7 @@ export function RewardChart({ data }: RewardChartProps) {
                 return `${label} ${numValue.toLocaleString()} pts`;
               }}
               indicator="dot"
+              hideIndicator={false}
               labelFormatter={(label) => formatDateForDisplay(String(label))}
             />
           }
