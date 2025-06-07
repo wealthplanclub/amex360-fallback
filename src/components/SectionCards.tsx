@@ -31,13 +31,17 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
   }, [])
 
   // Filter transactions based on selected time range
-  const getFilteredTransactions = React.useMemo(() => {
+  const filteredTransactions = React.useMemo(() => {
     const allTransactions = parseTransactionData(staticTxnData);
+    
+    console.log("SectionCards - selectedTimeRange:", selectedTimeRange);
+    console.log("SectionCards - all transactions count:", allTransactions.length);
     
     if (!allTransactions.length) return allTransactions;
     
     // Get the latest date from the data
     const latestDate = allTransactions[allTransactions.length - 1].date;
+    console.log("SectionCards - latest date:", latestDate);
     
     let startDate: string;
     const today = new Date(latestDate);
@@ -61,24 +65,31 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       startDate = allTransactions[0].date;
     }
     
-    return allTransactions.filter(transaction => transaction.date >= startDate);
+    console.log("SectionCards - start date:", startDate);
+    
+    const filtered = allTransactions.filter(transaction => transaction.date >= startDate);
+    console.log("SectionCards - filtered transactions count:", filtered.length);
+    
+    return filtered;
   }, [selectedTimeRange]);
 
-  // Parse the CSV data and calculate totals for the filtered period
-  const transactions = getFilteredTransactions;
-  const totalExpenses = transactions
+  // Calculate totals for the filtered period
+  const totalExpenses = filteredTransactions
     .filter(transaction => transaction.amount < 0)
     .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
   
-  const totalCredits = transactions
+  const totalCredits = filteredTransactions
     .filter(transaction => transaction.amount > 0)
     .reduce((sum, transaction) => sum + transaction.amount, 0);
+
+  console.log("SectionCards - total expenses:", totalExpenses);
+  console.log("SectionCards - total credits:", totalCredits);
 
   // Calculate payments to expenses ratio
   const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
   // Calculate top card spend
-  const cardExpenses = transactions
+  const cardExpenses = filteredTransactions
     .filter(transaction => transaction.amount < 0)
     .reduce((acc, transaction) => {
       const account = transaction.account;
