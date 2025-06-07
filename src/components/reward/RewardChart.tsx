@@ -1,5 +1,3 @@
-
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -10,20 +8,16 @@ import {
 
 const chartConfig = {
   totalPoints: {
-    label: "Total:",
+    label: "Total Points",
     color: "hsl(var(--chart-1))",
   },
   employeePoints: {
-    label: "Employee:",
+    label: "Employee Card Points",
     color: "hsl(var(--chart-2))",
   },
   referralPoints: {
-    label: "Referral:",
+    label: "Referral Points",
     color: "hsl(var(--chart-3))",
-  },
-  welcome: {
-    label: "Welcome:",
-    color: "hsl(var(--chart-4))",
   },
 } satisfies ChartConfig
 
@@ -33,7 +27,6 @@ interface RewardChartProps {
     totalPoints: number
     employeePoints: number
     referralPoints: number
-    welcome: number
   }>
 }
 
@@ -85,18 +78,6 @@ export function RewardChart({ data }: RewardChartProps) {
               stopOpacity={0.1}
             />
           </linearGradient>
-          <linearGradient id="fillWelcome" x1="0" y1="0" x2="0" y2="1">
-            <stop
-              offset="5%"
-              stopColor="var(--color-welcome)"
-              stopOpacity={0.8}
-            />
-            <stop
-              offset="95%"
-              stopColor="var(--color-welcome)"
-              stopOpacity={0.1}
-            />
-          </linearGradient>
         </defs>
         <CartesianGrid vertical={false} />
         <XAxis
@@ -119,44 +100,17 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              labelFormatter={(value) => {
-                return new Date(value).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
+              formatter={(value, name) => {
+                const config = chartConfig[name as keyof typeof chartConfig];
+                const label = config?.label || name;
+                return [
+                  `${Number(value).toLocaleString()} pts`,
+                  label
+                ];
               }}
               indicator="dot"
-              formatter={(value, name, item, index, payload) => {
-                // Filter out zero values
-                if (value === 0) return null
-                
-                // Check if there are multiple non-zero point types
-                const nonZeroValues = Array.isArray(payload) ? payload.filter(p => 
-                  p.dataKey !== 'totalPoints' && Number(p.value) > 0
-                ).length : 0
-                
-                // Only show total if there are multiple point types
-                if (name === 'totalPoints' && nonZeroValues <= 1) {
-                  return null
-                }
-                
-                return [
-                  <span className="font-mono font-medium tabular-nums text-foreground">
-                    {value.toLocaleString()}
-                  </span>,
-                  name
-                ]
-              }}
             />
           }
-        />
-        <Area
-          dataKey="welcome"
-          type="monotone"
-          fill="url(#fillWelcome)"
-          stroke="var(--color-welcome)"
-          strokeWidth={1}
-          stackId="a"
         />
         <Area
           dataKey="referralPoints"
@@ -185,4 +139,3 @@ export function RewardChart({ data }: RewardChartProps) {
     </ChartContainer>
   )
 }
-
