@@ -42,7 +42,7 @@ const chartConfig = {
 
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile()
-  const [timeRange, setTimeRange] = React.useState("90d")
+  const [timeRange, setTimeRange] = React.useState("ytd")
 
   React.useEffect(() => {
     if (isMobile) {
@@ -137,7 +137,7 @@ export function ChartAreaInteractive() {
               className="flex w-40 md:hidden"
               aria-label="Select a value"
             >
-              <SelectValue placeholder="Last 90 days" />
+              <SelectValue placeholder="YTD" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
               <SelectItem value="ytd" className="rounded-lg">
