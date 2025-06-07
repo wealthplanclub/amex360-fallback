@@ -23,6 +23,9 @@ export function CardAccounts({
   selectedTimeRange = "ytd",
   transactionDropdownSelection = "all"
 }: CardAccountsProps) {
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  const [previousSelection, setPreviousSelection] = React.useState(transactionDropdownSelection);
+
   const allCardData = React.useMemo(() => {
     return processCardData(staticTxnData, selectedTimeRange);
   }, [selectedTimeRange]);
@@ -39,6 +42,21 @@ export function CardAccounts({
     
     return allCardData.filter(card => card.fullName === transactionDropdownSelection);
   }, [allCardData, transactionDropdownSelection]);
+
+  // Handle animation when selection changes
+  React.useEffect(() => {
+    if (previousSelection !== transactionDropdownSelection) {
+      setIsAnimating(true);
+      setPreviousSelection(transactionDropdownSelection);
+      
+      // Reset animation state after transition completes
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 300);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [transactionDropdownSelection, previousSelection]);
 
   // Calculate dynamic height based on filtered card count
   const dynamicHeight = React.useMemo(() => {
@@ -78,13 +96,24 @@ export function CardAccounts({
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4 pb-6">
             {cardData.map((card, index) => (
-              <CardAccountItem
+              <div
                 key={card.fullName}
-                card={card}
-                index={index}
-                onCardClick={handleCardClick}
-                isSelected={getSelectedCard(card)}
-              />
+                className={`transition-all duration-300 ease-in-out ${
+                  isAnimating 
+                    ? 'opacity-0 transform translate-y-2' 
+                    : 'opacity-100 transform translate-y-0'
+                }`}
+                style={{
+                  transitionDelay: isAnimating ? '0ms' : `${index * 50}ms`
+                }}
+              >
+                <CardAccountItem
+                  card={card}
+                  index={index}
+                  onCardClick={handleCardClick}
+                  isSelected={getSelectedCard(card)}
+                />
+              </div>
             ))}
           </div>
         </ScrollArea>
