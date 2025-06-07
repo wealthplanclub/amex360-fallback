@@ -161,8 +161,6 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           stroke="var(--color-welcome)"
           strokeWidth={1}
           stackId="a"
-          dot={{ fill: "#00175a", strokeWidth: 2, r: 4 }}
-          activeDot={{ r: 6, fill: "#00175a" }}
         />
         <Area
           dataKey="referralPoints"
@@ -171,8 +169,6 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           stroke="var(--color-referralPoints)"
           strokeWidth={1}
           stackId="a"
-          dot={{ fill: "#00175a", strokeWidth: 2, r: 4 }}
-          activeDot={{ r: 6, fill: "#00175a" }}
         />
         <Area
           dataKey="employeePoints"
@@ -181,8 +177,6 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           stroke="var(--color-employeePoints)"
           strokeWidth={1}
           stackId="a"
-          dot={{ fill: "#00175a", strokeWidth: 2, r: 4 }}
-          activeDot={{ r: 6, fill: "#00175a" }}
         />
         <Area
           dataKey="totalPoints"
@@ -190,8 +184,6 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
           fill="url(#fillTotal)"
           stroke="var(--color-totalPoints)"
           strokeWidth={1}
-          dot={{ fill: "#00175a", strokeWidth: 2, r: 4 }}
-          activeDot={{ r: 6, fill: "#00175a" }}
         />
       </AreaChart>
     </ChartContainer>
