@@ -23,7 +23,7 @@ export function TransactionCardHeader({
   onClearTimeRangeFilter,
   filters
 }: TransactionCardHeaderProps) {
-  const hasActiveFilter = selectedDate || hasStatCardFilter || (selectedTimeRange && selectedTimeRange !== "ytd")
+  const hasActiveFilter = selectedDate || hasStatCardFilter || (selectedTimeRange && selectedTimeRange !== "ytd") || (filters.selectedCard && filters.selectedCard !== "all")
 
   const getTimeRangeLabel = (range: string) => {
     switch (range) {
@@ -38,9 +38,12 @@ export function TransactionCardHeader({
   const getStatCardFilterLabel = () => {
     if (filters.expenseFilter) return "Expenses"
     if (filters.creditFilter) return "Credits"
-    if (filters.topCardFilter) return "Top card expenses"
-    if (filters.lowestCardFilter) return "Lowest card expenses"
     return ""
+  }
+
+  const getCardDisplayName = (cardName: string) => {
+    if (cardName === 'BUSINESS_GREEN_COMBINED') return 'Business Green'
+    return cardName.replace(/\b(card|Rewards)\b/gi, '').trim()
   }
 
   return (
@@ -73,7 +76,23 @@ export function TransactionCardHeader({
           </span>
         </div>
       )}
-      {selectedTimeRange && selectedTimeRange !== "ytd" && !hasStatCardFilter && onClearTimeRangeFilter && (
+      {filters.selectedCard && filters.selectedCard !== "all" && !hasStatCardFilter && (
+        <div className="mt-2">
+          <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+            Filtered by: {getCardDisplayName(filters.selectedCard)}, {getTimeRangeLabel(selectedTimeRange || "ytd")}
+            <button 
+              onClick={onClearStatCardFilter}
+              className="hover:bg-gray-200 rounded p-0.5"
+              title="Clear card filter"
+            >
+              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </span>
+        </div>
+      )}
+      {selectedTimeRange && selectedTimeRange !== "ytd" && !hasStatCardFilter && (!filters.selectedCard || filters.selectedCard === "all") && onClearTimeRangeFilter && (
         <TimeRangeFilterIndicator
           timeRange={selectedTimeRange}
           onClear={onClearTimeRangeFilter}

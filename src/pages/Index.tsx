@@ -1,4 +1,3 @@
-
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -30,30 +29,28 @@ const Index = () => {
       updateMultipleFilters({
         expenseFilter: true,
         creditFilter: undefined,
-        topCardFilter: undefined,
-        lowestCardFilter: undefined
+        selectedCard: "all" // Reset card selection to show all cards for expenses
       });
     } else if (cardType === "credits") {
       // Clear any previous stat card filters and add credit filter
       updateMultipleFilters({
         expenseFilter: undefined,
         creditFilter: true,
-        topCardFilter: undefined,
-        lowestCardFilter: undefined
+        selectedCard: "all" // Reset card selection to show all cards for credits
       });
     } else if (cardType === "top-card" && topCardAccount) {
+      // Set the card filter to the top card account and clear other stat filters
       updateMultipleFilters({
         expenseFilter: undefined,
         creditFilter: undefined,
-        topCardFilter: topCardAccount,
-        lowestCardFilter: undefined
+        selectedCard: topCardAccount
       });
     } else if (cardType === "lowest-card" && topCardAccount) {
+      // Set the card filter to the lowest card account and clear other stat filters
       updateMultipleFilters({
         expenseFilter: undefined,
         creditFilter: undefined,
-        topCardFilter: undefined,
-        lowestCardFilter: topCardAccount
+        selectedCard: topCardAccount
       });
     }
   };
@@ -62,8 +59,7 @@ const Index = () => {
     updateMultipleFilters({
       expenseFilter: undefined,
       creditFilter: undefined,
-      topCardFilter: undefined,
-      lowestCardFilter: undefined
+      selectedCard: "all"
     });
   };
 
