@@ -165,7 +165,15 @@ export function ChartAreaInteractive() {
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <AreaChart data={filteredData}>
+          <AreaChart 
+            data={filteredData}
+            margin={{
+              top: 10,
+              right: 10,
+              left: 10,
+              bottom: 20,
+            }}
+          >
             <defs>
               <linearGradient id="fillTotalSpend" x1="0" y1="0" x2="0" y2="1">
                 <stop
