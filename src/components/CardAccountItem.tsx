@@ -7,31 +7,21 @@ interface CardAccountItemProps {
   card: CardData;
   index: number;
   selectedCard?: string | null;
-  onCardClick: (cardName: string) => void;
 }
 
-export function CardAccountItem({ card, index, selectedCard, onCardClick }: CardAccountItemProps) {
-  const handleClick = () => {
-    if (card.name === 'Business Green\n(-2007)') {
-      onCardClick('BUSINESS_GREEN_COMBINED');
-    } else {
-      onCardClick(card.fullName);
-    }
-  };
-
+export function CardAccountItem({ card, index, selectedCard }: CardAccountItemProps) {
   const isSelected = selectedCard === card.fullName || 
     (selectedCard === 'BUSINESS_GREEN_COMBINED' && card.name === 'Business Green\n(-2007)');
 
   return (
     <Card 
-      className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in ${
+      className={`bg-gradient-to-b from-white to-gray-50 transition-all animate-fade-in ${
         isSelected ? 'bg-accent' : ''
       }`}
       style={{
         animationDelay: `${index * 100}ms`,
         animationFillMode: 'both'
       }}
-      onClick={handleClick}
     >
       <CardContent className="p-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

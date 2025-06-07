@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -18,15 +17,8 @@ const Index = () => {
   
   const isMobile = useIsMobile();
 
-  // State to track which card was clicked from CardAccounts
+  // State to track which card was selected from the transaction dropdown
   const [cardAccountSelection, setCardAccountSelection] = useState<string | null>(null);
-
-  const handleCardAccountClick = (cardName: string) => {
-    console.log("Card account clicked:", cardName);
-    setCardAccountSelection(cardName);
-    // Clear stat card filter when manually selecting a card
-    setStatCardFilter(null);
-  };
 
   const handleDateClick = (date: string) => {
     setSelectedDate(date);
@@ -110,6 +102,7 @@ const Index = () => {
             <div className="lg:col-span-2">
               <TransactionCard 
                 cardAccountSelection={cardAccountSelection}
+                onCardAccountSelectionChange={setCardAccountSelection}
                 selectedDate={selectedDate}
                 onClearDateFilter={clearDateFilter}
                 statCardFilter={statCardFilter}
@@ -120,7 +113,6 @@ const Index = () => {
             </div>
             <div className="lg:col-span-1">
               <CardAccounts 
-                onCardClick={handleCardAccountClick} 
                 cardAccountSelection={cardAccountSelection}
                 selectedTimeRange={selectedTimeRange}
               />
