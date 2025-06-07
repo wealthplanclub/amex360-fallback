@@ -7,14 +7,17 @@ interface DateFilterIndicatorProps {
 }
 
 export function DateFilterIndicator({ selectedDate, onClear }: DateFilterIndicatorProps) {
+  // Parse ISO date string directly without timezone conversion
+  const [year, month, day] = selectedDate.split('-').map(Number);
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+  const formattedDate = `${monthNames[month - 1]} ${day}, ${year}`;
+
   return (
     <div className="mt-2">
       <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-md">
-        Filtered by: {new Date(selectedDate).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric"
-        })}
+        Filtered by: {formattedDate}
         <button 
           onClick={onClear}
           className="hover:bg-blue-200 rounded p-0.5"
