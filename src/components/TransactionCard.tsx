@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -218,7 +219,7 @@ export function TransactionCard() {
   })
 
   return (
-    <Card className="bg-white">
+    <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
         <CardDescription className="mb-0">
