@@ -413,7 +413,6 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/27/2025	Tiller* Trial Over Winthrop WA	-$79.00	Blue Business Plus Card (-1009)	
 4/27/2025	Adero Scottsdale, Auscottsdale AZ	-$320.52	Bonvoy Business Amex Card (-1009)	
 4/27/2025	Twilio Inc San Francisco CA	-$20.99	Business Gold Card (-1000)	SuperPhone
-4/27/2025	Facebk *nq46hm4nd2 Fb.me/ads CA	-$8.58	Business Green Rewards Card (-1009)	
 4/27/2025	Twilio Inc San Francisco CA	-$591.18	Business Platinum Card (-2007)	SuperPhone
 4/27/2025	D J*wsj Online x-x-7625 NJ	-$7.62	Charles Schwab Platinum Card (-1000)	
 4/27/2025	Uber Trip help.uber.com CA	-$81.79	Charles Schwab Platinum Card (-1000)	
@@ -475,7 +474,6 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/20/2025	Twilio Inc San Francisco CA	-$600.18	Business Gold Card (-2008)	SuperPhone
 4/20/2025	Www.whalesync.com Miami FL	-$39.00	Business Gold Card (-2008)	
 4/20/2025	Online Payment - Thank You	$8,346.00	Business Gold Card (-2008)	
-4/20/2025	Paypal *twentyfoura x7733 NY	-$1,000.00	Business Green Rewards Card (-1009)	
 4/20/2025	Online Payment - Thank You	$617.40	Business Platinum Card (-2007)	
 4/20/2025	Delta Air Lines Atlanta	-$5.60	Delta SkyMiles Reserve Card (-1006)	
 4/20/2025	Delta Air Lines Atlanta	$5.60	Delta SkyMiles Reserve Card (-1006)	
@@ -502,14 +500,12 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/18/2025	Online Payment - Thank You	$530.78	Blue Business Plus Card (-1009)	
 4/18/2025	Twilio Inc San Francisco CA	-$23.22	Business Gold Card (-1000)	SuperPhone
 4/18/2025	Twilio Inc San Francisco CA	-$605.93	Business Gold Card (-2008)	SuperPhone
-4/18/2025	Facebk *sy3r7pqmd2 Fb.me/ads CA	-$5.00	Business Green Rewards Card (-1009)	
 4/18/2025	Online Payment - Thank You	$4,495.00	Platinum Card (-1003)	
 4/18/2025	Facebk *sy3r7pqmd2 Fb.me/ads CA	-$5.00	Business Green Rewards Card (-2007)	
 4/17/2025	Topsteptrader Llc Chicago IL	-$99.00	Blue Business Plus Card (-1009)	
 4/17/2025	Twilio Inc San Francisco CA	-$20.01	Business Gold Card (-1000)	SuperPhone
 4/17/2025	Twilio Inc San Francisco CA	-$590.47	Business Gold Card (-2008)	SuperPhone
 4/17/2025	Online Payment - Thank You	$4,182.29	Business Gold Card (-2008)	
-4/17/2025	Facebk *lpumvl4nd2 Menlo Park	-$5.97	Business Green Rewards Card (-1009)	
 4/17/2025	Be More Do More App Glendale CA	-$2,329.84	Business Platinum Card (-2007)	
 4/17/2025	Anthropologie 00423scottsdale AZ	-$30.41	Platinum Card (-1003)	
 4/17/2025	Facebk *lpumvl4nd2 Menlo Park	-$5.97	Business Green Rewards Card (-2007)	
@@ -542,8 +538,6 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/14/2025	Online Payment - Thank You	$3,300.00	Business Gold Card (-1002)	
 4/14/2025	Twilio Inc San Francisco CA	-$591.30	Business Gold Card (-2008)	SuperPhone
 4/14/2025	Twilio Inc San Francisco CA	-$674.14	Business Gold Card (-2008)	SuperPhone
-4/14/2025	Paypal *finks Llc x7733 AZ	-$595.35	Business Green Rewards Card (-1009)	
-4/14/2025	Online Payment - Thank You	$1,025.00	Business Green Rewards Card (-1009)	
 4/14/2025	Paypal *twentyfoura x7733 NY	-$1,000.00	Business Platinum Card (-2007)	
 4/14/2025	Uber Trip help.uber.com CA	-$16.75	Charles Schwab Platinum Card (-1000)	
 4/14/2025	Tst* Zona Cantina Anmesa AZ	-$145.29	Platinum Card (-1003)	
@@ -557,7 +551,6 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/13/2025	Twilio Inc San Francisco CA	-$21.85	Business Gold Card (-1000)	SuperPhone
 4/13/2025	Twilio Inc San Francisco CA	-$591.34	Business Gold Card (-2008)	SuperPhone
 4/13/2025	Online Payment - Thank You	$3,316.73	Business Gold Card (-2008)	
-4/13/2025	Online Payment - Thank You	$595.35	Business Green Rewards Card (-1009)	
 4/13/2025	Hlu*huluplus Hulu.com/bill CA	-$9.99	Platinum Card (-1003)	
 4/13/2025	Online Payment - Thank You	$595.35	Business Green Rewards Card (-2007)	
 4/12/2025	Online Payment - Thank You	$4,599.38	Amazon Business Prime Card (-2003)	
@@ -580,7 +573,6 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 4/11/2025	Online Payment - Thank You	$3,897.15	Business Gold Card (-1000)	
 4/11/2025	Online Payment - Thank You	$832.46	Business Gold Card (-1000)	
 4/11/2025	Twilio Inc San Francisco CA	-$592.25	Business Gold Card (-2008)	SuperPhone
-4/11/2025	Paypal *LINDAJANEKANx7733 De	-$1,445.89	Business Green Rewards Card (-1009)	
 4/11/2025	Paypal *LINDAJANEKANx7733 De	-$1,445.89	Business Green Rewards Card (-2007)	
 4/10/2025	Whole Foods Market Chandler AZ	-$56.59	Amazon Business Prime Card (-2003)	
 4/10/2025	Sls Hotel at Beverlylos Angeles CA	-$5,561.02	Bonvoy Business Amex Card (-1009)	
@@ -744,7 +736,6 @@ export const staticTxnData = `Date	Description	Amount	Account	Category
 3/26/2025	Twilio Inc San Francisco CA	-$603.54	Business Gold Card (-2008)	SuperPhone
 3/26/2025	Online Payment - Thank You	$490.07	Business Gold Card (-2008)	
 3/26/2025	Online Payment - Thank You	$2,192.92	Business Gold Card (-2008)	
-3/26/2025	Topsteptrader Llc Chicago IL	-$49.00	Business Green Rewards Card (-1009)	
 3/26/2025	Paypal *wolt x4307 De	-$24.57	Business Platinum Card (-2007)	
 3/26/2025	Topsteptrader Llc Chicago IL	-$49.00	Business Green Rewards Card (-2007)	
 3/25/2025	Twilio Inc San Francisco CA	-$201.14	Business Gold Card (-1000)	SuperPhone
