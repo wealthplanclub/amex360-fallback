@@ -19,10 +19,13 @@ export function CardAccountItem({ card, index, selectedCard, onCardClick }: Card
     }
   };
 
+  const isSelected = selectedCard === card.fullName || 
+    (selectedCard === 'BUSINESS_GREEN_COMBINED' && card.name === 'Business Green\n(-2007)');
+
   return (
     <Card 
       className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in ${
-        selectedCard === card.fullName ? 'bg-accent' : ''
+        isSelected ? 'ring-2 ring-primary bg-accent' : ''
       }`}
       style={{
         animationDelay: `${index * 100}ms`,

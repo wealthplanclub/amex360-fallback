@@ -38,14 +38,32 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
     return cardData.filter(card => card.fullName === selectedCard);
   }, [cardData, selectedCard]);
 
+  // Calculate dynamic height based on filtered card count
+  const dynamicHeight = React.useMemo(() => {
+    const baseHeight = 200; // Minimum height for header and padding
+    const cardHeight = 120; // Approximate height per card including spacing
+    const maxHeight = 830; // Original maximum height
+    
+    const calculatedHeight = baseHeight + (filteredCardData.length * cardHeight);
+    return Math.min(calculatedHeight, maxHeight);
+  }, [filteredCardData.length]);
+
   const handleCardClick = (cardName: string) => {
     if (onCardClick) {
-      onCardClick(cardName);
+      // If the clicked card is already selected, toggle it off (show all cards)
+      if (selectedCard === cardName) {
+        onCardClick("all");
+      } else {
+        onCardClick(cardName);
+      }
     }
   };
 
   return (
-    <Card className="bg-gradient-to-b from-white to-gray-100 h-[830px] flex flex-col">
+    <Card 
+      className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
+      style={{ height: `${dynamicHeight}px` }}
+    >
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Accounts</CardTitle>
         <CardDescription>
