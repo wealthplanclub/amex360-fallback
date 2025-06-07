@@ -62,7 +62,8 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
     const dailySpending = transactions
       .filter(transaction => transaction.amount < 0) // Only expenses
       .reduce((acc, transaction) => {
-        const date = new Date(transaction.date).toISOString().split('T')[0]
+        // Use the date string directly to avoid timezone issues
+        const date = transaction.date.split('T')[0] // Get YYYY-MM-DD format
         if (!acc[date]) {
           acc[date] = 0
         }
@@ -118,6 +119,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
   const handleChartClick = (data: any) => {
     if (data && data.activePayload && data.activePayload[0] && onDateClick) {
       const clickedDate = data.activePayload[0].payload.date;
+      console.log("Chart clicked date:", clickedDate);
       onDateClick(clickedDate);
     }
   };
@@ -199,7 +201,8 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                const date = new Date(value)
+                // Use the date string directly to avoid timezone conversion
+                const date = new Date(value + 'T00:00:00')
                 return date.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -212,7 +215,9 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                    // Use the date string directly to avoid timezone conversion
+                    const date = new Date(value + 'T00:00:00')
+                    return date.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
