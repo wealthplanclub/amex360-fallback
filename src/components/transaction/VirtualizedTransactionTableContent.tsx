@@ -104,13 +104,14 @@ export function VirtualizedTransactionTableContent({
           ))}
         </TableHeader>
       </Table>
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <List
           height={600}
           width="100%"
           itemCount={rows.length}
           itemSize={ROW_HEIGHT}
           itemData={{ rows, columns }}
+          style={{ overflow: 'auto' }}
         >
           {Row}
         </List>
