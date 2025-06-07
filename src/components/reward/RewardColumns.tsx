@@ -72,7 +72,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       },
       cell: ({ row }) => {
         const points = row.getValue("points") as number
-        return <div className="text-right font-medium" style={{ color: '#006fcf' }}>+{points.toLocaleString()}</div>
+        return <div className="text-right font-medium" style={{ color: '#00175a' }}>+{points.toLocaleString()}</div>
       },
     },
   ]
