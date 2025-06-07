@@ -22,7 +22,7 @@ const menuItems = [
   {
     title: "Rewards",
     icon: Award,
-    url: "#",
+    url: "/rewards",
   },
   {
     title: "Cards",

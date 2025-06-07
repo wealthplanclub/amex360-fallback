@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,8 +8,9 @@ import Lottie from "lottie-react";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
-// Lazy load the dashboard to completely separate it from the auth bundle
+// Lazy load the dashboard and rewards to completely separate them from the auth bundle
 const Dashboard = lazy(() => import("./pages/Index"));
+const Rewards = lazy(() => import("./pages/Rewards"));
 
 const queryClient = new QueryClient();
 
@@ -84,6 +84,14 @@ const App = () => {
                     {dashboardReady && <Dashboard />}
                   </Suspense>
                 )
+              } 
+            />
+            <Route 
+              path="/rewards" 
+              element={
+                <Suspense fallback={null}>
+                  <Rewards />
+                </Suspense>
               } 
             />
             <Route path="*" element={<NotFound />} />
