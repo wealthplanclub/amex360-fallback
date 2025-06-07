@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import * as React from "react"
@@ -103,9 +104,15 @@ export function ChartAreaInteractive() {
 
   // Calculate the Y-axis domain based on filtered data
   const yAxisDomain = React.useMemo(() => {
-    if (filteredData.length === 0) return [0, 100]
+    if (filteredData.length === 0) return [-10, 100]
     const maxValue = Math.max(...filteredData.map(item => item.totalSpend))
-    return [0, Math.ceil(maxValue * 1.1)] // Add 10% padding above the max value
+    const minValue = Math.min(...filteredData.map(item => item.totalSpend))
+    
+    // Add 10% padding above the max value and below zero
+    const upperBound = Math.ceil(maxValue * 1.1)
+    const lowerBound = Math.min(-10, minValue * 0.1) // At least -10 for padding below zero
+    
+    return [lowerBound, upperBound]
   }, [filteredData])
 
   const totalSpendForPeriod = filteredData.reduce((sum, item) => sum + item.totalSpend, 0)
@@ -120,10 +127,10 @@ export function ChartAreaInteractive() {
   }
 
   return (
-    <Card className="bg-gradient-to-b from-white to-gray-100">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <div className="space-y-1">
-          <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
+    <Card className="pt-0">
+      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
+        <div className="grid flex-1 gap-1">
+          <CardTitle>Daily Spend by Time Period</CardTitle>
           <CardDescription>
             Average daily spend ({getTimeRangeLabel()}): ${averageDailySpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </CardDescription>
@@ -168,7 +175,7 @@ export function ChartAreaInteractive() {
         </div>
       </CardHeader>
 
-      <CardContent className="px-2 sm:px-6">
+      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
@@ -245,3 +252,4 @@ export function ChartAreaInteractive() {
     </Card>
   )
 }
+
