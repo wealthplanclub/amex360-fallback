@@ -73,6 +73,14 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
 
+        {/* CreditMax Section */}
+        <SidebarGroup>
+          <SidebarGroupLabel>CREDITMAX</SidebarGroupLabel>
+          <SidebarMenu>
+            {/* This section can be populated with CreditMax specific items */}
+          </SidebarMenu>
+        </SidebarGroup>
+
         {/* Account Section */}
         <SidebarGroup>
           <SidebarGroupLabel>Account</SidebarGroupLabel>
