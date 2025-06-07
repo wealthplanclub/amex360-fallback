@@ -1,11 +1,12 @@
-
 import { useMemo } from 'react'
 import { rewardFilterService } from '@/services/rewardFilterService'
 import { FilterState } from '@/hooks/useFilterState'
 
 export function useRewardChartData(filters: FilterState) {
   return useMemo(() => {
-    const rewards = rewardFilterService.getFilteredRewards(filters)
+    // For chart data, we ignore the selectedDate filter to keep showing the full time range
+    const chartFilters = { ...filters, selectedDate: undefined }
+    const rewards = rewardFilterService.getFilteredRewards(chartFilters)
     
     // Group rewards by date
     const dailyData = rewards.reduce((acc, reward) => {
