@@ -12,7 +12,6 @@ import {
   SortingState,
   useReactTable,
   VisibilityState,
-  GlobalFilterState,
 } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronDown } from "lucide-react"
 
