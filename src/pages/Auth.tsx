@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -61,7 +60,7 @@ const Auth = () => {
               />
             </div>
             <Button type="submit" className="w-full">
-              {isLogin ? "Sign In" : "Sign Up"}
+              {isLogin ? "Log In" : "Sign Up"}
             </Button>
           </form>
           <div className="mt-4 text-center">
@@ -80,4 +79,3 @@ const Auth = () => {
 };
 
 export default Auth;
-
