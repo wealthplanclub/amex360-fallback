@@ -1,5 +1,4 @@
 
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -216,6 +215,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
               <CardTitle 
                 key={`${card.title}-${numbersKey}`}
                 className="text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out animate-fade-in"
+                style={{
+                  animationDelay: `${index * 200}ms`
+                }}
               >
                 ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </CardTitle>
@@ -240,4 +242,3 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     </div>
   )
 }
-
