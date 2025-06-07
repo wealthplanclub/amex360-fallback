@@ -1,4 +1,3 @@
-
 import React from "react"
 import { ChartNoAxesColumn, Award, CreditCard, Settings, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -25,7 +24,7 @@ const menuItems = [
     url: "/rewards",
   },
   {
-    title: "Cards",
+    title: "Employee Cards",
     icon: CreditCard,
     url: "#",
   },
