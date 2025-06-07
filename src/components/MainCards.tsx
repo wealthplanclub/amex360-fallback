@@ -1,14 +1,13 @@
-
 import * as React from "react"
 import { useTransactionCalculations } from "@/hooks/useTransactionCalculations"
 import { generateCardData } from "@/utils/statCardUtils"
 import { StatCard } from "@/components/StatCard"
 
-interface SectionCardsProps {
+interface MainCardsProps {
   selectedTimeRange: string;
 }
 
-export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
+export function MainCards({ selectedTimeRange }: MainCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const [numbersKey, setNumbersKey] = React.useState(0)
 

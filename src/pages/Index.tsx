@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { SectionCards } from "@/components/SectionCards";
+import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
@@ -73,9 +73,9 @@ const Index = () => {
           />
         </div>
         
-        {/* Section Cards */}
+        {/* Main Cards */}
         <div className="mt-8">
-          <SectionCards selectedTimeRange={selectedTimeRange} />
+          <MainCards selectedTimeRange={selectedTimeRange} />
         </div>
 
         {/* Daily Spending Chart */}
