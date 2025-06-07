@@ -14,9 +14,10 @@ import { FilterState } from "@/hooks/useFilterState"
 interface RewardChartDisplayProps {
   filters: FilterState
   onTimeRangeChange: (timeRange: string) => void
+  onDateClick?: (date: string) => void
 }
 
-export function RewardChartDisplay({ filters, onTimeRangeChange }: RewardChartDisplayProps) {
+export function RewardChartDisplay({ filters, onTimeRangeChange, onDateClick }: RewardChartDisplayProps) {
   const chartData = useRewardChartData(filters)
 
   const getTimeRangeLabel = () => {
@@ -77,7 +78,7 @@ export function RewardChartDisplay({ filters, onTimeRangeChange }: RewardChartDi
         />
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <RewardChart data={chartData} />
+        <RewardChart data={chartData} onDateClick={onDateClick} />
       </CardContent>
     </Card>
   )

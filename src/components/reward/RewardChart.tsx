@@ -33,19 +33,28 @@ interface RewardChartProps {
     referralPoints: number
     welcome: number
   }>
+  onDateClick?: (date: string) => void
 }
 
-export function RewardChart({ data }: RewardChartProps) {
+export function RewardChart({ data, onDateClick }: RewardChartProps) {
   // Calculate the maximum value to set an optimal Y-axis domain
   const maxValue = Math.max(...data.map(d => d.totalPoints))
   const yAxisMax = maxValue > 0 ? Math.ceil(maxValue * 1.05) : 100
+
+  const handleChartClick = (chartData: any) => {
+    if (chartData && chartData.activePayload && chartData.activePayload[0] && onDateClick) {
+      const clickedDate = chartData.activePayload[0].payload.date;
+      console.log("Reward chart clicked, date:", clickedDate);
+      onDateClick(clickedDate);
+    }
+  }
 
   return (
     <ChartContainer
       config={chartConfig}
       className="aspect-auto h-[250px] w-full"
     >
-      <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+      <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }} onClick={handleChartClick}>
         <defs>
           <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
             <stop

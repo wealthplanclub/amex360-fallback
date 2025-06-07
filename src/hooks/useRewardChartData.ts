@@ -14,6 +14,7 @@ export function useRewardChartData(filters: FilterState) {
       if (!acc[dateKey]) {
         acc[dateKey] = {
           date: dateKey,
+          originalDate: dateKey, // Keep original ISO date for filtering
           totalPoints: 0,
           employeePoints: 0,
           referralPoints: 0,
@@ -40,13 +41,14 @@ export function useRewardChartData(filters: FilterState) {
     
     // Convert to array and sort by date
     const chartData = Object.values(dailyData).sort((a: any, b: any) => 
-      a.date.localeCompare(b.date)
+      a.originalDate.localeCompare(b.originalDate)
     )
     
     // Format date labels for display
     return chartData.map((item: any) => ({
       ...item,
-      date: new Date(item.date).toLocaleDateString('en-US', { 
+      date: item.originalDate, // Keep ISO date for click handling
+      displayDate: new Date(item.originalDate).toLocaleDateString('en-US', { 
         month: 'short', 
         day: 'numeric'
       })

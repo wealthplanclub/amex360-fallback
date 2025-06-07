@@ -33,6 +33,14 @@ const Rewards = () => {
     updateFilter('selectedCard', cardSelection);
   };
 
+  const handleDateClick = (date: string) => {
+    // When a specific date is selected, clear the time range filter
+    updateMultipleFilters({
+      selectedDate: date,
+      selectedTimeRange: undefined
+    });
+  };
+
   const clearDateFilter = () => {
     updateMultipleFilters({
       selectedDate: undefined,
@@ -49,7 +57,11 @@ const Rewards = () => {
   };
 
   const handleTimeRangeChange = (timeRange: string) => {
-    updateFilter('selectedTimeRange', timeRange);
+    // When a time range is selected, clear the specific date filter
+    updateMultipleFilters({
+      selectedTimeRange: timeRange,
+      selectedDate: undefined
+    });
   };
 
   const handleCardClick = (cardType: string, topCardAccount?: string) => {
@@ -96,6 +108,7 @@ const Rewards = () => {
             <RewardChartDisplay
               filters={filters}
               onTimeRangeChange={handleTimeRangeChange}
+              onDateClick={handleDateClick}
             />
           </div>
           
