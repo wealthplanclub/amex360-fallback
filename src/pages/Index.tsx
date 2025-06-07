@@ -50,7 +50,8 @@ const Index = () => {
             <img 
               src="https://i.imgur.com/1fFddP4.png" 
               alt="Amex Logo" 
-              className="w-full max-w-[235px] h-auto"
+              className="mx-auto"
+              style={{ width: '276px' }}
             />
           </div>
           <Button
