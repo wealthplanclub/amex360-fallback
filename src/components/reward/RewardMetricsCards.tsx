@@ -39,7 +39,7 @@ export function RewardMetricsCards({
       cardType: "total-rewards"
     },
     {
-      title: "Employee Card Rewards",
+      title: "Employee Card Bonus",
       value: calculations.employeeCardRewards,
       badge: `${calculations.employeeCardPercentage}%`,
       icon: Users,
@@ -49,7 +49,7 @@ export function RewardMetricsCards({
       cardType: "employee-rewards"
     },
     {
-      title: "Referral Rewards",
+      title: "Referral Bonus",
       value: calculations.referralRewards,
       badge: `${calculations.referralPercentage}%`,
       icon: UserPlus,
