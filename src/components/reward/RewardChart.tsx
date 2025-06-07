@@ -1,3 +1,4 @@
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -8,7 +9,7 @@ import {
 
 const chartConfig = {
   totalPoints: {
-    label: "Total points:",
+    label: "Total:",
     color: "hsl(var(--chart-1))",
   },
   employeePoints: {
@@ -100,11 +101,27 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              formatter={(value, name) => {
+              formatter={(value, name, props) => {
                 const config = chartConfig[name as keyof typeof chartConfig];
                 const label = config?.label || name;
+                const numValue = Number(value);
+                
+                // Don't show zero values
+                if (numValue === 0) {
+                  return null;
+                }
+                
+                // Only show total when there are both referral and employee points
+                if (name === 'totalPoints') {
+                  const hasEmployee = props.payload.employeePoints > 0;
+                  const hasReferral = props.payload.referralPoints > 0;
+                  if (!(hasEmployee && hasReferral)) {
+                    return null;
+                  }
+                }
+                
                 return [
-                  `${label} ${Number(value).toLocaleString()} pts`,
+                  `${label} ${numValue.toLocaleString()} pts`,
                   ""
                 ];
               }}
