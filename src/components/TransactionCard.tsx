@@ -13,15 +13,15 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, LayoutGrid, List, CreditCard } from "lucide-react"
+import { ArrowUpDown, ChevronDown } from "lucide-react"
 
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -49,8 +49,6 @@ export type Transaction = {
   account: string
   category: string
 }
-
-type CardView = "table" | "grid" | "compact"
 
 // Custom global filter function for descriptions and amounts
 const globalFilterFn = (row: any, columnId: string, value: string) => {
@@ -174,7 +172,6 @@ export function TransactionCard() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
-  const [cardView, setCardView] = React.useState<CardView>("table")
 
   const table = useReactTable({
     data: transactions,
@@ -201,12 +198,6 @@ export function TransactionCard() {
     },
   })
 
-  const cardViewOptions = [
-    { value: "table" as CardView, label: "Table View", icon: List },
-    { value: "grid" as CardView, label: "Grid View", icon: LayoutGrid },
-    { value: "compact" as CardView, label: "Compact View", icon: CreditCard },
-  ]
-
   return (
     <Card className="bg-white">
       <CardHeader className="pb-4">
@@ -227,26 +218,27 @@ export function TransactionCard() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
-                  Card View <ChevronDown />
+                  Columns <ChevronDown />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {cardViewOptions.map((option) => {
-                  const IconComponent = option.icon
-                  return (
-                    <DropdownMenuItem
-                      key={option.value}
-                      onClick={() => setCardView(option.value)}
-                      className="cursor-pointer"
-                    >
-                      <IconComponent className="mr-2 h-4 w-4" />
-                      {option.label}
-                      {cardView === option.value && (
-                        <span className="ml-auto">✓</span>
-                      )}
-                    </DropdownMenuItem>
-                  )
-                })}
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
