@@ -23,23 +23,6 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
     return processCardData(staticTxnData, selectedTimeRange);
   }, [selectedTimeRange]);
 
-  // Filter cards based on selection
-  const filteredCardData = React.useMemo(() => {
-    if (!selectedCard || selectedCard === "all") {
-      return cardData;
-    }
-    
-    // Handle special case for Business Green Combined
-    if (selectedCard === "BUSINESS_GREEN_COMBINED") {
-      return cardData.filter(card => 
-        card.name === 'Business Green\n(-2007)'
-      );
-    }
-    
-    // Filter by matching fullName
-    return cardData.filter(card => card.fullName === selectedCard);
-  }, [cardData, selectedCard]);
-
   const handleCardClick = (cardName: string) => {
     if (onCardClick) {
       onCardClick(cardName);
@@ -57,7 +40,7 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4 pb-6">
-            {filteredCardData.map((card, index) => (
+            {cardData.map((card, index) => (
               <CardAccountItem
                 key={card.fullName}
                 card={card}
