@@ -49,34 +49,20 @@ export function CardAccounts({
         return acc;
       }, {} as Record<string, number>);
 
-    // Process card data similar to the original processCardData function
+    // Process card data using default logic for all cards
     const cardData = Object.entries(cardExpenses)
-      .reduce((acc: any[], [account, amount]: [string, number]) => {
-        if (account.toLowerCase().includes('business green rewards')) {
-          const existingBusinessGreen = acc.find(card => card.name === 'Business Green\n(-2007)');
-          if (existingBusinessGreen) {
-            existingBusinessGreen.amount += amount;
-          } else {
-            acc.push({
-              name: 'Business Green\n(-2007)',
-              fullName: 'Business Green Rewards Combined',
-              amount
-            });
-          }
-        } else {
-          let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
-          if (account.toLowerCase().includes('amazon business prime')) {
-            displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
-          }
-          
-          acc.push({
-            name: displayName,
-            fullName: account,
-            amount
-          });
+      .map(([account, amount]: [string, number]) => {
+        let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
+        if (account.toLowerCase().includes('amazon business prime')) {
+          displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
         }
-        return acc;
-      }, [])
+        
+        return {
+          name: displayName,
+          fullName: account,
+          amount
+        };
+      })
       .sort((a, b) => b.amount - a.amount);
 
     return cardData;
@@ -86,10 +72,6 @@ export function CardAccounts({
   const cardData = React.useMemo(() => {
     if (transactionDropdownSelection === "all") {
       return allCardData;
-    }
-    
-    if (transactionDropdownSelection === 'BUSINESS_GREEN_COMBINED') {
-      return allCardData.filter(card => card.name === 'Business Green\n(-2007)');
     }
     
     return allCardData.filter(card => card.fullName === transactionDropdownSelection);
@@ -114,7 +96,6 @@ export function CardAccounts({
   // Determine which card is selected
   const getSelectedCard = (card: any) => {
     if (transactionDropdownSelection === "all") return false;
-    if (transactionDropdownSelection === 'BUSINESS_GREEN_COMBINED' && card.name === 'Business Green\n(-2007)') return true;
     return card.fullName === transactionDropdownSelection;
   };
 

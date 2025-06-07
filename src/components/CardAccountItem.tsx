@@ -16,12 +16,8 @@ export function CardAccountItem({ card, index, onCardClick, isSelected }: CardAc
       // If this card is already selected, toggle to "all"
       onCardClick('all');
     } else {
-      // If this card is not selected, select it
-      if (card.name === 'Business Green\n(-2007)') {
-        onCardClick('BUSINESS_GREEN_COMBINED');
-      } else {
-        onCardClick(card.fullName);
-      }
+      // If this card is not selected, select it using default logic
+      onCardClick(card.fullName);
     }
   };
 
