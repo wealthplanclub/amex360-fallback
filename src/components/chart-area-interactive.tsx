@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -113,7 +114,7 @@ export function ChartAreaInteractive() {
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div className="space-y-1">
           <CardTitle className="text-xl font-semibold">Daily Spend by Time Period</CardTitle>
           <CardDescription>
@@ -122,7 +123,7 @@ export function ChartAreaInteractive() {
         </div>
         
         {/* Time Range Selector */}
-        <div className="flex justify-end">
+        <div className="flex justify-start md:justify-end">
           <ToggleGroup
             type="single"
             value={timeRange}
