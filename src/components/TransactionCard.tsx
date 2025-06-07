@@ -16,7 +16,6 @@ import { TransactionTable } from "@/components/transaction/TransactionTable"
 
 interface TransactionCardProps {
   cardAccountSelection?: string | null;
-  onCardAccountSelectionChange?: (selection: string | null) => void;
   selectedDate?: string;
   onClearDateFilter?: () => void;
   statCardFilter?: {
@@ -31,7 +30,6 @@ interface TransactionCardProps {
 
 export function TransactionCard({ 
   cardAccountSelection,
-  onCardAccountSelectionChange,
   selectedDate, 
   onClearDateFilter,
   statCardFilter,
@@ -62,20 +60,11 @@ export function TransactionCard({
   const [selectedCard, setSelectedCard] = React.useState<string>("all")
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
 
-  // Handle card selection changes and notify parent
-  const handleCardChange = (card: string) => {
-    setSelectedCard(card);
-    if (onCardAccountSelectionChange) {
-      onCardAccountSelectionChange(card === "all" ? null : card);
-    }
-  };
-
-  // Sync internal state with external cardAccountSelection
+  // Handle card account selection from CardAccounts component
   React.useEffect(() => {
     if (cardAccountSelection) {
+      console.log("Card account selection received:", cardAccountSelection);
       setSelectedCard(cardAccountSelection);
-    } else {
-      setSelectedCard("all");
     }
   }, [cardAccountSelection]);
 
@@ -87,6 +76,10 @@ export function TransactionCard({
       setSelectedCard(statCardFilter.topCardAccount);
     }
   }, [statCardFilter]);
+
+  const handleCardChange = (card: string) => {
+    setSelectedCard(card);
+  };
 
   // Filter transactions using the custom hook
   const transactions = useTransactionFilters({
