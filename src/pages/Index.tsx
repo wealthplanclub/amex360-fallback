@@ -69,7 +69,11 @@ const Index = () => {
               />
             </div>
             <div className="lg:col-span-1">
-              <CardSpendGrid onCardClick={handleCardClick} selectedCard={selectedCard} />
+              <CardSpendGrid 
+                onCardClick={handleCardClick} 
+                selectedCard={selectedCard} 
+                selectedTimeRange={selectedTimeRange}
+              />
             </div>
           </div>
         </div>

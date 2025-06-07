@@ -1,4 +1,3 @@
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -13,9 +12,10 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 interface CardSpendGridProps {
   onCardClick?: (cardName: string) => void;
   selectedCard?: string;
+  selectedTimeRange?: string;
 }
 
-export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps) {
+export function CardSpendGrid({ onCardClick, selectedCard, selectedTimeRange = "ytd" }: CardSpendGridProps) {
   // Parse the CSV data and calculate totals per card
   const transactions = parseTransactionData(staticTxnData);
   
@@ -104,12 +104,21 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
     }
   };
 
+  // Get time range description
+  const getTimeRangeDescription = () => {
+    if (selectedTimeRange === "ytd") return "(YTD)";
+    if (selectedTimeRange === "90d") return "(90d)";
+    if (selectedTimeRange === "30d") return "(30d)";
+    if (selectedTimeRange === "7d") return "(7d)";
+    return "(YTD)";
+  };
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100 h-[830px] flex flex-col">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
+        <CardTitle className="text-xl font-semibold">Total spending by card</CardTitle>
         <CardDescription>
-          Total spending by credit card
+          Total spending by credit card {getTimeRangeDescription()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
