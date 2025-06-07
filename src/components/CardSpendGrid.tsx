@@ -1,4 +1,3 @@
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -94,7 +93,7 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
   };
 
   return (
-    <Card className="bg-white h-[600px] flex flex-col">
+    <Card className="bg-white h-[800px] flex flex-col">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
         <CardDescription>
