@@ -5,11 +5,10 @@ interface StatCardFilterIndicatorProps {
   cardType: string
   timeRange: string
   topCardAccount?: string
-  lowestCardAccount?: string
   onClear: () => void
 }
 
-export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, lowestCardAccount, onClear }: StatCardFilterIndicatorProps) {
+export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, onClear }: StatCardFilterIndicatorProps) {
   const getTimeRangeLabel = (range: string) => {
     switch (range) {
       case "ytd": return "YTD"
@@ -25,7 +24,7 @@ export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, l
       case "expenses": return "Expenses"
       case "credits": return "Credits"
       case "top-card": return "Top card"
-      case "lowest-card": return "Lowest card"
+      case "lowest-card": return "Lowest Card"
       default: return type
     }
   }
@@ -34,28 +33,13 @@ export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, l
     if (cardType === "top-card" && topCardAccount) {
       return topCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
     }
-    if (cardType === "lowest-card" && lowestCardAccount) {
-      return lowestCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
-    }
     return "All cards"
-  }
-
-  const getFilterText = () => {
-    if (cardType === "top-card" && topCardAccount) {
-      const cardName = topCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
-      return `${cardName}, ${getCardTypeLabel(cardType)}, ${getTimeRangeLabel(timeRange)}`
-    }
-    if (cardType === "lowest-card" && lowestCardAccount) {
-      const cardName = lowestCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
-      return `${cardName}, ${getCardTypeLabel(cardType)}, ${getTimeRangeLabel(timeRange)}`
-    }
-    return `${getCardName()}, ${getCardTypeLabel(cardType)}, ${getTimeRangeLabel(timeRange)}`
   }
 
   return (
     <div className="mt-2">
       <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-        Filtered by: {getFilterText()}
+        Filtered by: {getCardName()}, {getCardTypeLabel(cardType)}, {getTimeRangeLabel(timeRange)}
         <button 
           onClick={onClear}
           className="hover:bg-gray-200 rounded p-0.5"

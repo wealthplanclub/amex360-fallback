@@ -27,7 +27,6 @@ interface TransactionCardProps {
     cardType: string;
     timeRange: string;
     topCardAccount?: string;
-    lowestCardAccount?: string;
   } | null;
   onClearStatCardFilter?: () => void;
 }
@@ -66,8 +65,6 @@ export function TransactionCard({
   React.useEffect(() => {
     if (statCardFilter?.cardType === "top-card" && statCardFilter.topCardAccount) {
       setSelectedCard(statCardFilter.topCardAccount);
-    } else if (statCardFilter?.cardType === "lowest-card" && statCardFilter.lowestCardAccount) {
-      setSelectedCard(statCardFilter.lowestCardAccount);
     } else if (selectedCardFromGrid && selectedCardFromGrid !== "all") {
       setSelectedCard(selectedCardFromGrid);
     }
@@ -115,11 +112,6 @@ export function TransactionCard({
         // Filter by expenses AND by the top card account
         filtered = filtered.filter(transaction => 
           transaction.amount < 0 && transaction.account === statCardFilter.topCardAccount
-        );
-      } else if (statCardFilter.cardType === "lowest-card") {
-        // Filter by expenses AND by the lowest card account
-        filtered = filtered.filter(transaction => 
-          transaction.amount < 0 && transaction.account === statCardFilter.lowestCardAccount
         );
       }
       
