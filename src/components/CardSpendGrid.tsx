@@ -1,3 +1,4 @@
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -107,7 +108,7 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
               <Card 
                 key={card.fullName} 
                 className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md ${
-                  selectedCard === card.fullName ? 'ring-2 ring-primary' : ''
+                  selectedCard === card.fullName ? 'bg-accent' : ''
                 }`}
                 onClick={() => handleCardClick(card.fullName)}
               >
