@@ -25,10 +25,10 @@ const DashboardLoader = () => {
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Ensure loader shows for at least 3 seconds to let animation complete
+    // Ensure loader shows for at least 5 seconds to let animation complete
     const timer = setTimeout(() => {
       setShowLoader(false);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -62,7 +62,7 @@ const DashboardWrapper = () => {
     // Wait for animation to complete before showing dashboard
     const timer = setTimeout(() => {
       setIsReady(true);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
