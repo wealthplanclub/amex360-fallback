@@ -57,7 +57,7 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
 
   const handleShowAll = () => {
     setShowAll(true)
-    table.setPageSize(table.getFilteredRowModel().rows.length) // Show all rows
+    table.setPageSize(table.getFilteredRowModel().rows.length) // Show all rows in scroll area
   }
 
   const handleShowPaginated = () => {

@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Transaction } from "@/types/transaction"
 
 interface TransactionTableContentProps {
@@ -69,7 +70,13 @@ export function TransactionTableContent({ table, showAll, columnsLength }: Trans
 
   return (
     <div className="rounded-md border">
-      {tableContent}
+      {showAll ? (
+        <ScrollArea className="h-96">
+          {tableContent}
+        </ScrollArea>
+      ) : (
+        tableContent
+      )}
     </div>
   )
 }
