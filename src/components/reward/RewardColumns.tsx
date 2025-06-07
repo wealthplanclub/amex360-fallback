@@ -1,4 +1,3 @@
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { ChevronsUpDown } from "lucide-react"
@@ -22,11 +21,13 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       },
       cell: ({ row }) => {
         const date = row.getValue("date") as string
-        const [year, month, day] = date.split('-').map(Number)
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        // Use the same formatting logic as the chart
+        const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric'
+        })
         
-        return <div className="font-medium text-center">{monthNames[month - 1]} {day}</div>
+        return <div className="font-medium text-center">{formattedDate}</div>
       },
     },
     {
