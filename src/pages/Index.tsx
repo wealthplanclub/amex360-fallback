@@ -1,3 +1,4 @@
+
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -113,7 +114,14 @@ const Index = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
+      <div 
+        className="min-h-screen flex w-full"
+        style={{
+          backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+          backgroundRepeat: 'repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <AppSidebar />
         <SidebarInset className="flex-1">
           {/* Header with transparent background */}
