@@ -64,9 +64,24 @@ const Rewards = () => {
     });
   };
 
+  const scrollToTable = () => {
+    const tableElement = document.querySelector('[data-testid="reward-table"]');
+    if (tableElement) {
+      tableElement.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  };
+
   const handleCardClick = (cardType: string, topCardAccount?: string) => {
     console.log("Card clicked:", cardType, topCardAccount);
-    // Handle card click logic here if needed
+    
+    if (cardType === "employee-rewards") {
+      // Scroll to table and add employee card filter
+      scrollToTable();
+      updateFilter('globalFilter', 'employee card');
+    }
   };
 
   return (
@@ -114,7 +129,7 @@ const Rewards = () => {
           
           {/* Table and Card List Row */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2" data-testid="reward-table">
               <RewardCard 
                 filters={filters}
                 onClearDateFilter={clearDateFilter}
