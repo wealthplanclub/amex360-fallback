@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { X, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -124,11 +125,13 @@ export const Sidebar = React.forwardRef<
         {...props}
       >
         <div className="flex items-center justify-between p-4 border-b">
-          <img 
-            src="https://i.imgur.com/9LhkmD4.png" 
-            alt="DLS Logo" 
-            className="h-8 w-8"
-          />
+          <div className="ml-4">
+            <img 
+              src="/dls-logo-bluebox-solid.svg" 
+              alt="DLS Logo" 
+              className="h-8 w-8"
+            />
+          </div>
           <button
             onClick={close}
             className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
