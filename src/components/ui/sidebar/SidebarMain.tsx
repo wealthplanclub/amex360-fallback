@@ -27,7 +27,8 @@ export const Sidebar = React.forwardRef<
           <div>
             <img 
               src="https://i.imgur.com/dZJ4pLl.png" 
-              alt="Amex Logo" 
+              alt="Amex Logo"
+              className="w-32"
             />
           </div>
           <button
