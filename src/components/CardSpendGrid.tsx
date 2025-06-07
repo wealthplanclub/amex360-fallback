@@ -1,4 +1,5 @@
 
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -103,7 +104,7 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
-          <div className="space-y-4">
+          <div className="space-y-4 pb-6">
             {cardData.map((card) => (
               <Card 
                 key={card.fullName} 
@@ -147,3 +148,4 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
     </Card>
   )
 }
+
