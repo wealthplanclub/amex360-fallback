@@ -19,6 +19,8 @@ const Auth = () => {
     navigate("/dashboard");
   };
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <div 
       className="min-h-screen p-6 flex items-center justify-center"
@@ -68,13 +70,9 @@ const Auth = () => {
             </Button>
           </form>
           <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
-            </button>
+            <p className="text-sm text-muted-foreground">
+              © {currentYear} Black Phoenix Enterprises LLC
+            </p>
           </div>
         </CardContent>
       </Card>
