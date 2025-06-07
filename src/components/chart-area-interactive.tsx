@@ -220,7 +220,7 @@ export function ChartAreaInteractive() {
               type="natural"
               fill="url(#fillTotalSpend)"
               stroke="#000000"
-              strokeWidth={2}
+              strokeWidth={1}
             />
           </AreaChart>
         </ChartContainer>
