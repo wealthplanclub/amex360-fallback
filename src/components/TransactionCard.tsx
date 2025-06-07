@@ -65,6 +65,8 @@ export function TransactionCard({
   React.useEffect(() => {
     if (statCardFilter?.cardType === "top-card" && statCardFilter.topCardAccount) {
       setSelectedCard(statCardFilter.topCardAccount);
+    } else if (statCardFilter?.cardType === "lowest-card" && statCardFilter.topCardAccount) {
+      setSelectedCard(statCardFilter.topCardAccount);
     } else if (selectedCardFromGrid && selectedCardFromGrid !== "all") {
       setSelectedCard(selectedCardFromGrid);
     }
@@ -110,6 +112,11 @@ export function TransactionCard({
         filtered = filtered.filter(transaction => transaction.amount > 0);
       } else if (statCardFilter.cardType === "top-card") {
         // Filter by expenses AND by the top card account
+        filtered = filtered.filter(transaction => 
+          transaction.amount < 0 && transaction.account === statCardFilter.topCardAccount
+        );
+      } else if (statCardFilter.cardType === "lowest-card") {
+        // Filter by expenses AND by the lowest card account
         filtered = filtered.filter(transaction => 
           transaction.amount < 0 && transaction.account === statCardFilter.topCardAccount
         );

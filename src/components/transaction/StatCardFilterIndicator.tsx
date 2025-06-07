@@ -24,13 +24,13 @@ export function StatCardFilterIndicator({ cardType, timeRange, topCardAccount, o
       case "expenses": return "Expenses"
       case "credits": return "Credits"
       case "top-card": return "Top card"
-      case "lowest-card": return "Lowest Card"
+      case "lowest-card": return "Lowest card"
       default: return type
     }
   }
 
   const getCardName = () => {
-    if (cardType === "top-card" && topCardAccount) {
+    if ((cardType === "top-card" || cardType === "lowest-card") && topCardAccount) {
       return topCardAccount.replace(/\b(card|Rewards)\b/gi, '').trim()
     }
     return "All cards"

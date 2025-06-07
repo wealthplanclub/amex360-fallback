@@ -200,8 +200,9 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       icon: TrendingDown,
       footer: calculations.lowestCardDisplayName,
       description: `Account with least expenses ${getTimeRangeDescription()}`,
-      clickable: false,
-      cardType: "lowest-card"
+      clickable: true,
+      cardType: "lowest-card",
+      topCardAccount: calculations.lowestCardAccount
     }
   ];
 
