@@ -97,7 +97,7 @@ export const ChartTooltipContent = React.forwardRef<
           indicatorColor = colorMap[key as keyof typeof colorMap] || '#8884d8'
         }
 
-        console.log('Indicator debug:', { key, indicatorColor, hideIndicator, indicator });
+        console.log('Final indicator debug:', { key, indicatorColor, hideIndicator, indicator });
 
         if (formatter && item?.value !== undefined && item.name) {
           const formatterResult = formatter(item.value, item.name, item, index, item.payload)
@@ -143,21 +143,16 @@ export const ChartTooltipContent = React.forwardRef<
                     ) : (
                       !hideIndicator && (
                         <div
-                          className={cn(
-                            "shrink-0 rounded-[2px] border",
-                            {
-                              "h-2.5 w-2.5": indicator === "dot",
-                              "w-1": indicator === "line",
-                              "w-0 border-[1.5px] border-dashed bg-transparent":
-                                indicator === "dashed",
-                              "my-0.5": nestLabel && indicator === "dashed",
-                            }
-                          )}
+                          className="shrink-0 rounded-[2px]"
                           style={{
-                            backgroundColor: indicator === "dot" ? indicatorColor : "transparent",
-                            borderColor: indicatorColor,
-                            border: indicator === "dot" ? `1px solid ${indicatorColor}` : undefined,
-                          }}
+                            width: indicator === "dot" ? "10px" : "4px",
+                            height: indicator === "dot" ? "10px" : "10px",
+                            backgroundColor: indicator === "dot" ? `${indicatorColor} !important` : "transparent",
+                            border: `2px solid ${indicatorColor} !important`,
+                            display: "block !important",
+                            minWidth: indicator === "dot" ? "10px" : "4px",
+                            minHeight: indicator === "dot" ? "10px" : "10px",
+                          } as React.CSSProperties}
                         />
                       )
                     )}
