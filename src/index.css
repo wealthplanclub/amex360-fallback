@@ -98,8 +98,16 @@
     @apply border-border;
   }
 
-  body {
+  html, body {
     @apply bg-background text-foreground antialiased;
+    background-image: url('https://i.imgur.com/MsHNAik.png');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
     background-image: url('https://i.imgur.com/MsHNAik.png');
     background-repeat: repeat;
     background-attachment: fixed;
