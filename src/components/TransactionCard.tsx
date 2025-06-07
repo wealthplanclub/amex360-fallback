@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -13,7 +14,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown } from "lucide-react"
+import { ArrowUpDown, ChevronDown, CreditCard } from "lucide-react"
 
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -68,7 +69,7 @@ const globalFilterFn = (row: any, columnId: string, value: string) => {
 
 export function TransactionCard() {
   // Parse the CSV data and get recent transactions - memoize this to prevent re-parsing
-  const transactions: Transaction[] = React.useMemo(() => {
+  const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
     
     return rawTransactions
@@ -79,6 +80,26 @@ export function TransactionCard() {
         ...transaction
       }));
   }, []);
+
+  // Extract unique credit cards
+  const creditCards = React.useMemo(() => {
+    const uniqueCards = Array.from(new Set(allTransactions.map(t => t.account.replace(/\bcard\b/gi, '').trim())))
+      .filter(card => card.length > 0)
+      .sort()
+    return uniqueCards
+  }, [allTransactions]);
+
+  const [selectedCard, setSelectedCard] = React.useState<string>("all")
+
+  // Filter transactions by selected card
+  const transactions = React.useMemo(() => {
+    if (selectedCard === "all") {
+      return allTransactions
+    }
+    return allTransactions.filter(transaction => 
+      transaction.account.replace(/\bcard\b/gi, '').trim() === selectedCard
+    )
+  }, [allTransactions, selectedCard]);
 
   // Memoize columns to prevent recreation on every render
   const columns: ColumnDef<Transaction>[] = React.useMemo(() => [
@@ -200,7 +221,7 @@ export function TransactionCard() {
 
   return (
     <Card className="bg-white">
-      <CardHeader className="pb-4">
+      <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
         <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
@@ -218,27 +239,27 @@ export function TransactionCard() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
-                  Columns <ChevronDown />
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  {selectedCard === "all" ? "All Cards" : selectedCard}
+                  <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    )
-                  })}
+                <DropdownMenuCheckboxItem
+                  checked={selectedCard === "all"}
+                  onCheckedChange={() => setSelectedCard("all")}
+                >
+                  All Cards
+                </DropdownMenuCheckboxItem>
+                {creditCards.map((card) => (
+                  <DropdownMenuCheckboxItem
+                    key={card}
+                    checked={selectedCard === card}
+                    onCheckedChange={() => setSelectedCard(card)}
+                  >
+                    {card}
+                  </DropdownMenuCheckboxItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
