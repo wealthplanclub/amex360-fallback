@@ -19,7 +19,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="ml-auto">
+        <Button variant="outline" className="w-full md:w-auto md:ml-auto">
           <CreditCard className="mr-2 h-4 w-4" />
           {selectedCard === "all" ? "All Cards" : 
            selectedCard === "BUSINESS_GREEN_COMBINED" ? "Business Green Combined" :
