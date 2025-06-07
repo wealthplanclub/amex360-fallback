@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import Lottie from "lottie-react";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -13,11 +14,16 @@ const Dashboard = lazy(() => import("./pages/Index"));
 
 const queryClient = new QueryClient();
 
-// Simple loading component for the dashboard
+// Simple loading component for the dashboard with Lottie animation
 const DashboardLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="text-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+      <Lottie
+        animationData={require("/public/triple-card.json")}
+        className="w-24 h-24 mx-auto mb-4"
+        loop={true}
+        autoplay={true}
+      />
       <p className="text-muted-foreground">Loading dashboard...</p>
     </div>
   </div>
