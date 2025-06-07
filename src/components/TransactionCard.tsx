@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -22,9 +21,10 @@ interface TransactionCardProps {
   selectedCardFromGrid?: string;
   selectedDate?: string;
   onClearDateFilter?: () => void;
+  selectedTimeRange?: string;
 }
 
-export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDateFilter }: TransactionCardProps) {
+export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDateFilter, selectedTimeRange = "ytd" }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
@@ -95,12 +95,27 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     return filtered;
   }, [allTransactions, selectedCard, selectedDate]);
 
+  // Get dynamic description based on filters
+  const getCardDescription = () => {
+    const cardName = selectedCard === "all" ? "All card" : 
+                    selectedCard === "BUSINESS_GREEN_COMBINED" ? "Business Green Combined" :
+                    formatAccountName(selectedCard);
+    
+    const timeRangeLabel = selectedTimeRange === "ytd" ? "(YTD)" :
+                          selectedTimeRange === "90d" ? "(90d)" :
+                          selectedTimeRange === "30d" ? "(30d)" :
+                          selectedTimeRange === "7d" ? "(7d)" :
+                          "(YTD)";
+    
+    return `[${cardName}] transactions [${timeRangeLabel}]`;
+  };
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
+        <CardTitle className="text-xl font-semibold">Transactions</CardTitle>
         <CardDescription className="mb-0">
-          Latest transaction activity with advanced filtering and sorting
+          {getCardDescription()}
         </CardDescription>
         {selectedDate && onClearDateFilter && (
           <DateFilterIndicator 
