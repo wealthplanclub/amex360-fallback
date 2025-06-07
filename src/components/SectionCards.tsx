@@ -1,6 +1,7 @@
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
+import * as React from "react"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -13,6 +14,17 @@ import {
 } from "@/components/ui/card"
 
 export function SectionCards() {
+  const [isVisible, setIsVisible] = React.useState(false)
+
+  React.useEffect(() => {
+    // Trigger animation after component mounts
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 100)
+    
+    return () => clearTimeout(timer)
+  }, [])
+
   // Parse the CSV data and calculate totals
   const transactions = parseTransactionData(staticTxnData);
   const totalExpenses = transactions
@@ -53,93 +65,76 @@ export function SectionCards() {
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
-      <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-6">
-          <CardDescription>Total Expenses</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            ${totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </CardTitle>
-          <div className="absolute top-4 right-4">
-            <Badge variant="outline" className="gap-1">
-              <TrendingUp className="h-3 w-3" />
-              +100%
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-          <div className="flex gap-2 font-medium items-center">
-            Trending up this month <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Total spend YTD
-          </div>
-        </CardFooter>
-      </Card>
-      
-      <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-6">
-          <CardDescription>Total Payments/Credits</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            ${totalCredits.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </CardTitle>
-          <div className="absolute top-4 right-4">
-            <Badge variant="outline" className="gap-1">
-              <TrendingUp className="h-3 w-3" />
-              {paymentsToExpensesRatio}%
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-          <div className="flex gap-2 font-medium items-center">
-            Steady incoming payments <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Payments and credits applied
-          </div>
-        </CardFooter>
-      </Card>
-      
-      <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-6">
-          <CardDescription>Top Card Spend</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            ${topCardSpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </CardTitle>
-          <div className="absolute top-4 right-4">
-            <Badge variant="outline" className="gap-1">
-              <TrendingUp className="h-3 w-3" />
-              {topCardPercentage}%
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-          <div className="flex gap-2 font-medium items-center">
-            {topCardDisplayName} <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="text-muted-foreground">Account with most expenses</div>
-        </CardFooter>
-      </Card>
-      
-      <Card className="relative bg-gradient-to-b from-white to-gray-100">
-        <CardHeader className="pb-6">
-          <CardDescription>Lowest Card Spend</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-            ${lowestCardSpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </CardTitle>
-          <div className="absolute top-4 right-4">
-            <Badge variant="outline" className="gap-1">
-              <TrendingDown className="h-3 w-3" />
-              {lowestCardPercentage}%
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-          <div className="flex gap-2 font-medium items-center">
-            {lowestCardDisplayName} <TrendingDown className="h-4 w-4" />
-          </div>
-          <div className="text-muted-foreground">Account with least expenses</div>
-        </CardFooter>
-      </Card>
+      {[
+        {
+          title: "Total Expenses",
+          value: totalExpenses,
+          badge: "+100%",
+          icon: TrendingUp,
+          footer: "Trending up this month",
+          description: "Total spend YTD"
+        },
+        {
+          title: "Total Payments/Credits",
+          value: totalCredits,
+          badge: `${paymentsToExpensesRatio}%`,
+          icon: TrendingUp,
+          footer: "Steady incoming payments",
+          description: "Payments and credits applied"
+        },
+        {
+          title: "Top Card Spend",
+          value: topCardSpend,
+          badge: `${topCardPercentage}%`,
+          icon: TrendingUp,
+          footer: topCardDisplayName,
+          description: "Account with most expenses"
+        },
+        {
+          title: "Lowest Card Spend",
+          value: lowestCardSpend,
+          badge: `${lowestCardPercentage}%`,
+          icon: TrendingDown,
+          footer: lowestCardDisplayName,
+          description: "Account with least expenses"
+        }
+      ].map((card, index) => {
+        const IconComponent = card.icon;
+        return (
+          <Card 
+            key={card.title}
+            className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
+              isVisible 
+                ? 'translate-y-0 opacity-100' 
+                : 'translate-y-8 opacity-0'
+            }`}
+            style={{
+              transitionDelay: `${index * 150}ms`
+            }}
+          >
+            <CardHeader className="pb-6">
+              <CardDescription>{card.title}</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
+                ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </CardTitle>
+              <div className="absolute top-4 right-4">
+                <Badge variant="outline" className="gap-1">
+                  <IconComponent className="h-3 w-3" />
+                  {card.badge}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
+              <div className="flex gap-2 font-medium items-center">
+                {card.footer} <IconComponent className="h-4 w-4" />
+              </div>
+              <div className="text-muted-foreground">
+                {card.description}
+              </div>
+            </CardFooter>
+          </Card>
+        );
+      })}
     </div>
   )
 }
