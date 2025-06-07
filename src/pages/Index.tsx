@@ -1,5 +1,8 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
@@ -9,6 +12,7 @@ const Index = () => {
   const [selectedCard, setSelectedCard] = useState<string>("all");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTimeRange, setSelectedTimeRange] = useState<string>("ytd");
+  const navigate = useNavigate();
 
   const handleCardClick = (cardName: string) => {
     setSelectedCard(cardName);
@@ -26,6 +30,11 @@ const Index = () => {
     setSelectedTimeRange(timeRange);
   };
 
+  const handleLogout = () => {
+    console.log("User logged out");
+    navigate("/auth");
+  };
+
   return (
     <div 
       className="min-h-screen p-6"
@@ -35,13 +44,24 @@ const Index = () => {
       }}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Image */}
-        <div className="text-center mt-4">
-          <img 
-            src="https://i.imgur.com/1fFddP4.png" 
-            alt="Amex Logo" 
-            className="mx-auto w-full max-w-[235px] h-auto"
-          />
+        {/* Header with Logo and Logout Button */}
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex-1 flex justify-center">
+            <img 
+              src="https://i.imgur.com/1fFddP4.png" 
+              alt="Amex Logo" 
+              className="w-full max-w-[235px] h-auto"
+            />
+          </div>
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Log Out
+          </Button>
         </div>
         
         {/* Section Cards */}
