@@ -129,9 +129,7 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              formatter={(value, name, props) => {
-                const config = chartConfig[name as keyof typeof chartConfig];
-                const label = config?.label || name;
+              formatter={(value, name) => {
                 const numValue = Number(value);
                 
                 // Don't show zero values
@@ -141,26 +139,21 @@ export function RewardChart({ data }: RewardChartProps) {
                 
                 // Only show total when there are multiple point types
                 if (name === 'totalPoints') {
-                  const hasEmployee = props.payload.employeePoints > 0;
-                  const hasReferral = props.payload.referralPoints > 0;
-                  const hasWelcome = props.payload.welcome > 0;
+                  const hasEmployee = data.some(d => d.employeePoints > 0);
+                  const hasReferral = data.some(d => d.referralPoints > 0);
+                  const hasWelcome = data.some(d => d.welcome > 0);
                   const pointTypeCount = [hasEmployee, hasReferral, hasWelcome].filter(Boolean).length;
                   if (pointTypeCount < 2) {
                     return null;
                   }
                 }
                 
-                return (
-                  <div className="flex items-center gap-2">
-                    <div 
-                      className="w-3 h-3 rounded-sm" 
-                      style={{ backgroundColor: config?.color || '#ccc' }}
-                    />
-                    <span>{label} {numValue.toLocaleString()} pts</span>
-                  </div>
-                );
+                const config = chartConfig[name as keyof typeof chartConfig];
+                const label = config?.label || name;
+                
+                return `${label} ${numValue.toLocaleString()} pts`;
               }}
-              hideIndicator={true}
+              indicator="dot"
               labelFormatter={(label) => formatDateForDisplay(String(label))}
             />
           }
