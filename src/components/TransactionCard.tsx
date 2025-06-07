@@ -120,6 +120,9 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate }: Transact
   const transactions = React.useMemo(() => {
     let filtered = allTransactions;
     
+    console.log("All transactions count:", filtered.length);
+    console.log("Selected date:", selectedDate);
+    
     // Filter by card
     if (selectedCard !== "all") {
       if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
@@ -133,11 +136,22 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate }: Transact
       }
     }
     
+    console.log("After card filter:", filtered.length);
+    
     // Filter by date if selected
     if (selectedDate) {
-      filtered = filtered.filter(transaction => 
-        transaction.date === selectedDate
-      )
+      // Convert selectedDate to the same format as transaction dates
+      const targetDate = new Date(selectedDate).toISOString().split('T')[0];
+      console.log("Target date for filtering:", targetDate);
+      
+      filtered = filtered.filter(transaction => {
+        const transactionDate = new Date(transaction.date).toISOString().split('T')[0];
+        console.log("Comparing:", transactionDate, "with", targetDate);
+        return transactionDate === targetDate;
+      });
+      
+      console.log("After date filter:", filtered.length);
+      console.log("Sample filtered transactions:", filtered.slice(0, 3));
     }
     
     return filtered;
@@ -271,25 +285,25 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate }: Transact
         <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
         <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
-          {selectedDate && (
-            <div className="mt-2">
-              <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-md">
-                Filtered by: {new Date(selectedDate).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric"
-                })}
-                <button 
-                  onClick={clearDateFilter}
-                  className="hover:bg-blue-200 rounded p-0.5"
-                  title="Clear date filter"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </span>
-            </div>
-          )}
         </CardDescription>
+        {selectedDate && (
+          <div className="mt-2">
+            <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-md">
+              Filtered by: {new Date(selectedDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+              })}
+              <button 
+                onClick={clearDateFilter}
+                className="hover:bg-blue-200 rounded p-0.5"
+                title="Clear date filter"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          </div>
+        )}
       </CardHeader>
       <CardContent>
         <div className="w-full">
