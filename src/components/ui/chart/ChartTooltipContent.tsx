@@ -84,8 +84,19 @@ export const ChartTooltipContent = React.forwardRef<
       .map((item, index) => {
         const key = `${nameKey || item.name || item.dataKey || "value"}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
-        // Use the color property directly instead of payload.fill
-        const indicatorColor = color || item.color
+        
+        // Get the actual color from the config instead of relying on CSS variables
+        let indicatorColor = color
+        if (!indicatorColor && itemConfig?.color) {
+          indicatorColor = itemConfig.color
+        } else if (!indicatorColor && config[key]?.color) {
+          indicatorColor = config[key].color
+        } else if (!indicatorColor) {
+          // Fallback to the item color
+          indicatorColor = item.color
+        }
+
+        console.log('Color resolution:', { key, itemConfigColor: itemConfig?.color, configColor: config[key]?.color, finalColor: indicatorColor });
 
         if (formatter && item?.value !== undefined && item.name) {
           const formatterResult = formatter(item.value, item.name, item, index, item.payload)
