@@ -52,7 +52,6 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
 const DashboardWrapper = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
   const [dashboardReady, setDashboardReady] = useState(false);
-  const location = useLocation();
 
   const handleLoadingComplete = () => {
     setAnimationComplete(true);
@@ -65,18 +64,6 @@ const DashboardWrapper = () => {
       setDashboardReady(true);
     });
   }, []);
-
-  // Check if we're coming from login (state passed from Auth component)
-  const skipAnimation = location.state?.fromLogin;
-
-  // If coming from login, skip animation and show dashboard immediately when ready
-  if (skipAnimation && dashboardReady) {
-    return (
-      <Suspense fallback={null}>
-        <Dashboard />
-      </Suspense>
-    );
-  }
 
   // Show loader until animation is complete
   if (!animationComplete) {

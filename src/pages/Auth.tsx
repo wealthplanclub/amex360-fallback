@@ -14,9 +14,9 @@ const Auth = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Accept any credentials and redirect to dashboard with state
+    // Accept any credentials and redirect to dashboard
     console.log("Auth attempt:", { email, password, isLogin });
-    navigate("/dashboard", { state: { fromLogin: true } });
+    navigate("/dashboard");
   };
 
   return (
