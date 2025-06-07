@@ -21,23 +21,24 @@ export function RewardChartDisplay({ filters, onTimeRangeChange }: RewardChartDi
 
   const getTimeRangeLabel = () => {
     switch (filters.selectedTimeRange) {
-      case "ytd": return "Year to Date"
-      case "90d": return "Last 90 Days"
-      case "30d": return "Last 30 Days"
-      case "7d": return "Last 7 Days"
-      default: return "Year to Date"
+      case "ytd": return "(YTD)"
+      case "90d": return "(90d)"
+      case "30d": return "(30d)"
+      case "7d": return "(7d)"
+      default: return "(YTD)"
     }
   }
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
-      <CardHeader className="flex items-center gap-2 space-y-0 py-5 sm:flex-row">
-        <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle>Rewards Over Time</CardTitle>
+      <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
+        <div className="space-y-1">
+          <CardTitle className="text-xl font-semibold">Rewards Over Time</CardTitle>
           <CardDescription>
-            Showing reward points earned {getTimeRangeLabel().toLowerCase()}
+            Showing reward points earned {getTimeRangeLabel()}
           </CardDescription>
         </div>
+        
         <TimeRangeSelector 
           timeRange={filters.selectedTimeRange}
           onTimeRangeChange={onTimeRangeChange}
