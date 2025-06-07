@@ -1,4 +1,3 @@
-
 import { TrendingUp, Users, UserPlus, Trophy } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { useRewardCalculations } from "@/hooks/useRewardCalculations"
@@ -33,7 +32,7 @@ export function RewardMetricsCards({
       value: calculations.totalRewardPoints,
       badge: "+100%",
       icon: TrendingUp,
-      footer: "Points earned",
+      footer: "Total bonus points",
       description: `Total rewards ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: false,
       showHover: true,
