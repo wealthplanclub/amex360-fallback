@@ -31,7 +31,7 @@ export function RewardChartDisplay({ filters, onTimeRangeChange }: RewardChartDi
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
-      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
+      <CardHeader className="flex items-center gap-2 space-y-0 py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
           <CardTitle>Rewards Over Time</CardTitle>
           <CardDescription>
