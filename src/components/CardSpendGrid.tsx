@@ -43,14 +43,8 @@ export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps)
           });
         }
       } else {
-        // Special handling for Amazon Business Prime - remove "Business" from display name only
-        let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
-        if (account.toLowerCase().includes('amazon business prime')) {
-          displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
-        }
-        
         acc.push({
-          name: displayName,
+          name: account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1'),
           fullName: account,
           amount
         });
