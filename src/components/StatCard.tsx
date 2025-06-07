@@ -25,7 +25,6 @@ interface StatCardProps {
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
-  variant?: 'default' | 'rewards'
 }
 
 export function StatCard({
@@ -43,8 +42,7 @@ export function StatCard({
   cardType,
   topCardAccount,
   onClick,
-  formatAsPoints = false,
-  variant = 'default'
+  formatAsPoints = false
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -71,23 +69,6 @@ export function StatCard({
     return baseClasses;
   };
 
-  const getTitleClasses = () => {
-    const baseClasses = "text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out";
-    
-    if (variant === 'rewards') {
-      return `${baseClasses} ${isVisible ? 'animate-fade-in' : 'opacity-0'}`;
-    }
-    
-    return `${baseClasses} ${isVisible ? 'animate-fade-in' : 'opacity-0'}`;
-  };
-
-  const getTitleStyle = () => {
-    if (variant === 'rewards') {
-      return { color: '#00175a' };
-    }
-    return {};
-  };
-
   return (
     <Card 
       className={getCardClasses()}
@@ -97,8 +78,9 @@ export function StatCard({
         <CardDescription>{title}</CardDescription>
         <CardTitle 
           key={`${title}-${numbersKey}`}
-          className={getTitleClasses()}
-          style={getTitleStyle()}
+          className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
+            isVisible ? 'animate-fade-in' : 'opacity-0'
+          }`}
         >
           {formatValue(value)}
         </CardTitle>
