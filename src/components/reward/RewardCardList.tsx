@@ -150,7 +150,7 @@ export function RewardCardList({ filters, onCardClick }: RewardCardListProps) {
                         <p className="text-xs text-muted-foreground">
                           Reward points
                         </p>
-                        <div className="text-lg font-bold tabular-nums">
+                        <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
                           {card.points.toLocaleString()} pts
                         </div>
                       </div>
