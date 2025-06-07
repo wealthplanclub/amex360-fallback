@@ -99,7 +99,7 @@
   }
 
   html, body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
     background-image: url('https://i.imgur.com/MsHNAik.png');
     background-repeat: repeat;
     background-attachment: fixed;
