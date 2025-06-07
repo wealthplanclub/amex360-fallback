@@ -51,7 +51,7 @@ export const processCardData = (staticTxnData: string, selectedTimeRange: string
     }, {} as Record<string, number>);
 
   const cardData = Object.entries(cardExpenses)
-    .reduce((acc, [account, amount]) => {
+    .reduce((acc: CardData[], [account, amount]: [string, number]) => {
       if (account.toLowerCase().includes('business green rewards')) {
         const existingBusinessGreen = acc.find(card => card.name === 'Business Green\n(-2007)');
         if (existingBusinessGreen) {
