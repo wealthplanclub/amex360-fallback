@@ -1,3 +1,4 @@
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -129,7 +130,8 @@ export function RewardChart({ data }: RewardChartProps) {
           defaultIndex={-1}
           content={
             <ChartTooltipContent
-              formatter={(value, name) => {
+              formatter={(value, name, props) => {
+                console.log('Tooltip formatter called:', { value, name, props });
                 const numValue = Number(value);
                 
                 // Don't show zero values
@@ -163,7 +165,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillWelcome)"
           stroke="var(--color-welcome)"
-          strokeWidth={0}
+          strokeWidth={2}
           stackId="a"
         />
         <Area
@@ -171,7 +173,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillReferral)"
           stroke="var(--color-referralPoints)"
-          strokeWidth={0}
+          strokeWidth={2}
           stackId="a"
         />
         <Area
@@ -179,7 +181,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillEmployee)"
           stroke="var(--color-employeePoints)"
-          strokeWidth={0}
+          strokeWidth={2}
           stackId="a"
         />
         <Area
@@ -187,7 +189,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillTotal)"
           stroke="var(--color-totalPoints)"
-          strokeWidth={0}
+          strokeWidth={2}
         />
       </AreaChart>
     </ChartContainer>
