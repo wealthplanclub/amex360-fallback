@@ -17,14 +17,16 @@ import { formatAccountName } from "@/utils/transactionUtils"
 import { DateFilterIndicator } from "@/components/transaction/DateFilterIndicator"
 import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { TransactionTable } from "@/components/transaction/TransactionTable"
+import { filterTransactionsByTimeRange } from "@/utils/cardDataUtils"
 
 interface TransactionCardProps {
   selectedCardFromGrid?: string;
   selectedDate?: string;
   onClearDateFilter?: () => void;
+  statCardFilter?: {type: string, value?: string} | null;
 }
 
-export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDateFilter }: TransactionCardProps) {
+export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDateFilter, statCardFilter }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
@@ -55,29 +57,63 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     }
   }, [selectedCardFromGrid]);
 
-  // Filter transactions by selected card and date
+  // Find the account name that matches the stat card filter
+  const findAccountByDisplayName = (displayName: string) => {
+    return creditCards.find(account => {
+      const cleanedAccount = account.replace(/\b(card|Rewards)\b/gi, '').trim();
+      return cleanedAccount === displayName;
+    });
+  };
+
+  // Filter transactions by selected card, date, and stat card filter
   const transactions = React.useMemo(() => {
     let filtered = allTransactions;
     
     console.log("All transactions count:", filtered.length);
     console.log("Selected card:", selectedCard);
     console.log("Selected date:", selectedDate);
-    
-    // Filter by card
-    if (selectedCard !== "all") {
-      if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
-        filtered = filtered.filter(transaction => 
-          transaction.account.toLowerCase().includes('business green rewards')
-        )
-      } else {
-        // Direct comparison using the original account name
-        filtered = filtered.filter(transaction => 
-          transaction.account === selectedCard
-        )
+    console.log("Stat card filter:", statCardFilter);
+
+    // Apply stat card filter first if present
+    if (statCardFilter) {
+      const timeRangeFiltered = filterTransactionsByTimeRange(filtered, "ytd"); // Use current time range
+      
+      if (statCardFilter.type === "expenses") {
+        filtered = timeRangeFiltered.filter(transaction => transaction.amount < 0);
+      } else if (statCardFilter.type === "credits") {
+        filtered = timeRangeFiltered.filter(transaction => transaction.amount > 0);
+      } else if (statCardFilter.type === "topCard" && statCardFilter.value) {
+        const accountName = findAccountByDisplayName(statCardFilter.value);
+        if (accountName) {
+          filtered = timeRangeFiltered.filter(transaction => 
+            transaction.account === accountName && transaction.amount < 0
+          );
+        }
+      } else if (statCardFilter.type === "lowestCard" && statCardFilter.value) {
+        const accountName = findAccountByDisplayName(statCardFilter.value);
+        if (accountName) {
+          filtered = timeRangeFiltered.filter(transaction => 
+            transaction.account === accountName && transaction.amount < 0
+          );
+        }
+      }
+    } else {
+      // Regular card filtering logic
+      if (selectedCard !== "all") {
+        if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
+          filtered = filtered.filter(transaction => 
+            transaction.account.toLowerCase().includes('business green rewards')
+          )
+        } else {
+          // Direct comparison using the original account name
+          filtered = filtered.filter(transaction => 
+            transaction.account === selectedCard
+          )
+        }
       }
     }
     
-    console.log("After card filter:", filtered.length);
+    console.log("After card/stat filter:", filtered.length);
     
     // Filter by date if selected - now using simple string comparison since dates are in ISO format
     if (selectedDate) {
@@ -93,7 +129,7 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
     }
     
     return filtered;
-  }, [allTransactions, selectedCard, selectedDate]);
+  }, [allTransactions, selectedCard, selectedDate, statCardFilter, creditCards]);
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
@@ -101,6 +137,14 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
         <CardTitle className="text-xl font-semibold">Transaction History</CardTitle>
         <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
+          {statCardFilter && (
+            <span className="block text-blue-600 font-medium mt-1">
+              Filtered by: {statCardFilter.type === "expenses" ? "All Expenses" : 
+                          statCardFilter.type === "credits" ? "All Credits" :
+                          statCardFilter.type === "topCard" ? `Top Card (${statCardFilter.value})` :
+                          statCardFilter.type === "lowestCard" ? `Lowest Card (${statCardFilter.value})` : ""}
+            </span>
+          )}
         </CardDescription>
         {selectedDate && onClearDateFilter && (
           <DateFilterIndicator 
@@ -118,11 +162,13 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
               onChange={(event) => setGlobalFilter(event.target.value)}
               className="max-w-sm"
             />
-            <CardFilterDropdown
-              selectedCard={selectedCard}
-              creditCards={creditCards}
-              onCardChange={setSelectedCard}
-            />
+            {!statCardFilter && (
+              <CardFilterDropdown
+                selectedCard={selectedCard}
+                creditCards={creditCards}
+                onCardChange={setSelectedCard}
+              />
+            )}
           </div>
           <TransactionTable
             transactions={transactions}

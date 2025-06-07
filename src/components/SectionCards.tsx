@@ -15,9 +15,10 @@ import {
 
 interface SectionCardsProps {
   selectedTimeRange: string;
+  onCardClick?: (filterType: string, filterValue?: string) => void;
 }
 
-export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
+export function SectionCards({ selectedTimeRange, onCardClick }: SectionCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const [numbersKey, setNumbersKey] = React.useState(0)
 
@@ -165,7 +166,8 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: "+100%",
       icon: TrendingUp,
       footer: "Trending up this month",
-      description: `Total spend ${getTimeRangeDescription()}`
+      description: `Total spend ${getTimeRangeDescription()}`,
+      filterType: "expenses"
     },
     {
       title: "Total Payments/Credits",
@@ -173,7 +175,8 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: `${calculations.paymentsToExpensesRatio}%`,
       icon: TrendingUp,
       footer: "Steady incoming payments",
-      description: `Payments and credits ${getTimeRangeDescription()}`
+      description: `Payments and credits ${getTimeRangeDescription()}`,
+      filterType: "credits"
     },
     {
       title: "Top Card Spend",
@@ -181,7 +184,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: `${calculations.topCardPercentage}%`,
       icon: TrendingUp,
       footer: calculations.topCardDisplayName,
-      description: `Account with most expenses ${getTimeRangeDescription()}`
+      description: `Account with most expenses ${getTimeRangeDescription()}`,
+      filterType: "topCard",
+      filterValue: calculations.topCardDisplayName
     },
     {
       title: "Lowest Card Spend",
@@ -189,9 +194,17 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
       badge: `${calculations.lowestCardPercentage}%`,
       icon: TrendingDown,
       footer: calculations.lowestCardDisplayName,
-      description: `Account with least expenses ${getTimeRangeDescription()}`
+      description: `Account with least expenses ${getTimeRangeDescription()}`,
+      filterType: "lowestCard",
+      filterValue: calculations.lowestCardDisplayName
     }
   ];
+
+  const handleCardClick = (filterType: string, filterValue?: string) => {
+    if (onCardClick) {
+      onCardClick(filterType, filterValue);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
@@ -200,7 +213,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
         return (
           <Card 
             key={card.title}
-            className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
+            className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out cursor-pointer hover:scale-105 hover:shadow-lg ${
               isVisible 
                 ? 'translate-y-0 opacity-100' 
                 : 'translate-y-8 opacity-0'
@@ -208,6 +221,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
             style={{
               transitionDelay: `${index * 150}ms`
             }}
+            onClick={() => handleCardClick(card.filterType, card.filterValue)}
           >
             <CardHeader className="pb-6">
               <CardDescription>{card.title}</CardDescription>
