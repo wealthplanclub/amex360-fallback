@@ -13,31 +13,24 @@ import { TransactionCardHeader } from "@/components/transaction/TransactionCardH
 import { TransactionCardControls } from "@/components/transaction/TransactionCardControls"
 import { useTransactionFilters } from "@/components/transaction/TransactionFilters"
 import { TransactionTable } from "@/components/transaction/TransactionTable"
+import { FilterState } from "@/hooks/useFilterState"
 
 interface TransactionCardProps {
-  cardAccountSelection?: string | null;
-  selectedDate?: string;
+  filters: FilterState;
   onClearDateFilter?: () => void;
-  selectedTimeRange?: string;
   onClearTimeRangeFilter?: () => void;
   onDropdownChange?: (cardSelection: string) => void;
-  statCardFilter?: {
-    cardType: string
-    timeRange: string
-    topCardAccount?: string
-  } | null;
   onClearStatCardFilter?: () => void;
+  onGlobalFilterChange?: (value: string) => void;
 }
 
 export function TransactionCard({ 
-  cardAccountSelection,
-  selectedDate, 
+  filters,
   onClearDateFilter,
-  selectedTimeRange,
   onClearTimeRangeFilter,
   onDropdownChange,
-  statCardFilter,
-  onClearStatCardFilter
+  onClearStatCardFilter,
+  onGlobalFilterChange
 }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -59,19 +52,7 @@ export function TransactionCard({
     return uniqueCards
   }, [allTransactions]);
 
-  const [selectedCard, setSelectedCard] = React.useState<string>("all")
-  const [globalFilter, setGlobalFilter] = React.useState<string>("")
-
-  // Handle card account selection from CardAccounts component
-  React.useEffect(() => {
-    if (cardAccountSelection) {
-      console.log("Card account selection received:", cardAccountSelection);
-      setSelectedCard(cardAccountSelection);
-    }
-  }, [cardAccountSelection]);
-
   const handleCardChange = (card: string) => {
-    setSelectedCard(card);
     if (onDropdownChange) {
       onDropdownChange(card);
     }
@@ -80,36 +61,36 @@ export function TransactionCard({
   // Filter transactions using the custom hook
   const transactions = useTransactionFilters({
     allTransactions,
-    selectedCard,
-    selectedDate,
-    statCardFilter,
-    selectedTimeRange
+    filters
   })
+
+  // Determine what filters are active for the header
+  const hasStatCardFilter = !!(filters.expenseFilter || filters.creditFilter || filters.topCardFilter || filters.lowestCardFilter);
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <TransactionCardHeader
-        selectedDate={selectedDate}
+        selectedDate={filters.selectedDate}
         onClearDateFilter={onClearDateFilter}
-        statCardFilter={statCardFilter}
+        hasStatCardFilter={hasStatCardFilter}
         onClearStatCardFilter={onClearStatCardFilter}
-        selectedTimeRange={selectedTimeRange}
+        selectedTimeRange={filters.selectedTimeRange}
         onClearTimeRangeFilter={onClearTimeRangeFilter}
+        filters={filters}
       />
       <CardContent>
         <div className="w-full">
           <TransactionCardControls
-            globalFilter={globalFilter}
-            onGlobalFilterChange={setGlobalFilter}
-            selectedCard={selectedCard}
+            globalFilter={filters.globalFilter}
+            onGlobalFilterChange={onGlobalFilterChange || (() => {})}
+            selectedCard={filters.selectedCard}
             creditCards={creditCards}
             onCardChange={handleCardChange}
-            statCardFilter={statCardFilter}
           />
           <TransactionTable
             transactions={transactions}
-            globalFilter={globalFilter}
-            onGlobalFilterChange={setGlobalFilter}
+            globalFilter={filters.globalFilter}
+            onGlobalFilterChange={onGlobalFilterChange || (() => {})}
           />
         </div>
       </CardContent>

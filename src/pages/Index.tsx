@@ -1,75 +1,80 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { AppHeader } from "@/components/AppHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useFilterState } from "@/hooks/useFilterState";
 
 const Index = () => {
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedTimeRange, setSelectedTimeRange] = useState<string>("ytd");
-  
   const isMobile = useIsMobile();
-
-  // State to track the dropdown selection from TransactionCard
-  const [transactionDropdownSelection, setTransactionDropdownSelection] = useState<string>("all");
-
-  // State to track stat card filter
-  const [statCardFilter, setStatCardFilter] = useState<{
-    cardType: string
-    timeRange: string
-    topCardAccount?: string
-  } | null>(null);
+  const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
 
   const handleCardAccountClick = (cardName: string) => {
     console.log("Card account clicked:", cardName);
-    setTransactionDropdownSelection(cardName);
+    updateFilter('selectedCard', cardName);
   };
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
     console.log("Transaction dropdown changed:", cardSelection);
-    setTransactionDropdownSelection(cardSelection);
+    updateFilter('selectedCard', cardSelection);
   };
 
   const handleStatCardClick = (cardType: string, topCardAccount?: string) => {
     console.log("Stat card clicked:", cardType, topCardAccount);
-    setStatCardFilter({
-      cardType,
-      timeRange: selectedTimeRange,
-      topCardAccount
-    });
+    
+    // Clear previous stat card filters first
+    const clearedFilters = { ...filters };
+    delete clearedFilters.expenseFilter;
+    delete clearedFilters.creditFilter;
+    delete clearedFilters.topCardFilter;
+    delete clearedFilters.lowestCardFilter;
+    
+    // Add the new filter based on card type
+    if (cardType === "expenses") {
+      updateMultipleFilters({ ...clearedFilters, expenseFilter: true });
+    } else if (cardType === "credits") {
+      updateMultipleFilters({ ...clearedFilters, creditFilter: true });
+    } else if (cardType === "top-card" && topCardAccount) {
+      updateMultipleFilters({ ...clearedFilters, topCardFilter: topCardAccount });
+    } else if (cardType === "lowest-card" && topCardAccount) {
+      updateMultipleFilters({ ...clearedFilters, lowestCardFilter: topCardAccount });
+    }
   };
 
   const handleClearStatCardFilter = () => {
-    setStatCardFilter(null);
+    updateMultipleFilters({
+      expenseFilter: undefined,
+      creditFilter: undefined,
+      topCardFilter: undefined,
+      lowestCardFilter: undefined
+    });
   };
 
   const handleDateClick = (date: string) => {
-    setSelectedDate(date);
+    updateFilter('selectedDate', date);
   };
 
   const clearDateFilter = () => {
-    setSelectedDate("");
+    clearFilter('selectedDate');
   };
 
   const handleTimeRangeChange = (timeRange: string) => {
     console.log("Time range change requested:", timeRange, "isMobile:", isMobile);
-    console.log("Current selectedTimeRange before change:", selectedTimeRange);
-    setSelectedTimeRange(timeRange);
-    console.log("Time range state should be updated to:", timeRange);
+    updateFilter('selectedTimeRange', timeRange);
   };
 
   const clearTimeRangeFilter = () => {
     console.log("Clearing time range filter, isMobile:", isMobile);
-    setSelectedTimeRange("ytd");
+    updateFilter('selectedTimeRange', 'ytd');
   };
 
   // Add effect to log time range changes
   React.useEffect(() => {
-    console.log("selectedTimeRange state changed to:", selectedTimeRange, "isMobile:", isMobile);
-  }, [selectedTimeRange, isMobile]);
+    console.log("selectedTimeRange state changed to:", filters.selectedTimeRange, "isMobile:", isMobile);
+  }, [filters.selectedTimeRange, isMobile]);
 
   return (
     <div 
@@ -96,7 +101,7 @@ const Index = () => {
         {/* Main Cards */}
         <div className="mt-8">
           <MainCards 
-            selectedTimeRange={selectedTimeRange} 
+            selectedTimeRange={filters.selectedTimeRange} 
             onStatCardClick={handleStatCardClick}
           />
         </div>
@@ -105,7 +110,7 @@ const Index = () => {
         <div className="mt-8 px-4 lg:px-6">
           <ChartAreaInteractive 
             onDateClick={handleDateClick} 
-            selectedTimeRange={selectedTimeRange}
+            selectedTimeRange={filters.selectedTimeRange}
             onTimeRangeChange={handleTimeRangeChange}
           />
         </div>
@@ -115,21 +120,19 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <TransactionCard 
-                cardAccountSelection={transactionDropdownSelection}
-                selectedDate={selectedDate}
+                filters={filters}
                 onClearDateFilter={clearDateFilter}
-                selectedTimeRange={selectedTimeRange}
                 onClearTimeRangeFilter={clearTimeRangeFilter}
                 onDropdownChange={handleTransactionDropdownChange}
-                statCardFilter={statCardFilter}
                 onClearStatCardFilter={handleClearStatCardFilter}
+                onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
               />
             </div>
             <div className="lg:col-span-1">
               <CardAccounts 
                 onCardClick={handleCardAccountClick} 
-                selectedTimeRange={selectedTimeRange}
-                transactionDropdownSelection={transactionDropdownSelection}
+                selectedTimeRange={filters.selectedTimeRange}
+                transactionDropdownSelection={filters.selectedCard}
               />
             </div>
           </div>

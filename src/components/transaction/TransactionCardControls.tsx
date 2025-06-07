@@ -8,11 +8,6 @@ interface TransactionCardControlsProps {
   selectedCard: string
   creditCards: string[]
   onCardChange: (card: string) => void
-  statCardFilter?: {
-    cardType: string
-    timeRange: string
-    topCardAccount?: string
-  } | null
 }
 
 export function TransactionCardControls({
@@ -20,8 +15,7 @@ export function TransactionCardControls({
   onGlobalFilterChange,
   selectedCard,
   creditCards,
-  onCardChange,
-  statCardFilter
+  onCardChange
 }: TransactionCardControlsProps) {
   return (
     <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">

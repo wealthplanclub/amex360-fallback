@@ -1,31 +1,47 @@
 
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DateFilterIndicator } from "./DateFilterIndicator"
-import { StatCardFilterIndicator } from "./StatCardFilterIndicator"
 import { TimeRangeFilterIndicator } from "./TimeRangeFilterIndicator"
+import { FilterState } from "@/hooks/useFilterState"
 
 interface TransactionCardHeaderProps {
   selectedDate?: string
   onClearDateFilter?: () => void
-  statCardFilter?: {
-    cardType: string
-    timeRange: string
-    topCardAccount?: string
-  } | null
+  hasStatCardFilter?: boolean
   onClearStatCardFilter?: () => void
   selectedTimeRange?: string
   onClearTimeRangeFilter?: () => void
+  filters: FilterState
 }
 
 export function TransactionCardHeader({
   selectedDate,
   onClearDateFilter,
-  statCardFilter,
+  hasStatCardFilter,
   onClearStatCardFilter,
   selectedTimeRange,
-  onClearTimeRangeFilter
+  onClearTimeRangeFilter,
+  filters
 }: TransactionCardHeaderProps) {
-  const hasActiveFilter = selectedDate || statCardFilter || (selectedTimeRange && selectedTimeRange !== "ytd")
+  const hasActiveFilter = selectedDate || hasStatCardFilter || (selectedTimeRange && selectedTimeRange !== "ytd")
+
+  const getTimeRangeLabel = (range: string) => {
+    switch (range) {
+      case "ytd": return "YTD"
+      case "90d": return "90d"
+      case "30d": return "30d"
+      case "7d": return "7d"
+      default: return range.toUpperCase()
+    }
+  }
+
+  const getStatCardFilterLabel = () => {
+    if (filters.expenseFilter) return "Expenses"
+    if (filters.creditFilter) return "Credits"
+    if (filters.topCardFilter) return "Top card expenses"
+    if (filters.lowestCardFilter) return "Lowest card expenses"
+    return ""
+  }
 
   return (
     <CardHeader className="pb-2">
@@ -41,15 +57,23 @@ export function TransactionCardHeader({
           onClear={onClearDateFilter}
         />
       )}
-      {statCardFilter && onClearStatCardFilter && (
-        <StatCardFilterIndicator
-          cardType={statCardFilter.cardType}
-          timeRange={statCardFilter.timeRange}
-          topCardAccount={statCardFilter.topCardAccount}
-          onClear={onClearStatCardFilter}
-        />
+      {hasStatCardFilter && onClearStatCardFilter && (
+        <div className="mt-2">
+          <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+            Filtered by: {getStatCardFilterLabel()}, {getTimeRangeLabel(selectedTimeRange || "ytd")}
+            <button 
+              onClick={onClearStatCardFilter}
+              className="hover:bg-gray-200 rounded p-0.5"
+              title="Clear stat card filter"
+            >
+              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </span>
+        </div>
       )}
-      {selectedTimeRange && selectedTimeRange !== "ytd" && !statCardFilter && onClearTimeRangeFilter && (
+      {selectedTimeRange && selectedTimeRange !== "ytd" && !hasStatCardFilter && onClearTimeRangeFilter && (
         <TimeRangeFilterIndicator
           timeRange={selectedTimeRange}
           onClear={onClearTimeRangeFilter}
