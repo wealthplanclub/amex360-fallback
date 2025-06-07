@@ -115,7 +115,7 @@ export function RewardCardList({ filters, onCardClick }: RewardCardListProps) {
       style={{ height: `${dynamicHeight}px` }}
     >
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Card Rewards</CardTitle>
+        <CardTitle className="text-xl font-semibold">Card Breakdown</CardTitle>
         <CardDescription>
           Reward points by card {getTimeRangeDescription()}
         </CardDescription>
