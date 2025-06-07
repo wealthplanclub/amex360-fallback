@@ -25,6 +25,7 @@ interface StatCardProps {
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
+  variant?: "dashboard" | "rewards"
 }
 
 export function StatCard({
@@ -42,7 +43,8 @@ export function StatCard({
   cardType,
   topCardAccount,
   onClick,
-  formatAsPoints = false
+  formatAsPoints = false,
+  variant = "dashboard"
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -58,7 +60,11 @@ export function StatCard({
   };
 
   const getCardClasses = () => {
-    const baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
+    const gradientClass = variant === "rewards" 
+      ? "bg-gradient-to-b from-white to-blue-50" 
+      : "bg-gradient-to-b from-white to-gray-100";
+    
+    const baseClasses = `relative ${gradientClass}`;
     
     if (clickable) {
       return `${baseClasses} cursor-pointer hover:shadow-lg transition-shadow duration-200`;
