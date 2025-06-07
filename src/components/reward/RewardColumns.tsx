@@ -1,3 +1,4 @@
+
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { ArrowUpDown } from "lucide-react"
@@ -68,14 +69,6 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
       cell: ({ row }) => {
         const points = row.getValue("points") as number
         return <div className="text-right font-medium text-green-600">+{points.toLocaleString()}</div>
-      },
-    },
-    {
-      accessorKey: "required_spend",
-      header: "Required Spend",
-      cell: ({ row }) => {
-        const spend = row.getValue("required_spend") as number | undefined
-        return spend ? <div className="text-right">${spend.toLocaleString()}</div> : <div className="text-right text-gray-400">-</div>
       },
     },
   ]
