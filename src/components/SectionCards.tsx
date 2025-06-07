@@ -177,7 +177,7 @@ export function SectionCards({ selectedTimeRange, onStatCardClick }: SectionCard
       icon: TrendingUp,
       footer: "Steady incoming payments",
       description: `Payments and credits ${getTimeRangeDescription()}`,
-      clickable: false,
+      clickable: true,
       cardType: "credits"
     },
     {

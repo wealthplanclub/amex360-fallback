@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -102,6 +103,8 @@ export function TransactionCard({
       // Filter by card type
       if (statCardFilter.cardType === "expenses") {
         filtered = filtered.filter(transaction => transaction.amount < 0);
+      } else if (statCardFilter.cardType === "credits") {
+        filtered = filtered.filter(transaction => transaction.amount > 0);
       }
       
       console.log("After stat card filter:", filtered.length);

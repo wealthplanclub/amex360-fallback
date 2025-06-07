@@ -30,11 +30,11 @@ export function StatCardFilterIndicator({ cardType, timeRange, onClear }: StatCa
 
   return (
     <div className="mt-2">
-      <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded-md">
+      <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
         Filtered by: All cards, {getCardTypeLabel(cardType)}, {getTimeRangeLabel(timeRange)}
         <button 
           onClick={onClear}
-          className="hover:bg-gray-300 rounded p-0.5"
+          className="hover:bg-gray-200 rounded p-0.5"
           title="Clear stat card filter"
         >
           <X className="h-3 w-3" />
