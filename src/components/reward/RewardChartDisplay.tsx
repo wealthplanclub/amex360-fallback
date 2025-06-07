@@ -33,11 +33,32 @@ export function RewardChartDisplay({ filters, onTimeRangeChange }: RewardChartDi
     if (chartData.length === 0) return 0
     
     const totalRewards = chartData.reduce((sum, day) => sum + day.totalPoints, 0)
-    const daysWithData = chartData.filter(day => day.totalPoints > 0).length
     
-    if (daysWithData === 0) return 0
+    // Calculate number of days based on time range
+    let numberOfDays: number
+    const today = new Date()
     
-    return Math.round(totalRewards / daysWithData)
+    switch (filters.selectedTimeRange) {
+      case "ytd":
+        const startOfYear = new Date(today.getFullYear(), 0, 1)
+        numberOfDays = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1
+        break
+      case "90d":
+        numberOfDays = 90
+        break
+      case "30d":
+        numberOfDays = 30
+        break
+      case "7d":
+        numberOfDays = 7
+        break
+      default:
+        numberOfDays = chartData.length
+    }
+    
+    if (numberOfDays === 0) return 0
+    
+    return Math.round(totalRewards / numberOfDays)
   }
 
   return (
