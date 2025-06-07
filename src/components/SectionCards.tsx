@@ -41,32 +41,46 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     console.log("Latest date from data:", latestDate);
     console.log("Selected time range:", selectedTimeRange);
     
-    let startDate: string;
-    const today = new Date(latestDate);
+    // Parse the latest date properly
+    const latestDateObj = new Date(latestDate + 'T00:00:00'); // Add time to prevent timezone issues
+    
+    let startDate: Date;
     
     if (selectedTimeRange === "ytd") {
       // Year to date - start from January 1st of the current year
-      startDate = `${today.getFullYear()}-01-01`;
+      startDate = new Date(latestDateObj.getFullYear(), 0, 1); // January 1st
     } else if (selectedTimeRange === "90d") {
-      const date90DaysAgo = new Date(today);
-      date90DaysAgo.setDate(date90DaysAgo.getDate() - 90);
-      startDate = date90DaysAgo.toISOString().split('T')[0];
+      startDate = new Date(latestDateObj);
+      startDate.setDate(startDate.getDate() - 90);
     } else if (selectedTimeRange === "30d") {
-      const date30DaysAgo = new Date(today);
-      date30DaysAgo.setDate(date30DaysAgo.getDate() - 30);
-      startDate = date30DaysAgo.toISOString().split('T')[0];
+      startDate = new Date(latestDateObj);
+      startDate.setDate(startDate.getDate() - 30);
     } else if (selectedTimeRange === "7d") {
-      const date7DaysAgo = new Date(today);
-      date7DaysAgo.setDate(date7DaysAgo.getDate() - 7);
-      startDate = date7DaysAgo.toISOString().split('T')[0];
+      startDate = new Date(latestDateObj);
+      startDate.setDate(startDate.getDate() - 7);
     } else {
       return transactions;
     }
     
-    console.log("Filtering from start date:", startDate);
-    const filtered = transactions.filter(transaction => transaction.date >= startDate);
+    // Convert start date back to ISO string format for comparison
+    const startDateString = startDate.toISOString().split('T')[0];
+    console.log("Filtering from start date:", startDateString);
+    console.log("Latest date object:", latestDateObj);
+    console.log("Start date object:", startDate);
+    
+    const filtered = transactions.filter(transaction => {
+      const transactionDate = transaction.date;
+      const isIncluded = transactionDate >= startDateString;
+      if (!isIncluded) {
+        console.log(`Filtering out transaction from ${transactionDate} (before ${startDateString})`);
+      }
+      return isIncluded;
+    });
+    
     console.log("Total transactions:", transactions.length);
     console.log("Filtered transactions:", filtered.length);
+    console.log("First few filtered dates:", filtered.slice(0, 5).map(t => t.date));
+    console.log("Last few filtered dates:", filtered.slice(-5).map(t => t.date));
     
     return filtered;
   }, [selectedTimeRange]);
