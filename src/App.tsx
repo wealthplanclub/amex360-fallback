@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Lottie from "lottie-react";
+import tripleCardAnimation from "/public/triple-card.json";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -19,7 +20,7 @@ const DashboardLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="text-center">
       <Lottie
-        animationData={require("/public/triple-card.json")}
+        animationData={tripleCardAnimation}
         className="w-24 h-24 mx-auto mb-4"
         loop={true}
         autoplay={true}
