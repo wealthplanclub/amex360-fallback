@@ -1,4 +1,3 @@
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { ArrowUpDown } from "lucide-react"
@@ -46,7 +45,11 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
     {
       accessorKey: "reward_description",
       header: "Description",
-      cell: ({ row }) => <div className="max-w-[300px] truncate">{row.getValue("reward_description")}</div>,
+      cell: ({ row }) => {
+        const description = row.getValue("reward_description") as string
+        const cleanDescription = description.replace(/\bspend\b/gi, '').replace(/\s+/g, ' ').trim()
+        return <div className="max-w-[300px] truncate">{cleanDescription}</div>
+      },
     },
     {
       accessorKey: "points",
