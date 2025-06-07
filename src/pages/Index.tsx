@@ -45,17 +45,19 @@ const Index = () => {
     >
       <div className="max-w-7xl mx-auto">
         {/* Header with Logo and Logout Button */}
-        <div className="flex justify-center items-center mt-4 relative">
-          <img 
-            src="https://i.imgur.com/1fFddP4.png" 
-            alt="Amex Logo" 
-            className="w-full max-w-[235px] h-auto"
-          />
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex-1 flex justify-center">
+            <img 
+              src="https://i.imgur.com/1fFddP4.png" 
+              alt="Amex Logo" 
+              className="w-full max-w-[235px] h-auto"
+            />
+          </div>
           <Button
             onClick={handleLogout}
             variant="outline"
             size="sm"
-            className="flex items-center gap-2 absolute right-0"
+            className="flex items-center gap-2"
           >
             <LogOut className="h-4 w-4" />
             Log Out
