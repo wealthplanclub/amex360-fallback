@@ -84,6 +84,13 @@ const Rewards = () => {
       // Scroll to table and add referral filter
       scrollToTable();
       updateFilter('globalFilter', 'referral');
+    } else if (cardType === "top-card") {
+      // Scroll to table, clear description filter, and add top card selection
+      scrollToTable();
+      updateMultipleFilters({
+        globalFilter: '',
+        selectedCard: topCardAccount || 'all'
+      });
     }
   };
 
