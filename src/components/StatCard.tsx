@@ -23,6 +23,7 @@ interface StatCardProps {
   cardType?: string
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
+  formatAsPoints?: boolean
 }
 
 export function StatCard({
@@ -38,12 +39,20 @@ export function StatCard({
   clickable = false,
   cardType,
   topCardAccount,
-  onClick
+  onClick,
+  formatAsPoints = false
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
       onClick(cardType, topCardAccount);
     }
+  };
+
+  const formatValue = (val: number) => {
+    if (formatAsPoints) {
+      return val.toLocaleString('en-US');
+    }
+    return `$${val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
 
   return (
@@ -68,7 +77,7 @@ export function StatCard({
           key={`${title}-${numbersKey}`}
           className="text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out animate-fade-in"
         >
-          ${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          {formatValue(value)}
         </CardTitle>
         <div className="absolute top-4 right-4">
           <Badge variant="outline" className="gap-1">

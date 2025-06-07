@@ -89,6 +89,7 @@ export function RewardMetricsCards({
           cardType={card.cardType}
           topCardAccount={card.topCardAccount}
           onClick={onCardClick}
+          formatAsPoints={true}
         />
       ))}
     </div>

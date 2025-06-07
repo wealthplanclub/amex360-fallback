@@ -7,7 +7,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { useFilterState } from "@/hooks/useFilterState";
 import { RewardMetricsCards } from "@/components/reward/RewardMetricsCards";
 import { RewardChartDisplay } from "@/components/reward/RewardChartDisplay";
-import { CardAccounts } from "@/components/CardAccounts";
+import { RewardCardList } from "@/components/reward/RewardCardList";
 
 const Rewards = () => {
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
@@ -82,7 +82,7 @@ const Rewards = () => {
             />
           </div>
           
-          {/* Chart and Card Accounts */}
+          {/* Chart and Card List */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
             <div className="lg:col-span-2">
               <RewardChartDisplay
@@ -91,7 +91,7 @@ const Rewards = () => {
               />
             </div>
             <div className="lg:col-span-1">
-              <CardAccounts filters={filters} />
+              <RewardCardList filters={filters} />
             </div>
           </div>
           
