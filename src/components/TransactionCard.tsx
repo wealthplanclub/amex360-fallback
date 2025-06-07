@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import * as React from "react"
@@ -67,6 +68,21 @@ const globalFilterFn = (row: any, columnId: string, value: string) => {
          formattedAmount.includes(searchValue)
 }
 
+// Function to format account names according to the rules
+const formatAccountName = (accountName: string): string => {
+  let formatted = accountName.replace(/\bcard\b/gi, '').trim()
+  
+  // Apply conditional formatting rules
+  formatted = formatted.replace(/business/gi, '').trim()
+  formatted = formatted.replace(/rewards/gi, '').trim()
+  formatted = formatted.replace(/charles/gi, '').trim()
+  
+  // Clean up extra spaces
+  formatted = formatted.replace(/\s+/g, ' ').trim()
+  
+  return formatted
+}
+
 export function TransactionCard() {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
@@ -82,7 +98,7 @@ export function TransactionCard() {
 
   // Extract unique credit cards
   const creditCards = React.useMemo(() => {
-    const uniqueCards = Array.from(new Set(allTransactions.map(t => t.account.replace(/\bcard\b/gi, '').trim())))
+    const uniqueCards = Array.from(new Set(allTransactions.map(t => formatAccountName(t.account))))
       .filter(card => card.length > 0)
       .sort()
     return uniqueCards
@@ -96,7 +112,7 @@ export function TransactionCard() {
       return allTransactions
     }
     return allTransactions.filter(transaction => 
-      transaction.account.replace(/\bcard\b/gi, '').trim() === selectedCard
+      formatAccountName(transaction.account) === selectedCard
     )
   }, [allTransactions, selectedCard]);
 
@@ -126,7 +142,7 @@ export function TransactionCard() {
           </div>
         );
       },
-      size: 80,
+      size: 60,
     },
     {
       accessorKey: "description",
@@ -153,7 +169,7 @@ export function TransactionCard() {
       header: "Account",
       cell: ({ row }) => (
         <div className="text-sm text-muted-foreground">
-          {(row.getValue("account") as string).replace(/\bcard\b/gi, '').trim()}
+          {formatAccountName(row.getValue("account") as string)}
         </div>
       ),
     },
@@ -334,3 +350,4 @@ export function TransactionCard() {
     </Card>
   )
 }
+
