@@ -25,7 +25,7 @@ export function CardAccountItem({ card, index, selectedCard, onCardClick }: Card
   return (
     <Card 
       className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in ${
-        isSelected ? 'ring-2 ring-primary bg-accent' : ''
+        isSelected ? 'bg-accent' : ''
       }`}
       style={{
         animationDelay: `${index * 100}ms`,
