@@ -3,11 +3,11 @@ import * as React from "react"
 import { Table as TanstackTable } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from "@radix-ui/react-icons"
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react"
 import { Reward } from "@/types/reward"
 
 interface RewardPaginationProps {
@@ -81,7 +81,7 @@ export function RewardPagination({
               disabled={!table.getCanPreviousPage()}
             >
               <span className="sr-only">Go to first page</span>
-              <DoubleArrowLeftIcon className="h-4 w-4" />
+              <ChevronsLeft className="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
@@ -90,7 +90,7 @@ export function RewardPagination({
               disabled={!table.getCanPreviousPage()}
             >
               <span className="sr-only">Go to previous page</span>
-              <ChevronLeftIcon className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
@@ -99,7 +99,7 @@ export function RewardPagination({
               disabled={!table.getCanNextPage()}
             >
               <span className="sr-only">Go to next page</span>
-              <ChevronRightIcon className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
@@ -108,7 +108,7 @@ export function RewardPagination({
               disabled={!table.getCanNextPage()}
             >
               <span className="sr-only">Go to last page</span>
-              <DoubleArrowRightIcon className="h-4 w-4" />
+              <ChevronsRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
