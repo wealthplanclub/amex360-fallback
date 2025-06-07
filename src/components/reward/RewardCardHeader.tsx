@@ -54,31 +54,34 @@ export function RewardCardHeader({
           {selectedDate && (
             <DateFilterIndicator
               selectedDate={selectedDate}
-              onClearFilter={onClearDateFilter}
+              onClear={onClearDateFilter || (() => {})}
             />
           )}
           
           {/* Time Range Filter (only show if no specific date is selected) */}
           {!selectedDate && selectedTimeRange && selectedTimeRange !== "ytd" && (
             <TimeRangeFilterIndicator
-              selectedTimeRange={getTimeRangeLabel()}
-              onClearFilter={onClearTimeRangeFilter}
+              timeRange={getTimeRangeLabel()}
+              onClear={onClearTimeRangeFilter || (() => {})}
             />
           )}
           
           {/* Employee Card Filter */}
           {filters.globalFilter && filters.globalFilter.toLowerCase().includes('employee card') && (
             <StatCardFilterIndicator
-              filterText="Employee Card"
-              onClearFilter={handleClearEmployeeFilter}
+              cardType="employee-rewards"
+              timeRange={selectedTimeRange}
+              onClear={handleClearEmployeeFilter}
             />
           )}
           
           {/* Card Filter */}
           {filters.selectedCard && filters.selectedCard !== "all" && (
             <StatCardFilterIndicator
-              filterText={filters.selectedCard}
-              onClearFilter={onClearCardFilter}
+              cardType="card-filter"
+              timeRange={selectedTimeRange}
+              topCardAccount={filters.selectedCard}
+              onClear={onClearCardFilter || (() => {})}
             />
           )}
         </div>
