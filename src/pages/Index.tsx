@@ -4,6 +4,7 @@ import { SectionCards } from "@/components/SectionCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { AppHeader } from "@/components/AppHeader";
 
 const Index = () => {
   const [selectedCard, setSelectedCard] = useState<string>("all");
@@ -28,13 +29,16 @@ const Index = () => {
 
   return (
     <div 
-      className="min-h-screen p-6"
+      className="min-h-screen"
       style={{
         backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
         backgroundRepeat: 'repeat'
       }}
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Header with Reset and Logout buttons */}
+      <AppHeader />
+      
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header with Logo */}
         <div className="flex justify-center items-center mt-4">
           <img 
