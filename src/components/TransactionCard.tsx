@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -13,6 +12,7 @@ import {
   SortingState,
   useReactTable,
   VisibilityState,
+  GlobalFilterState,
 } from "@tanstack/react-table"
 import { ArrowUpDown, ChevronDown } from "lucide-react"
 
@@ -49,6 +49,22 @@ export type Transaction = {
   amount: number
   account: string
   category: string
+}
+
+// Custom global filter function for descriptions and amounts
+const globalFilterFn = (row: any, columnId: string, value: string) => {
+  const description = String(row.getValue("description")).toLowerCase()
+  const amount = String(row.getValue("amount")).toLowerCase()
+  const formattedAmount = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(Math.abs(parseFloat(row.getValue("amount")))).toLowerCase()
+  
+  const searchValue = value.toLowerCase()
+  
+  return description.includes(searchValue) || 
+         amount.includes(searchValue) || 
+         formattedAmount.includes(searchValue)
 }
 
 export function TransactionCard() {
@@ -156,12 +172,15 @@ export function TransactionCard() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
+  const [globalFilter, setGlobalFilter] = React.useState<string>("")
 
   const table = useReactTable({
     data: transactions,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -171,6 +190,7 @@ export function TransactionCard() {
       sorting,
       columnFilters,
       columnVisibility,
+      globalFilter,
     },
     initialState: {
       pagination: {
@@ -191,11 +211,9 @@ export function TransactionCard() {
         <div className="w-full">
           <div className="flex items-center py-4">
             <Input
-              placeholder="Filter descriptions..."
-              value={(table.getColumn("description")?.getFilterValue() as string) ?? ""}
-              onChange={(event) =>
-                table.getColumn("description")?.setFilterValue(event.target.value)
-              }
+              placeholder="Search descriptions and amounts..."
+              value={globalFilter ?? ""}
+              onChange={(event) => setGlobalFilter(event.target.value)}
               className="max-w-sm"
             />
             <DropdownMenu>
