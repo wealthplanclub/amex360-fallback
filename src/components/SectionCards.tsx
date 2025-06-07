@@ -1,6 +1,5 @@
 
 
-
 import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -126,17 +125,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     const topCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === topCardSpend)?.[0] || "";
     const lowestCardAccount = Object.entries(cardExpenses).find(([_, amount]) => amount === lowestCardSpend)?.[0] || "";
 
-    // Remove the word "card" from account names and handle Business Green Rewards
-    const formatCardDisplayName = (accountName: string) => {
-      const cleanedName = accountName.replace(/\bcard\b/gi, '').trim();
-      if (cleanedName.toLowerCase().includes('business green rewards')) {
-        return 'Business Green';
-      }
-      return cleanedName;
-    };
-
-    const topCardDisplayName = formatCardDisplayName(topCardAccount);
-    const lowestCardDisplayName = formatCardDisplayName(lowestCardAccount);
+    // Remove the word "card" from account names
+    const topCardDisplayName = topCardAccount.replace(/\bcard\b/gi, '').trim();
+    const lowestCardDisplayName = lowestCardAccount.replace(/\bcard\b/gi, '').trim();
 
     console.log("Calculation results:", {
       totalExpenses,
@@ -249,5 +240,4 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     </div>
   )
 }
-
 
