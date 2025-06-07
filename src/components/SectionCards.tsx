@@ -35,31 +35,28 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     
     if (transactions.length === 0) return transactions;
     
-    // Get the latest date from the data
-    const latestDate = transactions[transactions.length - 1].date;
-    console.log("Latest date from data:", latestDate);
+    // Use today's date as the reference point instead of latest date from data
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0];
+    console.log("Today's date (reference point):", todayString);
     console.log("Selected time range:", selectedTimeRange);
-    
-    // Parse the latest date properly - this should be our reference point (2025-01-23)
-    const latestDateObj = new Date(latestDate + 'T00:00:00');
-    console.log("Latest date object:", latestDateObj.toISOString());
     
     let startDate: Date;
     
     if (selectedTimeRange === "ytd") {
-      // Year to date - start from January 1st of the latest year (2025)
-      startDate = new Date(latestDateObj.getFullYear(), 0, 1); // January 1st, 2025
+      // Year to date - start from January 1st of the current year
+      startDate = new Date(today.getFullYear(), 0, 1);
     } else if (selectedTimeRange === "90d") {
-      // 90 days before the latest date
-      startDate = new Date(latestDateObj);
+      // 90 days before today
+      startDate = new Date(today);
       startDate.setDate(startDate.getDate() - 90);
     } else if (selectedTimeRange === "30d") {
-      // 30 days before the latest date
-      startDate = new Date(latestDateObj);
+      // 30 days before today
+      startDate = new Date(today);
       startDate.setDate(startDate.getDate() - 30);
     } else if (selectedTimeRange === "7d") {
-      // 7 days before the latest date
-      startDate = new Date(latestDateObj);
+      // 7 days before today
+      startDate = new Date(today);
       startDate.setDate(startDate.getDate() - 7);
     } else {
       return transactions;
@@ -69,7 +66,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     const startDateString = startDate.toISOString().split('T')[0];
     console.log("Start date string for filtering:", startDateString);
     console.log("Start date object:", startDate.toISOString());
-    console.log("Days between start and latest:", Math.floor((latestDateObj.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
+    console.log("Days between start and today:", Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
     
     const filtered = transactions.filter(transaction => {
       const transactionDate = transaction.date;
@@ -79,7 +76,7 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     
     console.log("Total transactions:", transactions.length);
     console.log("Filtered transactions:", filtered.length);
-    console.log("Date range:", startDateString, "to", latestDate);
+    console.log("Date range:", startDateString, "to", todayString);
     
     return filtered;
   }, [selectedTimeRange]);
