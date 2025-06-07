@@ -28,7 +28,7 @@ export function RewardPagination({
   return (
     <div className="flex items-center justify-between px-2 py-4">
       <div className="flex items-center space-x-2">
-        <p className="text-sm font-medium">
+        <p className="text-sm text-muted-foreground">
           {filteredRowCount} reward{filteredRowCount !== 1 ? 's' : ''} found
         </p>
         {!showAll && filteredRowCount > 10 && (
