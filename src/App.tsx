@@ -17,13 +17,25 @@ const queryClient = new QueryClient();
 // Simple loading component for the dashboard with Lottie animation
 const DashboardLoader = () => {
   const [animationData, setAnimationData] = useState(null);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     fetch("/triple-card.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
+
+    // Ensure loader shows for at least 3 seconds to let animation complete
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  if (!showLoader) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -42,6 +54,30 @@ const DashboardLoader = () => {
   );
 };
 
+// Wrapper component to handle both lazy loading and animation timing
+const DashboardWrapper = () => {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for animation to complete before showing dashboard
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isReady) {
+    return <DashboardLoader />;
+  }
+
+  return (
+    <Suspense fallback={<div />}>
+      <Dashboard />
+    </Suspense>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -50,14 +86,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Auth />} />
-          <Route 
-            path="/dashboard" 
-            element={
-              <Suspense fallback={<DashboardLoader />}>
-                <Dashboard />
-              </Suspense>
-            } 
-          />
+          <Route path="/dashboard" element={<DashboardWrapper />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
