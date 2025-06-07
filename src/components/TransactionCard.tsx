@@ -13,7 +13,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ChevronsUpDown, ChevronDown, CreditCard } from "lucide-react"
+import { ChevronsUpDown, ChevronDown, CreditCard, X } from "lucide-react"
 
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -83,9 +83,10 @@ const formatAccountName = (accountName: string): string => {
 
 interface TransactionCardProps {
   selectedCardFromGrid?: string;
+  selectedDate?: string;
 }
 
-export function TransactionCard({ selectedCardFromGrid }: TransactionCardProps) {
+export function TransactionCard({ selectedCardFromGrid, selectedDate }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
@@ -115,23 +116,32 @@ export function TransactionCard({ selectedCardFromGrid }: TransactionCardProps) 
     }
   }, [selectedCardFromGrid]);
 
-  // Filter transactions by selected card
+  // Filter transactions by selected card and date
   const transactions = React.useMemo(() => {
-    if (selectedCard === "all") {
-      return allTransactions
+    let filtered = allTransactions;
+    
+    // Filter by card
+    if (selectedCard !== "all") {
+      if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
+        filtered = filtered.filter(transaction => 
+          transaction.account.toLowerCase().includes('business green rewards')
+        )
+      } else {
+        filtered = filtered.filter(transaction => 
+          transaction.account === selectedCard
+        )
+      }
     }
     
-    // Special handling for combined Business Green cards
-    if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
-      return allTransactions.filter(transaction => 
-        transaction.account.toLowerCase().includes('business green rewards')
+    // Filter by date if selected
+    if (selectedDate) {
+      filtered = filtered.filter(transaction => 
+        transaction.date === selectedDate
       )
     }
     
-    return allTransactions.filter(transaction => 
-      transaction.account === selectedCard
-    )
-  }, [allTransactions, selectedCard]);
+    return filtered;
+  }, [allTransactions, selectedCard, selectedDate]);
 
   // Memoize columns to prevent recreation on every render
   const columns: ColumnDef<Transaction>[] = React.useMemo(() => [
@@ -251,12 +261,34 @@ export function TransactionCard({ selectedCardFromGrid }: TransactionCardProps) 
     },
   })
 
+  const clearDateFilter = () => {
+    // This will be handled by the parent component
+  };
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
         <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
+          {selectedDate && (
+            <div className="mt-2">
+              <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-md">
+                Filtered by: {new Date(selectedDate).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric"
+                })}
+                <button 
+                  onClick={clearDateFilter}
+                  className="hover:bg-blue-200 rounded p-0.5"
+                  title="Clear date filter"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            </div>
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent>

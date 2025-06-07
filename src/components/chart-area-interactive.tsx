@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -41,7 +40,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartAreaInteractive() {
+interface ChartAreaInteractiveProps {
+  onDateClick?: (date: string) => void;
+}
+
+export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("ytd")
 
@@ -112,6 +115,13 @@ export function ChartAreaInteractive() {
     return "Last 90 days"
   }
 
+  const handleChartClick = (data: any) => {
+    if (data && data.activePayload && data.activePayload[0] && onDateClick) {
+      const clickedDate = data.activePayload[0].payload.date;
+      onDateClick(clickedDate);
+    }
+  };
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -166,7 +176,7 @@ export function ChartAreaInteractive() {
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <AreaChart data={filteredData}>
+          <AreaChart data={filteredData} onClick={handleChartClick}>
             <defs>
               <linearGradient id="fillTotalSpend" x1="0" y1="0" x2="0" y2="1">
                 <stop
