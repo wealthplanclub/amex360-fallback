@@ -1,6 +1,6 @@
 
 import { staticTxnData } from "@/data/staticData";
-import { processCardData, getTimeRangeDescription } from "@/utils/cardDataUtils";
+import { getTimeRangeDescription } from "@/utils/cardDataUtils";
 import {
   Card,
   CardContent,
@@ -10,22 +10,77 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CardAccountItem } from "@/components/CardAccountItem";
+import { transactionFilterService } from "@/services/transactionFilterService";
+import { FilterState } from "@/hooks/useFilterState";
 import * as React from "react";
 
 interface CardAccountsProps {
   onCardClick?: (cardName: string) => void;
   selectedTimeRange?: string;
   transactionDropdownSelection?: string;
+  filters: FilterState;
 }
 
 export function CardAccounts({ 
   onCardClick, 
   selectedTimeRange = "ytd",
-  transactionDropdownSelection = "all"
+  transactionDropdownSelection = "all",
+  filters
 }: CardAccountsProps) {
+  // Use the centralized filtering service to get filtered transactions
   const allCardData = React.useMemo(() => {
-    return processCardData(staticTxnData, selectedTimeRange);
-  }, [selectedTimeRange]);
+    // Create filter state for card calculations (don't include card filter itself to show all cards)
+    const cardFilters: FilterState = {
+      ...filters,
+      selectedCard: "all" // Always show all cards, but apply other filters
+    };
+    
+    const filteredTransactions = transactionFilterService.getFilteredTransactions(cardFilters);
+    
+    // Calculate card expenses from filtered transactions
+    const cardExpenses = filteredTransactions
+      .filter(transaction => transaction.amount < 0)
+      .reduce((acc, transaction) => {
+        const account = transaction.account;
+        if (!acc[account]) {
+          acc[account] = 0;
+        }
+        acc[account] += Math.abs(transaction.amount);
+        return acc;
+      }, {} as Record<string, number>);
+
+    // Process card data similar to the original processCardData function
+    const cardData = Object.entries(cardExpenses)
+      .reduce((acc: any[], [account, amount]: [string, number]) => {
+        if (account.toLowerCase().includes('business green rewards')) {
+          const existingBusinessGreen = acc.find(card => card.name === 'Business Green\n(-2007)');
+          if (existingBusinessGreen) {
+            existingBusinessGreen.amount += amount;
+          } else {
+            acc.push({
+              name: 'Business Green\n(-2007)',
+              fullName: 'Business Green Rewards Combined',
+              amount
+            });
+          }
+        } else {
+          let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
+          if (account.toLowerCase().includes('amazon business prime')) {
+            displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
+          }
+          
+          acc.push({
+            name: displayName,
+            fullName: account,
+            amount
+          });
+        }
+        return acc;
+      }, [])
+      .sort((a, b) => b.amount - a.amount);
+
+    return cardData;
+  }, [filters]);
 
   // Filter cards based on transaction dropdown selection
   const cardData = React.useMemo(() => {
@@ -63,6 +118,17 @@ export function CardAccounts({
     return card.fullName === transactionDropdownSelection;
   };
 
+  // Get appropriate description based on active filters
+  const getFilterDescription = () => {
+    if (filters.selectedDate) {
+      const [year, month, day] = filters.selectedDate.split('-').map(Number);
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      return `(${monthNames[month - 1]} ${day}, ${year})`;
+    }
+    return getTimeRangeDescription(selectedTimeRange);
+  };
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -71,7 +137,7 @@ export function CardAccounts({
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Accounts</CardTitle>
         <CardDescription>
-          Total spending by card {getTimeRangeDescription(selectedTimeRange)}
+          Total spending by card {getFilterDescription()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">

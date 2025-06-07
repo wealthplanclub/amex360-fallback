@@ -166,6 +166,7 @@ const Index = () => {
                 onCardClick={handleCardAccountClick} 
                 selectedTimeRange={filters.selectedTimeRange || 'ytd'}
                 transactionDropdownSelection={filters.selectedCard}
+                filters={filters}
               />
             </div>
           </div>
