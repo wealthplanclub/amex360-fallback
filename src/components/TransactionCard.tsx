@@ -98,7 +98,7 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDat
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-semibold">Recent Transactions</CardTitle>
+        <CardTitle className="text-xl font-semibold">Transaction History</CardTitle>
         <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
         </CardDescription>
