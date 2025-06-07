@@ -2,6 +2,7 @@ import { TrendingDown, TrendingUp } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import * as React from "react"
+import { useTrail, animated } from "@react-spring/web"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -187,9 +188,19 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     }
   ];
 
+  // Create trail animation for the number values
+  const trail = useTrail(cardData.length, {
+    from: { number: 0 },
+    to: { number: 1 },
+    config: { tension: 280, friction: 60 },
+    reset: true,
+    key: selectedTimeRange, // Reset animation when time range changes
+  });
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
-      {cardData.map((card, index) => {
+      {trail.map((style, index) => {
+        const card = cardData[index];
         const IconComponent = card.icon;
         return (
           <Card 
@@ -206,7 +217,9 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
             <CardHeader className="pb-6">
               <CardDescription>{card.title}</CardDescription>
               <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-                ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <animated.span>
+                  {style.number.to(n => `$${(card.value * n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`)}
+                </animated.span>
               </CardTitle>
               <div className="absolute top-4 right-4">
                 <Badge variant="outline" className="gap-1">
