@@ -1,9 +1,12 @@
+
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { AppHeader } from "@/components/AppHeader";
+import { AppSidebar } from "@/components/AppSidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFilterState } from "@/hooks/useFilterState";
 
@@ -110,69 +113,73 @@ const Index = () => {
   }, [filters.selectedTimeRange, isMobile]);
 
   return (
-    <div 
-      className="min-h-screen"
-      style={{
-        backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-        backgroundRepeat: 'repeat'
-      }}
-    >
-      {/* Header with Reset and Logout buttons */}
-      <AppHeader />
-      
-      <div className="max-w-7xl mx-auto px-6 mb-8">
-        {/* Header with Logo */}
-        <div className="flex justify-center items-center">
-          <img 
-            src="https://i.imgur.com/1fFddP4.png" 
-            alt="Amex Logo" 
-            className="mx-auto"
-            style={{ width: '276px' }}
-          />
-        </div>
+    <SidebarProvider>
+      <div 
+        className="min-h-screen w-full"
+        style={{
+          backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+          backgroundRepeat: 'repeat'
+        }}
+      >
+        <AppSidebar />
         
-        {/* Main Cards */}
-        <div className="mt-8">
-          <MainCards 
-            selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
-            onStatCardClick={handleStatCardClick}
-          />
-        </div>
+        {/* Header with Reset and Logout buttons */}
+        <AppHeader />
+        
+        <div className="max-w-7xl mx-auto px-6 mb-8">
+          {/* Header with Logo */}
+          <div className="flex justify-center items-center">
+            <img 
+              src="https://i.imgur.com/1fFddP4.png" 
+              alt="Amex Logo" 
+              className="mx-auto"
+              style={{ width: '276px' }}
+            />
+          </div>
+          
+          {/* Main Cards */}
+          <div className="mt-8">
+            <MainCards 
+              selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
+              onStatCardClick={handleStatCardClick}
+            />
+          </div>
 
-        {/* Daily Spending Chart */}
-        <div className="mt-8 px-4 lg:px-6">
-          <ChartAreaInteractive 
-            onDateClick={handleDateClick} 
-            selectedTimeRange={filters.selectedTimeRange || 'ytd'}
-            onTimeRangeChange={handleTimeRangeChange}
-          />
-        </div>
+          {/* Daily Spending Chart */}
+          <div className="mt-8 px-4 lg:px-6">
+            <ChartAreaInteractive 
+              onDateClick={handleDateClick} 
+              selectedTimeRange={filters.selectedTimeRange || 'ytd'}
+              onTimeRangeChange={handleTimeRangeChange}
+            />
+          </div>
 
-        {/* Transaction Card and Card Spend Grid */}
-        <div id="transaction-section" className="mt-8 px-4 lg:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <TransactionCard 
-                filters={filters}
-                onClearDateFilter={clearDateFilter}
-                onClearTimeRangeFilter={clearTimeRangeFilter}
-                onDropdownChange={handleTransactionDropdownChange}
-                onClearStatCardFilter={handleClearStatCardFilter}
-                onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-              />
-            </div>
-            <div className="lg:col-span-1">
-              <CardAccounts 
-                onCardClick={handleCardAccountClick} 
-                selectedTimeRange={filters.selectedTimeRange || 'ytd'}
-                transactionDropdownSelection={filters.selectedCard}
-                filters={filters}
-              />
+          {/* Transaction Card and Card Spend Grid */}
+          <div id="transaction-section" className="mt-8 px-4 lg:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <TransactionCard 
+                  filters={filters}
+                  onClearDateFilter={clearDateFilter}
+                  onClearTimeRangeFilter={clearTimeRangeFilter}
+                  onDropdownChange={handleTransactionDropdownChange}
+                  onClearStatCardFilter={handleClearStatCardFilter}
+                  onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+                />
+              </div>
+              <div className="lg:col-span-1">
+                <CardAccounts 
+                  onCardClick={handleCardAccountClick} 
+                  selectedTimeRange={filters.selectedTimeRange || 'ytd'}
+                  transactionDropdownSelection={filters.selectedCard}
+                  filters={filters}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

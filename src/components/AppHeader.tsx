@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export const AppHeader = () => {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ export const AppHeader = () => {
   };
 
   return (
-    <div className="flex justify-end items-center w-full px-6 py-4">
+    <div className="flex justify-between items-center w-full px-6 py-4">
+      <SidebarTrigger />
       <Button
         variant="outline"
         size="sm"
