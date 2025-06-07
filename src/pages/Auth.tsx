@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -13,9 +14,9 @@ const Auth = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Accept any credentials and redirect to dashboard
+    // Accept any credentials and redirect to dashboard with state
     console.log("Auth attempt:", { email, password, isLogin });
-    navigate("/dashboard");
+    navigate("/dashboard", { state: { fromLogin: true } });
   };
 
   return (
