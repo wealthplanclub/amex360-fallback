@@ -188,11 +188,12 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
     }
   ];
 
-  // Create trail animation for the number values
+  // Create trail animation for the cards to appear
   const trail = useTrail(cardData.length, {
-    from: { number: 0 },
-    to: { number: 1 },
-    config: { tension: 280, friction: 60 },
+    config: { mass: 5, tension: 2000, friction: 200 },
+    opacity: 1,
+    x: 0,
+    from: { opacity: 0, x: 20 },
     reset: true,
     key: selectedTimeRange, // Reset animation when time range changes
   });
@@ -203,40 +204,30 @@ export function SectionCards({ selectedTimeRange }: SectionCardsProps) {
         const card = cardData[index];
         const IconComponent = card.icon;
         return (
-          <Card 
-            key={card.title}
-            className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
-              isVisible 
-                ? 'translate-y-0 opacity-100' 
-                : 'translate-y-8 opacity-0'
-            }`}
-            style={{
-              transitionDelay: `${index * 150}ms`
-            }}
-          >
-            <CardHeader className="pb-6">
-              <CardDescription>{card.title}</CardDescription>
-              <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
-                <animated.span>
-                  {style.number.to(n => `$${(card.value * n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`)}
-                </animated.span>
-              </CardTitle>
-              <div className="absolute top-4 right-4">
-                <Badge variant="outline" className="gap-1">
-                  <IconComponent className="h-3 w-3" />
-                  {card.badge}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
-              <div className="flex gap-2 font-medium items-center">
-                {card.footer} <IconComponent className="h-4 w-4" />
-              </div>
-              <div className="text-muted-foreground">
-                {card.description}
-              </div>
-            </CardFooter>
-          </Card>
+          <animated.div key={card.title} style={{ opacity: style.opacity, transform: style.x.to(x => `translateX(${x}px)`) }}>
+            <Card className="relative bg-gradient-to-b from-white to-gray-100">
+              <CardHeader className="pb-6">
+                <CardDescription>{card.title}</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums lg:text-3xl">
+                  ${card.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </CardTitle>
+                <div className="absolute top-4 right-4">
+                  <Badge variant="outline" className="gap-1">
+                    <IconComponent className="h-3 w-3" />
+                    {card.badge}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
+                <div className="flex gap-2 font-medium items-center">
+                  {card.footer} <IconComponent className="h-4 w-4" />
+                </div>
+                <div className="text-muted-foreground">
+                  {card.description}
+                </div>
+              </CardFooter>
+            </Card>
+          </animated.div>
         );
       })}
     </div>
