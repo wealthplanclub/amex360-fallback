@@ -13,8 +13,8 @@ import {
 import { Reward } from "@/types/reward"
 import { globalFilterFn } from "@/utils/transactionUtils"
 import { useRewardColumns } from "./RewardColumns"
-import { TransactionTableContent } from "../transaction/TransactionTableContent"
-import { TransactionPagination } from "../transaction/TransactionPagination"
+import { RewardTableContent } from "./RewardTableContent"
+import { RewardPagination } from "./RewardPagination"
 
 interface RewardTableProps {
   rewards: Reward[]
@@ -69,12 +69,12 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
 
   return (
     <>
-      <TransactionTableContent 
+      <RewardTableContent 
         table={table} 
         showAll={showAll} 
         columnsLength={columns.length} 
       />
-      <TransactionPagination
+      <RewardPagination
         table={table}
         showAll={showAll}
         filteredRowCount={filteredRowCount}
