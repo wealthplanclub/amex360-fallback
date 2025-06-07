@@ -1,3 +1,4 @@
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -28,6 +29,7 @@ const chartConfig = {
 interface RewardChartProps {
   data: Array<{
     date: string
+    displayDate: string
     totalPoints: number
     employeePoints: number
     referralPoints: number
@@ -107,12 +109,11 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
         </defs>
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey="date"
+          dataKey="displayDate"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
           minTickGap={32}
-          tickFormatter={(value) => value}
         />
         <YAxis
           domain={[0, yAxisMax]}
