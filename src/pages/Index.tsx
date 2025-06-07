@@ -116,20 +116,20 @@ const Index = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <SidebarInset className="flex-1">
+        <SidebarInset 
+          className="flex-1"
+          style={{
+            backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+            backgroundRepeat: 'repeat'
+          }}
+        >
           {/* Header with Reset and Logout buttons */}
-          <div className="flex items-center gap-2 p-4 border-b bg-transparent">
+          <div className="flex items-center gap-2 p-4 border-b">
             <SidebarTrigger />
             <AppHeader />
           </div>
           
-          <div 
-            className="max-w-7xl mx-auto px-6 mb-8"
-            style={{
-              backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-              backgroundRepeat: 'repeat'
-            }}
-          >
+          <div className="max-w-7xl mx-auto px-6 mb-8">
             {/* Header with Logo */}
             <div className="flex justify-center items-center">
               <img 
