@@ -5,6 +5,7 @@ import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { AppHeader } from "@/components/AppHeader";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [selectedCard, setSelectedCard] = useState<string>("all");
@@ -15,6 +16,8 @@ const Index = () => {
     timeRange: string;
     topCardAccount?: string;
   } | null>(null);
+  
+  const isMobile = useIsMobile();
 
   const handleCardClick = (cardName: string) => {
     setSelectedCard(cardName);
@@ -31,10 +34,14 @@ const Index = () => {
   };
 
   const handleTimeRangeChange = (timeRange: string) => {
+    console.log("Time range change requested:", timeRange, "isMobile:", isMobile);
+    console.log("Current selectedTimeRange before change:", selectedTimeRange);
     setSelectedTimeRange(timeRange);
+    console.log("Time range state should be updated to:", timeRange);
   };
 
   const clearTimeRangeFilter = () => {
+    console.log("Clearing time range filter, isMobile:", isMobile);
     setSelectedTimeRange("ytd");
   };
 
@@ -49,6 +56,11 @@ const Index = () => {
   const clearStatCardFilter = () => {
     setStatCardFilter(null);
   };
+
+  // Add effect to log time range changes
+  React.useEffect(() => {
+    console.log("selectedTimeRange state changed to:", selectedTimeRange, "isMobile:", isMobile);
+  }, [selectedTimeRange, isMobile]);
 
   return (
     <div 
