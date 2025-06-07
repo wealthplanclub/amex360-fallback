@@ -61,12 +61,12 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
 
   const handleShowAll = () => {
     setShowAll(true)
-    // Don't change pageSize - virtualization will handle showing all rows
+    table.setPageSize(table.getFilteredRowModel().rows.length) // Show all rows in scroll area
   }
 
   const handleShowPaginated = () => {
     setShowAll(false)
-    table.setPageSize(10)
+    table.setPageSize(10) // Reset to 10 rows per page
   }
 
   const filteredRowCount = table.getFilteredRowModel().rows.length

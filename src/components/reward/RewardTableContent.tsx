@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Reward } from "@/types/reward"
-import { VirtualizedRewardTableContent } from "./VirtualizedRewardTableContent"
 
 interface RewardTableContentProps {
   table: TanstackTable<Reward>
@@ -18,66 +18,62 @@ interface RewardTableContentProps {
   columnsLength: number
 }
 
-const VIRTUALIZATION_THRESHOLD = 100
-
 export function RewardTableContent({ table, showAll, columnsLength }: RewardTableContentProps) {
-  const rowCount = table.getRowModel().rows.length
-  
-  // Use virtualization for large datasets when showing all
-  if (showAll && rowCount > VIRTUALIZATION_THRESHOLD) {
-    return (
-      <VirtualizedRewardTableContent 
-        table={table} 
-        columnsLength={columnsLength} 
-      />
-    )
-  }
+  // Regular table for all cases
+  const tableContent = (
+    <Table>
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              return (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              )
+            })}
+          </TableRow>
+        ))}
+      </TableHeader>
+      <TableBody>
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && "selected"}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={columnsLength} className="h-24 text-center">
+              No rewards found.
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+  )
 
-  // Regular table for pagination or small datasets
   return (
     <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columnsLength} className="h-24 text-center">
-                No rewards found.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {showAll ? (
+        <ScrollArea className="h-[600px]">
+          {tableContent}
+        </ScrollArea>
+      ) : (
+        tableContent
+      )}
     </div>
   )
 }
