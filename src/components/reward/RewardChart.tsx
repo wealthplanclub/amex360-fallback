@@ -1,5 +1,5 @@
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
   ChartConfig,
   ChartContainer,
@@ -32,10 +32,6 @@ interface RewardChartProps {
 }
 
 export function RewardChart({ data }: RewardChartProps) {
-  // Calculate the maximum value to set appropriate Y-axis domain
-  const maxValue = Math.max(...data.map(d => d.totalPoints))
-  const yAxisMax = Math.ceil(maxValue * 1.1) // Add 10% padding instead of default
-
   return (
     <ChartContainer
       config={chartConfig}
@@ -88,12 +84,6 @@ export function RewardChart({ data }: RewardChartProps) {
           tickMargin={8}
           minTickGap={32}
           tickFormatter={(value) => value}
-        />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          domain={[0, yAxisMax]}
         />
         <ChartTooltip
           cursor={false}
