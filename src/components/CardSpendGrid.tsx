@@ -116,7 +116,7 @@ export function CardSpendGrid({ onCardClick, selectedCard, selectedTimeRange = "
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100 h-[830px] flex flex-col">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Total spending by card</CardTitle>
+        <CardTitle className="text-xl font-semibold">R's Accounts</CardTitle>
         <CardDescription>
           Total spend by card {getTimeRangeDescription()}
         </CardDescription>
