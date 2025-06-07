@@ -1,4 +1,3 @@
-
 import { useMemo } from 'react'
 import { rewardFilterService } from '@/services/rewardFilterService'
 import { FilterState } from '@/hooks/useFilterState'
@@ -39,7 +38,10 @@ export function useRewardCalculations(filters: FilterState) {
       points > max.points ? { card, points } : max
     , { card: '', points: 0 })
     
-    const topCardDisplayName = topCardEntry.card.replace(/\bcard\b/gi, '').replace(/\(-\d+\)/g, '').trim()
+    // Updated logic to show full card name minus "card" word but keep last 4 digits
+    const topCardDisplayName = topCardEntry.card
+      .replace(/\bcard\b/gi, '') // Remove the word "card"
+      .trim() // Remove extra spaces
     
     // Calculate percentages
     const employeeCardPercentage = totalRewardPoints > 0 ? 
