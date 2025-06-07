@@ -11,7 +11,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 import { Reward } from "@/types/reward"
-import { globalFilterFn } from "@/utils/transactionUtils"
+import { rewardGlobalFilterFn } from "@/utils/rewardUtils"
 import { useRewardColumns } from "./RewardColumns"
 import { RewardTableContent } from "./RewardTableContent"
 import { RewardPagination } from "./RewardPagination"
@@ -36,7 +36,7 @@ export function RewardTable({ rewards, globalFilter, onGlobalFilterChange }: Rew
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: onGlobalFilterChange,
-    globalFilterFn,
+    globalFilterFn: rewardGlobalFilterFn,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
