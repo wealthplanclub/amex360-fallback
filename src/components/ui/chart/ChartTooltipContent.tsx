@@ -84,20 +84,7 @@ export const ChartTooltipContent = React.forwardRef<
       .map((item, index) => {
         const key = `${nameKey || item.name || item.dataKey || "value"}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
-        
-        // Use simple hex colors based on data key
-        let indicatorColor = color
-        if (!indicatorColor) {
-          const colorMap = {
-            'totalPoints': '#8884d8',
-            'employeePoints': '#22c55e',
-            'referralPoints': '#3b82f6',
-            'welcome': '#eab308'
-          }
-          indicatorColor = colorMap[key as keyof typeof colorMap] || '#8884d8'
-        }
-
-        console.log('Final indicator debug:', { key, indicatorColor, hideIndicator, indicator });
+        const indicatorColor = color || item.payload.fill || item.color
 
         if (formatter && item?.value !== undefined && item.name) {
           const formatterResult = formatter(item.value, item.name, item, index, item.payload)
@@ -143,16 +130,22 @@ export const ChartTooltipContent = React.forwardRef<
                     ) : (
                       !hideIndicator && (
                         <div
-                          className="shrink-0 rounded-[2px]"
-                          style={{
-                            width: indicator === "dot" ? "10px" : "4px",
-                            height: indicator === "dot" ? "10px" : "10px",
-                            backgroundColor: indicator === "dot" ? `${indicatorColor} !important` : "transparent",
-                            border: `2px solid ${indicatorColor} !important`,
-                            display: "block !important",
-                            minWidth: indicator === "dot" ? "10px" : "4px",
-                            minHeight: indicator === "dot" ? "10px" : "10px",
-                          } as React.CSSProperties}
+                          className={cn(
+                            "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
+                            {
+                              "h-2.5 w-2.5": indicator === "dot",
+                              "w-1": indicator === "line",
+                              "w-0 border-[1.5px] border-dashed bg-transparent":
+                                indicator === "dashed",
+                              "my-0.5": nestLabel && indicator === "dashed",
+                            }
+                          )}
+                          style={
+                            {
+                              "--color-bg": indicatorColor,
+                              "--color-border": indicatorColor,
+                            } as React.CSSProperties
+                          }
                         />
                       )
                     )}

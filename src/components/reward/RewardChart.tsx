@@ -131,8 +131,8 @@ export function RewardChart({ data }: RewardChartProps) {
           content={
             <ChartTooltipContent
               formatter={(value, name, props) => {
-                console.log('Tooltip formatter called:', { value, name, props });
-                console.log('Item color:', props?.color, 'Payload fill:', props?.payload?.fill);
+                const config = chartConfig[name as keyof typeof chartConfig];
+                const label = config?.label || name;
                 const numValue = Number(value);
                 
                 // Don't show zero values
@@ -142,22 +142,18 @@ export function RewardChart({ data }: RewardChartProps) {
                 
                 // Only show total when there are multiple point types
                 if (name === 'totalPoints') {
-                  const hasEmployee = data.some(d => d.employeePoints > 0);
-                  const hasReferral = data.some(d => d.referralPoints > 0);
-                  const hasWelcome = data.some(d => d.welcome > 0);
+                  const hasEmployee = props.payload.employeePoints > 0;
+                  const hasReferral = props.payload.referralPoints > 0;
+                  const hasWelcome = props.payload.welcome > 0;
                   const pointTypeCount = [hasEmployee, hasReferral, hasWelcome].filter(Boolean).length;
                   if (pointTypeCount < 2) {
                     return null;
                   }
                 }
                 
-                const config = chartConfig[name as keyof typeof chartConfig];
-                const label = config?.label || name;
-                
                 return `${label} ${numValue.toLocaleString()} pts`;
               }}
               indicator="dot"
-              hideIndicator={false}
               labelFormatter={(label) => formatDateForDisplay(String(label))}
             />
           }
@@ -167,7 +163,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillWelcome)"
           stroke="var(--color-welcome)"
-          strokeWidth={2}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -175,7 +171,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillReferral)"
           stroke="var(--color-referralPoints)"
-          strokeWidth={2}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -183,7 +179,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillEmployee)"
           stroke="var(--color-employeePoints)"
-          strokeWidth={2}
+          strokeWidth={0}
           stackId="a"
         />
         <Area
@@ -191,7 +187,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillTotal)"
           stroke="var(--color-totalPoints)"
-          strokeWidth={2}
+          strokeWidth={0}
         />
       </AreaChart>
     </ChartContainer>
