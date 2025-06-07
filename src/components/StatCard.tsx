@@ -1,5 +1,4 @@
 
-
 import * as React from "react"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -74,12 +73,15 @@ export function StatCard({
     return baseClasses;
   };
 
+  // Only show SVG and gradient overlay on the first reward card
+  const showSvgBackground = variant === 'reward' && index === 0;
+
   return (
     <Card 
       className={getCardClasses()}
       onClick={handleClick}
     >
-      {variant === 'reward' && (
+      {showSvgBackground && (
         <>
           <div 
             className="absolute"
@@ -111,7 +113,7 @@ export function StatCard({
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
             isVisible ? 'animate-fade-in' : 'opacity-0'
           }`}
-          style={variant === 'reward' ? { color: '#00175a' } : {}}
+          style={variant === 'reward' && index === 0 ? { color: '#00175a' } : {}}
         >
           {formatValue(value)}
         </CardTitle>
@@ -133,4 +135,3 @@ export function StatCard({
     </Card>
   );
 }
-
