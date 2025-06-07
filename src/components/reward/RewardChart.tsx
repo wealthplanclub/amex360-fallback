@@ -151,6 +151,9 @@ export function RewardChart({ data, onDateClick }: RewardChartProps) {
                 return `${label} ${numValue.toLocaleString()} pts`;
               }}
               indicator="dot"
+              style={{
+                '--indicator-color': '#00175a'
+              } as React.CSSProperties}
             />
           }
         />
