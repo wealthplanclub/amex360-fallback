@@ -69,7 +69,7 @@ const Auth = () => {
               Log In
             </Button>
           </form>
-          <div className="mt-4 text-center">
+          <div className="mt-8 text-center">
             <p className="text-xs text-muted-foreground">
               © {currentYear} Black Phoenix Enterprises LLC
             </p>
