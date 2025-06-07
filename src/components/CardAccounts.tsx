@@ -135,7 +135,7 @@ export function CardAccounts({
       style={{ height: `${dynamicHeight}px` }}
     >
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Card Accounts</CardTitle>
+        <CardTitle className="text-xl font-semibold">Card accounts</CardTitle>
         <CardDescription>
           Total spending by card {getFilterDescription()}
         </CardDescription>
