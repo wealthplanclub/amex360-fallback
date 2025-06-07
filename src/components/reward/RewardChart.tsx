@@ -1,4 +1,5 @@
 
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -124,6 +125,27 @@ export function RewardChart({ data }: RewardChartProps) {
                   day: "numeric",
                 })
               }}
+              formatter={(value, name, props) => {
+                const numValue = Number(value);
+                
+                // Don't show zero values
+                if (numValue === 0) {
+                  return null;
+                }
+                
+                // Only show total when there are multiple point types
+                if (name === 'totalPoints') {
+                  const hasEmployee = props.payload.employeePoints > 0;
+                  const hasReferral = props.payload.referralPoints > 0;
+                  const hasWelcome = props.payload.welcome > 0;
+                  const pointTypeCount = [hasEmployee, hasReferral, hasWelcome].filter(Boolean).length;
+                  if (pointTypeCount < 2) {
+                    return null;
+                  }
+                }
+                
+                return [numValue.toLocaleString(), name];
+              }}
               indicator="dot"
             />
           }
@@ -163,3 +185,4 @@ export function RewardChart({ data }: RewardChartProps) {
     </ChartContainer>
   )
 }
+
