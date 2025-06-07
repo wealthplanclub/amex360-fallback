@@ -1,4 +1,3 @@
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -139,12 +138,17 @@ export function RewardChart({ data }: RewardChartProps) {
                   }
                 }
                 
-                return [
-                  `${label} ${numValue.toLocaleString()} pts`,
-                  ""
-                ];
+                return (
+                  <div className="flex items-center justify-between w-full min-w-[120px]">
+                    <span className="text-muted-foreground">{label}</span>
+                    <span className="font-mono font-medium tabular-nums text-foreground ml-4">
+                      {numValue.toLocaleString()} pts
+                    </span>
+                  </div>
+                );
               }}
               indicator="dot"
+              className="grid gap-1.5"
             />
           }
         />
