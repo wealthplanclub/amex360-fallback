@@ -36,6 +36,7 @@ export function RewardMetricsCards({
       footer: "Points earned",
       description: `Total rewards ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: false,
+      showHover: true,
       cardType: "total-rewards"
     },
     {
@@ -86,6 +87,7 @@ export function RewardMetricsCards({
           isVisible={isVisible}
           numbersKey={numbersKey}
           clickable={card.clickable}
+          showHover={card.showHover}
           cardType={card.cardType}
           topCardAccount={card.topCardAccount}
           onClick={onCardClick}

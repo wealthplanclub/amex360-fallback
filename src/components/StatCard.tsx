@@ -20,6 +20,7 @@ interface StatCardProps {
   isVisible: boolean
   numbersKey: number
   clickable?: boolean
+  showHover?: boolean
   cardType?: string
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
@@ -37,6 +38,7 @@ export function StatCard({
   isVisible,
   numbersKey,
   clickable = false,
+  showHover = false,
   cardType,
   topCardAccount,
   onClick,
@@ -55,13 +57,21 @@ export function StatCard({
     return `$${val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
 
+  const getCardClasses = () => {
+    const baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
+    
+    if (clickable) {
+      return `${baseClasses} cursor-pointer hover:shadow-lg transition-shadow duration-200`;
+    } else if (showHover) {
+      return `${baseClasses} hover:shadow-lg transition-shadow duration-200`;
+    }
+    
+    return baseClasses;
+  };
+
   return (
     <Card 
-      className={`relative bg-gradient-to-b from-white to-gray-100 ${
-        clickable 
-          ? 'cursor-pointer hover:shadow-lg transition-shadow duration-200' 
-          : ''
-      }`}
+      className={getCardClasses()}
       onClick={handleClick}
     >
       <CardHeader className="pb-6">
