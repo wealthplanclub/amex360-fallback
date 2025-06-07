@@ -19,7 +19,6 @@ import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -71,31 +70,6 @@ export function TransactionCard() {
 
   // Memoize columns to prevent recreation on every render
   const columns: ColumnDef<Transaction>[] = React.useMemo(() => [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected()
-              ? true
-              : table.getIsSomePageRowsSelected()
-              ? "indeterminate"
-              : false
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
     {
       accessorKey: "date",
       header: ({ column }) => {
@@ -213,7 +187,6 @@ export function TransactionCard() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
     data: transactions,
@@ -225,12 +198,10 @@ export function TransactionCard() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-      rowSelection,
     },
     initialState: {
       pagination: {
@@ -308,10 +279,7 @@ export function TransactionCard() {
               <TableBody>
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
+                    <TableRow key={row.id}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
                           {flexRender(
@@ -336,10 +304,6 @@ export function TransactionCard() {
             </Table>
           </div>
           <div className="flex items-center justify-end space-x-2 py-4">
-            <div className="text-muted-foreground flex-1 text-sm">
-              {table.getFilteredSelectedRowModel().rows.length} of{" "}
-              {table.getFilteredRowModel().rows.length} row(s) selected.
-            </div>
             <div className="space-x-2">
               <Button
                 variant="outline"
