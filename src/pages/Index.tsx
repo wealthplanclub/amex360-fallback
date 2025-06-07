@@ -56,6 +56,7 @@ const Index = () => {
               <TransactionCard 
                 selectedCardFromGrid={selectedCard} 
                 selectedDate={selectedDate}
+                onClearDateFilter={clearDateFilter}
               />
             </div>
             <div className="lg:col-span-1">

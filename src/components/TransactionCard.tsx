@@ -21,9 +21,10 @@ import { TransactionTable } from "@/components/transaction/TransactionTable"
 interface TransactionCardProps {
   selectedCardFromGrid?: string;
   selectedDate?: string;
+  onClearDateFilter?: () => void;
 }
 
-export function TransactionCard({ selectedCardFromGrid, selectedDate }: TransactionCardProps) {
+export function TransactionCard({ selectedCardFromGrid, selectedDate, onClearDateFilter }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
@@ -95,10 +96,6 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate }: Transact
     return filtered;
   }, [allTransactions, selectedCard, selectedDate]);
 
-  const clearDateFilter = () => {
-    // This will be handled by the parent component
-  };
-
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="pb-2">
@@ -106,10 +103,10 @@ export function TransactionCard({ selectedCardFromGrid, selectedDate }: Transact
         <CardDescription className="mb-0">
           Latest transaction activity with advanced filtering and sorting
         </CardDescription>
-        {selectedDate && (
+        {selectedDate && onClearDateFilter && (
           <DateFilterIndicator 
             selectedDate={selectedDate} 
-            onClear={clearDateFilter}
+            onClear={onClearDateFilter}
           />
         )}
       </CardHeader>
