@@ -25,6 +25,7 @@ interface StatCardProps {
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
+  variant?: 'default' | 'rewards'
 }
 
 export function StatCard({
@@ -42,7 +43,8 @@ export function StatCard({
   cardType,
   topCardAccount,
   onClick,
-  formatAsPoints = false
+  formatAsPoints = false,
+  variant = 'default'
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -58,7 +60,13 @@ export function StatCard({
   };
 
   const getCardClasses = () => {
-    const baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
+    let baseClasses;
+    
+    if (variant === 'rewards') {
+      baseClasses = "relative bg-gradient-to-b from-white to-blue-50";
+    } else {
+      baseClasses = "relative bg-gradient-to-b from-white to-gray-100";
+    }
     
     if (clickable) {
       return `${baseClasses} cursor-pointer hover:shadow-lg transition-shadow duration-200`;
@@ -67,6 +75,23 @@ export function StatCard({
     }
     
     return baseClasses;
+  };
+
+  const getTitleClasses = () => {
+    const baseClasses = "text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out";
+    
+    if (variant === 'rewards') {
+      return `${baseClasses} ${isVisible ? 'animate-fade-in' : 'opacity-0'}`;
+    }
+    
+    return `${baseClasses} ${isVisible ? 'animate-fade-in' : 'opacity-0'}`;
+  };
+
+  const getTitleStyle = () => {
+    if (variant === 'rewards') {
+      return { color: '#00175a' };
+    }
+    return {};
   };
 
   return (
@@ -78,9 +103,8 @@ export function StatCard({
         <CardDescription>{title}</CardDescription>
         <CardTitle 
           key={`${title}-${numbersKey}`}
-          className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
-            isVisible ? 'animate-fade-in' : 'opacity-0'
-          }`}
+          className={getTitleClasses()}
+          style={getTitleStyle()}
         >
           {formatValue(value)}
         </CardTitle>
