@@ -1,5 +1,3 @@
-
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -56,23 +54,8 @@ const DashboardLoader = () => {
 
 // Wrapper component to handle both lazy loading and animation timing
 const DashboardWrapper = () => {
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    // Wait for animation to complete before showing dashboard
-    const timer = setTimeout(() => {
-      setIsReady(true);
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isReady) {
-    return <DashboardLoader />;
-  }
-
   return (
-    <Suspense fallback={<div />}>
+    <Suspense fallback={<DashboardLoader />}>
       <Dashboard />
     </Suspense>
   );
