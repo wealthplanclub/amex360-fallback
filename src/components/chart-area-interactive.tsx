@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -43,17 +42,34 @@ const chartConfig = {
 
 interface ChartAreaInteractiveProps {
   onDateClick?: (date: string) => void;
+  selectedTimeRange?: string;
+  onTimeRangeChange?: (timeRange: string) => void;
 }
 
-export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps) {
+export function ChartAreaInteractive({ 
+  onDateClick, 
+  selectedTimeRange = "ytd", 
+  onTimeRangeChange 
+}: ChartAreaInteractiveProps) {
   const isMobile = useIsMobile()
-  const [timeRange, setTimeRange] = React.useState("ytd")
+  const [timeRange, setTimeRange] = React.useState(selectedTimeRange)
 
   React.useEffect(() => {
     if (isMobile) {
-      setTimeRange("7d")
+      const newTimeRange = "7d";
+      setTimeRange(newTimeRange);
+      onTimeRangeChange?.(newTimeRange);
     }
-  }, [isMobile])
+  }, [isMobile, onTimeRangeChange])
+
+  React.useEffect(() => {
+    setTimeRange(selectedTimeRange);
+  }, [selectedTimeRange])
+
+  const handleTimeRangeChange = (newTimeRange: string) => {
+    setTimeRange(newTimeRange);
+    onTimeRangeChange?.(newTimeRange);
+  };
 
   // Process transaction data to get daily spending totals
   const processedData = React.useMemo(() => {
@@ -145,7 +161,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
           <ToggleGroup
             type="single"
             value={timeRange}
-            onValueChange={setTimeRange}
+            onValueChange={handleTimeRangeChange}
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:!px-4 md:flex"
           >
@@ -154,7 +170,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
             <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
             <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
           </ToggleGroup>
-          <Select value={timeRange} onValueChange={setTimeRange}>
+          <Select value={timeRange} onValueChange={handleTimeRangeChange}>
             <SelectTrigger
               className="flex w-40 md:hidden"
               aria-label="Select a value"
