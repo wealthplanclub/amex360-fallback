@@ -1,3 +1,4 @@
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -130,7 +131,7 @@ export function RewardChart({ data }: RewardChartProps) {
                 
                 // Check if there are multiple non-zero point types
                 const nonZeroValues = payload?.filter(p => 
-                  p.dataKey !== 'totalPoints' && p.value > 0
+                  p.dataKey !== 'totalPoints' && Number(p.value) > 0
                 ).length || 0
                 
                 // Only show total if there are multiple point types
