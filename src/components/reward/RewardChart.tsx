@@ -1,5 +1,3 @@
-
-
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -11,19 +9,19 @@ import {
 const chartConfig = {
   totalPoints: {
     label: "Total:",
-    color: "hsl(220, 70%, 50%)",
+    color: "hsl(var(--chart-1))",
   },
   employeePoints: {
     label: "Employee:",
-    color: "hsl(120, 60%, 50%)", // Green
+    color: "hsl(var(--chart-2))",
   },
   referralPoints: {
     label: "Referral:",
-    color: "hsl(210, 100%, 60%)", // Blue
+    color: "hsl(var(--chart-3))",
   },
   welcome: {
     label: "Welcome:",
-    color: "hsl(45, 100%, 60%)", // Yellow
+    color: "hsl(var(--chart-4))",
   },
 } satisfies ChartConfig
 
@@ -151,7 +149,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillWelcome)"
           stroke="var(--color-welcome)"
-          strokeWidth={0}
+          strokeWidth={1}
           stackId="a"
         />
         <Area
@@ -159,7 +157,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillReferral)"
           stroke="var(--color-referralPoints)"
-          strokeWidth={0}
+          strokeWidth={1}
           stackId="a"
         />
         <Area
@@ -167,7 +165,7 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillEmployee)"
           stroke="var(--color-employeePoints)"
-          strokeWidth={0}
+          strokeWidth={1}
           stackId="a"
         />
         <Area
@@ -175,10 +173,9 @@ export function RewardChart({ data }: RewardChartProps) {
           type="monotone"
           fill="url(#fillTotal)"
           stroke="var(--color-totalPoints)"
-          strokeWidth={0}
+          strokeWidth={1}
         />
       </AreaChart>
     </ChartContainer>
   )
 }
-
