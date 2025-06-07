@@ -107,6 +107,7 @@ export function VirtualizedTransactionTableContent({
       <div className="relative">
         <List
           height={600}
+          width="100%"
           itemCount={rows.length}
           itemSize={ROW_HEIGHT}
           itemData={{ rows, columns }}
