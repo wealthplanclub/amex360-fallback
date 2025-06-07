@@ -37,10 +37,10 @@ const Auth = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Accept any credentials and redirect to home
+    // Accept any credentials and redirect to dashboard
     console.log("Auth attempt:", { email, password, isLogin });
     console.log("Components preloaded:", isPreloaded);
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (

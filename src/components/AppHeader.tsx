@@ -7,8 +7,8 @@ export const AppHeader = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Navigate back to auth page
-    navigate("/auth");
+    // Navigate back to auth page (now at root)
+    navigate("/");
   };
 
   return (
