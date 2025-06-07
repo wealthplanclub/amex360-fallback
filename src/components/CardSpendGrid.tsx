@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import * as React from "react"
 
 interface CardSpendGridProps {
   onCardClick?: (cardName: string) => void;
@@ -16,10 +17,46 @@ interface CardSpendGridProps {
 }
 
 export function CardSpendGrid({ onCardClick, selectedCard, selectedTimeRange = "ytd" }: CardSpendGridProps) {
-  // Parse the CSV data and calculate totals per card
-  const transactions = parseTransactionData(staticTxnData);
+  // Parse the CSV data and filter based on time range
+  const filteredTransactions = React.useMemo(() => {
+    const transactions = parseTransactionData(staticTxnData);
+    
+    if (transactions.length === 0) return transactions;
+    
+    // Use today's date as the reference point
+    const today = new Date();
+    
+    let startDate: Date;
+    
+    if (selectedTimeRange === "ytd") {
+      // Year to date - start from January 1st of the current year
+      startDate = new Date(today.getFullYear(), 0, 1);
+    } else if (selectedTimeRange === "90d") {
+      // 90 days before today
+      startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - 90);
+    } else if (selectedTimeRange === "30d") {
+      // 30 days before today
+      startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - 30);
+    } else if (selectedTimeRange === "7d") {
+      // 7 days before today
+      startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - 7);
+    } else {
+      return transactions;
+    }
+    
+    // Convert start date to ISO string format for comparison
+    const startDateString = startDate.toISOString().split('T')[0];
+    
+    return transactions.filter(transaction => {
+      return transaction.date >= startDateString;
+    });
+  }, [selectedTimeRange]);
   
-  const cardExpenses = transactions
+  // Calculate card expenses from filtered transactions
+  const cardExpenses = filteredTransactions
     .filter(transaction => transaction.amount < 0)
     .reduce((acc, transaction) => {
       const account = transaction.account;
@@ -118,7 +155,7 @@ export function CardSpendGrid({ onCardClick, selectedCard, selectedTimeRange = "
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card Accounts</CardTitle>
         <CardDescription>
-          Total spend by card {getTimeRangeDescription()}
+          Total spending by card {getTimeRangeDescription()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
