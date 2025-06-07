@@ -10,11 +10,9 @@ const Index = () => {
   const [selectedCard, setSelectedCard] = useState<string>("all");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTimeRange, setSelectedTimeRange] = useState<string>("ytd");
-  const [statCardFilter, setStatCardFilter] = useState<{type: string, value?: string} | null>(null);
 
   const handleCardClick = (cardName: string) => {
     setSelectedCard(cardName);
-    setStatCardFilter(null); // Clear stat card filter when card account is selected
   };
 
   const handleDateClick = (date: string) => {
@@ -27,11 +25,6 @@ const Index = () => {
 
   const handleTimeRangeChange = (timeRange: string) => {
     setSelectedTimeRange(timeRange);
-  };
-
-  const handleStatCardClick = (filterType: string, filterValue?: string) => {
-    setStatCardFilter({ type: filterType, value: filterValue });
-    setSelectedCard("all"); // Reset card selection when stat card is clicked
   };
 
   return (
@@ -58,10 +51,7 @@ const Index = () => {
         
         {/* Section Cards */}
         <div className="mt-8">
-          <SectionCards 
-            selectedTimeRange={selectedTimeRange} 
-            onCardClick={handleStatCardClick}
-          />
+          <SectionCards selectedTimeRange={selectedTimeRange} />
         </div>
 
         {/* Daily Spending Chart */}
@@ -81,7 +71,6 @@ const Index = () => {
                 selectedCardFromGrid={selectedCard} 
                 selectedDate={selectedDate}
                 onClearDateFilter={clearDateFilter}
-                statCardFilter={statCardFilter}
               />
             </div>
             <div className="lg:col-span-1">
