@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -43,7 +44,7 @@ const DashboardLoader = () => {
           <Lottie
             animationData={animationData}
             className="w-24 h-24 mx-auto mb-4"
-            loop={false}
+            loop={true}
             autoplay={true}
           />
         )}
