@@ -82,28 +82,28 @@ const Rewards = () => {
             />
           </div>
           
-          {/* Chart and Card List */}
+          {/* Chart - Full Width Row */}
+          <div className="mt-8 px-4 lg:px-6">
+            <RewardChartDisplay
+              filters={filters}
+              onTimeRangeChange={handleTimeRangeChange}
+            />
+          </div>
+          
+          {/* Table and Card List Row */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
             <div className="lg:col-span-2">
-              <RewardChartDisplay
+              <RewardCard 
                 filters={filters}
-                onTimeRangeChange={handleTimeRangeChange}
+                onClearDateFilter={clearDateFilter}
+                onClearTimeRangeFilter={clearTimeRangeFilter}
+                onDropdownChange={handleTransactionDropdownChange}
+                onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
               />
             </div>
             <div className="lg:col-span-1">
               <RewardCardList filters={filters} />
             </div>
-          </div>
-          
-          {/* Rewards Card */}
-          <div className="mt-8 px-4 lg:px-6">
-            <RewardCard 
-              filters={filters}
-              onClearDateFilter={clearDateFilter}
-              onClearTimeRangeFilter={clearTimeRangeFilter}
-              onDropdownChange={handleTransactionDropdownChange}
-              onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-            />
           </div>
         </div>
       </div>
