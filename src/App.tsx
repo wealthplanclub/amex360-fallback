@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,10 +14,9 @@ const Dashboard = lazy(() => import("./pages/Index"));
 
 const queryClient = new QueryClient();
 
-// Simple loading component for the dashboard with Lottie animation
-const DashboardLoader = () => {
+// Enhanced loading component with controlled timing
+const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void }) => {
   const [animationData, setAnimationData] = useState(null);
-  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     fetch("/triple-card.json")
@@ -24,17 +24,13 @@ const DashboardLoader = () => {
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Ensure loader shows for at least 5 seconds to let animation complete
+    // Let animation run for 5 seconds, then signal completion
     const timer = setTimeout(() => {
-      setShowLoader(false);
+      onLoadingComplete();
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, []);
-
-  if (!showLoader) {
-    return null;
-  }
+  }, [onLoadingComplete]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -52,11 +48,26 @@ const DashboardLoader = () => {
   );
 };
 
-// Wrapper component to handle both lazy loading and animation timing
+// Wrapper component with controlled loading sequence
 const DashboardWrapper = () => {
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [startDashboardLoad, setStartDashboardLoad] = useState(false);
+
+  const handleLoadingComplete = () => {
+    setAnimationComplete(true);
+    // Start loading the dashboard after animation completes
+    setStartDashboardLoad(true);
+  };
+
+  // Show loader until animation is complete
+  if (!animationComplete) {
+    return <DashboardLoader onLoadingComplete={handleLoadingComplete} />;
+  }
+
+  // Show dashboard loading fallback briefly, then show dashboard
   return (
-    <Suspense fallback={<DashboardLoader />}>
-      <Dashboard />
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading dashboard...</div>}>
+      {startDashboardLoad && <Dashboard />}
     </Suspense>
   );
 };
