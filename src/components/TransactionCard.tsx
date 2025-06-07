@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import * as React from "react"
@@ -15,7 +13,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, CreditCard } from "lucide-react"
+import { ChevronsUpDown, ChevronDown, CreditCard } from "lucide-react"
 
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -127,7 +125,7 @@ export function TransactionCard() {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Date
-            <ArrowUpDown />
+            <ChevronsUpDown />
           </Button>
         )
       },
@@ -153,7 +151,7 @@ export function TransactionCard() {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Description
-            <ArrowUpDown />
+            <ChevronsUpDown />
           </Button>
         )
       },
@@ -350,4 +348,3 @@ export function TransactionCard() {
     </Card>
   )
 }
-
