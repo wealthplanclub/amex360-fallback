@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -62,7 +63,8 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
     const dailySpending = transactions
       .filter(transaction => transaction.amount < 0) // Only expenses
       .reduce((acc, transaction) => {
-        const date = new Date(transaction.date).toISOString().split('T')[0]
+        // Use the date string directly from the data without timezone conversion
+        const date = transaction.date
         if (!acc[date]) {
           acc[date] = 0
         }
@@ -199,7 +201,7 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               tickMargin={8}
               minTickGap={32}
               tickFormatter={(value) => {
-                const date = new Date(value)
+                const date = new Date(value + 'T00:00:00')
                 return date.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -212,7 +214,8 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                    const date = new Date(value + 'T00:00:00')
+                    return date.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
