@@ -118,7 +118,7 @@ export function TransactionCard() {
       cell: ({ row }) => {
         const date = new Date(row.getValue("date"));
         return (
-          <div className="text-sm">
+          <div className="text-sm text-center">
             {date.toLocaleDateString("en-US", {
               month: "short",
               day: "numeric"
