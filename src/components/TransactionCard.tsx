@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -160,7 +159,7 @@ export function TransactionCard() {
 
         return (
           <div className={`text-right font-medium tabular-nums ${
-            isNegative ? 'text-muted-foreground' : 'text-green-600'
+            isNegative ? 'text-sm font-medium' : 'text-green-600'
           }`}>
             {isNegative ? '-' : '+'}{formatted}
           </div>
