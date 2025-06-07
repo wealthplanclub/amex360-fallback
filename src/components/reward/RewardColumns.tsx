@@ -1,8 +1,7 @@
 
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { ArrowUpDown } from "lucide-react"
+import { ChevronsUpDown } from "lucide-react"
 import { Reward } from "@/types/reward"
 
 export function useRewardColumns(): ColumnDef<Reward>[] {
@@ -17,7 +16,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
             className="hover:bg-gray-100"
           >
             Date
-            <ArrowUpDown className="ml-1 h-4 w-4" />
+            <ChevronsUpDown className="ml-1 h-4 w-4" />
           </Button>
         )
       },
@@ -63,7 +62,7 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
             className="hover:bg-gray-100"
           >
             Points
-            <ArrowUpDown className="ml-1 h-4 w-4" />
+            <ChevronsUpDown className="ml-1 h-4 w-4" />
           </Button>
         )
       },
@@ -74,4 +73,3 @@ export function useRewardColumns(): ColumnDef<Reward>[] {
     },
   ]
 }
-
