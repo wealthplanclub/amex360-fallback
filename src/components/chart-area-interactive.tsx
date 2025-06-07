@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -215,13 +216,23 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) => {
-                    // Use the date string directly to avoid timezone conversion
-                    const date = new Date(value + 'T00:00:00')
+                    // Ensure we have a valid date string in YYYY-MM-DD format
+                    const dateString = typeof value === 'string' ? value : String(value);
+                    console.log("Tooltip date value:", dateString);
+                    
+                    // Parse the date string properly
+                    const [year, month, day] = dateString.split('-').map(Number);
+                    if (!year || !month || !day) {
+                      console.error("Invalid date format:", dateString);
+                      return dateString; // Return original value if parsing fails
+                    }
+                    
+                    const date = new Date(year, month - 1, day); // month is 0-indexed
                     return date.toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
-                    })
+                    });
                   }}
                   formatter={(value) => [
                     `Total Spend: $${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
