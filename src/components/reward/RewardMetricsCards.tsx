@@ -53,7 +53,7 @@ export function RewardMetricsCards({
       value: calculations.referralRewards,
       badge: `${calculations.referralPercentage}%`,
       icon: UserPlus,
-      footer: "Referral bonuses",
+      footer: `${calculations.referralCount} total referrals`,
       description: `Referral points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
       cardType: "referral-rewards"
