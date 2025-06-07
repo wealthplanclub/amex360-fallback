@@ -71,7 +71,7 @@ export function TransactionTableContent({ table, showAll, columnsLength }: Trans
   return (
     <div className="rounded-md border">
       {showAll ? (
-        <ScrollArea className="h-96">
+        <ScrollArea className="h-60">
           {tableContent}
         </ScrollArea>
       ) : (
