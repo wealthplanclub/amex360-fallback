@@ -57,25 +57,20 @@ export function StatCard({
 
   return (
     <Card 
-      className={`relative bg-gradient-to-b from-white to-gray-100 transform transition-all duration-700 ease-out ${
-        isVisible 
-          ? 'translate-y-0 opacity-100' 
-          : 'translate-y-8 opacity-0'
-      } ${
+      className={`relative bg-gradient-to-b from-white to-gray-100 ${
         clickable 
           ? 'cursor-pointer hover:shadow-lg transition-shadow duration-200' 
           : ''
       }`}
-      style={{
-        transitionDelay: `${index * 150}ms`
-      }}
       onClick={handleClick}
     >
       <CardHeader className="pb-6">
         <CardDescription>{title}</CardDescription>
         <CardTitle 
           key={`${title}-${numbersKey}`}
-          className="text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out animate-fade-in"
+          className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
+            isVisible ? 'animate-fade-in' : 'opacity-0'
+          }`}
         >
           {formatValue(value)}
         </CardTitle>
