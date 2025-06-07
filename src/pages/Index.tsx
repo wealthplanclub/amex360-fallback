@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
-import { CardSpendGrid } from "@/components/CardSpendGrid";
+import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 
@@ -69,7 +69,7 @@ const Index = () => {
               />
             </div>
             <div className="lg:col-span-1">
-              <CardSpendGrid 
+              <CardAccounts 
                 onCardClick={handleCardClick} 
                 selectedCard={selectedCard} 
                 selectedTimeRange={selectedTimeRange}

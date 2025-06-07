@@ -10,13 +10,13 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import * as React from "react"
 
-interface CardSpendGridProps {
+interface CardAccountsProps {
   onCardClick?: (cardName: string) => void;
   selectedCard?: string;
   selectedTimeRange?: string;
 }
 
-export function CardSpendGrid({ onCardClick, selectedCard, selectedTimeRange = "ytd" }: CardSpendGridProps) {
+export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "ytd" }: CardAccountsProps) {
   // Parse the CSV data and filter based on time range
   const filteredTransactions = React.useMemo(() => {
     const transactions = parseTransactionData(staticTxnData);
