@@ -3,7 +3,7 @@ export const getCardImage = (cardName: string) => {
   const lowerCardName = cardName.toLowerCase();
   if (lowerCardName.includes('hilton')) {
     return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000336_480x304_STRAIGHT_96.jpg";
-  } else if (lowerCardName.includes('marriott')) {
+  } else if (lowerCardName.includes('bonvoy') || lowerCardName.includes('marriott')) {
     return "https://i.imgur.com/5MsJHUL.jpeg";
   } else if (lowerCardName.includes('delta')) {
     return "https://www.aexp-static.com/online/myca/shared/summary/cardasset/images/NUS000000270_480x304_STRAIGHT_96.jpg";
