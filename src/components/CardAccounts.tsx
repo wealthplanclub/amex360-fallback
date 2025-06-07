@@ -1,3 +1,4 @@
+
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -161,12 +162,16 @@ export function CardAccounts({ onCardClick, selectedCard, selectedTimeRange = "y
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4 pb-6">
-            {cardData.map((card) => (
+            {cardData.map((card, index) => (
               <Card 
                 key={card.fullName} 
-                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md ${
+                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in ${
                   selectedCard === card.fullName ? 'bg-accent' : ''
                 }`}
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: 'both'
+                }}
                 onClick={() => handleCardClick(card.fullName)}
               >
                 <CardContent className="p-4">
