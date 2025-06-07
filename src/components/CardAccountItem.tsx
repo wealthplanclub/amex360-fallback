@@ -7,20 +7,27 @@ interface CardAccountItemProps {
   card: CardData;
   index: number;
   onCardClick: (cardName: string) => void;
+  isSelected: boolean;
 }
 
-export function CardAccountItem({ card, index, onCardClick }: CardAccountItemProps) {
+export function CardAccountItem({ card, index, onCardClick, isSelected }: CardAccountItemProps) {
   const handleClick = () => {
-    if (card.name === 'Business Green\n(-2007)') {
-      onCardClick('BUSINESS_GREEN_COMBINED');
+    if (isSelected) {
+      // If this card is already selected, toggle to "all"
+      onCardClick('all');
     } else {
-      onCardClick(card.fullName);
+      // If this card is not selected, select it
+      if (card.name === 'Business Green\n(-2007)') {
+        onCardClick('BUSINESS_GREEN_COMBINED');
+      } else {
+        onCardClick(card.fullName);
+      }
     }
   };
 
   return (
     <Card 
-      className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in focus:outline-none"
+      className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in"
       style={{
         animationDelay: `${index * 100}ms`,
         animationFillMode: 'both'

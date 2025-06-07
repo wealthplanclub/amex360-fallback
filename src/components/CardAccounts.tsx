@@ -14,14 +14,12 @@ import * as React from "react";
 
 interface CardAccountsProps {
   onCardClick?: (cardName: string) => void;
-  cardAccountSelection?: string | null;
   selectedTimeRange?: string;
   transactionDropdownSelection?: string;
 }
 
 export function CardAccounts({ 
   onCardClick, 
-  cardAccountSelection, 
   selectedTimeRange = "ytd",
   transactionDropdownSelection = "all"
 }: CardAccountsProps) {
@@ -58,6 +56,13 @@ export function CardAccounts({
     }
   };
 
+  // Determine which card is selected
+  const getSelectedCard = (card: any) => {
+    if (transactionDropdownSelection === "all") return false;
+    if (transactionDropdownSelection === 'BUSINESS_GREEN_COMBINED' && card.name === 'Business Green\n(-2007)') return true;
+    return card.fullName === transactionDropdownSelection;
+  };
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -78,6 +83,7 @@ export function CardAccounts({
                 card={card}
                 index={index}
                 onCardClick={handleCardClick}
+                isSelected={getSelectedCard(card)}
               />
             ))}
           </div>
