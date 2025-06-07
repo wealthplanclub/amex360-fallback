@@ -88,7 +88,11 @@ const Rewards = () => {
 
           {/* Card Accounts */}
           <div className="mt-8 px-4 lg:px-6">
-            <CardAccounts />
+            <CardAccounts 
+              filters={filters}
+              selectedTimeRange={filters.selectedTimeRange}
+              transactionDropdownSelection={filters.selectedCard}
+            />
           </div>
           
           {/* Rewards Table */}
