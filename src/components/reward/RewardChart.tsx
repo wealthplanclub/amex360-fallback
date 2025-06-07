@@ -1,3 +1,4 @@
+
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   ChartConfig,
@@ -9,19 +10,19 @@ import {
 const chartConfig = {
   totalPoints: {
     label: "Total:",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(220, 70%, 50%)",
   },
   employeePoints: {
     label: "Employee:",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(120, 60%, 50%)", // Green
   },
   referralPoints: {
     label: "Referral:",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(210, 100%, 60%)", // Blue
   },
   welcome: {
     label: "Welcome:",
-    color: "hsl(var(--chart-4))",
+    color: "hsl(45, 100%, 60%)", // Yellow
   },
 } satisfies ChartConfig
 
