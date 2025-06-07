@@ -84,7 +84,8 @@ export const ChartTooltipContent = React.forwardRef<
       .map((item, index) => {
         const key = `${nameKey || item.name || item.dataKey || "value"}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
-        const indicatorColor = color || item.payload.fill || item.color
+        // Use the color property directly instead of payload.fill
+        const indicatorColor = color || item.color
 
         if (formatter && item?.value !== undefined && item.name) {
           const formatterResult = formatter(item.value, item.name, item, index, item.payload)
