@@ -36,19 +36,17 @@ export function RewardMetricsCards({
       footer: "Points earned",
       description: `Total rewards ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: false,
-      cardType: "total-rewards",
-      formatAsPoints: true
+      cardType: "total-rewards"
     },
     {
       title: "Employee Card Bonus",
       value: calculations.employeeCardRewards,
       badge: `${calculations.employeeCardPercentage}%`,
       icon: Users,
-      footer: `${calculations.employeeCardRewards.toLocaleString()} Employee Card Awards`,
+      footer: "Employee spending rewards",
       description: `Employee card points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
-      cardType: "employee-rewards",
-      formatAsPoints: false
+      cardType: "employee-rewards"
     },
     {
       title: "Referral Bonus",
@@ -58,8 +56,7 @@ export function RewardMetricsCards({
       footer: "Referral bonuses",
       description: `Referral points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
-      cardType: "referral-rewards",
-      formatAsPoints: true
+      cardType: "referral-rewards"
     },
     {
       title: "Top Bonus Card",
@@ -70,8 +67,7 @@ export function RewardMetricsCards({
       description: `Highest earning card ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
       cardType: "top-card",
-      topCardAccount: calculations.topCardAccount,
-      formatAsPoints: true
+      topCardAccount: calculations.topCardAccount
     }
   ]
 
@@ -93,7 +89,7 @@ export function RewardMetricsCards({
           cardType={card.cardType}
           topCardAccount={card.topCardAccount}
           onClick={onCardClick}
-          formatAsPoints={card.formatAsPoints}
+          formatAsPoints={true}
         />
       ))}
     </div>
