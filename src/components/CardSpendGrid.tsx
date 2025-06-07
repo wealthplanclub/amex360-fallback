@@ -1,4 +1,3 @@
-
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import {
@@ -82,50 +81,48 @@ export function CardSpendGrid() {
   };
 
   return (
-    <div className="px-4 lg:px-6">
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
-          <CardDescription>
-            Total spending by credit card
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {cardData.map((card) => (
-              <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
-                <CardContent className="p-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div className="flex items-center gap-4 flex-1">
-                      <img 
-                        src={getCardImage(card.fullName)} 
-                        alt="Card placeholder" 
-                        className="w-16 h-10 object-cover rounded"
-                      />
-                      <div className="text-sm font-medium leading-tight whitespace-pre-line">
-                        {card.name}
-                      </div>
+    <Card className="bg-white">
+      <CardHeader>
+        <CardTitle className="text-xl font-semibold">Card Spending Breakdown</CardTitle>
+        <CardDescription>
+          Total spending by credit card
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {cardData.map((card) => (
+            <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
+              <CardContent className="p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="flex items-center gap-4 flex-1">
+                    <img 
+                      src={getCardImage(card.fullName)} 
+                      alt="Card placeholder" 
+                      className="w-16 h-10 object-cover rounded"
+                    />
+                    <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                      {card.name}
                     </div>
-                    <div className="flex items-center justify-end sm:justify-end">
-                      <div className="text-right">
-                        <p className="text-xs text-muted-foreground">
-                          Total spend
-                        </p>
-                        <div className="text-lg font-bold tabular-nums">
-                          ${card.amount.toLocaleString('en-US', { 
-                            minimumFractionDigits: 2, 
-                            maximumFractionDigits: 2 
-                          })}
-                        </div>
+                  </div>
+                  <div className="flex items-center justify-end sm:justify-end">
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">
+                        Total spend
+                      </p>
+                      <div className="text-lg font-bold tabular-nums">
+                        ${card.amount.toLocaleString('en-US', { 
+                          minimumFractionDigits: 2, 
+                          maximumFractionDigits: 2 
+                        })}
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   )
 }

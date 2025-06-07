@@ -1,6 +1,7 @@
 
 import { SectionCards } from "@/components/SectionCards";
 import { CardSpendGrid } from "@/components/CardSpendGrid";
+import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 
 const Index = () => {
@@ -32,9 +33,16 @@ const Index = () => {
           <ChartAreaInteractive />
         </div>
 
-        {/* Card Spend Grid */}
-        <div className="mt-8">
-          <CardSpendGrid />
+        {/* Transaction Card and Card Spend Grid */}
+        <div className="mt-8 px-4 lg:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <TransactionCard />
+            </div>
+            <div className="lg:col-span-1">
+              <CardSpendGrid />
+            </div>
+          </div>
         </div>
       </div>
     </div>
