@@ -124,6 +124,30 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
     }
   };
 
+  // Helper function to format date for display
+  const formatDateForDisplay = (dateString: string) => {
+    // Parse the date string (assuming YYYY-MM-DD format)
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // month is 0-indexed in Date constructor
+    
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const formatDateForTooltip = (dateString: string) => {
+    // Parse the date string (assuming YYYY-MM-DD format)
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // month is 0-indexed in Date constructor
+    
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -200,27 +224,14 @@ export function ChartAreaInteractive({ onDateClick }: ChartAreaInteractiveProps)
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value + 'T00:00:00')
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
-              }}
+              tickFormatter={formatDateForDisplay}
             />
             <ChartTooltip
               cursor={false}
               defaultIndex={-1}
               content={
                 <ChartTooltipContent
-                  labelFormatter={(value) => {
-                    const date = new Date(value + 'T00:00:00')
-                    return date.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })
-                  }}
+                  labelFormatter={formatDateForTooltip}
                   formatter={(value) => [
                     `Total Spend: $${Number(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
                     ""
