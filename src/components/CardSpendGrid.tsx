@@ -8,7 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export function CardSpendGrid() {
+interface CardSpendGridProps {
+  onCardClick?: (cardName: string) => void;
+  selectedCard?: string;
+}
+
+export function CardSpendGrid({ onCardClick, selectedCard }: CardSpendGridProps) {
   // Parse the CSV data and calculate totals per card
   const transactions = parseTransactionData(staticTxnData);
   
@@ -80,6 +85,12 @@ export function CardSpendGrid() {
     return "https://i.imgur.com/4zwqhph.jpeg"; // default image
   };
 
+  const handleCardClick = (cardName: string) => {
+    if (onCardClick) {
+      onCardClick(cardName);
+    }
+  };
+
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -91,7 +102,13 @@ export function CardSpendGrid() {
       <CardContent>
         <div className="space-y-4">
           {cardData.map((card) => (
-            <Card key={card.fullName} className="bg-gradient-to-b from-white to-gray-50">
+            <Card 
+              key={card.fullName} 
+              className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md ${
+                selectedCard === card.fullName ? 'ring-2 ring-primary' : ''
+              }`}
+              onClick={() => handleCardClick(card.fullName)}
+            >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex items-center gap-4 flex-1">

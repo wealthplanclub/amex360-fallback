@@ -1,10 +1,17 @@
 
+import { useState } from "react";
 import { SectionCards } from "@/components/SectionCards";
 import { CardSpendGrid } from "@/components/CardSpendGrid";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 
 const Index = () => {
+  const [selectedCard, setSelectedCard] = useState<string>("all");
+
+  const handleCardClick = (cardName: string) => {
+    setSelectedCard(cardName);
+  };
+
   return (
     <div 
       className="min-h-screen p-6"
@@ -37,10 +44,10 @@ const Index = () => {
         <div className="mt-8 px-4 lg:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <TransactionCard />
+              <TransactionCard selectedCardFromGrid={selectedCard} />
             </div>
             <div className="lg:col-span-1">
-              <CardSpendGrid />
+              <CardSpendGrid onCardClick={handleCardClick} selectedCard={selectedCard} />
             </div>
           </div>
         </div>

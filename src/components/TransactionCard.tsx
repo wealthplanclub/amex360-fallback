@@ -81,7 +81,11 @@ const formatAccountName = (accountName: string): string => {
   return formatted
 }
 
-export function TransactionCard() {
+interface TransactionCardProps {
+  selectedCardFromGrid?: string;
+}
+
+export function TransactionCard({ selectedCardFromGrid }: TransactionCardProps) {
   // Parse the CSV data and get all transactions - memoize this to prevent re-parsing
   const allTransactions: Transaction[] = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData);
@@ -104,13 +108,20 @@ export function TransactionCard() {
 
   const [selectedCard, setSelectedCard] = React.useState<string>("all")
 
+  // Sync with the card selected from the grid
+  React.useEffect(() => {
+    if (selectedCardFromGrid && selectedCardFromGrid !== "all") {
+      setSelectedCard(selectedCardFromGrid);
+    }
+  }, [selectedCardFromGrid]);
+
   // Filter transactions by selected card
   const transactions = React.useMemo(() => {
     if (selectedCard === "all") {
       return allTransactions
     }
     return allTransactions.filter(transaction => 
-      formatAccountName(transaction.account) === selectedCard
+      transaction.account === selectedCard
     )
   }, [allTransactions, selectedCard]);
 
@@ -253,7 +264,7 @@ export function TransactionCard() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
                   <CreditCard className="mr-2 h-4 w-4" />
-                  {selectedCard === "all" ? "All Cards" : selectedCard}
+                  {selectedCard === "all" ? "All Cards" : formatAccountName(selectedCard)}
                   <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -270,7 +281,7 @@ export function TransactionCard() {
                     checked={selectedCard === card}
                     onCheckedChange={() => setSelectedCard(card)}
                   >
-                    {card}
+                    {formatAccountName(card)}
                   </DropdownMenuCheckboxItem>
                 ))}
               </DropdownMenuContent>
