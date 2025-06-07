@@ -29,6 +29,9 @@ const menuItems = [
     icon: CreditCard,
     url: "#",
   },
+]
+
+const creditMaxItems = [
   {
     title: "CreditMax Swaps",
     icon: Repeat,
@@ -77,7 +80,17 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>CREDITMAX</SidebarGroupLabel>
           <SidebarMenu>
-            {/* This section can be populated with CreditMax specific items */}
+            {creditMaxItems.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton 
+                  onClick={() => handleItemClick(item.url)}
+                  className="gap-3"
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.title}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
           </SidebarMenu>
         </SidebarGroup>
 
