@@ -144,7 +144,7 @@ export const ChartTooltipContent = React.forwardRef<
                       !hideIndicator && (
                         <div
                           className={cn(
-                            "shrink-0 rounded-[2px]",
+                            "shrink-0 rounded-[2px] border",
                             {
                               "h-2.5 w-2.5": indicator === "dot",
                               "w-1": indicator === "line",
@@ -154,8 +154,9 @@ export const ChartTooltipContent = React.forwardRef<
                             }
                           )}
                           style={{
-                            backgroundColor: indicator === "dot" ? indicatorColor : undefined,
+                            backgroundColor: indicator === "dot" ? indicatorColor : "transparent",
                             borderColor: indicatorColor,
+                            border: indicator === "dot" ? `1px solid ${indicatorColor}` : undefined,
                           }}
                         />
                       )
