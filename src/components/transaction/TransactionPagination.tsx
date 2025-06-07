@@ -40,7 +40,7 @@ export function TransactionPagination({
             size="sm"
             onClick={onShowAll}
           >
-            All
+            Show All
           </Button>
         )}
         {showAll && (
