@@ -1,4 +1,3 @@
-
 // Static data file containing all employee cards with their boost status
 // This determines which cards have received the 15,000 point bonus
 
@@ -59,10 +58,17 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Platinum--51108", cardType: "Platinum", lastFive: "-51108", hasBonus: true },
   { cardKey: "Platinum--51116", cardType: "Platinum", lastFive: "-51116", hasBonus: true },
   { cardKey: "Platinum--52122", cardType: "Platinum", lastFive: "-52122", hasBonus: true },
+  { cardKey: "Platinum--52130", cardType: "Platinum", lastFive: "-52130", hasBonus: true },
   { cardKey: "Platinum--52148", cardType: "Platinum", lastFive: "-52148", hasBonus: true },
+  { cardKey: "Platinum--52163", cardType: "Platinum", lastFive: "-52163", hasBonus: true },
   { cardKey: "Platinum--52171", cardType: "Platinum", lastFive: "-52171", hasBonus: true },
   { cardKey: "Platinum--52189", cardType: "Platinum", lastFive: "-52189", hasBonus: true },
+  { cardKey: "Platinum--52197", cardType: "Platinum", lastFive: "-52197", hasBonus: true },
+  { cardKey: "Platinum--52205", cardType: "Platinum", lastFive: "-52205", hasBonus: true },
   { cardKey: "Platinum--52213", cardType: "Platinum", lastFive: "-52213", hasBonus: true },
+  { cardKey: "Platinum--52221", cardType: "Platinum", lastFive: "-52221", hasBonus: true },
+  { cardKey: "Platinum--52247", cardType: "Platinum", lastFive: "-52247", hasBonus: true },
+  { cardKey: "Platinum--52254", cardType: "Platinum", lastFive: "-52254", hasBonus: true },
 
   // Rose Gold cards - sorted by last five digits in ascending order
   { cardKey: "Rose Gold--01018", cardType: "Rose Gold", lastFive: "-01018", hasBonus: true },
