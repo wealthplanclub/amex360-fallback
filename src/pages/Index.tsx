@@ -1,10 +1,11 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AppHeader } from "@/components/AppHeader";
 import { MainCards } from "@/components/MainCards";
 import { TransactionCard } from "@/components/TransactionCard";
 import { CardAccounts } from "@/components/CardAccounts";
-import { ChartDisplay } from "@/components/chart/ChartDisplay";
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { useFilterState } from "@/hooks/useFilterState";
 import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -219,7 +220,7 @@ const Index = () => {
           
           {/* Chart - Full Width Row */}
           <div className="mt-8 px-4 lg:px-6">
-            <ChartDisplay
+            <ChartAreaInteractive
               selectedTimeRange={filters.selectedTimeRange}
               onTimeRangeChange={handleTimeRangeChange}
               onDateClick={handleDateClick}
