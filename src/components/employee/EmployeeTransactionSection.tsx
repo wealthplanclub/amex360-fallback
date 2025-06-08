@@ -33,7 +33,7 @@ export function EmployeeTransactionSection({
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
         <div className="p-6 pb-2">
-          <div className="mb-4">
+          <div className={hasAnyFilter ? "mb-2" : "mb-4"}>
             <h2 className="text-xl font-semibold">Employee Transactions</h2>
             {!hasAnyFilter && (
               <p className="text-sm text-muted-foreground mt-1">
