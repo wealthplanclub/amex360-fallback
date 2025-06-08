@@ -1,7 +1,8 @@
 
 import React from "react"
-import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut } from "lucide-react"
+import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "@/components/ui/sonner"
 import {
   Sidebar,
   SidebarContent,
@@ -47,6 +48,19 @@ export function AppSidebar() {
     close()
   }
 
+  const handleRefreshData = () => {
+    // Simulate data refresh
+    console.log("Refreshing static data...")
+    
+    // Show success toast
+    toast.success("Data refreshed successfully!", {
+      description: "Latest static data has been loaded",
+      position: "top-right"
+    })
+    
+    close()
+  }
+
   const handleLogout = () => {
     navigate("/")
     close()
@@ -70,6 +84,22 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* Data Management Section */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Data</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton 
+                onClick={handleRefreshData}
+                className="gap-3"
+              >
+                <RotateCw className="h-4 w-4" />
+                <span>Refresh Data</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
 
