@@ -126,14 +126,6 @@ export function CardAccounts({
     return getTimeRangeDescription(selectedTimeRange);
   };
 
-  // Get appropriate title based on active filters
-  const getCardTitle = () => {
-    if (filters.creditFilter) {
-      return "Total credits by card";
-    }
-    return "Total spending by card";
-  };
-
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -142,7 +134,7 @@ export function CardAccounts({
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card accounts</CardTitle>
         <CardDescription>
-          {getCardTitle()} {getFilterDescription()}
+          Total spending by card {getFilterDescription()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
