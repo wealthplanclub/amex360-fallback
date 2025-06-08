@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,10 +9,11 @@ import Lottie from "lottie-react";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
-// Lazy load the dashboard, rewards, and employee pages to completely separate them from the auth bundle
+// Lazy load the dashboard, rewards, employee, and creditmax pages
 const Dashboard = lazy(() => import("./pages/Index"));
 const Rewards = lazy(() => import("./pages/Rewards"));
 const Employee = lazy(() => import("./pages/Employee"));
+const CreditMax = lazy(() => import("./pages/CreditMax"));
 
 const queryClient = new QueryClient();
 
@@ -105,6 +107,14 @@ const App = () => {
               element={
                 <Suspense fallback={null}>
                   <Employee />
+                </Suspense>
+              } 
+            />
+            <Route 
+              path="/creditmax" 
+              element={
+                <Suspense fallback={null}>
+                  <CreditMax />
                 </Suspense>
               } 
             />

@@ -33,7 +33,7 @@ const menuItems = [
   {
     title: "CreditMax",
     icon: Crown,
-    url: "#",
+    url: "/creditmax",
   },
 ]
 
