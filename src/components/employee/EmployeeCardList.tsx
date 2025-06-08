@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -89,6 +88,12 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     return Math.min(calculatedHeight, maxHeight)
   }, [filteredCardData.length])
 
+  // Calculate scroll area height (subtract space for search bar)
+  const scrollAreaHeight = React.useMemo(() => {
+    const searchBarHeight = 56 // height of search input + margin
+    return `calc(100% - ${searchBarHeight}px)`
+  }, [])
+
   const handleCardClick = (card: any) => {
     if (!onCardClick) return
     
@@ -131,7 +136,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
             className="w-full"
           />
         </div>
-        <ScrollArea className="h-full pr-4">
+        <ScrollArea className="pr-4" style={{ height: scrollAreaHeight }}>
           <div className="space-y-4 pb-6">
             {filteredCardData.map((card, index) => {
               const isCardSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
