@@ -884,4 +884,5 @@ export const staticEmpData = `date	description	card	last_five	amount	point_multi
 2025-06-04	KAJABI              NEWPORT BEACH       CA	Blue Plus II	-11041	399.00	2.0
 2025-06-04	TWILIO INC          SAN FRANCISCO       CA	Blue Plus II	-11041	400.00	2.0
 2025-06-05	LOVABLE             DOVER               DE	Blue Plus II	-11041	75.20	2.0
-2025-06-05	KJE COMPUTER SOLUTIONS	Blue Plus II	-11058	33.99	2.0`;
+2025-06-05	KJE COMPUTER SOLUTIONS	Blue Plus II	-11058	33.99	2.0
+2025-06-08	CHARGEBEE           WALNUT              CA	Blue Plus II	-11041	1474.00	2.0`;
