@@ -1,3 +1,4 @@
+
 import React from "react"
 import { DollarSign, Star, TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
@@ -31,9 +32,9 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
     const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (Math.abs(transaction.amount) * transaction.point_multiple), 0)
     const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
     
-    // Count unique last 5 digit cards
-    const uniqueLastFive = new Set(filteredTransactions.map(transaction => transaction.last_five))
-    const totalCards = uniqueLastFive.size
+    // Count unique combinations of card_type and last_five
+    const uniqueCardCombinations = new Set(filteredTransactions.map(transaction => `${transaction.card_type}-${transaction.last_five}`))
+    const totalCards = uniqueCardCombinations.size
 
     return {
       totalSpend,
