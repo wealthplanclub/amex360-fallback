@@ -40,7 +40,7 @@ export function EmployeeTransactionSection({
           {/* Header with card image in top right */}
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
-              <h2 className="text-xl font-semibold">Employee Transactions</h2>
+              <h2 className="text-xl font-semibold">Employee card transactions</h2>
               
               {/* Filter indicator directly below title when card is showing */}
               {showCardImage && hasAnyFilter && (
@@ -60,7 +60,7 @@ export function EmployeeTransactionSection({
               
               {!hasAnyFilter && (
                 <p className="text-sm text-muted-foreground mt-1">
-                  View and manage employee card transactions
+                  View and filter employee card activity
                 </p>
               )}
             </div>
