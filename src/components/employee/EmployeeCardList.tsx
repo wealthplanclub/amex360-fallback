@@ -156,8 +156,17 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                           <p className="text-xs text-muted-foreground">
                             {card.count} transactions
                           </p>
-                          <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
-                            ${card.amount.toFixed(2)}
+                          <div className="flex items-center gap-2">
+                            <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
+                              ${card.amount.toFixed(2)}
+                            </div>
+                            {isBonusActive && (
+                              <img 
+                                src="https://i.imgur.com/dTz9vVm.png" 
+                                alt="Boost active" 
+                                className="w-6 h-6"
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
