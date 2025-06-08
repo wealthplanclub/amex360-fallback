@@ -42,28 +42,28 @@ const cardDetails = {
   ],
   brandPartners: [
     {
-      name: "Delta SkyMiles® Reserve",
+      name: "Delta SkyMiles® Reserve - 3x",
       lastFive: "-1006",
       amount: "$30,000",
       type: "limit",
       image: getCardImage("delta")
     },
     {
-      name: "Marriott Bonvoy Business",
+      name: "Marriott Bonvoy Business - 6x",
       lastFive: "-1009",
       amount: "$5,000",
       type: "limit",
       image: getCardImage("marriott")
     },
     {
-      name: "Hilton Honors Business", 
+      name: "Hilton Honors Business - 12x", 
       lastFive: "-9003",
       amount: "$5,000",
       type: "limit",
       image: getCardImage("hilton")
     },
     {
-      name: "Amazon Business Prime",
+      name: "Amazon Business Prime - 5x",
       lastFive: "-2003",
       amount: "$6,000",
       type: "limit",
@@ -227,6 +227,9 @@ export function QuickMetricsCards() {
             {cardContent}
           </SheetTrigger>
           <SheetContent side="bottom" className="h-auto max-h-[80vh]">
+            <SheetHeader>
+              <SheetTitle>Metric Details</SheetTitle>
+            </SheetHeader>
             <MetricSheetContent metric={metric} />
           </SheetContent>
         </Sheet>
