@@ -24,7 +24,7 @@ export function EmployeeTransactionTable({ transactions, globalFilter, onGlobalF
   const [showAll, setShowAll] = React.useState(false)
   const columns = useEmployeeTransactionColumns()
   
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([{ id: "date", desc: true }])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
 
