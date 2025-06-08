@@ -16,6 +16,7 @@ import Lottie from "lottie-react"
 const Employee = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [animationData, setAnimationData] = React.useState(null)
+  const [showContent, setShowContent] = React.useState(false)
 
   React.useEffect(() => {
     // Load the cube-loader animation
@@ -27,6 +28,8 @@ const Employee = () => {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false)
+      // Start showing content with staggered animations
+      setTimeout(() => setShowContent(true), 100)
     }, 2000)
 
     return () => clearTimeout(timer)
@@ -87,25 +90,30 @@ const Employee = () => {
                 />
               </div>
               
+              {/* Transaction Section and Card Section with staggered fade-in animations */}
               <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <EmployeeTransactionSection
-                  filteredTransactions={filteredTransactions}
-                  hasAnyFilter={hasAnyFilter}
-                  getFilterDisplayText={getFilterDisplayText}
-                  handleClearAllFilters={handleClearAllFilters}
-                  globalFilter={filters.globalFilter}
-                  onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                  getCardDropdownDisplayText={getCardDropdownDisplayText}
-                  uniqueCardTypes={uniqueCardTypes}
-                  handleCardDropdownChange={handleCardDropdownChange}
-                />
+                <div className={`lg:col-span-2 transition-all duration-700 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                  <EmployeeTransactionSection
+                    filteredTransactions={filteredTransactions}
+                    hasAnyFilter={hasAnyFilter}
+                    getFilterDisplayText={getFilterDisplayText}
+                    handleClearAllFilters={handleClearAllFilters}
+                    globalFilter={filters.globalFilter}
+                    onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+                    getCardDropdownDisplayText={getCardDropdownDisplayText}
+                    uniqueCardTypes={uniqueCardTypes}
+                    handleCardDropdownChange={handleCardDropdownChange}
+                  />
+                </div>
                 
-                <EmployeeCardSection
-                  selectedLastFive={filters.selectedLastFive}
-                  handleCardClick={handleCardClick}
-                  cardsToShow={getCardsToShow()}
-                  selectedCardType={filters.selectedCardType}
-                />
+                <div className={`lg:col-span-1 transition-all duration-700 delay-400 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                  <EmployeeCardSection
+                    selectedLastFive={filters.selectedLastFive}
+                    handleCardClick={handleCardClick}
+                    cardsToShow={getCardsToShow()}
+                    selectedCardType={filters.selectedCardType}
+                  />
+                </div>
               </div>
             </div>
           </EmployeeBonusProvider>
