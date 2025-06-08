@@ -1,4 +1,3 @@
-
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -18,8 +17,8 @@ const Rewards = () => {
   const [animationData, setAnimationData] = React.useState(null);
 
   React.useEffect(() => {
-    // Load the cube-loader animation
-    fetch("/cube-loader.json")
+    // Load the waiting-finger-tapping animation
+    fetch("/waiting-finger-tapping.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
