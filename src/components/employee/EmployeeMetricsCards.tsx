@@ -99,6 +99,7 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
           isVisible={isVisible}
           numbersKey={numbersKey}
           formatAsPoints={card.formatAsPoints}
+          showBadge={false}
         />
       ))}
     </div>

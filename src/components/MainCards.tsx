@@ -48,6 +48,7 @@ export function MainCards({ selectedTimeRange, onStatCardClick }: MainCardsProps
           cardType={card.cardType}
           topCardAccount={card.topCardAccount}
           onClick={onStatCardClick}
+          showBadge={true}
         />
       ))}
     </div>

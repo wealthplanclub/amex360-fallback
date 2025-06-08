@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 interface StatCardProps {
   title: string
@@ -24,6 +25,7 @@ interface StatCardProps {
   topCardAccount?: string
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
+  showBadge?: boolean
 }
 
 export function StatCard({
@@ -41,7 +43,8 @@ export function StatCard({
   cardType,
   topCardAccount,
   onClick,
-  formatAsPoints = false
+  formatAsPoints = false,
+  showBadge = true
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -79,7 +82,14 @@ export function StatCard({
       onClick={handleClick}
     >
       <CardHeader className="pb-6">
-        <CardDescription>{title}</CardDescription>
+        <div className="flex items-center justify-between">
+          <CardDescription>{title}</CardDescription>
+          {showBadge && (
+            <Badge variant="secondary" className="text-xs">
+              {badge}
+            </Badge>
+          )}
+        </div>
         <CardTitle 
           key={`${title}-${numbersKey}`}
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
