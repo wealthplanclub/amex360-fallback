@@ -29,6 +29,19 @@ export function EmployeeTransactionSection({
   uniqueCardTypes,
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
+  // Calculate metrics from filtered transactions
+  const metrics = React.useMemo(() => {
+    const totalSpend = filteredTransactions.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
+    const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (transaction.points_earned || 0), 0)
+    const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
+
+    return {
+      totalSpend,
+      totalPoints: Math.round(totalPoints),
+      avgPointsPerDollar: Number(avgPointsPerDollar.toFixed(2))
+    }
+  }, [filteredTransactions])
+
   return (
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
@@ -53,8 +66,30 @@ export function EmployeeTransactionSection({
               </span>
             </div>
           )}
+
+          {/* Metrics */}
+          <div className="grid grid-cols-3 gap-4 mt-4 mb-4">
+            <div className="text-center p-3 bg-white rounded-lg border">
+              <div className="text-sm text-muted-foreground">Total Spend</div>
+              <div className="text-lg font-semibold" style={{ color: '#00175a' }}>
+                ${metrics.totalSpend.toFixed(2)}
+              </div>
+            </div>
+            <div className="text-center p-3 bg-white rounded-lg border">
+              <div className="text-sm text-muted-foreground">Total Points</div>
+              <div className="text-lg font-semibold" style={{ color: '#00175a' }}>
+                {metrics.totalPoints.toLocaleString()}
+              </div>
+            </div>
+            <div className="text-center p-3 bg-white rounded-lg border">
+              <div className="text-sm text-muted-foreground">Avg Points/$</div>
+              <div className="text-lg font-semibold" style={{ color: '#00175a' }}>
+                {metrics.avgPointsPerDollar}
+              </div>
+            </div>
+          </div>
           
-          {/* Filter Controls moved to header */}
+          {/* Filter Controls */}
           <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
             <Input
               placeholder="Search descriptions..."
