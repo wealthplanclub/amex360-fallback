@@ -31,7 +31,11 @@ export function EmployeeTransactionSection({
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
   const selectedCardType = getCardDropdownDisplayText()
+  // Show card image when there's a card type filter active (not "all" and doesn't contain parentheses indicating combined format)
   const showCardImage = selectedCardType && selectedCardType !== "all" && !selectedCardType.includes('(')
+  
+  // Extract the base card type for the image (remove any parentheses content)
+  const baseCardType = selectedCardType?.split('(')[0]?.trim() || selectedCardType
 
   return (
     <div className="lg:col-span-2">
@@ -68,8 +72,8 @@ export function EmployeeTransactionSection({
             {showCardImage && (
               <div className="ml-4">
                 <img 
-                  src={getCardImage(selectedCardType)} 
-                  alt={`${selectedCardType} card`}
+                  src={getCardImage(baseCardType)} 
+                  alt={`${baseCardType} card`}
                   className="w-16 h-10 object-cover rounded shadow-sm"
                 />
               </div>
