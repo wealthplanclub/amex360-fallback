@@ -80,19 +80,19 @@ export function useEmployeeFilters(employeeTransactions: EmployeeTransaction[]) 
       const cardType = transaction?.card_type
       
       // Check current state to determine what layer to go to
-      if (isLayer3 && filters.selectedLastFive === lastFive && filters.selectedCardType === cardType) {
-        // Currently on Layer 3 with this exact card selected - go back to Layer 2
+      if (isLayer3 && filters.selectedLastFive === lastFive) {
+        // Currently on Layer 3 with this card selected - go back to Layer 2
         updateMultipleFilters({
           selectedLastFive: 'all',
           selectedCardType: cardType || 'all',
           selectedCard: cardType || 'all'
         })
       } else {
-        // Go to Layer 3 - show individual card (both type and last five)
+        // Go to Layer 3 - show individual card
         updateMultipleFilters({
           selectedLastFive: lastFive,
           selectedCardType: cardType || 'all',
-          selectedCard: `${cardType} (${lastFive})`
+          selectedCard: lastFive
         })
       }
     }
@@ -107,25 +107,20 @@ export function useEmployeeFilters(employeeTransactions: EmployeeTransaction[]) 
       // Layer 2: Show only cards of the selected type
       return employeeTransactions.filter(t => t.card_type === filters.selectedCardType)
     } else {
-      // Layer 3: Show only the selected card (both type and last five match)
-      return employeeTransactions.filter(t => 
-        t.last_five === filters.selectedLastFive && 
-        t.card_type === filters.selectedCardType
-      )
+      // Layer 3: Show only the selected card
+      return employeeTransactions.filter(t => t.last_five === filters.selectedLastFive)
     }
   }
 
   const getFilterDisplayText = () => {
-    if (hasLastFiveFilter && hasCardTypeFilter) {
-      return `${filters.selectedCardType} (${filters.selectedLastFive})`
-    }
+    const parts = []
     if (hasCardTypeFilter) {
-      return filters.selectedCardType
+      parts.push(filters.selectedCardType)
     }
     if (hasLastFiveFilter) {
-      return filters.selectedLastFive
+      parts.push(filters.selectedLastFive)
     }
-    return ''
+    return parts.join(', ')
   }
 
   const getCardDropdownDisplayText = () => {
