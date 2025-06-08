@@ -133,7 +133,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
             placeholder="Search last 5 digits"
             value={lastFiveFilter}
             onChange={(e) => setLastFiveFilter(e.target.value)}
-            className="w-full"
+            className="w-auto"
           />
         </div>
         <ScrollArea className="pr-4" style={{ height: scrollAreaHeight }}>
