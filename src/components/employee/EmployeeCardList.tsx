@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -19,30 +20,33 @@ interface EmployeeCardListProps {
 }
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
-  // Calculate card totals by last 5 digits
+  // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
     const cardTotals = transactions.reduce((acc, transaction) => {
-      const lastFive = transaction.last_five
-      if (!acc[lastFive]) {
-        acc[lastFive] = {
+      const cardKey = `${transaction.card_type}-${transaction.last_five}`
+      if (!acc[cardKey]) {
+        acc[cardKey] = {
           amount: 0,
           cardType: transaction.card_type,
+          lastFive: transaction.last_five,
           count: 0
         }
       }
-      acc[lastFive].amount += transaction.amount
-      acc[lastFive].count += 1
+      acc[cardKey].amount += transaction.amount
+      acc[cardKey].count += 1
       return acc
-    }, {} as Record<string, { amount: number, cardType: string, count: number }>)
+    }, {} as Record<string, { amount: number, cardType: string, lastFive: string, count: number }>)
 
     return Object.entries(cardTotals)
-      .map(([lastFive, data]) => ({
-        name: lastFive,
-        fullName: lastFive,
+      .map(([cardKey, data]) => ({
+        name: data.lastFive,
+        fullName: data.lastFive,
         amount: data.amount,
         cardType: data.cardType,
+        lastFive: data.lastFive,
         count: data.count,
-        displayName: `${data.cardType}\n(${lastFive})`
+        displayName: `${data.cardType}\n(${data.lastFive})`,
+        cardKey: cardKey // unique identifier combining type and last five
       }))
       .sort((a, b) => b.amount - a.amount)
   }, [transactions])
@@ -53,7 +57,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       return cardData
     }
     
-    // Show all cards that match the selected card type
+    // Show only cards that match the selected card type
     return cardData.filter(card => card.cardType === selectedCardType)
   }, [cardData, selectedCardType])
 
@@ -70,12 +74,13 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
   const handleCardClick = (card: any) => {
     if (!onCardClick) return
     
-    const isSelected = card.fullName === selectedCard
+    // Check if this specific card (type + last five combination) is selected
+    const isSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
     
     if (isSelected) {
       onCardClick('all')
     } else {
-      onCardClick(card.fullName)
+      onCardClick(card.lastFive)
     }
   }
 
@@ -95,7 +100,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
           <div className="space-y-4 pb-6">
             {filteredCardData.map((card, index) => (
               <Card 
-                key={card.fullName}
+                key={card.cardKey}
                 className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in"
                 style={{
                   animationDelay: `${index * 100}ms`,
