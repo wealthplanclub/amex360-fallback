@@ -15,6 +15,7 @@ const Rewards = () => {
   const [numbersKey, setNumbersKey] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
   const [animationData, setAnimationData] = React.useState(null);
+  const [showContent, setShowContent] = React.useState(false);
 
   React.useEffect(() => {
     // Load the waiting-finger-tapping animation
@@ -27,6 +28,8 @@ const Rewards = () => {
     const timer = setTimeout(() => {
       setIsLoading(false);
       setIsVisible(true);
+      // Start showing content with staggered animations
+      setTimeout(() => setShowContent(true), 100);
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -159,8 +162,8 @@ const Rewards = () => {
             />
           </div>
           
-          {/* Chart - Full Width Row */}
-          <div className="mt-8 px-4 lg:px-6">
+          {/* Chart - Full Width Row with fade-in animation */}
+          <div className={`mt-8 px-4 lg:px-6 transition-all duration-700 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <RewardChartDisplay
               filters={filters}
               onTimeRangeChange={handleTimeRangeChange}
@@ -168,9 +171,12 @@ const Rewards = () => {
             />
           </div>
           
-          {/* Table and Card List Row */}
+          {/* Table and Card List Row with staggered fade-in animations */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
-            <div className="lg:col-span-2" data-testid="reward-table">
+            <div 
+              className={`lg:col-span-2 transition-all duration-700 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} 
+              data-testid="reward-table"
+            >
               <RewardCard 
                 filters={filters}
                 onClearDateFilter={clearDateFilter}
@@ -180,7 +186,7 @@ const Rewards = () => {
                 onClearCardFilter={clearCardFilter}
               />
             </div>
-            <div className="lg:col-span-1">
+            <div className={`lg:col-span-1 transition-all duration-700 delay-400 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <RewardCardList 
                 filters={filters} 
                 onCardClick={handleRewardCardClick}
