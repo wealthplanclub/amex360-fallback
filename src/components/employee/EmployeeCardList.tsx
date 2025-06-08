@@ -1,4 +1,5 @@
 
+
 import {
   Card,
   CardContent,
@@ -133,33 +134,35 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       style={{ height: `${dynamicHeight}px` }}
     >
       <CardHeader>
-        <div>
-          <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
-          <CardDescription className="mt-1">
-            Employee spending by card (last 5 digits)
-          </CardDescription>
-        </div>
-        
-        {/* Sort Controls on next row with consistent spacing */}
-        <div className="flex items-center gap-2 mt-4">
-          <Select value={sortBy} onValueChange={(value: SortBy) => setSortBy(value)}>
-            <SelectTrigger className="w-24 h-8">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="spend">Spend</SelectItem>
-              <SelectItem value="lastFive">Last 5</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="grid gap-3">
+          <div>
+            <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
+            <CardDescription className="mt-1">
+              Employee spending by card (last 5 digits)
+            </CardDescription>
+          </div>
           
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={toggleSortDirection}
-            className="h-8 w-8 p-0"
-          >
-            {sortDirection === 'desc' ? <ArrowDown className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />}
-          </Button>
+          {/* Sort Controls in grid item */}
+          <div className="flex items-center gap-2">
+            <Select value={sortBy} onValueChange={(value: SortBy) => setSortBy(value)}>
+              <SelectTrigger className="w-24 h-8">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="spend">Spend</SelectItem>
+                <SelectItem value="lastFive">Last 5</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleSortDirection}
+              className="h-8 w-8 p-0"
+            >
+              {sortDirection === 'desc' ? <ArrowDown className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />}
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
@@ -248,3 +251,4 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     </Card>
   )
 }
+
