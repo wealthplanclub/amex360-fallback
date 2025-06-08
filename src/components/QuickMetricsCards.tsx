@@ -13,14 +13,14 @@ const cardDetails = {
       name: "Delta SkyMiles® Reserve",
       lastFive: "-1006",
       amount: "$30,000",
-      type: "hard limit",
+      type: "preset limit",
       image: getCardImage("delta")
     },
     {
       name: "Business Green Rewards",
       lastFive: "-2007", 
       amount: "$30,000",
-      type: "pay over time",
+      type: "pay over time limit",
       image: getCardImage("green")
     }
   ],
@@ -29,14 +29,14 @@ const cardDetails = {
       name: "Business Classic Gold",
       lastFive: "-1002",
       amount: "$2,000", 
-      type: "pay over time",
+      type: "pay over time limit",
       image: getCardImage("gold -1002")
     },
     {
       name: "Business White Gold",
       lastFive: "-1000",
       amount: "$2,000",
-      type: "pay over time", 
+      type: "pay over time limit", 
       image: getCardImage("gold -1000")
     }
   ],
@@ -54,28 +54,28 @@ const cardDetails = {
       name: "Delta SkyMiles® Reserve - 3x",
       lastFive: "-1006",
       amount: "$30,000",
-      type: "limit",
+      type: "preset limit",
       image: getCardImage("delta")
     },
     {
       name: "Marriott Bonvoy Business - 6x",
       lastFive: "-1009",
       amount: "$5,000",
-      type: "limit",
+      type: "preset limit",
       image: getCardImage("marriott")
     },
     {
       name: "Hilton Honors Business - 12x", 
       lastFive: "-9003",
       amount: "$5,000",
-      type: "limit",
+      type: "preset limit",
       image: getCardImage("hilton")
     },
     {
       name: "Amazon Business Prime - 5x",
       lastFive: "-2003",
       amount: "$6,000",
-      type: "limit",
+      type: "preset limit",
       image: getCardImage("amazon")
     }
   ]
