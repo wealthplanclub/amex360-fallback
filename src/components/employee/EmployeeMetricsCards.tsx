@@ -63,7 +63,7 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
       formatAsPoints: true
     },
     {
-      title: "Avg Points/$",
+      title: "Avg Points/Dollar",
       value: metrics.avgPointsPerDollar,
       badge: "Rate",
       icon: TrendingUp,
