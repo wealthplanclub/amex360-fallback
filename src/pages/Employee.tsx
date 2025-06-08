@@ -1,4 +1,3 @@
-
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -7,9 +6,13 @@ import { EmployeeTransactionTable } from "@/components/employee/EmployeeTransact
 import { EmployeeCardList } from "@/components/employee/EmployeeCardList"
 import { useFilterState } from "@/hooks/useFilterState"
 import { staticEmpData } from "@/data/staticEmpData"
+import { parseEmployeeData } from "@/utils/employeeParser"
 
 const Employee = () => {
   const { filters, updateFilter } = useFilterState()
+  
+  // Parse the static employee data into proper format
+  const employeeTransactions = parseEmployeeData(staticEmpData)
 
   return (
     <SidebarProvider>
@@ -27,6 +30,7 @@ const Employee = () => {
                   <EmployeeCardList 
                     selectedCard={filters.selectedCard}
                     onCardClick={(card) => updateFilter('selectedCard', card)}
+                    transactions={employeeTransactions}
                   />
                 </div>
                 
@@ -41,7 +45,7 @@ const Employee = () => {
                     </div>
                     <div className="p-6">
                       <EmployeeTransactionTable
-                        transactions={staticEmpData}
+                        transactions={employeeTransactions}
                         globalFilter={filters.globalFilter}
                         onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
                       />

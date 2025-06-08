@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -10,16 +9,18 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
+import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 
 interface EmployeeCardListProps {
   selectedCard?: string
   onCardClick?: (cardType: string) => void
+  transactions: EmployeeTransaction[]
 }
 
-export function EmployeeCardList({ selectedCard, onCardClick }: EmployeeCardListProps) {
+export function EmployeeCardList({ selectedCard, onCardClick, transactions }: EmployeeCardListProps) {
   // Calculate card totals from employee data
   const cardData = React.useMemo(() => {
-    const cardTotals = staticEmpData.reduce((acc, transaction) => {
+    const cardTotals = transactions.reduce((acc, transaction) => {
       const cardType = transaction.card_type
       acc[cardType] = (acc[cardType] || 0) + transaction.amount
       return acc
@@ -33,7 +34,7 @@ export function EmployeeCardList({ selectedCard, onCardClick }: EmployeeCardList
         displayName: cardType
       }))
       .sort((a, b) => b.amount - a.amount)
-  }, [])
+  }, [transactions])
 
   // Filter cards based on selected card
   const filteredCardData = React.useMemo(() => {
