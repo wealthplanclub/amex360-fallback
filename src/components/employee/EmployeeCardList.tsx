@@ -123,12 +123,12 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         {/* Search Bar */}
-        <div className="mb-4 pb-4 border-b border-gray-200">
+        <div className="mb-4">
           <Input
             placeholder="Search last 5 digits"
             value={searchLastFive}
             onChange={(e) => setSearchLastFive(e.target.value)}
-            className="max-w-xs"
+            className="max-w-xs focus:ring-0 focus:ring-offset-0"
           />
         </div>
 
