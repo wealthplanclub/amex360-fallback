@@ -17,6 +17,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [animationData, setAnimationData] = React.useState(null);
 
+  // Always call useEffect hooks in the same order
   React.useEffect(() => {
     // Load the cube-loader animation
     fetch("/cube-loader.json")
@@ -32,6 +33,12 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Add effect to log time range changes - always call this hook
+  React.useEffect(() => {
+    console.log("selectedTimeRange state changed to:", filters.selectedTimeRange, "isMobile:", isMobile);
+  }, [filters.selectedTimeRange, isMobile]);
+
+  // Early return after all hooks have been called
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -141,11 +148,6 @@ const Index = () => {
     console.log("Clearing time range filter, isMobile:", isMobile);
     updateFilter('selectedTimeRange', 'ytd');
   };
-
-  // Add effect to log time range changes
-  React.useEffect(() => {
-    console.log("selectedTimeRange state changed to:", filters.selectedTimeRange, "isMobile:", isMobile);
-  }, [filters.selectedTimeRange, isMobile]);
 
   return (
     <SidebarProvider>
