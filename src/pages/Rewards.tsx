@@ -17,32 +17,38 @@ const Rewards = () => {
   const [animationData, setAnimationData] = React.useState(null);
 
   React.useEffect(() => {
-    // Load the waiting-finger-tapping animation
+    // Load the waiting-finger-tapping animation immediately
     fetch("/waiting-finger-tapping.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Remove the artificial delay - content loads immediately
-    setIsLoading(false);
-    setIsVisible(true);
+    // Wait 3 seconds before showing the main content
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setIsVisible(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   React.useEffect(() => {
     setNumbersKey(prev => prev + 1);
   }, [filters.selectedTimeRange, filters.selectedDate, filters.selectedCard]);
 
-  // Show animation while loading the JSON file
-  if (!animationData) {
+  // Show animation while loading
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <Lottie
-            animationData={animationData}
-            className="w-32 h-32 mx-auto"
-            loop={true}
-            autoplay={true}
-          />
+          {animationData && (
+            <Lottie
+              animationData={animationData}
+              className="w-32 h-32 mx-auto"
+              loop={true}
+              autoplay={true}
+            />
+          )}
         </div>
       </div>
     );
