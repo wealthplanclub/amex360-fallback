@@ -35,24 +35,42 @@ export function EmployeeTransactionSection({
         <div className="p-6 pb-2">
           {/* 2-column header layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end mb-4">
-            {/* Left column - Title and description */}
-            <div className={hasAnyFilter ? "mb-2" : ""}>
+            {/* Left column - Title, description, filter indicator, and search */}
+            <div>
               <h2 className="text-xl font-semibold">Employee Transactions</h2>
               {!hasAnyFilter && (
                 <p className="text-sm text-muted-foreground mt-1">
                   View and manage employee card transactions
                 </p>
               )}
+              
+              {hasAnyFilter && (
+                <div className="mt-2">
+                  <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+                    Filtered by: {getFilterDisplayText()}
+                    <button 
+                      onClick={handleClearAllFilters}
+                      className="hover:bg-gray-200 rounded p-0.5"
+                      title="Clear all filters"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                </div>
+              )}
+              
+              <div className="mt-4">
+                <Input
+                  placeholder="Search descriptions..."
+                  value={globalFilter ?? ""}
+                  onChange={(event) => onGlobalFilterChange(event.target.value)}
+                  className="max-w-sm"
+                />
+              </div>
             </div>
 
-            {/* Right column - Filter Controls */}
-            <div className="flex flex-col gap-4 md:flex-row md:items-center">
-              <Input
-                placeholder="Search descriptions..."
-                value={globalFilter ?? ""}
-                onChange={(event) => onGlobalFilterChange(event.target.value)}
-                className="max-w-sm"
-              />
+            {/* Right column - Dropdown */}
+            <div className="flex justify-end">
               <CardFilterDropdown
                 selectedCard={getCardDropdownDisplayText()}
                 creditCards={uniqueCardTypes}
@@ -60,21 +78,6 @@ export function EmployeeTransactionSection({
               />
             </div>
           </div>
-
-          {hasAnyFilter && (
-            <div className="mb-4">
-              <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                Filtered by: {getFilterDisplayText()}
-                <button 
-                  onClick={handleClearAllFilters}
-                  className="hover:bg-gray-200 rounded p-0.5"
-                  title="Clear all filters"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </span>
-            </div>
-          )}
         </div>
         
         <div className="px-6 pb-6">
