@@ -8,10 +8,9 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Switch } from "@/components/ui/switch"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
-import { ChevronsUpDown } from "lucide-react"
 import * as React from "react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 import { useEmployeeBonus } from "@/hooks/useEmployeeBonusContext"
@@ -28,7 +27,7 @@ const EMPLOYEE_CARD_IMAGE = "https://icm.aexp-static.com/acquisition/card-art/NU
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
   const { toggleCardBonus, isCardBonusActive } = useEmployeeBonus()
-  const [sortBy, setSortBy] = React.useState<'spend' | 'last5'>('spend')
+  const [searchLastFive, setSearchLastFive] = React.useState('')
 
   // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
@@ -58,28 +57,31 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
         displayName: `${data.cardType}\n(${data.lastFive})`,
         cardKey: cardKey // unique identifier combining type and last five
       }))
-      .sort((a, b) => {
-        if (sortBy === 'spend') {
-          return b.amount - a.amount
-        } else {
-          return a.lastFive.localeCompare(b.lastFive)
-        }
-      })
-  }, [transactions, sortBy])
+      .sort((a, b) => b.amount - a.amount) // Default sort by spend
+  }, [transactions])
 
-  // Filter cards based on selected card type from dropdown
+  // Filter cards based on selected card type from dropdown and search
   const filteredCardData = React.useMemo(() => {
-    if (!selectedCardType || selectedCardType === "all") {
-      return cardData
+    let filtered = cardData
+
+    // Filter by card type if selected
+    if (selectedCardType && selectedCardType !== "all") {
+      filtered = filtered.filter(card => card.cardType === selectedCardType)
     }
     
-    // Show only cards that match the selected card type
-    return cardData.filter(card => card.cardType === selectedCardType)
-  }, [cardData, selectedCardType])
+    // Filter by Last 5 search
+    if (searchLastFive.trim()) {
+      filtered = filtered.filter(card => 
+        card.lastFive.toLowerCase().includes(searchLastFive.toLowerCase())
+      )
+    }
+
+    return filtered
+  }, [cardData, selectedCardType, searchLastFive])
 
   // Calculate dynamic height based on filtered card count
   const dynamicHeight = React.useMemo(() => {
-    const baseHeight = 280 // Increased to account for sorting controls
+    const baseHeight = 280 // Account for search bar
     const cardHeight = 120
     const maxHeight = 830
     
@@ -121,26 +123,16 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
-        {/* Sorting Controls */}
+        {/* Search Bar */}
         <div className="mb-4 pb-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">Sorted by:</span>
-            <Button
-              variant={sortBy === 'spend' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setSortBy('spend')}
-              className="flex items-center gap-1"
-            >
-              Spend <ChevronsUpDown className="h-3 w-3" />
-            </Button>
-            <Button
-              variant={sortBy === 'last5' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setSortBy('last5')}
-              className="flex items-center gap-1"
-            >
-              Last 5 <ChevronsUpDown className="h-3 w-3" />
-            </Button>
+            <span className="text-sm text-muted-foreground">Search Last 5:</span>
+            <Input
+              placeholder="Enter last 5 digits..."
+              value={searchLastFive}
+              onChange={(e) => setSearchLastFive(e.target.value)}
+              className="max-w-xs"
+            />
           </div>
         </div>
 
