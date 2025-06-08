@@ -6,7 +6,11 @@ interface EmployeeBonusContextType {
   toggleStates: Record<string, boolean>
   toggleCardBonus: (cardKey: string) => void
   isCardBonusActive: (cardKey: string) => boolean
-  getAdjustedMetrics: (baseTransactions: EmployeeTransaction[]) => {
+  getAdjustedMetrics: (
+    baseTransactions: EmployeeTransaction[], 
+    selectedCardType?: string, 
+    selectedLastFive?: string
+  ) => {
     totalSpend: number
     totalPoints: number
     avgPointsPerDollar: number
@@ -42,7 +46,11 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
     return toggleStates[cardKey] || false
   }
 
-  const getAdjustedMetrics = (baseTransactions: EmployeeTransaction[]) => {
+  const getAdjustedMetrics = (
+    baseTransactions: EmployeeTransaction[], 
+    selectedCardType?: string, 
+    selectedLastFive?: string
+  ) => {
     // Calculate base metrics
     const totalSpend = baseTransactions.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
     const basePoints = baseTransactions.reduce((sum, transaction) => sum + (Math.abs(transaction.amount) * transaction.point_multiple), 0)
@@ -51,8 +59,27 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
     const uniqueCardCombinations = new Set(baseTransactions.map(transaction => `${transaction.card_type}-${transaction.last_five}`))
     const totalCards = uniqueCardCombinations.size
     
-    // Calculate bonus points from active toggles
-    const bonusPoints = Object.values(toggleStates).filter(Boolean).length * 15000
+    // Calculate bonus points based on current filter state
+    let bonusPoints = 0
+    
+    if (selectedCardType && selectedCardType !== "all" && selectedLastFive && selectedLastFive !== "all") {
+      // State C: Specific card selected - only apply bonus for this exact card
+      const specificCardKey = `${selectedCardType}-${selectedLastFive}`
+      if (toggleStates[specificCardKey]) {
+        bonusPoints = 15000
+      }
+    } else if (selectedCardType && selectedCardType !== "all") {
+      // State B: Card type selected - apply bonuses for all active cards of this type
+      uniqueCardCombinations.forEach(cardKey => {
+        const [cardType] = cardKey.split('-')
+        if (cardType === selectedCardType && toggleStates[cardKey]) {
+          bonusPoints += 15000
+        }
+      })
+    } else {
+      // State A: All cards - apply all active bonuses
+      bonusPoints = Object.values(toggleStates).filter(Boolean).length * 15000
+    }
     
     const totalPoints = Math.round(basePoints + bonusPoints)
     const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0

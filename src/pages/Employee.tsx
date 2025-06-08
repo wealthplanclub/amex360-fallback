@@ -1,4 +1,3 @@
-
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -44,7 +43,11 @@ const Employee = () => {
               
               {/* Employee Metrics Cards */}
               <div className="mt-8">
-                <EmployeeMetricsCards filteredTransactions={filteredTransactions} />
+                <EmployeeMetricsCards 
+                  filteredTransactions={filteredTransactions}
+                  selectedCardType={filters.selectedCardType}
+                  selectedLastFive={filters.selectedLastFive}
+                />
               </div>
               
               <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">

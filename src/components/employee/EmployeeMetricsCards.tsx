@@ -1,4 +1,3 @@
-
 import React from "react"
 import { TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
@@ -7,9 +6,15 @@ import { useEmployeeBonus } from "@/hooks/useEmployeeBonusContext"
 
 interface EmployeeMetricsCardsProps {
   filteredTransactions: EmployeeTransaction[]
+  selectedCardType?: string
+  selectedLastFive?: string
 }
 
-export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCardsProps) {
+export function EmployeeMetricsCards({ 
+  filteredTransactions, 
+  selectedCardType, 
+  selectedLastFive 
+}: EmployeeMetricsCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const [numbersKey, setNumbersKey] = React.useState(0)
   const { getAdjustedMetrics } = useEmployeeBonus()
@@ -28,10 +33,10 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
     setNumbersKey(prev => prev + 1)
   }, [filteredTransactions])
 
-  // Calculate metrics from filtered transactions using the bonus context
+  // Calculate metrics from filtered transactions using the bonus context with filter state
   const metrics = React.useMemo(() => {
-    return getAdjustedMetrics(filteredTransactions)
-  }, [filteredTransactions, getAdjustedMetrics])
+    return getAdjustedMetrics(filteredTransactions, selectedCardType, selectedLastFive)
+  }, [filteredTransactions, getAdjustedMetrics, selectedCardType, selectedLastFive])
 
   const cardData = [
     {
