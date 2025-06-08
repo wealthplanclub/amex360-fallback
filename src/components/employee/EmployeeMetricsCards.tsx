@@ -1,7 +1,9 @@
+
 import React from "react"
 import { TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
+import { useEmployeeBonus } from "@/hooks/useEmployeeBonusContext"
 
 interface EmployeeMetricsCardsProps {
   filteredTransactions: EmployeeTransaction[]
@@ -10,6 +12,7 @@ interface EmployeeMetricsCardsProps {
 export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCardsProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const [numbersKey, setNumbersKey] = React.useState(0)
+  const { getAdjustedMetrics } = useEmployeeBonus()
 
   React.useEffect(() => {
     // Trigger animation after component mounts
@@ -25,23 +28,10 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
     setNumbersKey(prev => prev + 1)
   }, [filteredTransactions])
 
-  // Calculate metrics from filtered transactions
+  // Calculate metrics from filtered transactions using the bonus context
   const metrics = React.useMemo(() => {
-    const totalSpend = filteredTransactions.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
-    const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (Math.abs(transaction.amount) * transaction.point_multiple), 0)
-    const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
-    
-    // Count unique combinations of card_type and last_five
-    const uniqueCardCombinations = new Set(filteredTransactions.map(transaction => `${transaction.card_type}-${transaction.last_five}`))
-    const totalCards = uniqueCardCombinations.size
-
-    return {
-      totalSpend,
-      totalPoints: Math.round(totalPoints),
-      avgPointsPerDollar: Number(avgPointsPerDollar.toFixed(2)),
-      totalCards
-    }
-  }, [filteredTransactions])
+    return getAdjustedMetrics(filteredTransactions)
+  }, [filteredTransactions, getAdjustedMetrics])
 
   const cardData = [
     {

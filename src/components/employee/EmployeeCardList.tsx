@@ -1,5 +1,3 @@
-
-
 import {
   Card,
   CardContent,
@@ -13,6 +11,7 @@ import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
+import { useEmployeeBonus } from "@/hooks/useEmployeeBonusContext"
 
 interface EmployeeCardListProps {
   selectedCard?: string
@@ -25,6 +24,8 @@ interface EmployeeCardListProps {
 const EMPLOYEE_CARD_IMAGE = "https://icm.aexp-static.com/acquisition/card-art/NUS000000322_160x102_straight_withname.png"
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
+  const { toggleCardBonus, isCardBonusActive } = useEmployeeBonus()
+
   // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
     const cardTotals = transactions.reduce((acc, transaction) => {
@@ -93,6 +94,11 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     }
   }
 
+  const handleSwitchToggle = (cardKey: string, event: React.MouseEvent) => {
+    event.stopPropagation() // Prevent card click when toggling switch
+    toggleCardBonus(cardKey)
+  }
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -109,6 +115,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
           <div className="space-y-4 pb-6">
             {filteredCardData.map((card, index) => {
               const isCardSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
+              const isBonusActive = isCardBonusActive(card.cardKey)
               
               return (
                 <Card 
@@ -152,7 +159,11 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                           <span className="text-sm text-muted-foreground">
                             +15,000 bonus awarded
                           </span>
-                          <Switch />
+                          <Switch 
+                            checked={isBonusActive}
+                            onCheckedChange={() => toggleCardBonus(card.cardKey)}
+                            onClick={(e) => handleSwitchToggle(card.cardKey, e)}
+                          />
                         </div>
                       </div>
                     )}
@@ -166,4 +177,3 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     </Card>
   )
 }
-
