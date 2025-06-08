@@ -41,6 +41,9 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Classic Gold--72091", cardType: "Classic Gold", lastFive: "-72091", hasBonus: false },
   { cardKey: "Classic Gold--72109", cardType: "Classic Gold", lastFive: "-72109", hasBonus: false },
   { cardKey: "Classic Gold--72117", cardType: "Classic Gold", lastFive: "-72117", hasBonus: false },
+  { cardKey: "Classic Gold--72125", cardType: "Classic Gold", lastFive: "-72125", hasBonus: false },
+  { cardKey: "Classic Gold--72133", cardType: "Classic Gold", lastFive: "-72133", hasBonus: false },
+  { cardKey: "Classic Gold--72141", cardType: "Classic Gold", lastFive: "-72141", hasBonus: false },
   { cardKey: "Classic Gold--72158", cardType: "Classic Gold", lastFive: "-72158", hasBonus: false },
 
   // Green cards - sorted by last five digits in ascending order
