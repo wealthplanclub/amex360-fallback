@@ -33,10 +33,10 @@ export function EmployeeTransactionSection({
   const selectedCardType = getCardDropdownDisplayText()
   const filterText = getFilterDisplayText()
   
-  // Show card image when there's a card type filter active (State B or C)
-  const showCardImage = hasAnyFilter && filterText.includes(',') === false && filterText !== ""
+  // Show card image when there's any card type filter active (State B or C)
+  const showCardImage = hasAnyFilter && filterText !== ""
   
-  // Extract the base card type for the image
+  // Extract the base card type for the image (first part before comma if present)
   const baseCardType = filterText.split(',')[0]?.trim() || ""
 
   return (
