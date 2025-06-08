@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -94,8 +95,8 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     }
   }
 
-  const handleSwitchToggle = (cardKey: string, event: React.MouseEvent) => {
-    event.stopPropagation() // Prevent card click when toggling switch
+  const handleSwitchChange = (cardKey: string) => {
+    console.log('Switch toggled for card:', cardKey)
     toggleCardBonus(cardKey)
   }
 
@@ -159,11 +160,12 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                           <span className="text-sm text-muted-foreground">
                             +15,000 bonus awarded
                           </span>
-                          <Switch 
-                            checked={isBonusActive}
-                            onCheckedChange={() => toggleCardBonus(card.cardKey)}
-                            onClick={(e) => handleSwitchToggle(card.cardKey, e)}
-                          />
+                          <div onClick={(e) => e.stopPropagation()}>
+                            <Switch 
+                              checked={isBonusActive}
+                              onCheckedChange={() => handleSwitchChange(card.cardKey)}
+                            />
+                          </div>
                         </div>
                       </div>
                     )}
