@@ -1,6 +1,7 @@
 
-import React, { createContext, useContext, useState, useMemo } from 'react'
+import React, { createContext, useContext } from 'react'
 import { EmployeeTransaction } from '@/components/employee/EmployeeTransactionColumns'
+import { updateCardToggleState, getCardToggleState, getAllToggleStates } from '@/data/staticCardToggleData'
 
 interface EmployeeBonusContextType {
   toggleStates: Record<string, boolean>
@@ -33,18 +34,19 @@ interface EmployeeBonusProviderProps {
 }
 
 export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ children }) => {
-  const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({})
-
   const toggleCardBonus = (cardKey: string) => {
-    setToggleStates(prev => ({
-      ...prev,
-      [cardKey]: !prev[cardKey]
-    }))
+    const currentState = getCardToggleState(cardKey)
+    updateCardToggleState(cardKey, !currentState)
+    // Force re-render by updating a dummy state
+    setForceUpdate(prev => prev + 1)
   }
 
   const isCardBonusActive = (cardKey: string) => {
-    return toggleStates[cardKey] || false
+    return getCardToggleState(cardKey)
   }
+
+  // Force update state to trigger re-renders when toggle states change
+  const [forceUpdate, setForceUpdate] = React.useState(0)
 
   const getAdjustedMetrics = (
     baseTransactions: EmployeeTransaction[], 
@@ -61,6 +63,7 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
     
     // Calculate bonus points based on current filter state
     let bonusPoints = 0
+    const toggleStates = getAllToggleStates()
     
     if (selectedCardType && selectedCardType !== "all" && selectedLastFive && selectedLastFive !== "all") {
       // State C: Specific card selected - only apply bonus for this exact card
@@ -93,7 +96,7 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
   }
 
   const value = {
-    toggleStates,
+    toggleStates: getAllToggleStates(),
     toggleCardBonus,
     isCardBonusActive,
     getAdjustedMetrics
