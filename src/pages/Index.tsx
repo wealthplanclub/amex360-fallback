@@ -1,9 +1,9 @@
-
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
 import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { QuickMetricsCards } from "@/components/QuickMetricsCards";
 import { AppHeader } from "@/components/AppHeader";
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
@@ -180,6 +180,11 @@ const Index = () => {
               selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
               onStatCardClick={handleStatCardClick}
             />
+          </div>
+
+          {/* Quick Metrics Cards */}
+          <div className="mt-8 px-4 lg:px-6">
+            <QuickMetricsCards selectedTimeRange={filters.selectedTimeRange || 'ytd'} />
           </div>
 
           {/* Daily Spending Chart */}
