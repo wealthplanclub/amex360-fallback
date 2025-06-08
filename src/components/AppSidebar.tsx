@@ -55,7 +55,11 @@ export function AppSidebar() {
     // Show success toast
     toast.success("Dashboard refreshed", {
       description: "Latest transaction data has been loaded",
-      position: "top-right"
+      position: "top-right",
+      style: {
+        "--toast-swipe-end-transform": "translateX(100%)",
+        "--toast-exit-transform": "translateX(100%)"
+      }
     })
     
     close()
