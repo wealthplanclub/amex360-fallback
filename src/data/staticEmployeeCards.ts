@@ -81,6 +81,7 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "White Gold--41026", cardType: "White Gold", lastFive: "-41026", hasBonus: true },
   { cardKey: "White Gold--41034", cardType: "White Gold", lastFive: "-41034", hasBonus: true },
   { cardKey: "White Gold--41042", cardType: "White Gold", lastFive: "-41042", hasBonus: true },
+  { cardKey: "White Gold--41059", cardType: "White Gold", lastFive: "-41059", hasBonus: true },
 ]
 
 // Function to update a card's bonus status
