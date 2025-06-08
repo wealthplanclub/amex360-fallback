@@ -10,24 +10,31 @@ import {
 import { formatAccountName } from "@/utils/transactionUtils"
 
 interface CardFilterDropdownProps {
-  selectedCard: string
+  selectedCard: string | undefined
   creditCards: string[]
   onCardChange: (card: string) => void
 }
 
 export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: CardFilterDropdownProps) {
+  const getDisplayText = () => {
+    if (!selectedCard || selectedCard === "all") {
+      return "All Cards"
+    }
+    return formatAccountName(selectedCard)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="w-full md:w-auto md:ml-auto">
           <CreditCard className="mr-2 h-4 w-4" />
-          {selectedCard === "all" ? "All Cards" : formatAccountName(selectedCard)}
+          {getDisplayText()}
           <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuCheckboxItem
-          checked={selectedCard === "all"}
+          checked={!selectedCard || selectedCard === "all"}
           onCheckedChange={() => onCardChange("all")}
         >
           All Cards
