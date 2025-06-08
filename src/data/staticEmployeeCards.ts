@@ -23,11 +23,16 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Blue Plus I--01117", cardType: "Blue Plus I", lastFive: "-01117", hasBonus: true },
   { cardKey: "Blue Plus I--01125", cardType: "Blue Plus I", lastFive: "-01125", hasBonus: true },
   { cardKey: "Blue Plus I--01141", cardType: "Blue Plus I", lastFive: "-01141", hasBonus: true },
-  { cardKey: "Blue Plus I--01158", cardType: "Blue Plus I", lastFive: "-01158", hasBonus: false },
+  { cardKey: "Blue Plus I--01158", cardType: "Blue Plus I", lastFive: "-01158", hasBonus: true },
 
   // Blue Plus II cards - sorted by last five digits in ascending order
+  { cardKey: "Blue Plus II--11009", cardType: "Blue Plus II", lastFive: "-11009", hasBonus: true },
+  { cardKey: "Blue Plus II--11017", cardType: "Blue Plus II", lastFive: "-11025", hasBonus: true },
   { cardKey: "Blue Plus II--11025", cardType: "Blue Plus II", lastFive: "-11025", hasBonus: true },
-
+  { cardKey: "Blue Plus II--11033", cardType: "Blue Plus II", lastFive: "-11033", hasBonus: true },
+  { cardKey: "Blue Plus II--11041", cardType: "Blue Plus II", lastFive: "-11041", hasBonus: false },
+  { cardKey: "Blue Plus II--11058", cardType: "Blue Plus II", lastFive: "-11058", hasBonus: false },
+  
   // Classic Gold cards - sorted by last five digits in ascending order
   { cardKey: "Classic Gold--72067", cardType: "Classic Gold", lastFive: "-72067", hasBonus: true },
 
