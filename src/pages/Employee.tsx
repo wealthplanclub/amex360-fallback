@@ -31,6 +31,21 @@ const Employee = () => {
     updateFilter('selectedCard', 'all')
   }
 
+  // Get the card type for the selected card filter
+  const getFilterDisplayText = () => {
+    if (!hasCardFilter) return ""
+    
+    const selectedTransaction = employeeTransactions.find(
+      transaction => transaction.last_five === filters.selectedCard
+    )
+    
+    if (selectedTransaction) {
+      return `${selectedTransaction.card_type} (-${filters.selectedCard})`
+    }
+    
+    return `Card ending in ${filters.selectedCard}`
+  }
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -63,7 +78,7 @@ const Employee = () => {
                     {hasCardFilter && (
                       <div className="mt-2">
                         <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                          Filtered by card ending in: {filters.selectedCard}
+                          Filtered by: {getFilterDisplayText()}
                           <button 
                             onClick={handleClearCardFilter}
                             className="hover:bg-gray-200 rounded p-0.5"
