@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -20,6 +19,7 @@ import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 import { useEmployeeBonus } from "@/hooks/useEmployeeBonusContext"
+import { ChevronDown, ChevronUp } from "lucide-react"
 
 interface EmployeeCardListProps {
   selectedCard?: string
@@ -126,16 +126,21 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
   const getSortOptionLabel = (option: SortOption) => {
     switch (option) {
       case 'spend-desc':
-        return 'Spend (descending)'
+        return 'spend'
       case 'spend-asc':
-        return 'Spend (ascending)'
+        return 'spend'
       case 'lastFive-desc':
-        return 'Last 5 (descending)'
+        return 'last 5'
       case 'lastFive-asc':
-        return 'Last 5 (ascending)'
+        return 'last 5'
       default:
-        return 'Spend (descending)'
+        return 'spend'
     }
+  }
+
+  const getSortArrow = (option: SortOption) => {
+    const isDescending = option.includes('-desc')
+    return isDescending ? <ChevronDown className="h-3 w-3" /> : <ChevronUp className="h-3 w-3" />
   }
 
   return (
@@ -157,14 +162,32 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
             <Select value={sortOption} onValueChange={(value: SortOption) => setSortOption(value)}>
               <SelectTrigger className="w-auto h-8">
                 <SelectValue>
-                  Sorted by: {getSortOptionLabel(sortOption)}
+                  <div className="flex items-center gap-1">
+                    Sorted by {getSortOptionLabel(sortOption)} {getSortArrow(sortOption)}
+                  </div>
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="spend-desc">Spend (descending)</SelectItem>
-                <SelectItem value="spend-asc">Spend (ascending)</SelectItem>
-                <SelectItem value="lastFive-desc">Last 5 (descending)</SelectItem>
-                <SelectItem value="lastFive-asc">Last 5 (ascending)</SelectItem>
+                <SelectItem value="spend-desc">
+                  <div className="flex items-center gap-1">
+                    spend <ChevronDown className="h-3 w-3" />
+                  </div>
+                </SelectItem>
+                <SelectItem value="spend-asc">
+                  <div className="flex items-center gap-1">
+                    spend <ChevronUp className="h-3 w-3" />
+                  </div>
+                </SelectItem>
+                <SelectItem value="lastFive-desc">
+                  <div className="flex items-center gap-1">
+                    last 5 <ChevronDown className="h-3 w-3" />
+                  </div>
+                </SelectItem>
+                <SelectItem value="lastFive-asc">
+                  <div className="flex items-center gap-1">
+                    last 5 <ChevronUp className="h-3 w-3" />
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
