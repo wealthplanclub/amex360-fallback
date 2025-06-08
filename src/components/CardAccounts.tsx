@@ -68,20 +68,14 @@ export function CardAccounts({
     return cardData;
   }, [filters]);
 
-  // Check if any stat card filters are active
-  const hasStatCardFilters = React.useMemo(() => {
-    return !!(filters.expenseFilter || filters.creditFilter);
-  }, [filters.expenseFilter, filters.creditFilter]);
-
-  // Filter cards based on transaction dropdown selection, but only if no stat card filters are active
+  // Filter cards based on transaction dropdown selection only
   const cardData = React.useMemo(() => {
-    // If stat card filters are active, always show all cards
-    if (hasStatCardFilters || transactionDropdownSelection === "all") {
+    if (transactionDropdownSelection === "all") {
       return allCardData;
     }
     
     return allCardData.filter(card => card.fullName === transactionDropdownSelection);
-  }, [allCardData, transactionDropdownSelection, hasStatCardFilters]);
+  }, [allCardData, transactionDropdownSelection]);
 
   // Calculate dynamic height based on filtered card count
   const dynamicHeight = React.useMemo(() => {
@@ -99,10 +93,8 @@ export function CardAccounts({
     }
   };
 
-  // Determine which card is selected
+  // Determine which card is selected based on dropdown selection only
   const getSelectedCard = (card: any) => {
-    // If stat card filters are active, no card should appear selected
-    if (hasStatCardFilters) return false;
     if (transactionDropdownSelection === "all") return false;
     return card.fullName === transactionDropdownSelection;
   };
