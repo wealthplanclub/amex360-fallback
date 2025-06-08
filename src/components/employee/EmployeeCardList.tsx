@@ -139,8 +139,8 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
           </CardDescription>
         </div>
         
-        {/* Sort Controls on next row */}
-        <div className="flex items-center gap-2 mt-4">
+        {/* Sort Controls on next row with more vertical space */}
+        <div className="flex items-center gap-2 mt-6">
           <Select value={sortBy} onValueChange={(value: SortBy) => setSortBy(value)}>
             <SelectTrigger className="w-24 h-8">
               <SelectValue />
