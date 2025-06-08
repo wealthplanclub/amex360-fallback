@@ -1,5 +1,5 @@
 import React from "react"
-import { TrendingUp, Star, CreditCard } from "lucide-react"
+import { TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 
@@ -57,7 +57,7 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
       title: "Total Points",
       value: metrics.totalPoints,
       badge: "Points",
-      icon: Star,
+      icon: () => <img src="https://i.imgur.com/dTz9vVm.png" alt="Points" className="h-4 w-4" />,
       footer: "Points earned",
       description: "Total points accumulated",
       formatAsPoints: true
