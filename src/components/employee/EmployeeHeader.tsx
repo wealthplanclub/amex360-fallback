@@ -8,7 +8,9 @@ export function EmployeeHeader() {
   const { toast } = useToast()
 
   const handleRefresh = () => {
+    console.log('Refresh button clicked at:', Date.now())
     setTimeout(() => {
+      console.log('Toast triggered at:', Date.now())
       toast({
         title: "Data refreshed",
         description: "Employee data has been updated successfully.",
