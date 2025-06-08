@@ -3,8 +3,9 @@ import React from "react"
 import { EmployeeTransactionTable } from "./EmployeeTransactionTable"
 import { Input } from "@/components/ui/input"
 import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
-import { X } from "lucide-react"
+import { X, DollarSign, Star, TrendingUp } from "lucide-react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
+import { StatCard } from "@/components/StatCard"
 
 interface EmployeeTransactionSectionProps {
   filteredTransactions: EmployeeTransaction[]
@@ -46,37 +47,53 @@ export function EmployeeTransactionSection({
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
         <div className="p-6 pb-2">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
-            <div>
-              <h2 className="text-xl font-semibold">Employee Transactions</h2>
-              {!hasAnyFilter && (
-                <p className="text-sm text-muted-foreground mt-1">
-                  View and manage employee card transactions
-                </p>
-              )}
-            </div>
-            
-            {/* Metrics */}
-            <div className="flex flex-col sm:flex-row gap-4 lg:gap-6">
-              <div className="text-center lg:text-right">
-                <div className="text-sm text-muted-foreground">Total Spend</div>
-                <div className="text-lg font-semibold" style={{ color: '#00175a' }}>
-                  ${metrics.totalSpend.toFixed(2)}
-                </div>
-              </div>
-              <div className="text-center lg:text-right">
-                <div className="text-sm text-muted-foreground">Total Points</div>
-                <div className="text-lg font-semibold" style={{ color: '#00175a' }}>
-                  {metrics.totalPoints.toLocaleString()}
-                </div>
-              </div>
-              <div className="text-center lg:text-right">
-                <div className="text-sm text-muted-foreground">Avg Points/$</div>
-                <div className="text-lg font-semibold" style={{ color: '#00175a' }}>
-                  {metrics.avgPointsPerDollar}
-                </div>
-              </div>
-            </div>
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold">Employee Transactions</h2>
+            {!hasAnyFilter && (
+              <p className="text-sm text-muted-foreground mt-1">
+                View and manage employee card transactions
+              </p>
+            )}
+          </div>
+          
+          {/* Metrics Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <StatCard
+              title="Total Spend"
+              value={metrics.totalSpend}
+              badge="100%"
+              icon={DollarSign}
+              footer="Employee spending"
+              description="Total amount spent"
+              index={0}
+              isVisible={true}
+              numbersKey={0}
+              formatAsPoints={false}
+            />
+            <StatCard
+              title="Total Points"
+              value={metrics.totalPoints}
+              badge="Points"
+              icon={Star}
+              footer="Points earned"
+              description="Total points accumulated"
+              index={1}
+              isVisible={true}
+              numbersKey={0}
+              formatAsPoints={true}
+            />
+            <StatCard
+              title="Avg Points/$"
+              value={metrics.avgPointsPerDollar}
+              badge="Rate"
+              icon={TrendingUp}
+              footer="Points per dollar"
+              description="Average points earned per dollar"
+              index={2}
+              isVisible={true}
+              numbersKey={0}
+              formatAsPoints={true}
+            />
           </div>
 
           {hasAnyFilter && (
