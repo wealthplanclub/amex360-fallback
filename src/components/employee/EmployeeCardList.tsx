@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -7,19 +8,11 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Switch } from "@/components/ui/switch"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 import { useEmployeeBonus } from "@/hooks/useEmployeeBonusContext"
-import { ChevronDown, ChevronUp } from "lucide-react"
 
 interface EmployeeCardListProps {
   selectedCard?: string
@@ -28,14 +21,11 @@ interface EmployeeCardListProps {
   selectedCardType?: string
 }
 
-type SortOption = 'spend-desc' | 'spend-asc' | 'lastFive-desc' | 'lastFive-asc'
-
 // Fixed employee card image for all cards in the list
 const EMPLOYEE_CARD_IMAGE = "https://icm.aexp-static.com/acquisition/card-art/NUS000000322_160x102_straight_withname.png"
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
   const { toggleCardBonus, isCardBonusActive } = useEmployeeBonus()
-  const [sortOption, setSortOption] = React.useState<SortOption>('spend-desc')
 
   // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
@@ -65,21 +55,8 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
         displayName: `${data.cardType}\n(${data.lastFive})`,
         cardKey: cardKey // unique identifier combining type and last five
       }))
-      .sort((a, b) => {
-        switch (sortOption) {
-          case 'spend-desc':
-            return b.amount - a.amount
-          case 'spend-asc':
-            return a.amount - b.amount
-          case 'lastFive-desc':
-            return b.lastFive.localeCompare(a.lastFive)
-          case 'lastFive-asc':
-            return a.lastFive.localeCompare(b.lastFive)
-          default:
-            return b.amount - a.amount
-        }
-      })
-  }, [transactions, sortOption])
+      .sort((a, b) => b.amount - a.amount)
+  }, [transactions])
 
   // Filter cards based on selected card type from dropdown
   const filteredCardData = React.useMemo(() => {
@@ -123,75 +100,16 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     toggleCardBonus(cardKey)
   }
 
-  const getSortOptionLabel = (option: SortOption) => {
-    switch (option) {
-      case 'spend-desc':
-        return 'spend'
-      case 'spend-asc':
-        return 'spend'
-      case 'lastFive-desc':
-        return 'last 5'
-      case 'lastFive-asc':
-        return 'last 5'
-      default:
-        return 'spend'
-    }
-  }
-
-  const getSortArrow = (option: SortOption) => {
-    const isDescending = option.includes('-desc')
-    return isDescending ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />
-  }
-
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
       style={{ height: `${dynamicHeight}px` }}
     >
       <CardHeader>
-        <div className="grid gap-3">
-          <div>
-            <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
-            <CardDescription className="mt-1">
-              Employee spending by card (last 5 digits)
-            </CardDescription>
-          </div>
-          
-          {/* Sort Controls in grid item */}
-          <div className="flex items-center gap-2">
-            <Select value={sortOption} onValueChange={(value: SortOption) => setSortOption(value)}>
-              <SelectTrigger className="w-auto h-8">
-                <SelectValue>
-                  <div className="flex items-center gap-1">
-                    Sorted by {getSortOptionLabel(sortOption)} {getSortArrow(sortOption)}
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="spend-desc">
-                  <div className="flex items-center gap-1">
-                    spend <ChevronDown className="h-4 w-4" />
-                  </div>
-                </SelectItem>
-                <SelectItem value="spend-asc">
-                  <div className="flex items-center gap-1">
-                    spend <ChevronUp className="h-4 w-4" />
-                  </div>
-                </SelectItem>
-                <SelectItem value="lastFive-desc">
-                  <div className="flex items-center gap-1">
-                    last 5 <ChevronDown className="h-4 w-4" />
-                  </div>
-                </SelectItem>
-                <SelectItem value="lastFive-asc">
-                  <div className="flex items-center gap-1">
-                    last 5 <ChevronUp className="h-4 w-4" />
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
+        <CardDescription>
+          Employee spending by card (last 5 digits)
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
