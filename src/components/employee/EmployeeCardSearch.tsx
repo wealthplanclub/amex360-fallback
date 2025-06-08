@@ -14,7 +14,7 @@ export function EmployeeCardSearch({ value, onChange, isVisible }: EmployeeCardS
   }
 
   return (
-    <div className="mb-4 mt-1 transition-all duration-300 ease-in-out">
+    <div className="mb-5 mt-1 transition-all duration-300 ease-in-out">
       <Input
         placeholder="Search last 5 digits"
         value={value}
