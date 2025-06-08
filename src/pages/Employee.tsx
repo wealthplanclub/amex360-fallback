@@ -22,19 +22,18 @@ const Employee = () => {
   const uniqueCardTypes = React.useMemo(() => {
     const cardTypes = new Set<string>()
     employeeTransactions.forEach(transaction => {
-      const cardDisplay = `${transaction.card_type} (${transaction.last_five})`
-      cardTypes.add(cardDisplay)
+      cardTypes.add(transaction.card_type)
     })
     return Array.from(cardTypes).sort()
   }, [employeeTransactions])
 
-  // Filter transactions based on selected card (now by last 5 digits)
+  // Filter transactions based on selected card type
   const filteredTransactions = React.useMemo(() => {
     if (!filters.selectedCard || filters.selectedCard === "all") {
       return employeeTransactions
     }
     
-    return employeeTransactions.filter(transaction => transaction.last_five === filters.selectedCard)
+    return employeeTransactions.filter(transaction => transaction.card_type === filters.selectedCard)
   }, [employeeTransactions, filters.selectedCard])
 
   const hasCardFilter = filters.selectedCard && filters.selectedCard !== "all"
@@ -43,31 +42,13 @@ const Employee = () => {
     updateFilter('selectedCard', 'all')
   }
 
-  // Get the card type for the selected card filter
   const getFilterDisplayText = () => {
     if (!hasCardFilter) return ""
-    
-    const selectedTransaction = employeeTransactions.find(
-      transaction => transaction.last_five === filters.selectedCard
-    )
-    
-    if (selectedTransaction) {
-      return `${selectedTransaction.card_type} (${filters.selectedCard})`
-    }
-    
-    return `Card ending in ${filters.selectedCard}`
+    return filters.selectedCard
   }
 
   const handleCardDropdownChange = (cardSelection: string) => {
-    if (cardSelection === "all") {
-      updateFilter('selectedCard', 'all')
-    } else {
-      // Extract the last 5 digits from the card display format
-      const match = cardSelection.match(/\((\d{5})\)$/)
-      if (match) {
-        updateFilter('selectedCard', match[1])
-      }
-    }
+    updateFilter('selectedCard', cardSelection)
   }
 
   return (
@@ -92,7 +73,7 @@ const Employee = () => {
               {/* Transaction Table */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg border">
-                  <div className="p-6">
+                  <div className="p-6 pb-2">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
                     {!hasCardFilter && (
                       <p className="text-sm text-muted-foreground mt-1">
@@ -113,9 +94,8 @@ const Employee = () => {
                         </span>
                       </div>
                     )}
-                  </div>
-                  <div className="p-6">
-                    {/* Filter Controls */}
+                    
+                    {/* Filter Controls moved to header */}
                     <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
                       <Input
                         placeholder="Search descriptions..."
@@ -129,7 +109,9 @@ const Employee = () => {
                         onCardChange={handleCardDropdownChange}
                       />
                     </div>
-                    
+                  </div>
+                  
+                  <div className="px-6 pb-6">
                     <EmployeeTransactionTable
                       transactions={filteredTransactions}
                       globalFilter={filters.globalFilter}
