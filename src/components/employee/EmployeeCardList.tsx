@@ -102,7 +102,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
             {filteredCardData.map((card, index) => (
               <Card 
                 key={card.fullName}
-                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in focus:outline-none focus:ring-0 ${
+                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 [&:focus]:outline-none [&:focus]:ring-0 [&:focus-visible]:outline-none [&:focus-visible]:ring-0 ${
                   getSelectedCard(card) ? 'ring-2 ring-blue-500' : ''
                 }`}
                 style={{
@@ -110,6 +110,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                   animationFillMode: 'both'
                 }}
                 onClick={() => handleCardClick(card)}
+                tabIndex={0}
               >
                 <CardContent className="p-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
