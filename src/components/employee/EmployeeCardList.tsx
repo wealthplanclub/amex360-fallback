@@ -1,5 +1,6 @@
 
 
+
 import {
   Card,
   CardContent,
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Switch } from "@/components/ui/switch"
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -17,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ArrowUp, ArrowDown } from "lucide-react"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
@@ -31,16 +30,14 @@ interface EmployeeCardListProps {
   selectedCardType?: string
 }
 
-type SortBy = 'spend' | 'lastFive'
-type SortDirection = 'asc' | 'desc'
+type SortOption = 'spend-desc' | 'spend-asc' | 'lastFive-desc' | 'lastFive-asc'
 
 // Fixed employee card image for all cards in the list
 const EMPLOYEE_CARD_IMAGE = "https://icm.aexp-static.com/acquisition/card-art/NUS000000322_160x102_straight_withname.png"
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
   const { toggleCardBonus, isCardBonusActive } = useEmployeeBonus()
-  const [sortBy, setSortBy] = React.useState<SortBy>('spend')
-  const [sortDirection, setSortDirection] = React.useState<SortDirection>('desc')
+  const [sortOption, setSortOption] = React.useState<SortOption>('spend-desc')
 
   // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
@@ -71,16 +68,20 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
         cardKey: cardKey // unique identifier combining type and last five
       }))
       .sort((a, b) => {
-        if (sortBy === 'spend') {
-          return sortDirection === 'desc' ? b.amount - a.amount : a.amount - b.amount
-        } else {
-          // Sort by last 5 digits
-          return sortDirection === 'desc' 
-            ? b.lastFive.localeCompare(a.lastFive)
-            : a.lastFive.localeCompare(b.lastFive)
+        switch (sortOption) {
+          case 'spend-desc':
+            return b.amount - a.amount
+          case 'spend-asc':
+            return a.amount - b.amount
+          case 'lastFive-desc':
+            return b.lastFive.localeCompare(a.lastFive)
+          case 'lastFive-asc':
+            return a.lastFive.localeCompare(b.lastFive)
+          default:
+            return b.amount - a.amount
         }
       })
-  }, [transactions, sortBy, sortDirection])
+  }, [transactions, sortOption])
 
   // Filter cards based on selected card type from dropdown
   const filteredCardData = React.useMemo(() => {
@@ -124,10 +125,6 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     toggleCardBonus(cardKey)
   }
 
-  const toggleSortDirection = () => {
-    setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')
-  }
-
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -144,24 +141,17 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
           
           {/* Sort Controls in grid item */}
           <div className="flex items-center gap-2">
-            <Select value={sortBy} onValueChange={(value: SortBy) => setSortBy(value)}>
-              <SelectTrigger className="w-24 h-8">
+            <Select value={sortOption} onValueChange={(value: SortOption) => setSortOption(value)}>
+              <SelectTrigger className="w-40 h-8">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="spend">Spend</SelectItem>
-                <SelectItem value="lastFive">Last 5</SelectItem>
+                <SelectItem value="spend-desc">Spend (descending)</SelectItem>
+                <SelectItem value="spend-asc">Spend (ascending)</SelectItem>
+                <SelectItem value="lastFive-desc">Last 5 (descending)</SelectItem>
+                <SelectItem value="lastFive-asc">Last 5 (ascending)</SelectItem>
               </SelectContent>
             </Select>
-            
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleSortDirection}
-              className="h-8 w-8 p-0"
-            >
-              {sortDirection === 'desc' ? <ArrowDown className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />}
-            </Button>
           </div>
         </div>
       </CardHeader>
@@ -251,4 +241,5 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     </Card>
   )
 }
+
 
