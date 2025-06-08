@@ -33,13 +33,32 @@ export function EmployeeTransactionSection({
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
         <div className="p-6 pb-2">
-          <div className={hasAnyFilter ? "mb-2" : "mb-4"}>
-            <h2 className="text-xl font-semibold">Employee Transactions</h2>
-            {!hasAnyFilter && (
-              <p className="text-sm text-muted-foreground mt-1">
-                View and manage employee card transactions
-              </p>
-            )}
+          {/* 2-column header layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end mb-4">
+            {/* Left column - Title and description */}
+            <div className={hasAnyFilter ? "mb-2" : ""}>
+              <h2 className="text-xl font-semibold">Employee Transactions</h2>
+              {!hasAnyFilter && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  View and manage employee card transactions
+                </p>
+              )}
+            </div>
+
+            {/* Right column - Filter Controls */}
+            <div className="flex flex-col gap-4 md:flex-row md:items-center">
+              <Input
+                placeholder="Search descriptions..."
+                value={globalFilter ?? ""}
+                onChange={(event) => onGlobalFilterChange(event.target.value)}
+                className="max-w-sm"
+              />
+              <CardFilterDropdown
+                selectedCard={getCardDropdownDisplayText()}
+                creditCards={uniqueCardTypes}
+                onCardChange={handleCardDropdownChange}
+              />
+            </div>
           </div>
 
           {hasAnyFilter && (
@@ -56,21 +75,6 @@ export function EmployeeTransactionSection({
               </span>
             </div>
           )}
-          
-          {/* Filter Controls */}
-          <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
-            <Input
-              placeholder="Search descriptions..."
-              value={globalFilter ?? ""}
-              onChange={(event) => onGlobalFilterChange(event.target.value)}
-              className="max-w-sm"
-            />
-            <CardFilterDropdown
-              selectedCard={getCardDropdownDisplayText()}
-              creditCards={uniqueCardTypes}
-              onCardChange={handleCardDropdownChange}
-            />
-          </div>
         </div>
         
         <div className="px-6 pb-6">
