@@ -41,6 +41,23 @@ export function EmployeeTransactionSection({
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
               <h2 className="text-xl font-semibold">Employee Transactions</h2>
+              
+              {/* Filter indicator directly below title when card is showing */}
+              {showCardImage && hasAnyFilter && (
+                <div className="mt-2">
+                  <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+                    Filtered by: {getFilterDisplayText()}
+                    <button 
+                      onClick={handleClearAllFilters}
+                      className="hover:bg-gray-200 rounded p-0.5"
+                      title="Clear all filters"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                </div>
+              )}
+              
               {!hasAnyFilter && (
                 <p className="text-sm text-muted-foreground mt-1">
                   View and manage employee card transactions
@@ -63,7 +80,7 @@ export function EmployeeTransactionSection({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end mb-4">
             {/* Left column - filter indicator and search */}
             <div>
-              {hasAnyFilter && (
+              {!showCardImage && hasAnyFilter && (
                 <div className="mb-4">
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
                     Filtered by: {getFilterDisplayText()}
