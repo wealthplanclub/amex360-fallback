@@ -97,7 +97,7 @@ export function AppSidebar() {
                 className="gap-3"
               >
                 <RotateCw className="h-4 w-4" />
-                <span>Refresh Data</span>
+                <span>Refresh</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
