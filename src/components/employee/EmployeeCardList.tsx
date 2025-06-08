@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -121,7 +122,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                           {card.count} transactions
                         </p>
                         <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
-                          ${card.amount.toLocaleString()}
+                          ${card.amount.toFixed(2)}
                         </div>
                       </div>
                     </div>
