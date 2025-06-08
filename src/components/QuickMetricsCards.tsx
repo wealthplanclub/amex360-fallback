@@ -40,6 +40,22 @@ const cardDetails = {
       image: getCardImage("gold -1000")
     }
   ],
+    businessCreditLimit: [
+    {
+      name: "Business Line of Credit",
+      lastFive: "-4156",
+      amount: "$2,000,000", 
+      type: "installment",
+      image: getCardImage("business blueprint")
+    },
+    {
+      name: "Business White Gold",
+      lastFive: "-1000",
+      amount: "$2,000",
+      type: "pay over time", 
+      image: getCardImage("gold -1000")
+    }
+  ],
   brandPartners: [
     {
       name: "Delta SkyMiles® Reserve - 3x",
@@ -107,7 +123,7 @@ const metricsData = [
     dataSource: "Underwriting System",
     lastUpdated: "Real-time",
     calculationMethod: "Sum of (credit limit - current balance) for BLOC account",
-    cardData: null
+    cardData: cardDetails.businessCreditLimit
   },
   {
     title: "Brand Partner Cards",
@@ -127,7 +143,7 @@ const MetricTooltipContent = ({ metric }: { metric: typeof metricsData[0] }) => 
     
     {metric.cardData && (
       <div className="space-y-2">
-        <div className="text-xs font-medium">Card Details:</div>
+        <div className="text-xs font-medium">Account Details:</div>
         {metric.cardData.map((card: any, index: number) => (
           <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded">
             <img src={card.image} alt={card.name} className="w-8 h-5 object-cover rounded" />
