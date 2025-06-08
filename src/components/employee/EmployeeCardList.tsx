@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -122,6 +123,21 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     toggleCardBonus(cardKey)
   }
 
+  const getSortOptionLabel = (option: SortOption) => {
+    switch (option) {
+      case 'spend-desc':
+        return 'Spend (descending)'
+      case 'spend-asc':
+        return 'Spend (ascending)'
+      case 'lastFive-desc':
+        return 'Last 5 (descending)'
+      case 'lastFive-asc':
+        return 'Last 5 (ascending)'
+      default:
+        return 'Spend (descending)'
+    }
+  }
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -140,7 +156,9 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
           <div className="flex items-center gap-2">
             <Select value={sortOption} onValueChange={(value: SortOption) => setSortOption(value)}>
               <SelectTrigger className="w-auto h-8">
-                <SelectValue />
+                <SelectValue>
+                  Sorted by: {getSortOptionLabel(sortOption)}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="spend-desc">Spend (descending)</SelectItem>
