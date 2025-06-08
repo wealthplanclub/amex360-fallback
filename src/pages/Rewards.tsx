@@ -1,3 +1,4 @@
+
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -7,20 +8,51 @@ import { useFilterState } from "@/hooks/useFilterState";
 import { RewardMetricsCards } from "@/components/reward/RewardMetricsCards";
 import { RewardChartDisplay } from "@/components/reward/RewardChartDisplay";
 import { RewardCardList } from "@/components/reward/RewardCardList";
+import Lottie from "lottie-react";
 
 const Rewards = () => {
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
   const [isVisible, setIsVisible] = React.useState(false);
   const [numbersKey, setNumbersKey] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [animationData, setAnimationData] = React.useState(null);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
+    // Load the cube-loader animation
+    fetch("/cube-loader.json")
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error("Failed to load animation:", error));
+
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setIsVisible(true);
+    }, 2000);
+
     return () => clearTimeout(timer);
   }, []);
 
   React.useEffect(() => {
     setNumbersKey(prev => prev + 1);
   }, [filters.selectedTimeRange, filters.selectedDate, filters.selectedCard]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          {animationData && (
+            <Lottie
+              animationData={animationData}
+              className="w-32 h-32 mx-auto"
+              loop={true}
+              autoplay={true}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
     console.log("Reward dropdown changed:", cardSelection);

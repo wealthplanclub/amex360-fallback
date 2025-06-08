@@ -9,10 +9,45 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFilterState } from "@/hooks/useFilterState";
+import Lottie from "lottie-react";
 
 const Index = () => {
   const isMobile = useIsMobile();
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [animationData, setAnimationData] = React.useState(null);
+
+  React.useEffect(() => {
+    // Load the cube-loader animation
+    fetch("/cube-loader.json")
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error("Failed to load animation:", error));
+
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          {animationData && (
+            <Lottie
+              animationData={animationData}
+              className="w-32 h-32 mx-auto"
+              loop={true}
+              autoplay={true}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   const handleCardAccountClick = (cardName: string) => {
     console.log("Card account clicked:", cardName);

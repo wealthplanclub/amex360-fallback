@@ -1,3 +1,4 @@
+
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -10,8 +11,27 @@ import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
 import { staticEmpData } from "@/data/staticEmpData"
 import { parseEmployeeData } from "@/utils/employeeParser"
+import Lottie from "lottie-react"
 
 const Employee = () => {
+  const [isLoading, setIsLoading] = React.useState(true)
+  const [animationData, setAnimationData] = React.useState(null)
+
+  React.useEffect(() => {
+    // Load the cube-loader animation
+    fetch("/cube-loader.json")
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error("Failed to load animation:", error))
+
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   // Parse the static employee data into proper format
   const employeeTransactions = parseEmployeeData(staticEmpData)
   
@@ -29,6 +49,23 @@ const Employee = () => {
     getFilterDisplayText,
     getCardDropdownDisplayText
   } = useEmployeeFilters(employeeTransactions)
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          {animationData && (
+            <Lottie
+              animationData={animationData}
+              className="w-32 h-32 mx-auto"
+              loop={true}
+              autoplay={true}
+            />
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <SidebarProvider>
