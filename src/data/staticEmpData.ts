@@ -198,7 +198,12 @@ export const staticEmpData = `date	description	card	last_five	amount	point_multi
 2025-06-04	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	590.25	
 2025-06-04	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	20.43	
 2025-06-05	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	214.64	
-2025-06-05	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	20.31	
+2025-06-05	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	20.31
+2025-06-06	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	193.06
+2025-06-06	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	631.16
+2025-06-06	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	612.32
+2025-06-06	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	590.07
+2025-06-07	TWILIO INC          SAN FRANCISCO       CA	Classic Gold	-72158	590.58
 2025-01-13	DNH*GODADDY#35171245480-505-8855        AZ	Green	-81017	149.98	
 2025-01-22	DNH*GODADDY#35397671Tempe               AZ	Green	-81017	32.17	
 2025-01-23	CON-STRUC-TION      CULVER CITY         CA	Green	-81017	100.00	
