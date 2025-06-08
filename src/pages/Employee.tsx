@@ -43,15 +43,6 @@ const Employee = () => {
             </div>
             
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Card List */}
-              <div className="lg:col-span-1">
-                <EmployeeCardList 
-                  selectedCard={filters.selectedCard}
-                  onCardClick={(card) => updateFilter('selectedCard', card)}
-                  transactions={employeeTransactions}
-                />
-              </div>
-              
               {/* Transaction Table */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg border">
@@ -74,6 +65,15 @@ const Employee = () => {
                     />
                   </div>
                 </div>
+              </div>
+              
+              {/* Card List */}
+              <div className="lg:col-span-1">
+                <EmployeeCardList 
+                  selectedCard={filters.selectedCard}
+                  onCardClick={(card) => updateFilter('selectedCard', card)}
+                  transactions={employeeTransactions}
+                />
               </div>
             </div>
           </div>
