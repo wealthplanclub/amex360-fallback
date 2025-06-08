@@ -102,7 +102,7 @@ const metricsData = [
   },
   {
     title: "Available Line of Credit",
-    value: "$2M",
+    value: "$2,000,000",
     description: "Total available business line of credit",
     dataSource: "Underwriting System",
     lastUpdated: "Real-time",
@@ -166,7 +166,7 @@ const MetricSheetContent = ({ metric }: { metric: typeof metricsData[0] }) => (
       
       {metric.cardData && (
         <div>
-          <h4 className="font-medium text-sm text-muted-foreground mb-2">Card Details</h4>
+          <h4 className="font-medium text-sm text-muted-foreground mb-2">Account Details</h4>
           <div className="space-y-3">
             {metric.cardData.map((card: any, index: number) => (
               <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
