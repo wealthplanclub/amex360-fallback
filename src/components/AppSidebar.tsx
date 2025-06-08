@@ -1,4 +1,3 @@
-
 import React from "react"
 import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -56,10 +55,8 @@ export function AppSidebar() {
     toast.success("Dashboard refreshed", {
       description: "Latest transaction data has been loaded",
       position: "top-right",
-      style: {
-        "--toast-swipe-end-transform": "translateX(100%)",
-        "--toast-exit-transform": "translateX(100%)"
-      } as React.CSSProperties
+      dismissible: true,
+      duration: 4000,
     })
     
     close()
