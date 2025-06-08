@@ -32,7 +32,7 @@ export function EmployeeTransactionSection({
   // Calculate metrics from filtered transactions
   const metrics = React.useMemo(() => {
     const totalSpend = filteredTransactions.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
-    const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (transaction.points_earned || 0), 0)
+    const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (Math.abs(transaction.amount) * transaction.point_multiple), 0)
     const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
 
     return {
