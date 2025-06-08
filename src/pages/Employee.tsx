@@ -22,19 +22,18 @@ const Employee = () => {
   const uniqueCardTypes = React.useMemo(() => {
     const cardTypes = new Set<string>()
     employeeTransactions.forEach(transaction => {
-      const cardDisplay = `${transaction.card_type} (${transaction.last_five})`
-      cardTypes.add(cardDisplay)
+      cardTypes.add(transaction.card_type)
     })
     return Array.from(cardTypes).sort()
   }, [employeeTransactions])
 
-  // Filter transactions based on selected card (now by last 5 digits)
+  // Filter transactions based on selected card type
   const filteredTransactions = React.useMemo(() => {
     if (!filters.selectedCard || filters.selectedCard === "all") {
       return employeeTransactions
     }
     
-    return employeeTransactions.filter(transaction => transaction.last_five === filters.selectedCard)
+    return employeeTransactions.filter(transaction => transaction.card_type === filters.selectedCard)
   }, [employeeTransactions, filters.selectedCard])
 
   const hasCardFilter = filters.selectedCard && filters.selectedCard !== "all"
@@ -43,31 +42,8 @@ const Employee = () => {
     updateFilter('selectedCard', 'all')
   }
 
-  // Get the card type for the selected card filter
-  const getFilterDisplayText = () => {
-    if (!hasCardFilter) return ""
-    
-    const selectedTransaction = employeeTransactions.find(
-      transaction => transaction.last_five === filters.selectedCard
-    )
-    
-    if (selectedTransaction) {
-      return `${selectedTransaction.card_type} (${filters.selectedCard})`
-    }
-    
-    return `Card ending in ${filters.selectedCard}`
-  }
-
   const handleCardDropdownChange = (cardSelection: string) => {
-    if (cardSelection === "all") {
-      updateFilter('selectedCard', 'all')
-    } else {
-      // Extract the last 5 digits from the card display format
-      const match = cardSelection.match(/\((\d{5})\)$/)
-      if (match) {
-        updateFilter('selectedCard', match[1])
-      }
-    }
+    updateFilter('selectedCard', cardSelection)
   }
 
   return (
@@ -102,7 +78,7 @@ const Employee = () => {
                     {hasCardFilter && (
                       <div className="mt-2">
                         <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                          Filtered by: {getFilterDisplayText()}
+                          Filtered by: {filters.selectedCard}
                           <button 
                             onClick={handleClearCardFilter}
                             className="hover:bg-gray-200 rounded p-0.5"

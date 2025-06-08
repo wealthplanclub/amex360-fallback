@@ -19,30 +19,32 @@ interface EmployeeCardListProps {
 }
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions }: EmployeeCardListProps) {
-  // Calculate card totals by last 5 digits
+  // Calculate card totals by card type
   const cardData = React.useMemo(() => {
     const cardTotals = transactions.reduce((acc, transaction) => {
-      const lastFive = transaction.last_five
-      if (!acc[lastFive]) {
-        acc[lastFive] = {
+      const cardType = transaction.card_type
+      if (!acc[cardType]) {
+        acc[cardType] = {
           amount: 0,
-          cardType: transaction.card_type,
-          count: 0
+          count: 0,
+          uniqueCards: new Set<string>()
         }
       }
-      acc[lastFive].amount += transaction.amount
-      acc[lastFive].count += 1
+      acc[cardType].amount += transaction.amount
+      acc[cardType].count += 1
+      acc[cardType].uniqueCards.add(transaction.last_five)
       return acc
-    }, {} as Record<string, { amount: number, cardType: string, count: number }>)
+    }, {} as Record<string, { amount: number, count: number, uniqueCards: Set<string> }>)
 
     return Object.entries(cardTotals)
-      .map(([lastFive, data]) => ({
-        name: lastFive,
-        fullName: lastFive,
+      .map(([cardType, data]) => ({
+        name: cardType,
+        fullName: cardType,
         amount: data.amount,
-        cardType: data.cardType,
+        cardType: cardType,
         count: data.count,
-        displayName: `${data.cardType}\n(${lastFive})`
+        uniqueCardCount: data.uniqueCards.size,
+        displayName: cardType
       }))
       .sort((a, b) => b.amount - a.amount)
   }, [transactions])
@@ -91,7 +93,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions }: Em
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
         <CardDescription>
-          Employee spending by card (last 5 digits)
+          Employee spending by card type
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
@@ -117,14 +119,14 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions }: Em
                         alt="Card placeholder" 
                         className="w-16 h-10 object-cover rounded"
                       />
-                      <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                      <div className="text-sm font-medium leading-tight">
                         {card.displayName}
                       </div>
                     </div>
                     <div className="flex items-center justify-end sm:justify-end">
                       <div className="text-right">
                         <p className="text-xs text-muted-foreground">
-                          Total spending ({card.count} transactions)
+                          Total spending ({card.count} transactions, {card.uniqueCardCount} cards)
                         </p>
                         <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
                           ${card.amount.toLocaleString()}
