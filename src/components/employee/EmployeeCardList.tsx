@@ -1,4 +1,5 @@
 
+
 import {
   Card,
   CardContent,
@@ -112,15 +113,17 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
               return (
                 <Card 
                   key={card.cardKey}
-                  className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in"
+                  className="bg-gradient-to-b from-white to-gray-50 transition-all hover:shadow-md animate-fade-in"
                   style={{
                     animationDelay: `${index * 100}ms`,
                     animationFillMode: 'both'
                   }}
-                  onClick={() => handleCardClick(card)}
                 >
                   <CardContent className="p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div 
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 cursor-pointer"
+                      onClick={() => handleCardClick(card)}
+                    >
                       <div className="flex items-center gap-4 flex-1">
                         <img 
                           src={EMPLOYEE_CARD_IMAGE} 
@@ -163,3 +166,4 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     </Card>
   )
 }
+
