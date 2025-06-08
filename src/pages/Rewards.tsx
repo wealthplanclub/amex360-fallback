@@ -1,4 +1,3 @@
-
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -21,18 +20,16 @@ const Rewards = () => {
     // Load the waiting-finger-tapping animation
     fetch("/waiting-finger-tapping.json")
       .then(response => response.json())
-      .then(data => {
-        setAnimationData(data);
-        // Start showing content immediately after animation loads
-        setIsLoading(false);
-        setIsVisible(true);
-      })
-      .catch(error => {
-        console.error("Failed to load animation:", error);
-        // Show content even if animation fails to load
-        setIsLoading(false);
-        setIsVisible(true);
-      });
+      .then(data => setAnimationData(data))
+      .catch(error => console.error("Failed to load animation:", error));
+
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setIsVisible(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   React.useEffect(() => {
