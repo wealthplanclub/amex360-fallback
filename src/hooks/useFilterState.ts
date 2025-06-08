@@ -10,6 +10,8 @@ export interface FilterState {
   creditFilter?: boolean
   topCardFilter?: string
   lowestCardFilter?: string
+  selectedCardType?: string
+  selectedLastFive?: string
 }
 
 export function useFilterState(initialTimeRange: string = "ytd") {

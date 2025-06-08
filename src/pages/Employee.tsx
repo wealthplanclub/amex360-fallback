@@ -13,7 +13,7 @@ import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { X } from "lucide-react"
 
 const Employee = () => {
-  const { filters, updateFilter } = useFilterState()
+  const { filters, updateFilter, updateMultipleFilters } = useFilterState()
   
   // Parse the static employee data into proper format
   const employeeTransactions = parseEmployeeData(staticEmpData)
@@ -27,28 +27,80 @@ const Employee = () => {
     return Array.from(cardTypes).sort()
   }, [employeeTransactions])
 
-  // Filter transactions based on selected card type
+  // Filter transactions based on selected card type and last five
   const filteredTransactions = React.useMemo(() => {
-    if (!filters.selectedCard || filters.selectedCard === "all") {
-      return employeeTransactions
+    let filtered = employeeTransactions
+
+    // Filter by card type if selected
+    if (filters.selectedCardType && filters.selectedCardType !== "all") {
+      filtered = filtered.filter(transaction => transaction.card_type === filters.selectedCardType)
     }
-    
-    return employeeTransactions.filter(transaction => transaction.card_type === filters.selectedCard)
-  }, [employeeTransactions, filters.selectedCard])
 
-  const hasCardFilter = filters.selectedCard && filters.selectedCard !== "all"
+    // Filter by last five if selected
+    if (filters.selectedLastFive && filters.selectedLastFive !== "all") {
+      filtered = filtered.filter(transaction => transaction.last_five === filters.selectedLastFive)
+    }
 
-  const handleClearCardFilter = () => {
-    updateFilter('selectedCard', 'all')
+    return filtered
+  }, [employeeTransactions, filters.selectedCardType, filters.selectedLastFive])
+
+  const hasCardTypeFilter = filters.selectedCardType && filters.selectedCardType !== "all"
+  const hasLastFiveFilter = filters.selectedLastFive && filters.selectedLastFive !== "all"
+  const hasAnyFilter = hasCardTypeFilter || hasLastFiveFilter
+
+  const handleClearAllFilters = () => {
+    updateMultipleFilters({
+      selectedCardType: 'all',
+      selectedLastFive: 'all',
+      selectedCard: 'all'
+    })
+  }
+
+  const handleClearCardTypeFilter = () => {
+    updateMultipleFilters({
+      selectedCardType: 'all',
+      selectedCard: 'all'
+    })
+  }
+
+  const handleClearLastFiveFilter = () => {
+    updateMultipleFilters({
+      selectedLastFive: 'all',
+      selectedCard: 'all'
+    })
   }
 
   const getFilterDisplayText = () => {
-    if (!hasCardFilter) return ""
-    return filters.selectedCard
+    const parts = []
+    if (hasCardTypeFilter) {
+      parts.push(filters.selectedCardType)
+    }
+    if (hasLastFiveFilter) {
+      parts.push(filters.selectedLastFive)
+    }
+    return parts.join(', ')
   }
 
   const handleCardDropdownChange = (cardSelection: string) => {
-    updateFilter('selectedCard', cardSelection)
+    updateMultipleFilters({
+      selectedCardType: cardSelection,
+      selectedCard: cardSelection,
+      selectedLastFive: 'all' // Clear last five when changing card type
+    })
+  }
+
+  const handleCardClick = (lastFive: string) => {
+    if (lastFive === 'all') {
+      updateMultipleFilters({
+        selectedLastFive: 'all',
+        selectedCard: filters.selectedCardType || 'all'
+      })
+    } else {
+      updateMultipleFilters({
+        selectedLastFive: lastFive,
+        selectedCard: lastFive
+      })
+    }
   }
 
   return (
@@ -75,19 +127,19 @@ const Employee = () => {
                 <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
                   <div className="p-6 pb-2">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
-                    {!hasCardFilter && (
+                    {!hasAnyFilter && (
                       <p className="text-sm text-muted-foreground mt-1">
                         View and manage employee card transactions
                       </p>
                     )}
-                    {hasCardFilter && (
+                    {hasAnyFilter && (
                       <div className="mt-2">
                         <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
                           Filtered by: {getFilterDisplayText()}
                           <button 
-                            onClick={handleClearCardFilter}
+                            onClick={handleClearAllFilters}
                             className="hover:bg-gray-200 rounded p-0.5"
-                            title="Clear filter"
+                            title="Clear all filters"
                           >
                             <X className="h-3 w-3" />
                           </button>
@@ -104,7 +156,7 @@ const Employee = () => {
                         className="max-w-sm"
                       />
                       <CardFilterDropdown
-                        selectedCard={filters.selectedCard}
+                        selectedCard={filters.selectedCardType}
                         creditCards={uniqueCardTypes}
                         onCardChange={handleCardDropdownChange}
                       />
@@ -124,10 +176,10 @@ const Employee = () => {
               {/* Card List */}
               <div className="lg:col-span-1">
                 <EmployeeCardList 
-                  selectedCard={filters.selectedCard}
-                  onCardClick={(card) => updateFilter('selectedCard', card)}
+                  selectedCard={filters.selectedLastFive}
+                  onCardClick={handleCardClick}
                   transactions={employeeTransactions}
-                  selectedCardType={filters.selectedCard}
+                  selectedCardType={filters.selectedCardType}
                 />
               </div>
             </div>
