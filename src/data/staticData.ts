@@ -1,5 +1,17 @@
 
 export const staticTxnData = `Date	Description	Amount	Account	Category
+2025-06-07	Twilio Inc San Francisco CA	-$592.85	Blue Business Plus Card (-1000)	
+2025-06-07	Twilio Inc San Francisco CA	-$270.69	Blue Business Plus Card (-1000)	
+2025-06-07	Twilio Inc San Francisco CA	-$590.83	Blue Business Plus Card (-1000)	
+2025-06-07	Lovable Dover De	-$148.80	Blue Business Plus Card (-1009)	
+2025-06-07	Twilio Inc San Francisco CA	-$193.06	Business Gold Card (-1002)	
+2025-06-06	Twilio Inc San Francisco CA	-$197.22	Blue Business Plus Card (-1000)	
+2025-06-06	Twilio Inc San Francisco CA	-$191.20	Blue Business Plus Card (-1000)	
+2025-06-06	Kje Computer Solutiominneapolis MN	-$33.99	Blue Business Plus Card (-1009)	
+2025-06-06	Twilio Inc San Francisco CA	-$590.25	Business Gold Card (-1002)	
+2025-06-06	Twilio Inc San Francisco CA	-$20.43	Business Gold Card (-1002)	
+2025-06-06	Twilio Inc San Francisco CA	-$20.31	Business Gold Card (-1002)	
+2025-06-06	Twilio Inc San Francisco CA	-$214.64	Business Gold Card (-1002)	
 2025-06-05	Abc*x959-crunch Fitnbrooklyn NY	-$87.67	Business Platinum Card (-2007)	
 2025-06-05	Zapier.com/charge San Francisco CA	-$29.99	Business Gold Card (-1000)	
 2025-06-05	Twilio Inc San Francisco CA	-$400.00	Blue Business Plus Card (-1009)	SuperPhone
