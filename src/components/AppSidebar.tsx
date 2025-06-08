@@ -1,6 +1,6 @@
 
 import React from "react"
-import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw } from "lucide-react"
+import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw, Check } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "@/components/ui/sonner"
 import {
@@ -52,10 +52,11 @@ export function AppSidebar() {
     // Simulate data refresh
     console.log("Refreshing static data...")
     
-    // Show success toast
+    // Show success toast with blue check icon
     toast.success("Dashboard refreshed", {
       description: "Latest transaction data has been loaded",
-      position: "top-right"
+      position: "top-right",
+      icon: <Check style={{ color: '#006fcf' }} />
     })
     
     close()
