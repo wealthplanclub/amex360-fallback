@@ -37,19 +37,34 @@ export function EmployeeTransactionSection({
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
         <div className="p-6 pb-2">
-          {/* 2-column header layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end mb-4">
-            {/* Left column - Title, description, filter indicator, and search */}
-            <div>
+          {/* Header with card image in top right */}
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex-1">
               <h2 className="text-xl font-semibold">Employee Transactions</h2>
               {!hasAnyFilter && (
                 <p className="text-sm text-muted-foreground mt-1">
                   View and manage employee card transactions
                 </p>
               )}
-              
+            </div>
+            
+            {showCardImage && (
+              <div className="ml-4">
+                <img 
+                  src={getCardImage(selectedCardType)} 
+                  alt={`${selectedCardType} card`}
+                  className="w-16 h-10 object-cover rounded shadow-sm"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Filter indicator and controls */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end mb-4">
+            {/* Left column - filter indicator and search */}
+            <div>
               {hasAnyFilter && (
-                <div className="mt-2">
+                <div className="mb-4">
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
                     Filtered by: {getFilterDisplayText()}
                     <button 
@@ -63,7 +78,7 @@ export function EmployeeTransactionSection({
                 </div>
               )}
               
-              <div className="mt-4">
+              <div>
                 <Input
                   placeholder="Search descriptions..."
                   value={globalFilter ?? ""}
@@ -73,24 +88,13 @@ export function EmployeeTransactionSection({
               </div>
             </div>
 
-            {/* Right column - Card image and dropdown */}
-            <div className="flex flex-col items-end gap-3">
-              {showCardImage && (
-                <div className="flex justify-end">
-                  <img 
-                    src={getCardImage(selectedCardType)} 
-                    alt={`${selectedCardType} card`}
-                    className="w-16 h-10 object-cover rounded shadow-sm"
-                  />
-                </div>
-              )}
-              <div className="flex justify-end">
-                <CardFilterDropdown
-                  selectedCard={getCardDropdownDisplayText()}
-                  creditCards={uniqueCardTypes}
-                  onCardChange={handleCardDropdownChange}
-                />
-              </div>
+            {/* Right column - dropdown */}
+            <div className="flex justify-end">
+              <CardFilterDropdown
+                selectedCard={getCardDropdownDisplayText()}
+                creditCards={uniqueCardTypes}
+                onCardChange={handleCardDropdownChange}
+              />
             </div>
           </div>
         </div>
