@@ -64,21 +64,29 @@ export function useEmployeeFilters(employeeTransactions: EmployeeTransaction[]) 
     }
   }
 
-  const handleCardClick = (lastFive: string) => {
-    if (isStateC && filters.selectedLastFive === lastFive) {
-      // Currently on State C with this card selected - go back to State B
+  const handleCardClick = (lastFive: string, cardType?: string) => {
+    console.log('Card clicked:', { lastFive, cardType, currentState: { isStateA, isStateB, isStateC }, currentFilters: filters })
+    
+    if (isStateC && filters.selectedLastFive === lastFive && filters.selectedCardType === cardType) {
+      // Currently on State C with this exact card selected - go back to State B
       updateMultipleFilters({
         selectedLastFive: 'all'
       })
     } else {
-      // Find the card type for this last five to ensure they match
-      const transaction = employeeTransactions.find(t => t.last_five === lastFive)
-      const cardType = transaction?.card_type
+      // We need the card type from the clicked card
+      // If not provided, find it from the transactions
+      let targetCardType = cardType
+      if (!targetCardType) {
+        const transaction = employeeTransactions.find(t => t.last_five === lastFive && t.card_type)
+        targetCardType = transaction?.card_type
+      }
       
-      if (cardType) {
+      console.log('Setting filters to:', { cardType: targetCardType, lastFive })
+      
+      if (targetCardType) {
         // Go to State C - show specific card (card type + last five)
         updateMultipleFilters({
-          selectedCardType: cardType,
+          selectedCardType: targetCardType,
           selectedLastFive: lastFive
         })
       }

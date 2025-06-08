@@ -5,7 +5,7 @@ import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 
 interface EmployeeCardSectionProps {
   selectedLastFive?: string
-  handleCardClick: (lastFive: string) => void
+  handleCardClick: (lastFive: string, cardType?: string) => void
   cardsToShow: EmployeeTransaction[]
   selectedCardType?: string
 }

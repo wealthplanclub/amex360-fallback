@@ -74,13 +74,16 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
   const handleCardClick = (card: any) => {
     if (!onCardClick) return
     
+    console.log('Card clicked in list:', { card, selectedCard, selectedCardType })
+    
     // Check if this specific card (type + last five combination) is selected
     const isSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
     
     if (isSelected) {
       onCardClick('all')
     } else {
-      onCardClick(card.lastFive)
+      // Pass both the lastFive and cardType to ensure correct filtering
+      onCardClick(card.lastFive, card.cardType)
     }
   }
 
