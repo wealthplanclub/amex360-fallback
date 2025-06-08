@@ -1,100 +1,100 @@
 
-export const staticSwapData = `date	award_code	card	reward_description	points	required_spend
-2025-06-05	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-27	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-23	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-22	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-19	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-19	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-18	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-12	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-12	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-09	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-05	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-05	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-01	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-05-01	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-02-15	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-02-01	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-02-01	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-01-21	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-01-20	K3L3:0005	Business Platinum Card (-2007)	Employee Card Spend	15000	4000
-2025-01-17	K7I6:0007	Business Platinum Card (-2007)	Referral	30000	
-2025-06-07	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-04-14	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-04-04	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-03-30	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-03-26	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-02-20	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-02-12	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-01-30	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-01-29	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-01-25	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-01-07	K3L3:0008	Business Gold Card (-1002)	Employee Card Spend	15000	4000
-2025-02-17	K84O:0006	Business Gold Card (-1002)	Referral	20000	
-2025-05-14	K4IY:0006	Business Gold Card (-1000)	Employee Card Spend	15000	4000
-2025-05-08	K4IY:0006	Business Gold Card (-1000)	Employee Card Spend	15000	4000
-2025-03-28	K4IY:0006	Business Gold Card (-1000)	Employee Card Spend	15000	4000
-2025-02-17	K4IY:0006	Business Gold Card (-1000)	Employee Card Spend	15000	4000
-2025-02-07	K4IY:0006	Business Gold Card (-1000)	Employee Card Spend	15000	4000
-2025-04-27	K84O:0006	Business Gold Card (-1000)	Referral	20000	
-2025-04-09	K84O:0006	Business Gold Card (-1000)	Referral	20000	
-2025-06-05	K4IY:0006	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-05-30	K4IY:0006	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-05-12	K4IY:0006	Blue Business Plus Card (-1009)	Employee Card Spend	15000	4000
-2025-04-24	K4IY:0006	Blue Business Plus Card (-1009)	Employee Card Spend	15000	4000
-2025-04-23	K4IY:0006	Blue Business Plus Card (-1009)	Employee Card Spend	15000	4000
-2025-03-23	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-03-19	K6CD:0001	Blue Business Plus Card (-1009)	Welcome Bonus	15000	3000
-2025-02-11	K4IY:0006	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-01-24	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-01-16	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-01-13	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-01-11	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-01-04	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-01-02	K3L7:0008	Blue Business Plus Card (-1000)	Employee Card Spend	15000	4000
-2025-05-18	K44D:0015	Blue Business Plus Card (-1009)	Referral	20000	
-2025-04-23	K44D:0004	Blue Business Plus Card (-1000)	Referral	10000	
-2025-01-24	K44D:0004	Blue Business Plus Card (-1000)	Referral	10000	
-2025-01-19	K44D:0004	Blue Business Plus Card (-1000)	Referral	10000	
-2025-01-07	K44D:0004	Blue Business Plus Card (-1000)	Referral	10000	
-2025-01-05	K44D:0004	Blue Business Plus Card (-1000)	Referral	10000	
-2025-04-27	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-27	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-27	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-21	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-14	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-12	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-10	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-04	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-04-03	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-31	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-28	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-27	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-26	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-23	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-19	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-18	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-16	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-16	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-15	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-15	K4IY:0006	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-03-09	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-02-17	K4IY:0006	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-02-11	K4IY:0006	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-02-11	K4IY:0006	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-02-08	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-02-08	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-02-03	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-01-27	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-01-25	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-01-15	K3L3:0008	Business Gold Card (-2008)	Employee Card Spend	15000	4000
-2025-05-23	K84O:0006	Business Gold Card (-2008)	Referral	20000	
-2025-05-22	K84O:0006	Business Gold Card (-2008)	Referral	20000	
-2025-02-21	K84O:0006	Business Gold Card (-2008)	Referral	20000	
-2025-02-16	K84O:0006	Business Gold Card (-2008)	Referral	20000	
-2025-02-08	K84O:0006	Business Gold Card (-2008)	Referral	20000	
-2025-05-27	K3L3:0008	Business Green Rewards Card (-2007)	Employee Card Spend	15000	4000
-2025-05-05	K3L3:0008	Business Green Rewards Card (-2007)	Employee Card Spend	15000	4000
-2025-05-05	K3L3:0008	Business Green Rewards Card (-2007)	Employee Card Spend	15000	4000
-2025-03-23	K3L3:0008	Business Green Rewards Card (-2007)	Employee Card Spend	15000	4000`;
+export const staticSwapData = `id	date	counterparty	amount	direction	multiple	card
+1	2024-12-07 05:00:00+00	Lee Williams	8000	SWAP_IN		
+2	2024-12-07 05:00:00+00	Lee Williams	4000	SWAP_OUT	1	Platinum
+3	2024-12-07 05:00:00+00	Lee Williams	5000	SWAP_OUT	1.5	Platinum
+4	2024-12-09 05:00:00+00	Rob Berberian	1500	SWAP_OUT	1	Gold
+5	2024-12-10 05:00:00+00	Lee Williams	1000	SWAP_IN		
+6	2024-12-12 05:00:00+00	Xavier Keyz	3300	SWAP_OUT	1	Blue Plus
+7	2024-12-17 05:00:00+00	Lee Williams	4000	SWAP_IN		
+8	2024-12-17 05:00:00+00	Lee Williams	4000	SWAP_OUT	1	Blue Plus
+9	2024-12-19 05:00:00+00	Xavier Keyz	3300	SWAP_IN		
+10	2024-12-24 05:00:00+00	Rob Berberian	1500	SWAP_IN		
+11	2025-01-10 05:00:00+00	Dija Phaire	1800	SWAP_IN		
+12	2025-01-10 05:00:00+00	Xavier Keyz	500	SWAP_OUT	2	Blue Plus
+13	2025-01-10 05:00:00+00	Xavier Keyz	1000	SWAP_OUT	2	Blue Plus
+14	2025-01-10 05:00:00+00	Xavier Keyz	1800	SWAP_OUT	2	Blue Plus
+15	2025-01-10 05:00:00+00	Dija Phaire	2500	SWAP_OUT	2	Blue Plus
+16	2025-01-10 05:00:00+00	Theo Dawkins	3500	SWAP_OUT	2	Blue Plus
+17	2025-01-10 05:00:00+00	Theo Dawkins	4000	SWAP_OUT	2	Blue Plus
+18	2025-01-12 05:00:00+00	Nasar Onyeuku	5000	SWAP_IN		
+19	2025-01-13 05:00:00+00	Clement Leslie	1000	SWAP_IN		
+20	2025-01-14 05:00:00+00	Nolan Smith	4000	SWAP_IN		
+21	2025-01-16 05:00:00+00	Jackie Mitchell	19419.7	SWAP_IN		
+22	2025-01-17 05:00:00+00	Lee Williams	1000	SWAP_OUT	4	Gold
+23	2025-01-19 05:00:00+00	Raymond Hammond	4000	SWAP_IN		
+24	2025-01-19 05:00:00+00	Theo Dawkins	3500	SWAP_IN		
+25	2025-01-19 05:00:00+00	Theo Dawkins	3500	SWAP_IN		
+26	2025-01-20 05:00:00+00	Dija Phaire	700	SWAP_IN		
+27	2025-01-21 05:00:00+00	Nolan Smith	5000	SWAP_IN		
+28	2025-01-21 05:00:00+00	Clement Leslie	1000	SWAP_OUT	1	Gold
+29	2025-01-22 05:00:00+00	Lee Williams	500	SWAP_IN		
+30	2025-01-22 05:00:00+00	Raymond Hammond	12000	SWAP_IN		
+31	2025-01-23 05:00:00+00	Jackie Mitchell	19419.7	SWAP_OUT		
+32	2025-01-23 05:00:00+00	Nolan Smith	100	SWAP_OUT	1	Green
+33	2025-01-23 05:00:00+00	Nasar Onyeuku	3000	SWAP_OUT	1	Rose Gold
+34	2025-01-24 05:00:00+00	Lee Williams	500	SWAP_IN		
+35	2025-01-24 05:00:00+00	Xavier Keyz	3300	SWAP_IN		
+36	2025-01-24 05:00:00+00	Raymond Hammond	100	SWAP_OUT	1	Green
+37	2025-01-26 05:00:00+00	Eric Gonzalez	97	SWAP_IN		
+38	2025-01-26 05:00:00+00	Eric Gonzalez	97	SWAP_OUT	2	Blue Plus
+39	2025-01-26 05:00:00+00	Nasar Onyeuku	2000	SWAP_OUT	1	Gold
+40	2025-01-27 05:00:00+00	Raymond Hammond	500	SWAP_OUT	1	Gold
+41	2025-01-27 05:00:00+00	Nolan Smith	500	SWAP_OUT	1	Gold
+42	2025-01-27 05:00:00+00	Theo Dawkins	400	SWAP_OUT	2	Blue Plus
+43	2025-01-27 05:00:00+00	Theo Dawkins	4000	SWAP_OUT	4	Gold
+44	2025-01-28 05:00:00+00	Nathan McCartney	497	SWAP_IN		
+45	2025-01-28 05:00:00+00	Clement Leslie	997	SWAP_IN		
+46	2025-01-28 05:00:00+00	Nathan McCartney	5000	SWAP_IN		
+47	2025-01-28 05:00:00+00	Nathan McCartney	500	SWAP_OUT	2	Blue Plus
+48	2025-01-29 05:00:00+00	Nasar Onyeuku	5000	SWAP_IN		
+49	2025-01-29 05:00:00+00	Clement Leslie	997	SWAP_OUT	1.5	Platinum
+50	2025-01-29 05:00:00+00	Nasar Onyeuku	3000	SWAP_OUT	1.5	Platinum
+51	2025-01-29 05:00:00+00	Nolan Smith	1500	SWAP_OUT	1	Platinum
+52	2025-01-30 05:00:00+00	Daniel Stallworth	97	SWAP_IN		
+53	2025-01-30 05:00:00+00	Daniel Stallworth	97	SWAP_OUT	2	Blue Plus
+54	2025-01-30 05:00:00+00	Raymond Hammond	2500	SWAP_OUT	1.5	Platinum
+55	2025-01-31 05:00:00+00	Nathan McCartney	5000	SWAP_IN		
+56	2025-02-02 05:00:00+00	Raymond Hammond	900	SWAP_OUT	4	Gold
+59	2025-02-04 05:00:00+00	Nolan Smith	1000	SWAP_OUT	1.5	Platinum
+60	2025-02-04 05:00:00+00	Nathan McCartney	1500	SWAP_OUT	1.5	Platinum
+61	2025-02-04 05:00:00+00	Raymond Hammond	3500	SWAP_OUT	1	Green
+62	2025-02-05 05:00:00+00	Raymond Hammond	1500	SWAP_OUT	4	Gold
+63	2025-02-06 05:00:00+00	Theo Dawkins	4000	SWAP_IN		
+64	2025-02-06 05:00:00+00	Henry Quintana	997	SWAP_IN		
+65	2025-02-06 05:00:00+00	Henry Quintana	997	SWAP_OUT	2	Blue Plus
+66	2025-02-06 05:00:00+00	Raymond Hammond	4000	SWAP_OUT	4	Rose Gold
+67	2025-02-06 05:00:00+00	Nolan Smith	4000	SWAP_OUT	4	Rose Gold
+68	2025-02-07 05:00:00+00	Nahla Gad	97	SWAP_IN		
+69	2025-02-07 05:00:00+00	Nahla Gad	97	SWAP_OUT	2	Blue Plus
+70	2025-02-08 05:00:00+00	Nathan McCartney	2500	SWAP_OUT	4	Gold
+71	2025-02-11 05:00:00+00	Daniel Stallworth	997	SWAP_IN		
+72	2025-02-11 05:00:00+00	Daniel Stallworth	997	SWAP_OUT	1.5	Platinum
+73	2025-02-11 05:00:00+00	Dija Phaire	1500	SWAP_OUT	1	Gold
+74	2025-02-11 05:00:00+00	Dija Phaire	1503.89	SWAP_OUT	1	Green
+75	2025-02-14 05:00:00+00	Nolan Smith	1900	SWAP_OUT	4	Gold
+76	2025-02-14 05:00:00+00	Raymond Hammond	2100	SWAP_OUT	4	Gold
+77	2025-02-15 05:00:00+00	Xavier Keyz	2300	SWAP_OUT	2	Blue Plus
+78	2025-02-15 05:00:00+00	Raymond Hammond	1500	SWAP_IN		
+79	2025-02-19 05:00:00+00	Genaro Perez	497	SWAP_OUT	1.5	Platinum
+80	2025-02-19 05:00:00+00	Nathan McCartney	2500	SWAP_OUT	4	Gold
+81	2025-02-20 05:00:00+00	Genaro Perez	497	SWAP_IN		
+82	2025-02-23 17:00:00+00	Dija Phaire	1500	SWAP_IN		
+83	2025-02-25 19:59:02+00	Nathan McCartney	500	SWAP_OUT	4	Gold
+84	2025-02-25 19:59:31+00	Raymond Hammond	500	SWAP_OUT	4	Gold
+85	2025-02-25 20:14:44+00	Nasar Onyeuku	2000	SWAP_OUT	2	Blue Plus
+86	2025-02-26 11:43:23+00	Raymond Hammond	1600	SWAP_OUT	4	Gold
+87	2025-02-26 14:17:35+00	Xavier Keyz	2300	SWAP_IN		
+88	2025-02-27 13:34:01+00	Nathan McCartney	2500	SWAP_OUT	4	Gold
+89	2025-03-03 17:00:00+00	Nathan McCartney	497	SWAP_OUT	2	Blue Plus
+90	2025-03-06 23:18:13+00	Dija Phaire	1503.89	SWAP_IN		
+91	2025-03-08 13:13:24+00	Raymond Hammond	100	SWAP_OUT	4	Gold
+92	2025-03-08 13:13:56+00	Raymond Hammond	200	SWAP_OUT	4	Gold
+93	2025-02-27 17:00:00+00	Nolan Smith	5000	SWAP_IN		
+94	2025-03-19 23:25:02+00	Nolan Smith	1500	SWAP_OUT	4	Gold
+95	2025-03-22 16:00:00+00	Nolan Smith	5000	SWAP_IN		
+96	2025-03-28 16:00:00+00	Nolan Smith	1000	SWAP_OUT	4	Gold
+97	2025-04-02 18:12:02+00	Nolan Smith	4000	SWAP_OUT	4	Gold
+98	2025-04-12 18:15:51+00	Nolan Smith	100	SWAP_OUT	4	Gold
+99	2025-04-12 18:16:15+00	Nolan Smith	100	SWAP_OUT	4	Gold
+100	2025-04-14 13:09:03+00	Nolan Smith	3300	SWAP_OUT	4	Gold`;
