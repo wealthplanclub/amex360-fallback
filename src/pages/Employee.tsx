@@ -1,4 +1,5 @@
 
+
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -19,8 +20,8 @@ const Employee = () => {
   const [showContent, setShowContent] = React.useState(false)
 
   React.useEffect(() => {
-    // Load the loading-geo-c animation
-    fetch("/loading-geo-c.json")
+    // Load the loading-geo-a animation
+    fetch("/loading-geo-a.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error))

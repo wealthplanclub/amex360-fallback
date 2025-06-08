@@ -20,7 +20,7 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
   const [animationData, setAnimationData] = useState(null);
 
   useEffect(() => {
-    fetch("/loading-geo-a.json")
+    fetch("/loading-geo-c.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
