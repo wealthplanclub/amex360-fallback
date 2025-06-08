@@ -46,7 +46,7 @@ const cardDetails = {
       lastFive: "-4156",
       amount: "$2,000,000", 
       type: "installment",
-      image: getCardImage("business blueprint")
+      image: getCardImage("blueprint")
     },
     {
       name: "Business White Gold",
@@ -118,11 +118,11 @@ const metricsData = [
   },
   {
     title: "Available Line of Credit",
-    value: "$2,000,000",
+    value: "$2M",
     description: "Total available business line of credit",
     dataSource: "Underwriting System",
     lastUpdated: "Real-time",
-    calculationMethod: "Sum of (credit limit - current balance) for BLOC account",
+    calculationMethod: "Sum of (credit limit - current balance)",
     cardData: cardDetails.businessCreditLimit
   },
   {
