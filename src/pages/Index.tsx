@@ -1,22 +1,126 @@
-
-import React from "react";
-import { MainCards } from "@/components/MainCards";
-import { CardAccounts } from "@/components/CardAccounts";
-import { TransactionCard } from "@/components/TransactionCard";
-import { ChartAreaInteractive } from "@/components/chart-area-interactive";
-import { AppHeader } from "@/components/AppHeader";
-import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { AppSidebar } from "@/components/AppSidebar";
+import { AppHeader } from "@/components/AppHeader";
+import { MainCards } from "@/components/MainCards";
+import { TransactionCard } from "@/components/TransactionCard";
+import { CardAccounts } from "@/components/CardAccounts";
+import { ChartDisplay } from "@/components/chart/ChartDisplay";
 import { useFilterState } from "@/hooks/useFilterState";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const DashboardSkeleton = () => (
+  <div className="max-w-7xl mx-auto px-6 mb-8">
+    {/* Header Skeleton */}
+    <div className="flex justify-center items-center mb-8">
+      <Skeleton className="h-16 w-64" />
+    </div>
+    
+    {/* Stats Cards Skeleton */}
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="bg-white rounded-lg border p-6">
+          <div className="flex items-center justify-between space-y-0 pb-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-4" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-20" />
+            <Skeleton className="h-3 w-16" />
+          </div>
+          <div className="pt-4">
+            <Skeleton className="h-3 w-32" />
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    {/* Chart Skeleton */}
+    <div className="px-4 lg:px-6 mb-8">
+      <div className="bg-white rounded-lg border p-6">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <Skeleton className="h-6 w-48 mb-2" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+          <Skeleton className="h-10 w-32" />
+        </div>
+        <Skeleton className="h-64 w-full" />
+      </div>
+    </div>
+    
+    {/* Table and Cards Grid Skeleton */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
+      {/* Transaction Table Skeleton */}
+      <div className="lg:col-span-2">
+        <div className="bg-white rounded-lg border">
+          <div className="p-6">
+            <Skeleton className="h-6 w-48 mb-4" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-32 ml-auto" />
+            </div>
+            <div className="space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="flex items-center space-x-4 py-3">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-32 flex-1" />
+                  <Skeleton className="h-4 w-16" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Card Accounts Skeleton */}
+      <div className="lg:col-span-1">
+        <div className="bg-white rounded-lg border p-6">
+          <Skeleton className="h-6 w-32 mb-2" />
+          <Skeleton className="h-4 w-48 mb-4" />
+          <div className="space-y-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="flex items-center justify-between p-4 border rounded">
+                <div className="space-y-1">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+                <Skeleton className="h-6 w-16" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 const Index = () => {
-  const isMobile = useIsMobile();
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleCardAccountClick = (cardName: string) => {
-    console.log("Card account clicked:", cardName);
-    updateFilter('selectedCard', cardName);
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleStatCardClick = (cardType: string, topCardAccount?: string) => {
+    console.log("Stat card clicked:", cardType, topCardAccount);
+    
+    if (cardType === "expenses") {
+      updateFilter('expenseFilter', true);
+    } else if (cardType === "credits") {
+      updateFilter('creditFilter', true);
+    } else if (cardType === "top-card") {
+      updateFilter('topCardFilter', topCardAccount || '');
+    } else if (cardType === "lowest-card") {
+      updateFilter('lowestCardFilter', topCardAccount || '');
+    }
   };
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
@@ -24,61 +128,12 @@ const Index = () => {
     updateFilter('selectedCard', cardSelection);
   };
 
-  const handleStatCardClick = (cardType: string, topCardAccount?: string) => {
-    console.log("Stat card clicked:", cardType, topCardAccount);
-    
-    if (cardType === "expenses") {
-      // Clear any previous stat card filters and add expense filter
-      updateMultipleFilters({
-        expenseFilter: true,
-        creditFilter: undefined,
-        selectedCard: "all" // Reset card selection to show all cards for expenses
-      });
-    } else if (cardType === "credits") {
-      // Clear any previous stat card filters and add credit filter
-      updateMultipleFilters({
-        expenseFilter: undefined,
-        creditFilter: true,
-        selectedCard: "all" // Reset card selection to show all cards for credits
-      });
-    } else if (cardType === "top-card" && topCardAccount) {
-      // Set the card filter to the top card account and clear other stat filters
-      updateMultipleFilters({
-        expenseFilter: undefined,
-        creditFilter: undefined,
-        selectedCard: topCardAccount
-      });
-    } else if (cardType === "lowest-card" && topCardAccount) {
-      // Set the card filter to the lowest card account and clear other stat filters
-      updateMultipleFilters({
-        expenseFilter: undefined,
-        creditFilter: undefined,
-        selectedCard: topCardAccount
-      });
-    }
-
-    // Scroll to transaction card section
-    setTimeout(() => {
-      const transactionSection = document.getElementById('transaction-section');
-      if (transactionSection) {
-        transactionSection.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    }, 100); // Small delay to ensure state updates are processed
-  };
-
-  const handleClearStatCardFilter = () => {
-    updateMultipleFilters({
-      expenseFilter: undefined,
-      creditFilter: undefined,
-      selectedCard: "all"
-    });
+  const handleCardClick = (cardSelection: string) => {
+    console.log("Card clicked:", cardSelection);
+    updateFilter('selectedCard', cardSelection);
   };
 
   const handleDateClick = (date: string) => {
-    // When a specific date is selected, clear the time range filter
     updateMultipleFilters({
       selectedDate: date,
       selectedTimeRange: undefined
@@ -86,31 +141,49 @@ const Index = () => {
   };
 
   const clearDateFilter = () => {
-    // When clearing date filter, restore default time range
     updateMultipleFilters({
       selectedDate: undefined,
       selectedTimeRange: 'ytd'
     });
   };
 
+  const clearTimeRangeFilter = () => {
+    updateFilter('selectedTimeRange', 'ytd');
+  };
+
+  const clearStatCardFilter = () => {
+    updateMultipleFilters({
+      expenseFilter: false,
+      creditFilter: false,
+      topCardFilter: '',
+      lowestCardFilter: ''
+    });
+  };
+
   const handleTimeRangeChange = (timeRange: string) => {
-    console.log("Time range change requested:", timeRange, "isMobile:", isMobile);
-    // When a time range is selected, clear the specific date filter
     updateMultipleFilters({
       selectedTimeRange: timeRange,
       selectedDate: undefined
     });
   };
 
-  const clearTimeRangeFilter = () => {
-    console.log("Clearing time range filter, isMobile:", isMobile);
-    updateFilter('selectedTimeRange', 'ytd');
-  };
-
-  // Add effect to log time range changes
-  React.useEffect(() => {
-    console.log("selectedTimeRange state changed to:", filters.selectedTimeRange, "isMobile:", isMobile);
-  }, [filters.selectedTimeRange, isMobile]);
+  if (isLoading) {
+    return (
+      <SidebarProvider>
+        <div 
+          className="min-h-screen w-full"
+          style={{
+            backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+            backgroundRepeat: 'repeat'
+          }}
+        >
+          <AppSidebar />
+          <AppHeader />
+          <DashboardSkeleton />
+        </div>
+      </SidebarProvider>
+    );
+  }
 
   return (
     <SidebarProvider>
@@ -123,7 +196,6 @@ const Index = () => {
       >
         <AppSidebar />
         
-        {/* Header with Reset and Logout buttons */}
         <AppHeader />
         
         <div className="max-w-7xl mx-auto px-6 mb-8">
@@ -140,41 +212,39 @@ const Index = () => {
           {/* Main Cards */}
           <div className="mt-8">
             <MainCards 
-              selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
+              selectedTimeRange={filters.selectedTimeRange}
               onStatCardClick={handleStatCardClick}
             />
           </div>
-
-          {/* Daily Spending Chart */}
+          
+          {/* Chart - Full Width Row */}
           <div className="mt-8 px-4 lg:px-6">
-            <ChartAreaInteractive 
-              onDateClick={handleDateClick} 
-              selectedTimeRange={filters.selectedTimeRange || 'ytd'}
+            <ChartDisplay
+              selectedTimeRange={filters.selectedTimeRange}
               onTimeRangeChange={handleTimeRangeChange}
+              onDateClick={handleDateClick}
             />
           </div>
-
-          {/* Transaction Card and Card Spend Grid */}
-          <div id="transaction-section" className="mt-8 px-4 lg:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <TransactionCard 
-                  filters={filters}
-                  onClearDateFilter={clearDateFilter}
-                  onClearTimeRangeFilter={clearTimeRangeFilter}
-                  onDropdownChange={handleTransactionDropdownChange}
-                  onClearStatCardFilter={handleClearStatCardFilter}
-                  onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                />
-              </div>
-              <div className="lg:col-span-1">
-                <CardAccounts 
-                  onCardClick={handleCardAccountClick} 
-                  selectedTimeRange={filters.selectedTimeRange || 'ytd'}
-                  transactionDropdownSelection={filters.selectedCard}
-                  filters={filters}
-                />
-              </div>
+          
+          {/* Table and Cards Grid */}
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
+            <div className="lg:col-span-2">
+              <TransactionCard 
+                filters={filters}
+                onClearDateFilter={clearDateFilter}
+                onClearTimeRangeFilter={clearTimeRangeFilter}
+                onDropdownChange={handleTransactionDropdownChange}
+                onClearStatCardFilter={clearStatCardFilter}
+                onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+              />
+            </div>
+            <div className="lg:col-span-1">
+              <CardAccounts 
+                filters={filters} 
+                onCardClick={handleCardClick}
+                selectedTimeRange={filters.selectedTimeRange}
+                transactionDropdownSelection={filters.selectedCard}
+              />
             </div>
           </div>
         </div>
