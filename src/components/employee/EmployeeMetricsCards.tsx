@@ -1,7 +1,5 @@
-
-
 import React from "react"
-import { Banknote, Star, TrendingUp, CreditCard } from "lucide-react"
+import { TrendingUp, Star, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 
@@ -50,7 +48,7 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
       title: "Total Spend",
       value: metrics.totalSpend,
       badge: "100%",
-      icon: Banknote,
+      icon: TrendingUp,
       footer: "Employee spending",
       description: "Total amount spent",
       formatAsPoints: false
