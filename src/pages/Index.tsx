@@ -174,17 +174,17 @@ const Index = () => {
             />
           </div>
           
+          {/* Quick Metrics Cards */}
+          <div className="mt-8">
+            <QuickMetricsCards />
+          </div>
+
           {/* Main Cards */}
           <div className="mt-8">
             <MainCards 
               selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
               onStatCardClick={handleStatCardClick}
             />
-          </div>
-
-          {/* Quick Metrics Cards */}
-          <div className="mt-8">
-            <QuickMetricsCards />
           </div>
 
           {/* Daily Spending Chart */}
