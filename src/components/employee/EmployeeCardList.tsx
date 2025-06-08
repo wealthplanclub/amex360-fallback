@@ -102,7 +102,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
             {filteredCardData.map((card, index) => (
               <Card 
                 key={card.fullName}
-                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in ${
+                className={`bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in focus:outline-none focus:ring-0 ${
                   getSelectedCard(card) ? 'ring-2 ring-blue-500' : ''
                 }`}
                 style={{
