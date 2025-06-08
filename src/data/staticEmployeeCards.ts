@@ -1,4 +1,3 @@
-
 // Static data file containing all employee cards with their boost status
 // This determines which cards have received the 15,000 point bonus
 
@@ -34,17 +33,17 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Blue Plus II--11058", cardType: "Blue Plus II", lastFive: "-11058", hasBonus: false },
   
   // Classic Gold cards - sorted by last five digits in ascending order
-  { cardKey: "Classic Gold--71051", cardType: "Classic Gold", lastFive: "-71051", hasBonus: false },
+  { cardKey: "Classic Gold--71051", cardType: "Classic Gold", lastFive: "-71051", hasBonus: true },
   { cardKey: "Classic Gold--72067", cardType: "Classic Gold", lastFive: "-72067", hasBonus: true },
-  { cardKey: "Classic Gold--72075", cardType: "Classic Gold", lastFive: "-72075", hasBonus: false },
-  { cardKey: "Classic Gold--72083", cardType: "Classic Gold", lastFive: "-72083", hasBonus: false },
-  { cardKey: "Classic Gold--72091", cardType: "Classic Gold", lastFive: "-72091", hasBonus: false },
-  { cardKey: "Classic Gold--72109", cardType: "Classic Gold", lastFive: "-72109", hasBonus: false },
-  { cardKey: "Classic Gold--72117", cardType: "Classic Gold", lastFive: "-72117", hasBonus: false },
-  { cardKey: "Classic Gold--72125", cardType: "Classic Gold", lastFive: "-72125", hasBonus: false },
-  { cardKey: "Classic Gold--72133", cardType: "Classic Gold", lastFive: "-72133", hasBonus: false },
-  { cardKey: "Classic Gold--72141", cardType: "Classic Gold", lastFive: "-72141", hasBonus: false },
-  { cardKey: "Classic Gold--72158", cardType: "Classic Gold", lastFive: "-72158", hasBonus: false },
+  { cardKey: "Classic Gold--72075", cardType: "Classic Gold", lastFive: "-72075", hasBonus: true },
+  { cardKey: "Classic Gold--72083", cardType: "Classic Gold", lastFive: "-72083", hasBonus: true },
+  { cardKey: "Classic Gold--72091", cardType: "Classic Gold", lastFive: "-72091", hasBonus: true },
+  { cardKey: "Classic Gold--72109", cardType: "Classic Gold", lastFive: "-72109", hasBonus: true },
+  { cardKey: "Classic Gold--72117", cardType: "Classic Gold", lastFive: "-72117", hasBonus: true },
+  { cardKey: "Classic Gold--72125", cardType: "Classic Gold", lastFive: "-72125", hasBonus: true },
+  { cardKey: "Classic Gold--72133", cardType: "Classic Gold", lastFive: "-72133", hasBonus: true },
+  { cardKey: "Classic Gold--72141", cardType: "Classic Gold", lastFive: "-72141", hasBonus: true },
+  { cardKey: "Classic Gold--72158", cardType: "Classic Gold", lastFive: "-72158", hasBonus: true },
 
   // Green cards - sorted by last five digits in ascending order
   { cardKey: "Green--81017", cardType: "Green", lastFive: "-81017", hasBonus: true },
