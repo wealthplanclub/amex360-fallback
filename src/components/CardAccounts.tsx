@@ -37,20 +37,36 @@ export function CardAccounts({
     
     const filteredTransactions = transactionFilterService.getFilteredTransactions(cardFilters);
     
-    // Calculate card expenses from filtered transactions
-    const cardExpenses = filteredTransactions
-      .filter(transaction => transaction.amount < 0)
-      .reduce((acc, transaction) => {
-        const account = transaction.account;
+    // Calculate card amounts based on active filters
+    const cardAmounts = filteredTransactions.reduce((acc, transaction) => {
+      const account = transaction.account;
+      
+      // Include transaction based on active filters
+      let shouldInclude = false;
+      
+      if (filters.expenseFilter && transaction.amount < 0) {
+        // Include expenses when expense filter is active
+        shouldInclude = true;
+      } else if (filters.creditFilter && transaction.amount > 0) {
+        // Include credits when credit filter is active
+        shouldInclude = true;
+      } else if (!filters.expenseFilter && !filters.creditFilter && transaction.amount < 0) {
+        // Default behavior: show expenses when no specific filter is active
+        shouldInclude = true;
+      }
+      
+      if (shouldInclude) {
         if (!acc[account]) {
           acc[account] = 0;
         }
         acc[account] += Math.abs(transaction.amount);
-        return acc;
-      }, {} as Record<string, number>);
+      }
+      
+      return acc;
+    }, {} as Record<string, number>);
 
     // Process card data using default logic for all cards
-    const cardData = Object.entries(cardExpenses)
+    const cardData = Object.entries(cardAmounts)
       .map(([account, amount]: [string, number]) => {
         let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
         if (account.toLowerCase().includes('amazon business prime')) {
@@ -110,6 +126,14 @@ export function CardAccounts({
     return getTimeRangeDescription(selectedTimeRange);
   };
 
+  // Get appropriate title based on active filters
+  const getCardTitle = () => {
+    if (filters.creditFilter) {
+      return "Total credits by card";
+    }
+    return "Total spending by card";
+  };
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
@@ -118,7 +142,7 @@ export function CardAccounts({
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Card accounts</CardTitle>
         <CardDescription>
-          Total spending by card {getFilterDescription()}
+          {getCardTitle()} {getFilterDescription()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
