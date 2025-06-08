@@ -80,7 +80,7 @@ export function EmployeeTransactionSection({
                   <img 
                     src={getCardImage(selectedCardType)} 
                     alt={`${selectedCardType} card`}
-                    className="w-24 h-15 object-cover rounded shadow-sm"
+                    className="w-16 h-10 object-cover rounded shadow-sm"
                   />
                 </div>
               )}
