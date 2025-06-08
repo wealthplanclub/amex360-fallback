@@ -53,8 +53,8 @@ export function AppSidebar() {
     console.log("Refreshing static data...")
     
     // Show success toast
-    toast.success("Data refreshed successfully!", {
-      description: "Latest static data has been loaded",
+    toast.success("Dashboard refreshed", {
+      description: "Latest transaction data has been loaded",
       position: "top-right"
     })
     
