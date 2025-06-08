@@ -102,7 +102,7 @@ const metricsData = [
   },
   {
     title: "Available Line of Credit",
-    value: "$2,000,000",
+    value: "$2M",
     description: "Total available business line of credit",
     dataSource: "Underwriting System",
     lastUpdated: "Real-time",
