@@ -44,6 +44,11 @@ const Employee = () => {
     return filtered
   }, [employeeTransactions, filters.selectedCardType, filters.selectedLastFive])
 
+  // Determine current filter layer and states
+  const isLayer1 = (!filters.selectedCardType || filters.selectedCardType === "all") && (!filters.selectedLastFive || filters.selectedLastFive === "all")
+  const isLayer2 = (filters.selectedCardType && filters.selectedCardType !== "all") && (!filters.selectedLastFive || filters.selectedLastFive === "all")
+  const isLayer3 = (filters.selectedCardType && filters.selectedCardType !== "all") && (filters.selectedLastFive && filters.selectedLastFive !== "all")
+
   const hasCardTypeFilter = filters.selectedCardType && filters.selectedCardType !== "all"
   const hasLastFiveFilter = filters.selectedLastFive && filters.selectedLastFive !== "all"
   const hasAnyFilter = hasCardTypeFilter || hasLastFiveFilter
@@ -92,15 +97,26 @@ const Employee = () => {
   }
 
   const handleCardDropdownChange = (cardSelection: string) => {
-    updateMultipleFilters({
-      selectedCardType: cardSelection,
-      selectedCard: cardSelection,
-      selectedLastFive: 'all' // Clear last five when changing card type
-    })
+    if (cardSelection === "all") {
+      // Go to Layer 1 - show all cards
+      updateMultipleFilters({
+        selectedCardType: 'all',
+        selectedLastFive: 'all',
+        selectedCard: 'all'
+      })
+    } else {
+      // Go to Layer 2 - show card group
+      updateMultipleFilters({
+        selectedCardType: cardSelection,
+        selectedLastFive: 'all',
+        selectedCard: cardSelection
+      })
+    }
   }
 
   const handleCardClick = (lastFive: string) => {
     if (lastFive === 'all') {
+      // This shouldn't happen in the new logic, but handle it just in case
       updateMultipleFilters({
         selectedLastFive: 'all',
         selectedCard: filters.selectedCardType || 'all'
@@ -110,11 +126,36 @@ const Employee = () => {
       const transaction = employeeTransactions.find(t => t.last_five === lastFive)
       const cardType = transaction?.card_type
       
-      updateMultipleFilters({
-        selectedLastFive: lastFive,
-        selectedCardType: cardType || 'all',
-        selectedCard: lastFive
-      })
+      // Check current state to determine what layer to go to
+      if (isLayer3 && filters.selectedLastFive === lastFive) {
+        // Currently on Layer 3 with this card selected - go back to Layer 2
+        updateMultipleFilters({
+          selectedLastFive: 'all',
+          selectedCardType: cardType || 'all',
+          selectedCard: cardType || 'all'
+        })
+      } else {
+        // Go to Layer 3 - show individual card
+        updateMultipleFilters({
+          selectedLastFive: lastFive,
+          selectedCardType: cardType || 'all',
+          selectedCard: lastFive
+        })
+      }
+    }
+  }
+
+  // Calculate which cards to show in the list based on current layer
+  const getCardsToShow = () => {
+    if (isLayer1) {
+      // Layer 1: Show all cards
+      return employeeTransactions
+    } else if (isLayer2) {
+      // Layer 2: Show only cards of the selected type
+      return employeeTransactions.filter(t => t.card_type === filters.selectedCardType)
+    } else {
+      // Layer 3: Show only the selected card
+      return employeeTransactions.filter(t => t.last_five === filters.selectedLastFive)
     }
   }
 
@@ -193,7 +234,7 @@ const Employee = () => {
                 <EmployeeCardList 
                   selectedCard={filters.selectedLastFive}
                   onCardClick={handleCardClick}
-                  transactions={employeeTransactions}
+                  transactions={getCardsToShow()}
                   selectedCardType={filters.selectedCardType}
                 />
               </div>
