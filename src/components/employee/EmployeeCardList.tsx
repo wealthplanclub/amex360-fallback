@@ -106,9 +106,9 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       style={{ height: `${dynamicHeight}px` }}
     >
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
+        <CardTitle className="text-xl font-semibold">Card accounts</CardTitle>
         <CardDescription>
-          Employee spending by card (last 5 digits)
+          Spending by employee card
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
