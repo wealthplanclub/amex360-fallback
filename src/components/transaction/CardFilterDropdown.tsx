@@ -22,9 +22,11 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
     }
     // Check if it's a combined format like "Card Type (12345)"
     if (selectedCard.includes('(') && selectedCard.includes(')')) {
-      return selectedCard
+      const [cardType, lastFive] = selectedCard.split(' (')
+      return `Business ${cardType} (${lastFive}`
     }
-    return formatAccountName(selectedCard)
+    // For employee page, add Business prefix to card type
+    return `Business ${selectedCard}`
   }
 
   return (
@@ -49,7 +51,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
             checked={selectedCard === card}
             onCheckedChange={() => onCardChange(card)}
           >
-            {card}
+            Business {card}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

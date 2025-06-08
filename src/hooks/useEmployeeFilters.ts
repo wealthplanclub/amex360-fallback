@@ -113,9 +113,9 @@ export function useEmployeeFilters(employeeTransactions: EmployeeTransaction[]) 
     if (isStateA) {
       return ""
     } else if (isStateB) {
-      return filters.selectedCardType || ""
+      return `Business ${filters.selectedCardType}` || ""
     } else if (isStateC) {
-      return `${filters.selectedCardType}, ${filters.selectedLastFive}`
+      return `Business ${filters.selectedCardType}, ${filters.selectedLastFive}`
     }
     return ""
   }
