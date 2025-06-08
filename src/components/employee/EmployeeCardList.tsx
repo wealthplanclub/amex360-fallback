@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -134,13 +135,13 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       <CardHeader>
         <div>
           <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
-          <CardDescription>
+          <CardDescription className="mt-1">
             Employee spending by card (last 5 digits)
           </CardDescription>
         </div>
         
-        {/* Sort Controls on next row with more vertical space */}
-        <div className="flex items-center gap-2 mt-6">
+        {/* Sort Controls on next row with consistent spacing */}
+        <div className="flex items-center gap-2 mt-4">
           <Select value={sortBy} onValueChange={(value: SortBy) => setSortBy(value)}>
             <SelectTrigger className="w-24 h-8">
               <SelectValue />
