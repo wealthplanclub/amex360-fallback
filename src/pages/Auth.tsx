@@ -71,7 +71,7 @@ const Auth = () => {
           </form>
           <div className="mt-8 text-center">
             <p className="text-xs text-muted-foreground">
-              © {currentYear} Black Phoenix Enterprises LLC
+              © {currentYear} WealthPlan™ by Ryan Leslie
             </p>
           </div>
         </CardContent>
