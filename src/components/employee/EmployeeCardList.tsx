@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Switch } from "@/components/ui/switch"
+import { Input } from "@/components/ui/input"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
@@ -26,6 +27,7 @@ const EMPLOYEE_CARD_IMAGE = "https://icm.aexp-static.com/acquisition/card-art/NU
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
   const { toggleCardBonus, isCardBonusActive } = useEmployeeBonus()
+  const [lastFiveFilter, setLastFiveFilter] = React.useState("")
 
   // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
@@ -58,15 +60,24 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       .sort((a, b) => b.amount - a.amount)
   }, [transactions])
 
-  // Filter cards based on selected card type from dropdown
+  // Filter cards based on selected card type from dropdown and last 5 filter
   const filteredCardData = React.useMemo(() => {
-    if (!selectedCardType || selectedCardType === "all") {
-      return cardData
+    let filtered = cardData
+
+    // Filter by card type
+    if (selectedCardType && selectedCardType !== "all") {
+      filtered = filtered.filter(card => card.cardType === selectedCardType)
     }
     
-    // Show only cards that match the selected card type
-    return cardData.filter(card => card.cardType === selectedCardType)
-  }, [cardData, selectedCardType])
+    // Filter by last 5 digits
+    if (lastFiveFilter.trim()) {
+      filtered = filtered.filter(card => 
+        card.lastFive.toLowerCase().includes(lastFiveFilter.toLowerCase())
+      )
+    }
+
+    return filtered
+  }, [cardData, selectedCardType, lastFiveFilter])
 
   // Calculate dynamic height based on filtered card count
   const dynamicHeight = React.useMemo(() => {
@@ -112,6 +123,14 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
+        <div className="mb-4">
+          <Input
+            placeholder="Search last 5 digits"
+            value={lastFiveFilter}
+            onChange={(e) => setLastFiveFilter(e.target.value)}
+            className="w-full"
+          />
+        </div>
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4 pb-6">
             {filteredCardData.map((card, index) => {
