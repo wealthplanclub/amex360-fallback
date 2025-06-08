@@ -157,9 +157,6 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                             {card.count} transactions
                           </p>
                           <div className="flex items-center gap-2">
-                            <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
-                              ${card.amount.toFixed(2)}
-                            </div>
                             {isBonusActive && (
                               <img 
                                 src="https://i.imgur.com/dTz9vVm.png" 
@@ -167,6 +164,9 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                                 className="w-4 h-4"
                               />
                             )}
+                            <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
+                              ${card.amount.toFixed(2)}
+                            </div>
                           </div>
                         </div>
                       </div>
