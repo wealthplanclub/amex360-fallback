@@ -1,3 +1,4 @@
+
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -19,8 +20,8 @@ const Index = () => {
 
   // Always call useEffect hooks in the same order
   React.useEffect(() => {
-    // Load the cube-loader animation
-    fetch("/cube-loader.json")
+    // Load the loading-geo-a animation
+    fetch("/loading-geo-a.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));

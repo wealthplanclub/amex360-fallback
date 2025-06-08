@@ -1,3 +1,4 @@
+
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -18,8 +19,8 @@ const Rewards = () => {
   const [showContent, setShowContent] = React.useState(false);
 
   React.useEffect(() => {
-    // Load the waiting-finger-tapping animation
-    fetch("/waiting-finger-tapping.json")
+    // Load the loading-geo-b animation
+    fetch("/loading-geo-b.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));

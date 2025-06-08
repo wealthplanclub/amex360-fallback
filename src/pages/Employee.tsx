@@ -19,8 +19,8 @@ const Employee = () => {
   const [showContent, setShowContent] = React.useState(false)
 
   React.useEffect(() => {
-    // Load the cube-loader animation
-    fetch("/cube-loader.json")
+    // Load the loading-geo-c animation
+    fetch("/loading-geo-c.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error))
