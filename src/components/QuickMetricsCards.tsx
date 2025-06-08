@@ -93,7 +93,7 @@ const metricsData = [
   },
   {
     title: "Highest Credit Limit",
-    value: "$30k",
+    value: "$30K",
     description: "The highest credit limit among all active cards",
     dataSource: "Credit Management System",
     lastUpdated: "Updated daily",
@@ -102,7 +102,7 @@ const metricsData = [
   },
   {
     title: "Lowest Pay Over Time Limit",
-    value: "$2k",
+    value: "$2K",
     description: "The lowest pay over time limit across all accounts",
     dataSource: "Credit Management System", 
     lastUpdated: "Updated daily",
