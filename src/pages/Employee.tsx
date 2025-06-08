@@ -1,3 +1,4 @@
+
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -22,7 +23,13 @@ const Employee = () => {
           <AppHeader />
           <main className="flex-1 p-6">
             <div className="max-w-7xl mx-auto">
-              <h1 className="text-3xl font-bold mb-6">Employee Cards</h1>
+              <div className="mb-6">
+                <img 
+                  src="https://i.imgur.com/dZJ4pLl.png" 
+                  alt="American Express"
+                  className="h-12"
+                />
+              </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Card List */}
