@@ -95,18 +95,18 @@ const metricsData = [
     title: "Lowest Pay Over Time Limit",
     value: "$2k",
     description: "The lowest pay over time limit across all accounts",
-    dataSource: "Payment Processing System", 
+    dataSource: "Credit Management System", 
     lastUpdated: "Updated daily",
     calculationMethod: "Minimum pay over time limit for active accounts",
     cardData: cardDetails.lowestCreditLimit
   },
   {
     title: "Available Line of Credit",
-    value: "$2M",
-    description: "Total available credit across all accounts",
-    dataSource: "Credit Management System",
+    value: "$2,000,000",
+    description: "Total available business line of credit",
+    dataSource: "Underwriting System",
     lastUpdated: "Real-time",
-    calculationMethod: "Sum of (credit limit - current balance) for all accounts",
+    calculationMethod: "Sum of (credit limit - current balance) for BLOC account",
     cardData: null
   },
   {
@@ -227,9 +227,6 @@ export function QuickMetricsCards() {
             {cardContent}
           </SheetTrigger>
           <SheetContent side="bottom" className="h-auto max-h-[80vh]">
-            <SheetHeader>
-              <SheetTitle>Metric Details</SheetTitle>
-            </SheetHeader>
             <MetricSheetContent metric={metric} />
           </SheetContent>
         </Sheet>
