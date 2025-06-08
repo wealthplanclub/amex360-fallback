@@ -11,26 +11,10 @@ import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
 import { staticEmpData } from "@/data/staticEmpData"
 import { parseEmployeeData } from "@/utils/employeeParser"
-import Lottie from "lottie-react"
+import { PageLoader } from "@/components/PageLoader"
 
 const Employee = () => {
   const [isLoading, setIsLoading] = React.useState(true)
-  const [animationData, setAnimationData] = React.useState(null)
-
-  React.useEffect(() => {
-    // Load the cube-loader animation immediately
-    fetch("/cube-loader.json")
-      .then(response => response.json())
-      .then(data => setAnimationData(data))
-      .catch(error => console.error("Failed to load animation:", error))
-
-    // Wait 3 seconds before showing the main content
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
-
-    return () => clearTimeout(timer)
-  }, [])
 
   // Parse the static employee data into proper format
   const employeeTransactions = parseEmployeeData(staticEmpData)
@@ -50,22 +34,9 @@ const Employee = () => {
     getCardDropdownDisplayText
   } = useEmployeeFilters(employeeTransactions)
 
-  // Show animation while loading
+  // Show PageLoader while loading
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          {animationData && (
-            <Lottie
-              animationData={animationData}
-              className="w-32 h-32 mx-auto"
-              loop={true}
-              autoplay={true}
-            />
-          )}
-        </div>
-      </div>
-    )
+    return <PageLoader onLoadingComplete={() => setIsLoading(false)} />;
   }
 
   return (

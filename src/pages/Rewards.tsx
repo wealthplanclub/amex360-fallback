@@ -7,51 +7,28 @@ import { useFilterState } from "@/hooks/useFilterState";
 import { RewardMetricsCards } from "@/components/reward/RewardMetricsCards";
 import { RewardChartDisplay } from "@/components/reward/RewardChartDisplay";
 import { RewardCardList } from "@/components/reward/RewardCardList";
-import Lottie from "lottie-react";
+import { PageLoader } from "@/components/PageLoader";
 
 const Rewards = () => {
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
   const [isVisible, setIsVisible] = React.useState(false);
   const [numbersKey, setNumbersKey] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [animationData, setAnimationData] = React.useState(null);
 
   React.useEffect(() => {
-    // Load the waiting-finger-tapping animation immediately
-    fetch("/waiting-finger-tapping.json")
-      .then(response => response.json())
-      .then(data => setAnimationData(data))
-      .catch(error => console.error("Failed to load animation:", error));
-
-    // Wait 3 seconds before showing the main content
-    const timer = setTimeout(() => {
-      setIsLoading(false);
+    // Set visible when loading completes
+    if (!isLoading) {
       setIsVisible(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
+    }
+  }, [isLoading]);
 
   React.useEffect(() => {
     setNumbersKey(prev => prev + 1);
   }, [filters.selectedTimeRange, filters.selectedDate, filters.selectedCard]);
 
-  // Show animation while loading
+  // Show PageLoader while loading
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          {animationData && (
-            <Lottie
-              animationData={animationData}
-              className="w-32 h-32 mx-auto"
-              loop={true}
-              autoplay={true}
-            />
-          )}
-        </div>
-      </div>
-    );
+    return <PageLoader onLoadingComplete={() => setIsLoading(false)} />;
   }
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
