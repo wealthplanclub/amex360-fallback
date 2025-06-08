@@ -139,7 +139,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
           {/* Sort Controls in grid item */}
           <div className="flex items-center gap-2">
             <Select value={sortOption} onValueChange={(value: SortOption) => setSortOption(value)}>
-              <SelectTrigger className="w-48 h-8">
+              <SelectTrigger className="w-auto h-8">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
