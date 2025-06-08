@@ -76,7 +76,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
       style={{ height: `${dynamicHeight}px` }}
     >
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
         <CardDescription>
           Total spending by card (last 5 digits)
