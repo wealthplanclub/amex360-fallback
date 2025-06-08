@@ -1,4 +1,5 @@
 
+
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -25,7 +26,7 @@ const Employee = () => {
             <div className="max-w-7xl mx-auto">
               <div className="mb-6">
                 <img 
-                  src="https://i.imgur.com/dZJ4pLl.png" 
+                  src="https://i.imgur.com/1fFddP4.png" 
                   alt="American Express"
                   className="h-12"
                 />
