@@ -107,6 +107,9 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     >
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
+        <CardDescription>
+          Employee spending by card (last 5 digits)
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
