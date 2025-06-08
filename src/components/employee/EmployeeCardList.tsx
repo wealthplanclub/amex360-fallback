@@ -118,6 +118,15 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
               const isCardSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
               const isBonusActive = isCardBonusActive(card.cardKey)
               
+              // Debug logging
+              console.log('Card debug info:', {
+                cardKey: card.cardKey,
+                isBonusActive,
+                isCardSelected,
+                cardType: card.cardType,
+                lastFive: card.lastFive
+              })
+              
               return (
                 <Card 
                   key={card.cardKey}
