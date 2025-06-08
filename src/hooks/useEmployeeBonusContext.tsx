@@ -43,11 +43,9 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
   const [forceUpdate, setForceUpdate] = React.useState(0)
 
   const toggleCardBonus = (cardKey: string) => {
-    console.log('Toggling card bonus for:', cardKey)
     const currentState = getCardBonusStatus(cardKey)
     updateCardBonusStatus(cardKey, !currentState)
-    console.log('Updated to:', !currentState)
-    // Force re-render by updating the state
+    // Force re-render by updating a dummy state
     setForceUpdate(prev => prev + 1)
   }
 
@@ -55,7 +53,7 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
     return getCardBonusStatus(cardKey)
   }
 
-  // Convert array to record format for compatibility - force update dependency ensures fresh data
+  // Convert array to record format for compatibility
   const getToggleStatesRecord = (): Record<string, boolean> => {
     const allCards = getAllCardBonuses()
     const record: Record<string, boolean> = {}
@@ -111,13 +109,12 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
     }
   }
 
-  // Use forceUpdate as dependency to ensure fresh data on every render
-  const value = React.useMemo(() => ({
+  const value = {
     toggleStates: getToggleStatesRecord(),
     toggleCardBonus,
     isCardBonusActive,
     getAdjustedMetrics
-  }), [forceUpdate])
+  }
 
   return (
     <EmployeeBonusContext.Provider value={value}>
