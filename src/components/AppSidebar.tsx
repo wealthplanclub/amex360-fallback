@@ -1,3 +1,4 @@
+
 import React from "react"
 import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -51,10 +52,10 @@ export function AppSidebar() {
     // Simulate data refresh
     console.log("Refreshing static data...")
     
-    // Show success toast that will exit to the right
+    // Show success toast
     toast.success("Dashboard refreshed", {
       description: "Latest transaction data has been loaded",
-      position: "top-right",
+      position: "top-right"
     })
     
     close()
