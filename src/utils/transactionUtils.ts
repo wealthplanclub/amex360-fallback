@@ -16,7 +16,12 @@ export const globalFilterFn = (row: any, columnId: string, value: string) => {
 }
 
 // Function to format account names according to the rules
-export const formatAccountName = (accountName: string): string => {
+export const formatAccountName = (accountName: string | undefined | null): string => {
+  // Handle undefined, null, or empty string cases
+  if (!accountName) {
+    return ''
+  }
+  
   let formatted = accountName.replace(/\bcard\b/gi, '').trim()
   
   // Apply conditional formatting rules
