@@ -1,5 +1,4 @@
 
-
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -18,6 +17,7 @@ const Index = () => {
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
   const [isLoading, setIsLoading] = React.useState(true);
   const [animationData, setAnimationData] = React.useState(null);
+  const [showContent, setShowContent] = React.useState(false);
 
   // Always call useEffect hooks in the same order
   React.useEffect(() => {
@@ -30,6 +30,8 @@ const Index = () => {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
+      // Start showing content with staggered animations
+      setTimeout(() => setShowContent(true), 100);
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -189,8 +191,8 @@ const Index = () => {
             />
           </div>
 
-          {/* Daily Spending Chart */}
-          <div className="mt-8 px-4 lg:px-6">
+          {/* Daily Spending Chart with fade-in animation */}
+          <div className={`mt-8 px-4 lg:px-6 transition-all duration-700 delay-100 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <ChartAreaInteractive 
               onDateClick={handleDateClick} 
               selectedTimeRange={filters.selectedTimeRange || 'ytd'}
@@ -198,10 +200,10 @@ const Index = () => {
             />
           </div>
 
-          {/* Transaction Card and Card Spend Grid */}
+          {/* Transaction Card and Card Spend Grid with staggered fade-in animations */}
           <div id="transaction-section" className="mt-8 px-4 lg:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
+              <div className={`lg:col-span-2 transition-all duration-700 delay-300 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <TransactionCard 
                   filters={filters}
                   onClearDateFilter={clearDateFilter}
@@ -211,7 +213,7 @@ const Index = () => {
                   onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
                 />
               </div>
-              <div className="lg:col-span-1">
+              <div className={`lg:col-span-1 transition-all duration-700 delay-500 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <CardAccounts 
                   onCardClick={handleCardAccountClick} 
                   selectedTimeRange={filters.selectedTimeRange || 'ytd'}
