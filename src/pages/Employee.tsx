@@ -8,6 +8,7 @@ import { EmployeeCardList } from "@/components/employee/EmployeeCardList"
 import { useFilterState } from "@/hooks/useFilterState"
 import { staticEmpData } from "@/data/staticEmpData"
 import { parseEmployeeData } from "@/utils/employeeParser"
+import { X } from "lucide-react"
 
 const Employee = () => {
   const { filters, updateFilter } = useFilterState()
@@ -23,6 +24,12 @@ const Employee = () => {
     
     return employeeTransactions.filter(transaction => transaction.last_five === filters.selectedCard)
   }, [employeeTransactions, filters.selectedCard])
+
+  const hasCardFilter = filters.selectedCard && filters.selectedCard !== "all"
+
+  const handleClearCardFilter = () => {
+    updateFilter('selectedCard', 'all')
+  }
 
   return (
     <SidebarProvider>
@@ -48,14 +55,25 @@ const Employee = () => {
                 <div className="bg-white rounded-lg border">
                   <div className="p-6 border-b">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      View and manage employee card transactions
-                      {filters.selectedCard && filters.selectedCard !== "all" && (
-                        <span className="ml-2 text-blue-600">
-                          (Filtered by card ending in {filters.selectedCard})
+                    {!hasCardFilter && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        View and manage employee card transactions
+                      </p>
+                    )}
+                    {hasCardFilter && (
+                      <div className="mt-2">
+                        <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+                          Filtered by card ending in: {filters.selectedCard}
+                          <button 
+                            onClick={handleClearCardFilter}
+                            className="hover:bg-gray-200 rounded p-0.5"
+                            title="Clear filter"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
                         </span>
-                      )}
-                    </p>
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
                     <EmployeeTransactionTable
