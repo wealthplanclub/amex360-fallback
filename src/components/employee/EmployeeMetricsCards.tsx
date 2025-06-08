@@ -83,7 +83,7 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       {cardData.map((card, index) => (
         <StatCard
           key={card.title}
