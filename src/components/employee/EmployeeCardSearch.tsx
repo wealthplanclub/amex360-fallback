@@ -9,12 +9,18 @@ interface EmployeeCardSearchProps {
 }
 
 export function EmployeeCardSearch({ value, onChange, isVisible }: EmployeeCardSearchProps) {
-  if (!isVisible) {
-    return null
-  }
-
   return (
-    <div className="mb-5 mt-1 transition-all duration-300 ease-in-out">
+    <div 
+      className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        isVisible 
+          ? 'mb-5 mt-1 opacity-100' 
+          : 'mb-0 mt-0 opacity-0'
+      }`}
+      style={{
+        height: isVisible ? 'auto' : '0',
+        maxHeight: isVisible ? '100px' : '0'
+      }}
+    >
       <Input
         placeholder="Search last 5 digits"
         value={value}
