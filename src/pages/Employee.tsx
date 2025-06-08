@@ -1,5 +1,3 @@
-
-
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -25,11 +23,14 @@ const Employee = () => {
           <main className="flex-1 p-6">
             <div className="max-w-7xl mx-auto">
               <div className="mb-6">
-                <img 
-                  src="https://i.imgur.com/1fFddP4.png" 
-                  alt="American Express"
-                  className="h-12"
-                />
+                <div className="flex justify-center items-center">
+                  <img 
+                    src="https://i.imgur.com/1fFddP4.png" 
+                    alt="Amex Logo" 
+                    className="mx-auto"
+                    style={{ width: '276px' }}
+                  />
+                </div>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
