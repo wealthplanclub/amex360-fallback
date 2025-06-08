@@ -164,7 +164,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                               <img 
                                 src="https://i.imgur.com/dTz9vVm.png" 
                                 alt="Boost active" 
-                                className="w-6 h-6"
+                                className="w-4 h-4"
                               />
                             )}
                           </div>
