@@ -40,7 +40,7 @@ const Employee = () => {
     )
     
     if (selectedTransaction) {
-      return `${selectedTransaction.card_type} (-${filters.selectedCard})`
+      return `${selectedTransaction.card_type} (${filters.selectedCard})`
     }
     
     return `Card ending in ${filters.selectedCard}`
