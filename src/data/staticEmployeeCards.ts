@@ -23,7 +23,7 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Blue Plus I--01117", cardType: "Blue Plus I", lastFive: "-01117", hasBonus: true },
   { cardKey: "Blue Plus I--01125", cardType: "Blue Plus I", lastFive: "-01125", hasBonus: true },
   { cardKey: "Blue Plus I--01141", cardType: "Blue Plus I", lastFive: "-01141", hasBonus: true },
-  { cardKey: "Blue Plus I--01158", cardType: "Blue Plus I", lastFive: "-01158", hasBonus: true },
+  { cardKey: "Blue Plus I--01158", cardType: "Blue Plus I", lastFive: "-01158", hasBonus: false },
 
   // Blue Plus II cards - sorted by last five digits in ascending order
   { cardKey: "Blue Plus II--11025", cardType: "Blue Plus II", lastFive: "-11025", hasBonus: true },
