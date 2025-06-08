@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -80,7 +79,8 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     const isSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
     
     if (isSelected) {
-      onCardClick('all')
+      // If this card is currently selected, pass the card info to allow toggle back to card type
+      onCardClick(card.lastFive, card.cardType)
     } else {
       // Pass both the lastFive and cardType to ensure correct filtering
       onCardClick(card.lastFive, card.cardType)
