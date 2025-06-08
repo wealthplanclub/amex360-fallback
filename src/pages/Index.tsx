@@ -1,4 +1,3 @@
-
 import React from "react";
 import { MainCards } from "@/components/MainCards";
 import { CardAccounts } from "@/components/CardAccounts";
@@ -6,6 +5,7 @@ import { TransactionCard } from "@/components/TransactionCard";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { AppHeader } from "@/components/AppHeader";
 import { AppSidebar } from "@/components/AppSidebar";
+import { QuickMetricsCards } from "@/components/QuickMetricsCards";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFilterState } from "@/hooks/useFilterState";
@@ -180,6 +180,11 @@ const Index = () => {
               selectedTimeRange={filters.selectedTimeRange || 'ytd'} 
               onStatCardClick={handleStatCardClick}
             />
+          </div>
+
+          {/* Quick Metrics Cards */}
+          <div className="mt-8">
+            <QuickMetricsCards />
           </div>
 
           {/* Daily Spending Chart */}
