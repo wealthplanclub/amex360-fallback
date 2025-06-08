@@ -1,3 +1,4 @@
+
 // Static data file containing all employee cards with their boost status
 // This determines which cards have received the 15,000 point bonus
 
@@ -55,9 +56,11 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Platinum--52122", cardType: "Platinum", lastFive: "-52122", hasBonus: true },
   { cardKey: "Platinum--51017", cardType: "Platinum", lastFive: "-51017", hasBonus: true },
 
-  // Green cards - using real last five digits from employee data
+  // Green cards - using real last five digits from employee data (all 4 cards)
+  { cardKey: "Green--81017", cardType: "Green", lastFive: "-81017", hasBonus: true },
   { cardKey: "Green--81041", cardType: "Green", lastFive: "-81041", hasBonus: true },
   { cardKey: "Green--81058", cardType: "Green", lastFive: "-81058", hasBonus: true },
+  { cardKey: "Green--81025", cardType: "Green", lastFive: "-81025", hasBonus: true },
 
   // White Gold cards - using real last five digits from employee data
   { cardKey: "White Gold--41026", cardType: "White Gold", lastFive: "-41026", hasBonus: true },
