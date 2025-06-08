@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { X } from "lucide-react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
+import { getCardImage } from "@/utils/cardImageUtils"
 
 interface EmployeeTransactionSectionProps {
   filteredTransactions: EmployeeTransaction[]
@@ -29,6 +30,9 @@ export function EmployeeTransactionSection({
   uniqueCardTypes,
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
+  const selectedCardType = getCardDropdownDisplayText()
+  const showCardImage = selectedCardType && selectedCardType !== "all" && !selectedCardType.includes('(')
+
   return (
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
@@ -69,13 +73,24 @@ export function EmployeeTransactionSection({
               </div>
             </div>
 
-            {/* Right column - Dropdown */}
-            <div className="flex justify-end">
-              <CardFilterDropdown
-                selectedCard={getCardDropdownDisplayText()}
-                creditCards={uniqueCardTypes}
-                onCardChange={handleCardDropdownChange}
-              />
+            {/* Right column - Card image and dropdown */}
+            <div className="flex flex-col items-end gap-3">
+              {showCardImage && (
+                <div className="flex justify-end">
+                  <img 
+                    src={getCardImage(selectedCardType)} 
+                    alt={`${selectedCardType} card`}
+                    className="w-24 h-15 object-cover rounded shadow-sm"
+                  />
+                </div>
+              )}
+              <div className="flex justify-end">
+                <CardFilterDropdown
+                  selectedCard={getCardDropdownDisplayText()}
+                  creditCards={uniqueCardTypes}
+                  onCardChange={handleCardDropdownChange}
+                />
+              </div>
             </div>
           </div>
         </div>
