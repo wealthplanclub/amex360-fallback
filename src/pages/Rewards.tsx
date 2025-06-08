@@ -7,28 +7,50 @@ import { useFilterState } from "@/hooks/useFilterState";
 import { RewardMetricsCards } from "@/components/reward/RewardMetricsCards";
 import { RewardChartDisplay } from "@/components/reward/RewardChartDisplay";
 import { RewardCardList } from "@/components/reward/RewardCardList";
-import { PageLoader } from "@/components/PageLoader";
+import Lottie from "lottie-react";
 
 const Rewards = () => {
   const { filters, updateFilter, updateMultipleFilters, clearFilter, clearAllFilters } = useFilterState("ytd");
   const [isVisible, setIsVisible] = React.useState(false);
   const [numbersKey, setNumbersKey] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [animationData, setAnimationData] = React.useState(null);
 
   React.useEffect(() => {
-    // Set visible when loading completes
-    if (!isLoading) {
+    // Load the waiting-finger-tapping animation
+    fetch("/waiting-finger-tapping.json")
+      .then(response => response.json())
+      .then(data => setAnimationData(data))
+      .catch(error => console.error("Failed to load animation:", error));
+
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
       setIsVisible(true);
-    }
-  }, [isLoading]);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   React.useEffect(() => {
     setNumbersKey(prev => prev + 1);
   }, [filters.selectedTimeRange, filters.selectedDate, filters.selectedCard]);
 
-  // Show PageLoader while loading
   if (isLoading) {
-    return <PageLoader onLoadingComplete={() => setIsLoading(false)} />;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          {animationData && (
+            <Lottie
+              animationData={animationData}
+              className="w-32 h-32 mx-auto"
+              loop={true}
+              autoplay={true}
+            />
+          )}
+        </div>
+      </div>
+    );
   }
 
   const handleTransactionDropdownChange = (cardSelection: string) => {
