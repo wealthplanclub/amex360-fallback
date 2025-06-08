@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -125,15 +124,12 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       <CardContent className="flex-1 overflow-hidden">
         {/* Search Bar */}
         <div className="mb-4 pb-4 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">Search Last 5:</span>
-            <Input
-              placeholder="Enter last 5 digits..."
-              value={searchLastFive}
-              onChange={(e) => setSearchLastFive(e.target.value)}
-              className="max-w-xs"
-            />
-          </div>
+          <Input
+            placeholder="Search last 5 digits"
+            value={searchLastFive}
+            onChange={(e) => setSearchLastFive(e.target.value)}
+            className="max-w-xs"
+          />
         </div>
 
         <ScrollArea className="h-full pr-4">
