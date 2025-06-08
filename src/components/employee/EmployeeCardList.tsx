@@ -112,8 +112,8 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex items-center gap-4 flex-1">
                       <img 
-                        src="https://icm.aexp-static.com/acquisition/card-art/NUS000000322_160x102_straight_withname.png" 
-                        alt="Card placeholder" 
+                        src={getCardImage(card.cardType)} 
+                        alt={`${card.cardType} card`} 
                         className="w-16 h-10 object-cover rounded"
                       />
                       <div className="text-sm font-medium leading-tight whitespace-pre-line">

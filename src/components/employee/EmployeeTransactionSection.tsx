@@ -31,12 +31,13 @@ export function EmployeeTransactionSection({
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
   const selectedCardType = getCardDropdownDisplayText()
+  const filterText = getFilterDisplayText()
   
-  // Show card image whenever there's a card type filter active (not "all")
-  const showCardImage = selectedCardType && selectedCardType !== "all"
+  // Show card image when there's a card type filter active (State B or C)
+  const showCardImage = hasAnyFilter && filterText.includes(',') === false && filterText !== ""
   
-  // Extract the base card type for the image (remove any parentheses content)
-  const baseCardType = selectedCardType?.split('(')[0]?.trim() || selectedCardType
+  // Extract the base card type for the image
+  const baseCardType = filterText.split(',')[0]?.trim() || ""
 
   return (
     <div className="lg:col-span-2">
@@ -51,7 +52,7 @@ export function EmployeeTransactionSection({
               {showCardImage && hasAnyFilter && (
                 <div className="mt-2">
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                    Filtered by: {getFilterDisplayText()}
+                    Filtered by: {filterText}
                     <button 
                       onClick={handleClearAllFilters}
                       className="hover:bg-gray-200 rounded p-0.5"
@@ -88,7 +89,7 @@ export function EmployeeTransactionSection({
               {!showCardImage && hasAnyFilter && (
                 <div className="mb-4">
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                    Filtered by: {getFilterDisplayText()}
+                    Filtered by: {filterText}
                     <button 
                       onClick={handleClearAllFilters}
                       className="hover:bg-gray-200 rounded p-0.5"

@@ -15,120 +15,110 @@ export function useEmployeeFilters(employeeTransactions: EmployeeTransaction[]) 
     return Array.from(cardTypes).sort()
   }, [employeeTransactions])
 
-  // Filter transactions based on selected card type and last five
+  // Filter transactions based on current state
   const filteredTransactions = React.useMemo(() => {
     let filtered = employeeTransactions
 
-    // Filter by card type if selected
-    if (filters.selectedCardType && filters.selectedCardType !== "all") {
+    // State B: Filter by card type only
+    if (filters.selectedCardType && filters.selectedCardType !== "all" && (!filters.selectedLastFive || filters.selectedLastFive === "all")) {
       filtered = filtered.filter(transaction => transaction.card_type === filters.selectedCardType)
     }
-
-    // Filter by last five if selected
-    if (filters.selectedLastFive && filters.selectedLastFive !== "all") {
-      filtered = filtered.filter(transaction => transaction.last_five === filters.selectedLastFive)
+    
+    // State C: Filter by both card type and last five (must match both)
+    if (filters.selectedCardType && filters.selectedCardType !== "all" && filters.selectedLastFive && filters.selectedLastFive !== "all") {
+      filtered = filtered.filter(transaction => 
+        transaction.card_type === filters.selectedCardType && transaction.last_five === filters.selectedLastFive
+      )
     }
 
     return filtered
   }, [employeeTransactions, filters.selectedCardType, filters.selectedLastFive])
 
-  // Determine current filter layer and states
-  const isLayer1 = (!filters.selectedCardType || filters.selectedCardType === "all") && (!filters.selectedLastFive || filters.selectedLastFive === "all")
-  const isLayer2 = (filters.selectedCardType && filters.selectedCardType !== "all") && (!filters.selectedLastFive || filters.selectedLastFive === "all")
-  const isLayer3 = (filters.selectedCardType && filters.selectedCardType !== "all") && (filters.selectedLastFive && filters.selectedLastFive !== "all")
+  // Determine current state
+  const isStateA = (!filters.selectedCardType || filters.selectedCardType === "all") && (!filters.selectedLastFive || filters.selectedLastFive === "all")
+  const isStateB = (filters.selectedCardType && filters.selectedCardType !== "all") && (!filters.selectedLastFive || filters.selectedLastFive === "all")
+  const isStateC = (filters.selectedCardType && filters.selectedCardType !== "all") && (filters.selectedLastFive && filters.selectedLastFive !== "all")
 
-  const hasCardTypeFilter = filters.selectedCardType && filters.selectedCardType !== "all"
-  const hasLastFiveFilter = filters.selectedLastFive && filters.selectedLastFive !== "all"
-  const hasAnyFilter = hasCardTypeFilter || hasLastFiveFilter
+  const hasAnyFilter = !isStateA
 
   const handleClearAllFilters = () => {
     updateMultipleFilters({
       selectedCardType: 'all',
-      selectedLastFive: 'all',
-      selectedCard: 'all'
+      selectedLastFive: 'all'
     })
   }
 
   const handleCardDropdownChange = (cardSelection: string) => {
     if (cardSelection === "all") {
-      // Go to Layer 1 - show all cards
+      // Go to State A - show all cards
       updateMultipleFilters({
         selectedCardType: 'all',
-        selectedLastFive: 'all',
-        selectedCard: 'all'
+        selectedLastFive: 'all'
       })
     } else {
-      // Go to Layer 2 - show card group
+      // Go to State B - show card group
       updateMultipleFilters({
         selectedCardType: cardSelection,
-        selectedLastFive: 'all',
-        selectedCard: cardSelection
+        selectedLastFive: 'all'
       })
     }
   }
 
   const handleCardClick = (lastFive: string) => {
-    if (lastFive === 'all') {
-      // This shouldn't happen in the new logic, but handle it just in case
+    if (isStateC && filters.selectedLastFive === lastFive) {
+      // Currently on State C with this card selected - go back to State B
       updateMultipleFilters({
-        selectedLastFive: 'all',
-        selectedCard: filters.selectedCardType || 'all'
+        selectedLastFive: 'all'
       })
     } else {
-      // Find the card type for this last five
+      // Find the card type for this last five to ensure they match
       const transaction = employeeTransactions.find(t => t.last_five === lastFive)
       const cardType = transaction?.card_type
       
-      // Check current state to determine what layer to go to
-      if (isLayer3 && filters.selectedLastFive === lastFive) {
-        // Currently on Layer 3 with this card selected - go back to Layer 2
+      if (cardType) {
+        // Go to State C - show specific card (card type + last five)
         updateMultipleFilters({
-          selectedLastFive: 'all',
-          selectedCardType: cardType || 'all',
-          selectedCard: cardType || 'all'
-        })
-      } else {
-        // Go to Layer 3 - show individual card
-        updateMultipleFilters({
-          selectedLastFive: lastFive,
-          selectedCardType: cardType || 'all',
-          selectedCard: lastFive
+          selectedCardType: cardType,
+          selectedLastFive: lastFive
         })
       }
     }
   }
 
-  // Calculate which cards to show in the list based on current layer
+  // Calculate which cards to show in the list based on current state
   const getCardsToShow = () => {
-    if (isLayer1) {
-      // Layer 1: Show all cards
+    if (isStateA) {
+      // State A: Show all cards
       return employeeTransactions
-    } else if (isLayer2) {
-      // Layer 2: Show only cards of the selected type
+    } else if (isStateB) {
+      // State B: Show only cards of the selected type
       return employeeTransactions.filter(t => t.card_type === filters.selectedCardType)
     } else {
-      // Layer 3: Show only the selected card
-      return employeeTransactions.filter(t => t.last_five === filters.selectedLastFive)
+      // State C: Show only the selected card (matching both type and last five)
+      return employeeTransactions.filter(t => 
+        t.card_type === filters.selectedCardType && t.last_five === filters.selectedLastFive
+      )
     }
   }
 
   const getFilterDisplayText = () => {
-    const parts = []
-    if (hasCardTypeFilter) {
-      parts.push(filters.selectedCardType)
+    if (isStateA) {
+      return ""
+    } else if (isStateB) {
+      return filters.selectedCardType || ""
+    } else if (isStateC) {
+      return `${filters.selectedCardType}, ${filters.selectedLastFive}`
     }
-    if (hasLastFiveFilter) {
-      parts.push(filters.selectedLastFive)
-    }
-    return parts.join(', ')
+    return ""
   }
 
   const getCardDropdownDisplayText = () => {
-    if (hasLastFiveFilter && hasCardTypeFilter) {
+    if (isStateA) {
+      return "all"
+    } else if (isStateB) {
+      return filters.selectedCardType || "all"
+    } else if (isStateC) {
       return `${filters.selectedCardType} (${filters.selectedLastFive})`
-    }
-    if (hasCardTypeFilter) {
-      return filters.selectedCardType
     }
     return "all"
   }
