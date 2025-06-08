@@ -1,3 +1,4 @@
+
 import React from "react"
 import { TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
@@ -93,6 +94,7 @@ export function EmployeeMetricsCards({
           numbersKey={numbersKey}
           formatAsPoints={card.formatAsPoints}
           showBadge={false}
+          showHover={true}
         />
       ))}
     </div>
