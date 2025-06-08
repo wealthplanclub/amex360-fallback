@@ -117,7 +117,7 @@ export function EmployeeTransactionSection({
               
               <div>
                 <Input
-                  placeholder="Search descriptions..."
+                  placeholder="Search transactions..."
                   value={globalFilter ?? ""}
                   onChange={(event) => onGlobalFilterChange(event.target.value)}
                   className="max-w-sm"
