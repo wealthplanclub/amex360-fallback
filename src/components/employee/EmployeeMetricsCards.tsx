@@ -2,6 +2,7 @@
 import React from "react"
 import { DollarSign, Star, TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
+import { Card, CardContent } from "@/components/ui/card"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 
 interface EmployeeMetricsCardsProps {
@@ -84,22 +85,26 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
-      {cardData.map((card, index) => (
-        <StatCard
-          key={card.title}
-          title={card.title}
-          value={card.value}
-          badge={card.badge}
-          icon={card.icon}
-          footer={card.footer}
-          description={card.description}
-          index={index}
-          isVisible={isVisible}
-          numbersKey={numbersKey}
-          formatAsPoints={card.formatAsPoints}
-        />
-      ))}
-    </div>
+    <Card className="bg-gradient-to-b from-white to-gray-100">
+      <CardContent className="p-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {cardData.map((card, index) => (
+            <StatCard
+              key={card.title}
+              title={card.title}
+              value={card.value}
+              badge={card.badge}
+              icon={card.icon}
+              footer={card.footer}
+              description={card.description}
+              index={index}
+              isVisible={isVisible}
+              numbersKey={numbersKey}
+              formatAsPoints={card.formatAsPoints}
+            />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
