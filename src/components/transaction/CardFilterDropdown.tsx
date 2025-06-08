@@ -46,7 +46,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
         {creditCards.map((card) => (
           <DropdownMenuCheckboxItem
             key={card}
-            checked={selectedCard === card || (selectedCard && selectedCard.startsWith(card))}
+            checked={selectedCard === card}
             onCheckedChange={() => onCardChange(card)}
           >
             {card}
