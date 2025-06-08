@@ -20,6 +20,10 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
     if (!selectedCard || selectedCard === "all") {
       return "All Cards"
     }
+    // Check if it's a combined format like "Card Type (12345)"
+    if (selectedCard.includes('(') && selectedCard.includes(')')) {
+      return selectedCard
+    }
     return formatAccountName(selectedCard)
   }
 
@@ -42,7 +46,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
         {creditCards.map((card) => (
           <DropdownMenuCheckboxItem
             key={card}
-            checked={selectedCard === card}
+            checked={selectedCard === card || (selectedCard && selectedCard.startsWith(card))}
             onCheckedChange={() => onCardChange(card)}
           >
             {card}

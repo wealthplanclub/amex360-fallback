@@ -81,6 +81,16 @@ const Employee = () => {
     return parts.join(', ')
   }
 
+  const getCardDropdownDisplayText = () => {
+    if (hasLastFiveFilter && hasCardTypeFilter) {
+      return `${filters.selectedCardType} (${filters.selectedLastFive})`
+    }
+    if (hasCardTypeFilter) {
+      return filters.selectedCardType
+    }
+    return "all"
+  }
+
   const handleCardDropdownChange = (cardSelection: string) => {
     updateMultipleFilters({
       selectedCardType: cardSelection,
@@ -96,8 +106,13 @@ const Employee = () => {
         selectedCard: filters.selectedCardType || 'all'
       })
     } else {
+      // Find the card type for this last five
+      const transaction = employeeTransactions.find(t => t.last_five === lastFive)
+      const cardType = transaction?.card_type
+      
       updateMultipleFilters({
         selectedLastFive: lastFive,
+        selectedCardType: cardType || 'all',
         selectedCard: lastFive
       })
     }
@@ -156,7 +171,7 @@ const Employee = () => {
                         className="max-w-sm"
                       />
                       <CardFilterDropdown
-                        selectedCard={filters.selectedCardType}
+                        selectedCard={getCardDropdownDisplayText()}
                         creditCards={uniqueCardTypes}
                         onCardChange={handleCardDropdownChange}
                       />
