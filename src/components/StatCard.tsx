@@ -51,7 +51,12 @@ export function StatCard({
 
   const formatValue = (val: number) => {
     if (formatAsPoints) {
-      return val.toLocaleString('en-US');
+      const formattedValue = val.toLocaleString('en-US');
+      // Add 'x' suffix for "Avg Points/Dollar" card
+      if (title === "Avg Points/Dollar") {
+        return `${formattedValue}x`;
+      }
+      return formattedValue;
     }
     return `$${val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
