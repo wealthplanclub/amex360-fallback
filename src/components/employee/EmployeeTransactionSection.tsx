@@ -3,9 +3,8 @@ import React from "react"
 import { EmployeeTransactionTable } from "./EmployeeTransactionTable"
 import { Input } from "@/components/ui/input"
 import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
-import { X, DollarSign, Star, TrendingUp } from "lucide-react"
+import { X } from "lucide-react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
-import { StatCard } from "@/components/StatCard"
 
 interface EmployeeTransactionSectionProps {
   filteredTransactions: EmployeeTransaction[]
@@ -30,19 +29,6 @@ export function EmployeeTransactionSection({
   uniqueCardTypes,
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
-  // Calculate metrics from filtered transactions
-  const metrics = React.useMemo(() => {
-    const totalSpend = filteredTransactions.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
-    const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (Math.abs(transaction.amount) * transaction.point_multiple), 0)
-    const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
-
-    return {
-      totalSpend,
-      totalPoints: Math.round(totalPoints),
-      avgPointsPerDollar: Number(avgPointsPerDollar.toFixed(2))
-    }
-  }, [filteredTransactions])
-
   return (
     <div className="lg:col-span-2">
       <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
@@ -54,46 +40,6 @@ export function EmployeeTransactionSection({
                 View and manage employee card transactions
               </p>
             )}
-          </div>
-          
-          {/* Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <StatCard
-              title="Total Spend"
-              value={metrics.totalSpend}
-              badge="100%"
-              icon={DollarSign}
-              footer="Employee spending"
-              description="Total amount spent"
-              index={0}
-              isVisible={true}
-              numbersKey={0}
-              formatAsPoints={false}
-            />
-            <StatCard
-              title="Total Points"
-              value={metrics.totalPoints}
-              badge="Points"
-              icon={Star}
-              footer="Points earned"
-              description="Total points accumulated"
-              index={1}
-              isVisible={true}
-              numbersKey={0}
-              formatAsPoints={true}
-            />
-            <StatCard
-              title="Avg Points/$"
-              value={metrics.avgPointsPerDollar}
-              badge="Rate"
-              icon={TrendingUp}
-              footer="Points per dollar"
-              description="Average points earned per dollar"
-              index={2}
-              isVisible={true}
-              numbersKey={0}
-              formatAsPoints={true}
-            />
           </div>
 
           {hasAnyFilter && (

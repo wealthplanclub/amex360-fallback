@@ -37,7 +37,7 @@ const Employee = () => {
           <AppHeader />
           
           <div className="max-w-7xl mx-auto px-6 mb-8">
-            <EmployeeHeader />
+            <EmployeeHeader filteredTransactions={filteredTransactions} />
             
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
               <EmployeeTransactionSection
