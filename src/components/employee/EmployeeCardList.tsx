@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -18,20 +19,30 @@ interface EmployeeCardListProps {
 }
 
 export function EmployeeCardList({ selectedCard, onCardClick, transactions }: EmployeeCardListProps) {
-  // Calculate card totals from employee data
+  // Calculate card totals by last 5 digits
   const cardData = React.useMemo(() => {
     const cardTotals = transactions.reduce((acc, transaction) => {
-      const cardType = transaction.card_type
-      acc[cardType] = (acc[cardType] || 0) + transaction.amount
+      const lastFive = transaction.last_five
+      if (!acc[lastFive]) {
+        acc[lastFive] = {
+          amount: 0,
+          cardType: transaction.card_type,
+          count: 0
+        }
+      }
+      acc[lastFive].amount += transaction.amount
+      acc[lastFive].count += 1
       return acc
-    }, {} as Record<string, number>)
+    }, {} as Record<string, { amount: number, cardType: string, count: number }>)
 
     return Object.entries(cardTotals)
-      .map(([cardType, amount]) => ({
-        name: cardType,
-        fullName: cardType,
-        amount,
-        displayName: cardType
+      .map(([lastFive, data]) => ({
+        name: lastFive,
+        fullName: lastFive,
+        amount: data.amount,
+        cardType: data.cardType,
+        count: data.count,
+        displayName: `${data.cardType}\n(${lastFive})`
       }))
       .sort((a, b) => b.amount - a.amount)
   }, [transactions])
@@ -80,7 +91,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions }: Em
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
         <CardDescription>
-          Employee spending by card type
+          Employee spending by card (last 5 digits)
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
@@ -102,7 +113,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions }: Em
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex items-center gap-4 flex-1">
                       <img 
-                        src={getCardImage(card.fullName)} 
+                        src={getCardImage(card.cardType)} 
                         alt="Card placeholder" 
                         className="w-16 h-10 object-cover rounded"
                       />
@@ -113,7 +124,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions }: Em
                     <div className="flex items-center justify-end sm:justify-end">
                       <div className="text-right">
                         <p className="text-xs text-muted-foreground">
-                          Total spending
+                          Total spending ({card.count} transactions)
                         </p>
                         <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
                           ${card.amount.toLocaleString()}

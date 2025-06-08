@@ -15,6 +15,15 @@ const Employee = () => {
   // Parse the static employee data into proper format
   const employeeTransactions = parseEmployeeData(staticEmpData)
 
+  // Filter transactions based on selected card (now by last 5 digits)
+  const filteredTransactions = React.useMemo(() => {
+    if (!filters.selectedCard || filters.selectedCard === "all") {
+      return employeeTransactions
+    }
+    
+    return employeeTransactions.filter(transaction => transaction.last_five === filters.selectedCard)
+  }, [employeeTransactions, filters.selectedCard])
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -50,11 +59,16 @@ const Employee = () => {
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
                     <p className="text-sm text-muted-foreground mt-1">
                       View and manage employee card transactions
+                      {filters.selectedCard && filters.selectedCard !== "all" && (
+                        <span className="ml-2 text-blue-600">
+                          (Filtered by card ending in {filters.selectedCard})
+                        </span>
+                      )}
                     </p>
                   </div>
                   <div className="p-6">
                     <EmployeeTransactionTable
-                      transactions={employeeTransactions}
+                      transactions={filteredTransactions}
                       globalFilter={filters.globalFilter}
                       onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
                     />
