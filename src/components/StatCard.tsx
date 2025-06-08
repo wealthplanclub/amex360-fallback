@@ -1,6 +1,5 @@
 
 import * as React from "react"
-import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardDescription,
@@ -85,12 +84,6 @@ export function StatCard({
         >
           {formatValue(value)}
         </CardTitle>
-        <div className="absolute top-4 right-4">
-          <Badge variant="outline" className="gap-1">
-            <IconComponent className="h-3 w-3" />
-            {badge}
-          </Badge>
-        </div>
       </CardHeader>
       <CardFooter className="flex-col items-start gap-1.5 text-sm pt-0 pb-6">
         <div className="flex gap-2 font-medium items-center">
