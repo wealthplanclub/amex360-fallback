@@ -118,7 +118,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                     <div className="flex items-center justify-end sm:justify-end">
                       <div className="text-right">
                         <p className="text-xs text-muted-foreground">
-                          Total spending ({card.count} transactions)
+                          {card.count} transactions
                         </p>
                         <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
                           ${card.amount.toLocaleString()}
