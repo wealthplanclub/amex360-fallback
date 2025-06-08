@@ -56,7 +56,7 @@ export function AppSidebar() {
     toast.success("Dashboard refreshed", {
       description: "Latest transaction data has been loaded",
       position: "top-right",
-      icon: <CircleCheck style={{ color: '#006fcf' }} />
+      icon: <CircleCheck size={16} style={{ color: '#006fcf' }} />
     })
     
     close()
