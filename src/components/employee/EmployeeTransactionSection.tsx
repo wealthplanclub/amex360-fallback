@@ -71,15 +71,18 @@ export function EmployeeTransactionSection({
               )}
             </div>
             
-            {showCardImage && (
-              <div className="ml-4">
-                <img 
-                  src={getCardImage(baseCardType)} 
-                  alt={`${baseCardType} card`}
-                  className="w-16 h-10 object-cover rounded shadow-sm"
-                />
-              </div>
-            )}
+            {/* Always reserve space for the image */}
+            <div className="ml-4 w-16 h-10">
+              <img 
+                src={getCardImage(baseCardType)} 
+                alt={`${baseCardType} card`}
+                className={`w-16 h-10 object-cover rounded shadow-sm transition-all duration-300 ease-in-out ${
+                  showCardImage 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-4'
+                }`}
+              />
+            </div>
           </div>
 
           {/* Filter indicator and controls */}
