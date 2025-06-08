@@ -1,4 +1,3 @@
-
 // Static data file containing all employee cards with their boost status
 // This determines which cards have received the 15,000 point bonus
 
@@ -65,14 +64,19 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Rose Gold--01026", cardType: "Rose Gold", lastFive: "-01026", hasBonus: true },
   { cardKey: "Rose Gold--01034", cardType: "Rose Gold", lastFive: "-01034", hasBonus: true },
   { cardKey: "Rose Gold--01042", cardType: "Rose Gold", lastFive: "-01042", hasBonus: true },
+  { cardKey: "Rose Gold--01059", cardType: "Rose Gold", lastFive: "-01059", hasBonus: true },
   { cardKey: "Rose Gold--01075", cardType: "Rose Gold", lastFive: "-01075", hasBonus: true },
   { cardKey: "Rose Gold--01091", cardType: "Rose Gold", lastFive: "-01091", hasBonus: true },
+  { cardKey: "Rose Gold--01109", cardType: "Rose Gold", lastFive: "-01109", hasBonus: true },
+  { cardKey: "Rose Gold--01117", cardType: "Rose Gold", lastFive: "-01117", hasBonus: true },
   { cardKey: "Rose Gold--01125", cardType: "Rose Gold", lastFive: "-01125", hasBonus: true },
   { cardKey: "Rose Gold--01133", cardType: "Rose Gold", lastFive: "-01133", hasBonus: true },
   { cardKey: "Rose Gold--01141", cardType: "Rose Gold", lastFive: "-01141", hasBonus: true },
   { cardKey: "Rose Gold--01158", cardType: "Rose Gold", lastFive: "-01158", hasBonus: true },
   { cardKey: "Rose Gold--01166", cardType: "Rose Gold", lastFive: "-01166", hasBonus: true },
   { cardKey: "Rose Gold--01174", cardType: "Rose Gold", lastFive: "-01174", hasBonus: true },
+  { cardKey: "Rose Gold--01182", cardType: "Rose Gold", lastFive: "-01182", hasBonus: true },
+  { cardKey: "Rose Gold--01190", cardType: "Rose Gold", lastFive: "-01190", hasBonus: true },
   { cardKey: "Rose Gold--01208", cardType: "Rose Gold", lastFive: "-01208", hasBonus: true },
   { cardKey: "Rose Gold--01216", cardType: "Rose Gold", lastFive: "-01216", hasBonus: true },
   { cardKey: "Rose Gold--01224", cardType: "Rose Gold", lastFive: "-01224", hasBonus: true },
@@ -81,6 +85,8 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Rose Gold--01257", cardType: "Rose Gold", lastFive: "-01257", hasBonus: true },
   { cardKey: "Rose Gold--01265", cardType: "Rose Gold", lastFive: "-01265", hasBonus: true },
   { cardKey: "Rose Gold--01273", cardType: "Rose Gold", lastFive: "-01273", hasBonus: true },
+  { cardKey: "Rose Gold--01299", cardType: "Rose Gold", lastFive: "-01299", hasBonus: true },
+  { cardKey: "Rose Gold--01307", cardType: "Rose Gold", lastFive: "-01307", hasBonus: true },
 
   // White Gold cards - sorted by last five digits in ascending order
   { cardKey: "White Gold--41018", cardType: "White Gold", lastFive: "-41018", hasBonus: true },
