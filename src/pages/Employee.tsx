@@ -22,18 +22,19 @@ const Employee = () => {
   const uniqueCardTypes = React.useMemo(() => {
     const cardTypes = new Set<string>()
     employeeTransactions.forEach(transaction => {
-      cardTypes.add(transaction.card_type)
+      const cardDisplay = `${transaction.card_type} (${transaction.last_five})`
+      cardTypes.add(cardDisplay)
     })
     return Array.from(cardTypes).sort()
   }, [employeeTransactions])
 
-  // Filter transactions based on selected card type
+  // Filter transactions based on selected card (now by last 5 digits)
   const filteredTransactions = React.useMemo(() => {
     if (!filters.selectedCard || filters.selectedCard === "all") {
       return employeeTransactions
     }
     
-    return employeeTransactions.filter(transaction => transaction.card_type === filters.selectedCard)
+    return employeeTransactions.filter(transaction => transaction.last_five === filters.selectedCard)
   }, [employeeTransactions, filters.selectedCard])
 
   const hasCardFilter = filters.selectedCard && filters.selectedCard !== "all"
@@ -42,8 +43,31 @@ const Employee = () => {
     updateFilter('selectedCard', 'all')
   }
 
+  // Get the card type for the selected card filter
+  const getFilterDisplayText = () => {
+    if (!hasCardFilter) return ""
+    
+    const selectedTransaction = employeeTransactions.find(
+      transaction => transaction.last_five === filters.selectedCard
+    )
+    
+    if (selectedTransaction) {
+      return `${selectedTransaction.card_type} (${filters.selectedCard})`
+    }
+    
+    return `Card ending in ${filters.selectedCard}`
+  }
+
   const handleCardDropdownChange = (cardSelection: string) => {
-    updateFilter('selectedCard', cardSelection)
+    if (cardSelection === "all") {
+      updateFilter('selectedCard', 'all')
+    } else {
+      // Extract the last 5 digits from the card display format
+      const match = cardSelection.match(/\((\d{5})\)$/)
+      if (match) {
+        updateFilter('selectedCard', match[1])
+      }
+    }
   }
 
   return (
@@ -68,7 +92,7 @@ const Employee = () => {
               {/* Transaction Table */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg border">
-                  <div className="p-6 pb-0">
+                  <div className="p-6">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
                     {!hasCardFilter && (
                       <p className="text-sm text-muted-foreground mt-1">
@@ -78,7 +102,7 @@ const Employee = () => {
                     {hasCardFilter && (
                       <div className="mt-2">
                         <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                          Filtered by: {filters.selectedCard}
+                          Filtered by: {getFilterDisplayText()}
                           <button 
                             onClick={handleClearCardFilter}
                             className="hover:bg-gray-200 rounded p-0.5"
@@ -89,7 +113,8 @@ const Employee = () => {
                         </span>
                       </div>
                     )}
-                    
+                  </div>
+                  <div className="p-6">
                     {/* Filter Controls */}
                     <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
                       <Input
@@ -104,13 +129,13 @@ const Employee = () => {
                         onCardChange={handleCardDropdownChange}
                       />
                     </div>
+                    
+                    <EmployeeTransactionTable
+                      transactions={filteredTransactions}
+                      globalFilter={filters.globalFilter}
+                      onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+                    />
                   </div>
-                  
-                  <EmployeeTransactionTable
-                    transactions={filteredTransactions}
-                    globalFilter={filters.globalFilter}
-                    onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                  />
                 </div>
               </div>
               
