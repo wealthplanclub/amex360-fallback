@@ -140,7 +140,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
 
   const getSortArrow = (option: SortOption) => {
     const isDescending = option.includes('-desc')
-    return isDescending ? <ChevronDown className="h-3 w-3" /> : <ChevronUp className="h-3 w-3" />
+    return isDescending ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />
   }
 
   return (
@@ -170,22 +170,22 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
               <SelectContent>
                 <SelectItem value="spend-desc">
                   <div className="flex items-center gap-1">
-                    spend <ChevronDown className="h-3 w-3" />
+                    spend <ChevronDown className="h-4 w-4" />
                   </div>
                 </SelectItem>
                 <SelectItem value="spend-asc">
                   <div className="flex items-center gap-1">
-                    spend <ChevronUp className="h-3 w-3" />
+                    spend <ChevronUp className="h-4 w-4" />
                   </div>
                 </SelectItem>
                 <SelectItem value="lastFive-desc">
                   <div className="flex items-center gap-1">
-                    last 5 <ChevronDown className="h-3 w-3" />
+                    last 5 <ChevronDown className="h-4 w-4" />
                   </div>
                 </SelectItem>
                 <SelectItem value="lastFive-asc">
                   <div className="flex items-center gap-1">
-                    last 5 <ChevronUp className="h-3 w-3" />
+                    last 5 <ChevronUp className="h-4 w-4" />
                   </div>
                 </SelectItem>
               </SelectContent>
