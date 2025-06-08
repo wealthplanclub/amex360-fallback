@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { ChevronsUpDown } from "lucide-react"
@@ -99,7 +98,7 @@ export const useEmployeeTransactionColumns = (): ColumnDef<EmployeeTransaction>[
     },
     {
       accessorKey: "point_multiple",
-      header: () => <div className="text-right">Points Multiple</div>,
+      header: () => <div className="text-right">Multiple</div>,
       cell: ({ row }) => {
         const multiple = row.getValue("point_multiple") as number
         return (
