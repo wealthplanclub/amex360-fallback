@@ -92,7 +92,7 @@ const Employee = () => {
               {/* Transaction Table */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg border">
-                  <div className="p-6 border-b">
+                  <div className="p-6">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
                     {!hasCardFilter && (
                       <p className="text-sm text-muted-foreground mt-1">
