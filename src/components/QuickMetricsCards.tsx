@@ -85,10 +85,10 @@ const metricsData = [
   {
     title: "Active Card Accounts",
     value: "13",
-    description: "Total number of active corporate card accounts",
+    description: "Total number of active card accounts",
     dataSource: "Card Management System",
     lastUpdated: "Real-time",
-    calculationMethod: "Count of all active card accounts with non-zero limits",
+    calculationMethod: "Count of active card accounts with non-zero limits",
     cardData: null
   },
   {
