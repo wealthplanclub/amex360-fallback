@@ -156,7 +156,7 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                       <div className="grid grid-cols-2 gap-4 text-xs">
                         <div>
                           <span className="text-muted-foreground">Points Earned:</span>
-                          <div className="font-semibold tabular-nums">${card.pointsEarned.toLocaleString()}</div>
+                          <div className="font-semibold tabular-nums">{card.pointsEarned.toLocaleString()}</div>
                         </div>
                         <div>
                           <span className="text-muted-foreground">Multiple:</span>
