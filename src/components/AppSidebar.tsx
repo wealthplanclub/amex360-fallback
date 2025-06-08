@@ -59,7 +59,7 @@ export function AppSidebar() {
       style: {
         "--toast-swipe-end-transform": "translateX(100%)",
         "--toast-exit-transform": "translateX(100%)"
-      }
+      } as React.CSSProperties
     })
     
     close()
