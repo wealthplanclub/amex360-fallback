@@ -1,4 +1,3 @@
-
 import React from "react"
 import { EmployeeTransactionTable } from "./EmployeeTransactionTable"
 import { Input } from "@/components/ui/input"
@@ -38,6 +37,18 @@ export function EmployeeTransactionSection({
   
   // Extract the base card type for the image (first part before comma if present)
   const baseCardType = filterText.split(',')[0]?.trim() || ""
+  
+  // Keep track of the last valid card type to prevent rose gold flash
+  const [lastValidCardType, setLastValidCardType] = React.useState("")
+  
+  React.useEffect(() => {
+    if (baseCardType && baseCardType !== "") {
+      setLastValidCardType(baseCardType)
+    }
+  }, [baseCardType])
+  
+  // Use the last valid card type during fade-out to prevent rose gold flash
+  const cardTypeToShow = showCardImage ? baseCardType : lastValidCardType
 
   return (
     <div className="lg:col-span-2">
@@ -74,8 +85,8 @@ export function EmployeeTransactionSection({
             {/* Always reserve space for the image */}
             <div className="ml-4 w-16 h-10">
               <img 
-                src={getCardImage(baseCardType)} 
-                alt={`${baseCardType} card`}
+                src={getCardImage(cardTypeToShow)} 
+                alt={`${cardTypeToShow} card`}
                 className={`w-16 h-10 object-cover rounded shadow-sm transition-all duration-300 ease-in-out ${
                   showCardImage 
                     ? 'opacity-100 translate-x-0' 
