@@ -1,3 +1,4 @@
+
 // Static data file containing all employee cards with their boost status
 // This determines which cards have received the 15,000 point bonus
 
@@ -61,12 +62,16 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Platinum--52213", cardType: "Platinum", lastFive: "-52213", hasBonus: true },
 
   // Rose Gold cards - sorted by last five digits in ascending order
+  { cardKey: "Rose Gold--01026", cardType: "Rose Gold", lastFive: "-01026", hasBonus: true },
+  { cardKey: "Rose Gold--01034", cardType: "Rose Gold", lastFive: "-01034", hasBonus: true },
   { cardKey: "Rose Gold--01042", cardType: "Rose Gold", lastFive: "-01042", hasBonus: true },
+  { cardKey: "Rose Gold--01075", cardType: "Rose Gold", lastFive: "-01075", hasBonus: true },
   { cardKey: "Rose Gold--01091", cardType: "Rose Gold", lastFive: "-01091", hasBonus: true },
   { cardKey: "Rose Gold--01125", cardType: "Rose Gold", lastFive: "-01125", hasBonus: true },
   { cardKey: "Rose Gold--01133", cardType: "Rose Gold", lastFive: "-01133", hasBonus: true },
   { cardKey: "Rose Gold--01141", cardType: "Rose Gold", lastFive: "-01141", hasBonus: true },
   { cardKey: "Rose Gold--01158", cardType: "Rose Gold", lastFive: "-01158", hasBonus: true },
+  { cardKey: "Rose Gold--01166", cardType: "Rose Gold", lastFive: "-01166", hasBonus: true },
   { cardKey: "Rose Gold--01174", cardType: "Rose Gold", lastFive: "-01174", hasBonus: true },
   { cardKey: "Rose Gold--01208", cardType: "Rose Gold", lastFive: "-01208", hasBonus: true },
   { cardKey: "Rose Gold--01216", cardType: "Rose Gold", lastFive: "-01216", hasBonus: true },
@@ -74,6 +79,7 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
   { cardKey: "Rose Gold--01232", cardType: "Rose Gold", lastFive: "-01232", hasBonus: true },
   { cardKey: "Rose Gold--01240", cardType: "Rose Gold", lastFive: "-01240", hasBonus: true },
   { cardKey: "Rose Gold--01257", cardType: "Rose Gold", lastFive: "-01257", hasBonus: true },
+  { cardKey: "Rose Gold--01265", cardType: "Rose Gold", lastFive: "-01265", hasBonus: true },
   { cardKey: "Rose Gold--01273", cardType: "Rose Gold", lastFive: "-01273", hasBonus: true },
 
   // White Gold cards - sorted by last five digits in ascending order
