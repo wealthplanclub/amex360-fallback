@@ -26,9 +26,9 @@ export const Sidebar = React.forwardRef<
         <div className="flex items-center justify-between p-4 border-b">
           <div>
             <img 
-              src="https://i.imgur.com/cSQKwKG.png" 
+              src="https://i.imgur.com/K1hwm2e.png" 
               alt="Amex Logo"
-              className="w-16"
+              className="min-w-[100px]"
             />
           </div>
           <button
