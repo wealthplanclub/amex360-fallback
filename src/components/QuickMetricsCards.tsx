@@ -5,6 +5,60 @@ import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/comp
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Info } from "lucide-react"
+import { getCardImage } from "@/utils/cardImageUtils"
+
+const cardDetails = {
+  highestCreditLimit: [
+    {
+      name: "Delta SkyMiles® Gold Business Card",
+      lastFive: "1006",
+      amount: "$30,000",
+      type: "hard limit",
+      image: getCardImage("delta")
+    },
+    {
+      name: "American Express® Green Card",
+      lastFive: "2007", 
+      amount: "$30,000",
+      type: "pay over time",
+      image: getCardImage("green")
+    }
+  ],
+  lowestCreditLimit: [
+    {
+      name: "American Express® Gold Card",
+      lastFive: "1002",
+      amount: "$2,000", 
+      type: "pay over time",
+      image: getCardImage("gold -1002")
+    },
+    {
+      name: "American Express® Gold Card",
+      lastFive: "1000",
+      amount: "$2,000",
+      type: "pay over time", 
+      image: getCardImage("gold -1000")
+    }
+  ],
+  brandPartners: [
+    {
+      name: "Delta SkyMiles Cards",
+      image: getCardImage("delta")
+    },
+    {
+      name: "Marriott Bonvoy Cards",
+      image: getCardImage("marriott")
+    },
+    {
+      name: "Hilton Honors Cards", 
+      image: getCardImage("hilton")
+    },
+    {
+      name: "Amazon Business Cards",
+      image: getCardImage("amazon")
+    }
+  ]
+}
 
 const metricsData = [
   {
@@ -13,7 +67,8 @@ const metricsData = [
     description: "Total number of active corporate card accounts",
     dataSource: "Card Management System",
     lastUpdated: "Real-time",
-    calculationMethod: "Count of all active card accounts with non-zero limits"
+    calculationMethod: "Count of all active card accounts with non-zero limits",
+    cardData: null
   },
   {
     title: "Highest Credit Limit",
@@ -21,15 +76,17 @@ const metricsData = [
     description: "The highest credit limit among all active cards",
     dataSource: "Credit Management System",
     lastUpdated: "Updated daily",
-    calculationMethod: "Maximum credit limit across all active accounts"
+    calculationMethod: "Maximum credit limit across all active accounts",
+    cardData: cardDetails.highestCreditLimit
   },
   {
     title: "Lowest Pay Over Time Limit",
     value: "$2k",
     description: "The lowest pay over time limit across all accounts",
-    dataSource: "Payment Processing System",
+    dataSource: "Payment Processing System", 
     lastUpdated: "Updated daily",
-    calculationMethod: "Minimum pay over time limit for active accounts"
+    calculationMethod: "Minimum pay over time limit for active accounts",
+    cardData: cardDetails.lowestCreditLimit
   },
   {
     title: "Available Line of Credit",
@@ -37,23 +94,45 @@ const metricsData = [
     description: "Total available credit across all accounts",
     dataSource: "Credit Management System",
     lastUpdated: "Real-time",
-    calculationMethod: "Sum of (credit limit - current balance) for all accounts"
+    calculationMethod: "Sum of (credit limit - current balance) for all accounts",
+    cardData: null
   },
   {
     title: "Brand Partner Cards",
     value: "4",
     description: "Number of active brand partner card programs",
     dataSource: "Partner Management System",
-    lastUpdated: "Updated weekly",
-    calculationMethod: "Count of active brand partnership agreements"
+    lastUpdated: "Updated weekly", 
+    calculationMethod: "Count of active brand partnership agreements",
+    cardData: cardDetails.brandPartners
   }
 ]
 
 const MetricTooltipContent = ({ metric }: { metric: typeof metricsData[0] }) => (
-  <div className="space-y-2 max-w-xs">
+  <div className="space-y-3 max-w-xs">
     <div className="font-medium">{metric.title}</div>
     <div className="text-sm text-muted-foreground">{metric.description}</div>
-    <div className="text-xs space-y-1">
+    
+    {metric.cardData && (
+      <div className="space-y-2">
+        <div className="text-xs font-medium">Card Details:</div>
+        {metric.cardData.map((card: any, index: number) => (
+          <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded">
+            <img src={card.image} alt={card.name} className="w-8 h-5 object-cover rounded" />
+            <div className="text-xs">
+              <div className="font-medium">{card.name}</div>
+              {card.lastFive && (
+                <div className="text-muted-foreground">
+                  {card.lastFive} • {card.amount} {card.type}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+    
+    <div className="text-xs space-y-1 pt-2 border-t">
       <div><span className="font-medium">Source:</span> {metric.dataSource}</div>
       <div><span className="font-medium">Updated:</span> {metric.lastUpdated}</div>
       <div><span className="font-medium">Method:</span> {metric.calculationMethod}</div>
@@ -72,6 +151,28 @@ const MetricSheetContent = ({ metric }: { metric: typeof metricsData[0] }) => (
         <h4 className="font-medium text-sm text-muted-foreground">Description</h4>
         <p className="text-sm">{metric.description}</p>
       </div>
+      
+      {metric.cardData && (
+        <div>
+          <h4 className="font-medium text-sm text-muted-foreground mb-2">Card Details</h4>
+          <div className="space-y-3">
+            {metric.cardData.map((card: any, index: number) => (
+              <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <img src={card.image} alt={card.name} className="w-12 h-8 object-cover rounded" />
+                <div>
+                  <div className="font-medium text-sm">{card.name}</div>
+                  {card.lastFive && (
+                    <div className="text-xs text-muted-foreground">
+                      {card.lastFive} • {card.amount} {card.type}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
       <div>
         <h4 className="font-medium text-sm text-muted-foreground">Data Source</h4>
         <p className="text-sm">{metric.dataSource}</p>
