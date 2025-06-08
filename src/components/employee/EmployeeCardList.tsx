@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -6,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Switch } from "@/components/ui/switch"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
@@ -104,42 +106,57 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-full pr-4">
           <div className="space-y-4 pb-6">
-            {filteredCardData.map((card, index) => (
-              <Card 
-                key={card.cardKey}
-                className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                  animationFillMode: 'both'
-                }}
-                onClick={() => handleCardClick(card)}
-              >
-                <CardContent className="p-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div className="flex items-center gap-4 flex-1">
-                      <img 
-                        src={EMPLOYEE_CARD_IMAGE} 
-                        alt="Employee card" 
-                        className="w-16 h-10 object-cover rounded"
-                      />
-                      <div className="text-sm font-medium leading-tight whitespace-pre-line">
-                        {card.displayName}
+            {filteredCardData.map((card, index) => {
+              const isCardSelected = selectedCard === card.lastFive && selectedCardType === card.cardType
+              
+              return (
+                <Card 
+                  key={card.cardKey}
+                  className="bg-gradient-to-b from-white to-gray-50 cursor-pointer transition-all hover:shadow-md animate-fade-in"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animationFillMode: 'both'
+                  }}
+                  onClick={() => handleCardClick(card)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-4 flex-1">
+                        <img 
+                          src={EMPLOYEE_CARD_IMAGE} 
+                          alt="Employee card" 
+                          className="w-16 h-10 object-cover rounded"
+                        />
+                        <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                          {card.displayName}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center justify-end sm:justify-end">
-                      <div className="text-right">
-                        <p className="text-xs text-muted-foreground">
-                          {card.count} transactions
-                        </p>
-                        <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
-                          ${card.amount.toFixed(2)}
+                      <div className="flex items-center justify-end sm:justify-end">
+                        <div className="text-right">
+                          <p className="text-xs text-muted-foreground">
+                            {card.count} transactions
+                          </p>
+                          <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
+                            ${card.amount.toFixed(2)}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    
+                    {isCardSelected && (
+                      <div className="mt-4 pt-4 border-t border-gray-200">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">
+                            +15,000 bonus awarded
+                          </span>
+                          <Switch />
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
         </ScrollArea>
       </CardContent>
