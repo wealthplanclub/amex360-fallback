@@ -31,6 +31,7 @@ export function EmployeeTransactionSection({
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
   const selectedCardType = getCardDropdownDisplayText()
+  const filterDisplayText = getFilterDisplayText()
   
   // Show card image whenever there's a card type filter active (not "all")
   const showCardImage = selectedCardType && selectedCardType !== "all"
@@ -51,7 +52,7 @@ export function EmployeeTransactionSection({
               {showCardImage && hasAnyFilter && (
                 <div className="mt-2">
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                    Filtered by: {getFilterDisplayText()}
+                    Filtered by: {filterDisplayText}
                     <button 
                       onClick={handleClearAllFilters}
                       className="hover:bg-gray-200 rounded p-0.5"
@@ -88,7 +89,7 @@ export function EmployeeTransactionSection({
               {!showCardImage && hasAnyFilter && (
                 <div className="mb-4">
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
-                    Filtered by: {getFilterDisplayText()}
+                    Filtered by: {filterDisplayText}
                     <button 
                       onClick={handleClearAllFilters}
                       className="hover:bg-gray-200 rounded p-0.5"
