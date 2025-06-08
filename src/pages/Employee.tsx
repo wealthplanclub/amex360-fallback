@@ -1,3 +1,4 @@
+
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -126,6 +127,7 @@ const Employee = () => {
                   selectedCard={filters.selectedCard}
                   onCardClick={(card) => updateFilter('selectedCard', card)}
                   transactions={employeeTransactions}
+                  selectedCardType={filters.selectedCard}
                 />
               </div>
             </div>

@@ -16,9 +16,10 @@ interface EmployeeCardListProps {
   selectedCard?: string
   onCardClick?: (cardType: string) => void
   transactions: EmployeeTransaction[]
+  selectedCardType?: string
 }
 
-export function EmployeeCardList({ selectedCard, onCardClick, transactions }: EmployeeCardListProps) {
+export function EmployeeCardList({ selectedCard, onCardClick, transactions, selectedCardType }: EmployeeCardListProps) {
   // Calculate card totals by last 5 digits
   const cardData = React.useMemo(() => {
     const cardTotals = transactions.reduce((acc, transaction) => {
@@ -47,14 +48,15 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions }: Em
       .sort((a, b) => b.amount - a.amount)
   }, [transactions])
 
-  // Filter cards based on selected card
+  // Filter cards based on selected card type from dropdown
   const filteredCardData = React.useMemo(() => {
-    if (!selectedCard || selectedCard === "all") {
+    if (!selectedCardType || selectedCardType === "all") {
       return cardData
     }
     
-    return cardData.filter(card => card.fullName === selectedCard)
-  }, [cardData, selectedCard])
+    // Show all cards that match the selected card type
+    return cardData.filter(card => card.cardType === selectedCardType)
+  }, [cardData, selectedCardType])
 
   // Calculate dynamic height based on filtered card count
   const dynamicHeight = React.useMemo(() => {
