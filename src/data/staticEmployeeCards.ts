@@ -53,12 +53,13 @@ export let employeeCardBonuses: EmployeeCardBonus[] = [
 
   // Platinum cards - sorted by last five digits in ascending order
   { cardKey: "Platinum--51017", cardType: "Platinum", lastFive: "-51017", hasBonus: true },
-  { cardKey: "Platinum--51066", cardType: "Platinum", lastFive: "-51066", hasBonus: true },
+  { cardKey: "Platinum--51066", cardType: "Platinum", lastFive: "-51066", hasBonus: false },
   { cardKey: "Platinum--51074", cardType: "Platinum", lastFive: "-51074", hasBonus: true },
   { cardKey: "Platinum--51082", cardType: "Platinum", lastFive: "-51082", hasBonus: true },
   { cardKey: "Platinum--51090", cardType: "Platinum", lastFive: "-51090", hasBonus: true },
   { cardKey: "Platinum--51108", cardType: "Platinum", lastFive: "-51108", hasBonus: true },
   { cardKey: "Platinum--51116", cardType: "Platinum", lastFive: "-51116", hasBonus: true },
+  { cardKey: "Platinum--52007", cardType: "Platinum", lastFive: "-52007", hasBonus: true },
   { cardKey: "Platinum--52122", cardType: "Platinum", lastFive: "-52122", hasBonus: true },
   { cardKey: "Platinum--52130", cardType: "Platinum", lastFive: "-52130", hasBonus: true },
   { cardKey: "Platinum--52148", cardType: "Platinum", lastFive: "-52148", hasBonus: true },
