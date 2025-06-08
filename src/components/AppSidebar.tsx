@@ -27,7 +27,7 @@ const menuItems = [
   {
     title: "Employee Cards",
     icon: CreditCard,
-    url: "#",
+    url: "/employee",
   },
   {
     title: "CreditMax",
