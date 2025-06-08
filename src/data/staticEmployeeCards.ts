@@ -12,7 +12,7 @@ export interface EmployeeCardBonus {
 // All employee cards with their current bonus status - organized by card type and sorted by last five digits
 export let employeeCardBonuses: EmployeeCardBonus[] = [
   // Blue Plus I cards - sorted by last five digits in ascending order
-  { cardKey: "Blue Plus I--01000", cardType: "Blue Plus I", lastFive: "-01000", hasBonus: true },
+  { cardKey: "Blue Plus I--01000", cardType: "Blue Plus I", lastFive: "-01000", hasBonus: false },
   { cardKey: "Blue Plus I--01018", cardType: "Blue Plus I", lastFive: "-01018", hasBonus: true },
   { cardKey: "Blue Plus I--01026", cardType: "Blue Plus I", lastFive: "-01026", hasBonus: true },
   { cardKey: "Blue Plus I--01067", cardType: "Blue Plus I", lastFive: "-01067", hasBonus: true },
