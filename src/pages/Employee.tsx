@@ -8,6 +8,8 @@ import { EmployeeCardList } from "@/components/employee/EmployeeCardList"
 import { useFilterState } from "@/hooks/useFilterState"
 import { staticEmpData } from "@/data/staticEmpData"
 import { parseEmployeeData } from "@/utils/employeeParser"
+import { Input } from "@/components/ui/input"
+import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { X } from "lucide-react"
 
 const Employee = () => {
@@ -15,6 +17,16 @@ const Employee = () => {
   
   // Parse the static employee data into proper format
   const employeeTransactions = parseEmployeeData(staticEmpData)
+
+  // Get unique card types for the dropdown
+  const uniqueCardTypes = React.useMemo(() => {
+    const cardTypes = new Set<string>()
+    employeeTransactions.forEach(transaction => {
+      const cardDisplay = `${transaction.card_type} (${transaction.last_five})`
+      cardTypes.add(cardDisplay)
+    })
+    return Array.from(cardTypes).sort()
+  }, [employeeTransactions])
 
   // Filter transactions based on selected card (now by last 5 digits)
   const filteredTransactions = React.useMemo(() => {
@@ -44,6 +56,18 @@ const Employee = () => {
     }
     
     return `Card ending in ${filters.selectedCard}`
+  }
+
+  const handleCardDropdownChange = (cardSelection: string) => {
+    if (cardSelection === "all") {
+      updateFilter('selectedCard', 'all')
+    } else {
+      // Extract the last 5 digits from the card display format
+      const match = cardSelection.match(/\((\d{5})\)$/)
+      if (match) {
+        updateFilter('selectedCard', match[1])
+      }
+    }
   }
 
   return (
@@ -91,6 +115,21 @@ const Employee = () => {
                     )}
                   </div>
                   <div className="p-6">
+                    {/* Filter Controls */}
+                    <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
+                      <Input
+                        placeholder="Search descriptions..."
+                        value={filters.globalFilter ?? ""}
+                        onChange={(event) => updateFilter('globalFilter', event.target.value)}
+                        className="max-w-sm"
+                      />
+                      <CardFilterDropdown
+                        selectedCard={filters.selectedCard}
+                        creditCards={uniqueCardTypes}
+                        onCardChange={handleCardDropdownChange}
+                      />
+                    </div>
+                    
                     <EmployeeTransactionTable
                       transactions={filteredTransactions}
                       globalFilter={filters.globalFilter}
