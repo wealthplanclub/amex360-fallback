@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -8,6 +7,7 @@ import {
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Switch } from "@/components/ui/switch"
+import { Award } from "lucide-react"
 import { staticEmpData } from "@/data/staticEmpData"
 import { getCardImage } from "@/utils/cardImageUtils"
 import * as React from "react"
@@ -147,8 +147,13 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
                           alt="Employee card" 
                           className="w-16 h-10 object-cover rounded"
                         />
-                        <div className="text-sm font-medium leading-tight whitespace-pre-line">
-                          {card.displayName}
+                        <div className="flex items-center gap-2">
+                          <div className="text-sm font-medium leading-tight whitespace-pre-line">
+                            {card.displayName}
+                          </div>
+                          {isBonusActive && (
+                            <Award className="h-4 w-4 text-yellow-500" />
+                          )}
                         </div>
                       </div>
                       <div className="flex items-center justify-end sm:justify-end">
