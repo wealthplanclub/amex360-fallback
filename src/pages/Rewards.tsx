@@ -23,31 +23,26 @@ const Rewards = () => {
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      setIsVisible(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    // Remove the artificial delay - content loads immediately
+    setIsLoading(false);
+    setIsVisible(true);
   }, []);
 
   React.useEffect(() => {
     setNumbersKey(prev => prev + 1);
   }, [filters.selectedTimeRange, filters.selectedDate, filters.selectedCard]);
 
-  if (isLoading) {
+  // Show animation while loading the JSON file
+  if (!animationData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          {animationData && (
-            <Lottie
-              animationData={animationData}
-              className="w-32 h-32 mx-auto"
-              loop={true}
-              autoplay={true}
-            />
-          )}
+          <Lottie
+            animationData={animationData}
+            className="w-32 h-32 mx-auto"
+            loop={true}
+            autoplay={true}
+          />
         </div>
       </div>
     );
