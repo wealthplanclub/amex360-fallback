@@ -1,7 +1,12 @@
 
 import React, { createContext, useContext } from 'react'
 import { EmployeeTransaction } from '@/components/employee/EmployeeTransactionColumns'
-import { updateCardToggleState, getCardToggleState, getAllToggleStates } from '@/data/staticCardToggleData'
+import { 
+  updateCardBonusStatus, 
+  getCardBonusStatus, 
+  getAllCardBonuses, 
+  getBonusCardCount 
+} from '@/data/staticEmployeeCards'
 
 interface EmployeeBonusContextType {
   toggleStates: Record<string, boolean>
@@ -34,19 +39,29 @@ interface EmployeeBonusProviderProps {
 }
 
 export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ children }) => {
+  // Force update state to trigger re-renders when toggle states change
+  const [forceUpdate, setForceUpdate] = React.useState(0)
+
   const toggleCardBonus = (cardKey: string) => {
-    const currentState = getCardToggleState(cardKey)
-    updateCardToggleState(cardKey, !currentState)
+    const currentState = getCardBonusStatus(cardKey)
+    updateCardBonusStatus(cardKey, !currentState)
     // Force re-render by updating a dummy state
     setForceUpdate(prev => prev + 1)
   }
 
   const isCardBonusActive = (cardKey: string) => {
-    return getCardToggleState(cardKey)
+    return getCardBonusStatus(cardKey)
   }
 
-  // Force update state to trigger re-renders when toggle states change
-  const [forceUpdate, setForceUpdate] = React.useState(0)
+  // Convert array to record format for compatibility
+  const getToggleStatesRecord = (): Record<string, boolean> => {
+    const allCards = getAllCardBonuses()
+    const record: Record<string, boolean> = {}
+    allCards.forEach(card => {
+      record[card.cardKey] = card.hasBonus
+    })
+    return record
+  }
 
   const getAdjustedMetrics = (
     baseTransactions: EmployeeTransaction[], 
@@ -63,25 +78,24 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
     
     // Calculate bonus points based on current filter state
     let bonusPoints = 0
-    const toggleStates = getAllToggleStates()
     
     if (selectedCardType && selectedCardType !== "all" && selectedLastFive && selectedLastFive !== "all") {
       // State C: Specific card selected - only apply bonus for this exact card
       const specificCardKey = `${selectedCardType}-${selectedLastFive}`
-      if (toggleStates[specificCardKey]) {
+      if (getCardBonusStatus(specificCardKey)) {
         bonusPoints = 15000
       }
     } else if (selectedCardType && selectedCardType !== "all") {
       // State B: Card type selected - apply bonuses for all active cards of this type
       uniqueCardCombinations.forEach(cardKey => {
         const [cardType] = cardKey.split('-')
-        if (cardType === selectedCardType && toggleStates[cardKey]) {
+        if (cardType === selectedCardType && getCardBonusStatus(cardKey)) {
           bonusPoints += 15000
         }
       })
     } else {
       // State A: All cards - apply all active bonuses
-      bonusPoints = Object.values(toggleStates).filter(Boolean).length * 15000
+      bonusPoints = getBonusCardCount() * 15000
     }
     
     const totalPoints = Math.round(basePoints + bonusPoints)
@@ -96,7 +110,7 @@ export const EmployeeBonusProvider: React.FC<EmployeeBonusProviderProps> = ({ ch
   }
 
   const value = {
-    toggleStates: getAllToggleStates(),
+    toggleStates: getToggleStatesRecord(),
     toggleCardBonus,
     isCardBonusActive,
     getAdjustedMetrics
