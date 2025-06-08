@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 
 const metricsData = [
   {
-    title: "Total Card Accounts",
+    title: "Active Card Accounts",
     value: "13"
   },
   {
