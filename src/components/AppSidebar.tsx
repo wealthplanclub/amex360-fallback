@@ -51,12 +51,10 @@ export function AppSidebar() {
     // Simulate data refresh
     console.log("Refreshing static data...")
     
-    // Show success toast
+    // Show success toast that will exit to the right
     toast.success("Dashboard refreshed", {
       description: "Latest transaction data has been loaded",
       position: "top-right",
-      dismissible: true,
-      duration: 4000,
     })
     
     close()
