@@ -227,9 +227,6 @@ export function QuickMetricsCards() {
             {cardContent}
           </SheetTrigger>
           <SheetContent side="bottom" className="h-auto max-h-[80vh]">
-            <SheetHeader>
-              <SheetTitle>Metric Details</SheetTitle>
-            </SheetHeader>
             <MetricSheetContent metric={metric} />
           </SheetContent>
         </Sheet>
