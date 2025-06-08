@@ -10,15 +10,15 @@ import { getCardImage } from "@/utils/cardImageUtils"
 const cardDetails = {
   highestCreditLimit: [
     {
-      name: "Delta SkyMiles® Gold Business Card",
-      lastFive: "1006",
+      name: "Delta SkyMiles® Reserve",
+      lastFive: "-1006",
       amount: "$30,000",
       type: "hard limit",
       image: getCardImage("delta")
     },
     {
-      name: "American Express® Green Card",
-      lastFive: "2007", 
+      name: "Business Green Rewards",
+      lastFive: "-2007", 
       amount: "$30,000",
       type: "pay over time",
       image: getCardImage("green")
@@ -26,15 +26,15 @@ const cardDetails = {
   ],
   lowestCreditLimit: [
     {
-      name: "American Express® Gold Card",
-      lastFive: "1002",
+      name: "Business Classic Gold",
+      lastFive: "-1002",
       amount: "$2,000", 
       type: "pay over time",
       image: getCardImage("gold -1002")
     },
     {
-      name: "American Express® Gold Card",
-      lastFive: "1000",
+      name: "Business White Gold",
+      lastFive: "-1000",
       amount: "$2,000",
       type: "pay over time", 
       image: getCardImage("gold -1000")
@@ -42,19 +42,31 @@ const cardDetails = {
   ],
   brandPartners: [
     {
-      name: "Delta SkyMiles Cards",
+      name: "Delta SkyMiles® Reserve",
+      lastFive: "-1006",
+      amount: "$30,000",
+      type: "limit",
       image: getCardImage("delta")
     },
     {
-      name: "Marriott Bonvoy Cards",
+      name: "Marriott Bonvoy Business",
+      lastFive: "-1009",
+      amount: "$5,000",
+      type: "limit",
       image: getCardImage("marriott")
     },
     {
-      name: "Hilton Honors Cards", 
+      name: "Hilton Honors Business", 
+      lastFive: "-9003",
+      amount: "$5,000",
+      type: "limit",
       image: getCardImage("hilton")
     },
     {
-      name: "Amazon Business Cards",
+      name: "Amazon Business Prime",
+      lastFive: "-2003",
+      amount: "$6,000",
+      type: "limit",
       image: getCardImage("amazon")
     }
   ]
