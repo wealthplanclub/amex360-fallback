@@ -5,7 +5,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { AppHeader } from "@/components/AppHeader";
 import { MainCards } from "@/components/MainCards";
 import { QuickMetricsCards } from "@/components/QuickMetricsCards";
-import { ChartDisplay } from "@/components/chart/ChartDisplay";
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { TransactionCard } from "@/components/TransactionCard";
 import { CardAccounts } from "@/components/CardAccounts";
 import { useFilterState } from "@/hooks/useFilterState";
@@ -53,6 +53,15 @@ const Dashboard = () => {
     updateFilter('selectedCard', 'all');
   };
 
+  const clearStatCardFilter = () => {
+    updateMultipleFilters({
+      expenseFilter: undefined,
+      creditFilter: undefined,
+      topCardFilter: undefined,
+      lowestCardFilter: undefined
+    });
+  };
+
   const handleTimeRangeChange = (timeRange: string) => {
     // When a time range is selected, clear the specific date filter
     updateMultipleFilters({
@@ -82,8 +91,8 @@ const Dashboard = () => {
             {/* Main Metrics Cards */}
             <div className="mt-8">
               <MainCards 
-                filters={filters}
-                onCardClick={(cardType, account) => {
+                selectedTimeRange={filters.selectedTimeRange}
+                onStatCardClick={(cardType, account) => {
                   console.log("Main card clicked:", cardType, account);
                   if (cardType === "top-card") {
                     updateFilter('selectedCard', account || 'all');
@@ -99,8 +108,8 @@ const Dashboard = () => {
             
             {/* Chart - Full Width Row */}
             <div className="mt-8">
-              <ChartDisplay
-                filters={filters}
+              <ChartAreaInteractive
+                selectedTimeRange={filters.selectedTimeRange}
                 onTimeRangeChange={handleTimeRangeChange}
                 onDateClick={handleDateClick}
               />
@@ -115,7 +124,7 @@ const Dashboard = () => {
                   onClearTimeRangeFilter={clearTimeRangeFilter}
                   onDropdownChange={handleTransactionDropdownChange}
                   onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                  onClearCardFilter={clearCardFilter}
+                  onClearStatCardFilter={clearStatCardFilter}
                 />
               </div>
               <div className="lg:col-span-1">
