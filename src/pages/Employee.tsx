@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
+import { EmployeeMainMetricsCards } from "@/components/employee/EmployeeMainMetricsCards"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
 import { EmployeeTransactionSection } from "@/components/employee/EmployeeTransactionSection"
 import { EmployeeCardSection } from "@/components/employee/EmployeeCardSection"
@@ -39,6 +40,11 @@ const Employee = () => {
           
           <div className="max-w-7xl mx-auto px-6 mb-8">
             <EmployeeHeader />
+            
+            {/* Main Metrics Cards - Same as Index Page */}
+            <div className="mt-8">
+              <EmployeeMainMetricsCards />
+            </div>
             
             {/* Employee Metrics Cards */}
             <div className="mt-8">
