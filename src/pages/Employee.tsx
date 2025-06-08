@@ -1,4 +1,3 @@
-
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -72,7 +71,7 @@ const Employee = () => {
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Transaction Table */}
               <div className="lg:col-span-2">
-                <div className="bg-white rounded-lg border">
+                <div className="bg-gradient-to-b from-white to-gray-100 rounded-lg border">
                   <div className="p-6 pb-2">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
                     {!hasCardFilter && (
