@@ -28,6 +28,13 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
   const { toggleCardBonus, isCardBonusActive } = useEmployeeBonus()
   const [lastFiveFilter, setLastFiveFilter] = React.useState("")
 
+  // Clear search filter when a specific card is selected
+  React.useEffect(() => {
+    if (selectedCard && selectedCard !== "all") {
+      setLastFiveFilter("")
+    }
+  }, [selectedCard])
+
   // Calculate card totals by unique combination of card type and last 5 digits
   const cardData = React.useMemo(() => {
     const cardTotals = transactions.reduce((acc, transaction) => {
@@ -78,7 +85,10 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     return filtered
   }, [cardData, selectedCardType, lastFiveFilter])
 
-  // Calculate dynamic height based on filtered card count
+  // Check if a specific card is selected (not just a card type)
+  const isSpecificCardSelected = selectedCard && selectedCard !== "all" && selectedCardType && selectedCardType !== "all"
+
+  // Calculate dynamic height based on filtered card count and search bar visibility
   const dynamicHeight = React.useMemo(() => {
     const baseHeight = 200
     const cardHeight = 120
@@ -88,11 +98,14 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     return Math.min(calculatedHeight, maxHeight)
   }, [filteredCardData.length])
 
-  // Calculate scroll area height (subtract space for search bar)
+  // Calculate scroll area height (subtract space for search bar only if it's visible)
   const scrollAreaHeight = React.useMemo(() => {
+    if (isSpecificCardSelected) {
+      return "100%" // No search bar space to subtract
+    }
     const searchBarHeight = 56 // height of search input + margin
     return `calc(100% - ${searchBarHeight}px)`
-  }, [])
+  }, [isSpecificCardSelected])
 
   const handleCardClick = (card: any) => {
     if (!onCardClick) return
@@ -128,14 +141,16 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
-        <div className="mb-4">
-          <Input
-            placeholder="Search last 5 digits"
-            value={lastFiveFilter}
-            onChange={(e) => setLastFiveFilter(e.target.value)}
-            className="w-auto"
-          />
-        </div>
+        {!isSpecificCardSelected && (
+          <div className="mb-4 transition-all duration-300 ease-in-out">
+            <Input
+              placeholder="Search last 5 digits"
+              value={lastFiveFilter}
+              onChange={(e) => setLastFiveFilter(e.target.value)}
+              className="w-auto"
+            />
+          </div>
+        )}
         <ScrollArea className="pr-4" style={{ height: scrollAreaHeight }}>
           <div className="space-y-4 pb-6">
             {filteredCardData.map((card, index) => {
