@@ -46,15 +46,8 @@ const cardDetails = {
       lastFive: "-4156",
       amount: "$2,000,000", 
       type: "installment",
-      image: getCardImage("blueprint")
+      image: getCardImage("bloc")
     },
-    {
-      name: "Business White Gold",
-      lastFive: "-1000",
-      amount: "$2,000",
-      type: "pay over time", 
-      image: getCardImage("gold -1000")
-    }
   ],
   brandPartners: [
     {
