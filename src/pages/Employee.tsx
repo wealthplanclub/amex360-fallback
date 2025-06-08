@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
+import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
 import { EmployeeTransactionSection } from "@/components/employee/EmployeeTransactionSection"
 import { EmployeeCardSection } from "@/components/employee/EmployeeCardSection"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
@@ -37,7 +38,12 @@ const Employee = () => {
           <AppHeader />
           
           <div className="max-w-7xl mx-auto px-6 mb-8">
-            <EmployeeHeader filteredTransactions={filteredTransactions} />
+            <EmployeeHeader />
+            
+            {/* Employee Metrics Cards */}
+            <div className="mt-8">
+              <EmployeeMetricsCards filteredTransactions={filteredTransactions} />
+            </div>
             
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
               <EmployeeTransactionSection
