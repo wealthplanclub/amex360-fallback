@@ -137,14 +137,14 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Employee cards</CardTitle>
         <CardDescription>
-          Total spending by card (last 5 digits)
+          Total spending by card account
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         {!isSpecificCardSelected && (
           <div className="mb-4 transition-all duration-300 ease-in-out">
             <Input
-              placeholder="Search last 5 digits"
+              placeholder="Filter by last 5 digits..."
               value={lastFiveFilter}
               onChange={(e) => setLastFiveFilter(e.target.value)}
               className="w-auto"
