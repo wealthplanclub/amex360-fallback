@@ -1,6 +1,6 @@
 
 import React from "react"
-import { DollarSign, Star, TrendingUp } from "lucide-react"
+import { DollarSign, Star, TrendingUp, CreditCard } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 
@@ -31,11 +31,16 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
     const totalSpend = filteredTransactions.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0)
     const totalPoints = filteredTransactions.reduce((sum, transaction) => sum + (Math.abs(transaction.amount) * transaction.point_multiple), 0)
     const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
+    
+    // Count unique last 5 digit cards
+    const uniqueLastFive = new Set(filteredTransactions.map(transaction => transaction.last_five))
+    const totalCards = uniqueLastFive.size
 
     return {
       totalSpend,
       totalPoints: Math.round(totalPoints),
-      avgPointsPerDollar: Number(avgPointsPerDollar.toFixed(2))
+      avgPointsPerDollar: Number(avgPointsPerDollar.toFixed(2)),
+      totalCards
     }
   }, [filteredTransactions])
 
@@ -66,11 +71,20 @@ export function EmployeeMetricsCards({ filteredTransactions }: EmployeeMetricsCa
       footer: "Points per dollar",
       description: "Average points earned per dollar",
       formatAsPoints: true
+    },
+    {
+      title: "Total Cards",
+      value: metrics.totalCards,
+      badge: "Cards",
+      icon: CreditCard,
+      footer: "Unique cards",
+      description: "Total unique employee cards",
+      formatAsPoints: true
     }
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 md:grid-cols-2 lg:grid-cols-4">
       {cardData.map((card, index) => (
         <StatCard
           key={card.title}
