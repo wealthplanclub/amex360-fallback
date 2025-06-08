@@ -13,7 +13,7 @@ export function EmployeeCardSearch({ value, onChange, isVisible }: EmployeeCardS
     <div 
       className={`transition-all duration-300 ease-in-out ${
         isVisible 
-          ? 'mb-3 mt-1 opacity-100' 
+          ? 'mb-2 mt-1 opacity-100' 
           : 'mb-0 mt-0 opacity-0'
       }`}
       style={{
