@@ -30,7 +30,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="w-full md:w-auto md:ml-auto">
+        <Button variant="outline" className="w-full md:w-auto md:ml-auto focus:ring-0 focus:ring-offset-0">
           <CreditCard className="mr-2 h-4 w-4" />
           {getDisplayText()}
           <ChevronDown className="ml-2 h-4 w-4" />
