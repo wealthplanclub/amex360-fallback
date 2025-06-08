@@ -92,7 +92,7 @@ const Employee = () => {
               {/* Transaction Table */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg border">
-                  <div className="p-6">
+                  <div className="p-6 pb-0">
                     <h2 className="text-xl font-semibold">Employee Transactions</h2>
                     {!hasCardFilter && (
                       <p className="text-sm text-muted-foreground mt-1">
@@ -113,8 +113,7 @@ const Employee = () => {
                         </span>
                       </div>
                     )}
-                  </div>
-                  <div className="p-6">
+                    
                     {/* Filter Controls */}
                     <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
                       <Input
@@ -129,13 +128,13 @@ const Employee = () => {
                         onCardChange={handleCardDropdownChange}
                       />
                     </div>
-                    
-                    <EmployeeTransactionTable
-                      transactions={filteredTransactions}
-                      globalFilter={filters.globalFilter}
-                      onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                    />
                   </div>
+                  
+                  <EmployeeTransactionTable
+                    transactions={filteredTransactions}
+                    globalFilter={filters.globalFilter}
+                    onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+                  />
                 </div>
               </div>
               
