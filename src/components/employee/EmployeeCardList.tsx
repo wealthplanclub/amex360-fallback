@@ -79,11 +79,6 @@ export function EmployeeCardList({ selectedCard, onCardClick, transactions, sele
     }
   }
 
-  const getSelectedCard = (card: any) => {
-    if (!selectedCard || selectedCard === "all") return false
-    return card.fullName === selectedCard
-  }
-
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-100 flex flex-col transition-all duration-300 ease-in-out"
