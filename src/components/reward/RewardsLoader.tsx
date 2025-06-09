@@ -9,7 +9,7 @@ interface RewardsLoaderProps {
 
 export function RewardsLoader({ animationData, showLottie }: RewardsLoaderProps) {
   return (
-    <div className="min-h-screen flex items-start justify-center pt-32">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         {animationData && showLottie && (
           <Lottie

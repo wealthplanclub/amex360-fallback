@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
 import { CreditMaxQuickMetrics } from "@/components/creditmax/CreditMaxQuickMetrics"
@@ -75,7 +74,7 @@ const CreditMax = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-start justify-center pt-32">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           {animationData && showLottie && (
             <Lottie
