@@ -1,4 +1,3 @@
-
 import React, { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
@@ -77,7 +76,7 @@ export function CreditMaxQuickMetrics({ swapTransactions }: CreditMaxQuickMetric
   const metricsData = [
     {
       title: "Total Points Earned",
-      value: metrics.totalPointsEarned.toLocaleString(),
+      value: `${metrics.totalPointsEarned.toLocaleString()} pts`,
       description: "Total points earned on outbound transactions",
       dataSource: "CreditMax Transaction System",
       lastUpdated: "Real-time",
