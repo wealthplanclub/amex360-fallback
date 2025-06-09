@@ -76,7 +76,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       value: Math.abs(metrics.netFlow),
       badge: metrics.totalSwapOut > 0 ? `${Math.round((Math.abs(metrics.netFlow) / metrics.totalSwapOut) * 100)}%` : "0%",
       icon: ArrowUpDown,
-      footer: metrics.netFlow >= 0 ? "Net inflow" : "Net outflow",
+      footer: metrics.netFlow > 0 ? "Net inflow" : metrics.netFlow < 0 ? "Net outflow" : "Net outflow",
       description: "Net swap activity",
       formatAsPoints: false
     },
