@@ -6,7 +6,7 @@ import { SwapTransaction } from '@/utils/swapParser'
 export function useCreditMaxFilters(transactions: SwapTransaction[]) {
   const { filters, updateFilter, clearAllFilters } = useFilterState()
 
-  // Get unique counterparties for dropdown
+  // Get unique counterparties for dropdown (clean names without prefix)
   const uniqueCounterparties = useMemo(() => {
     const counterparties = [...new Set(transactions.map(t => t.counterparty))]
     return ["All counterparties", ...counterparties.sort()]
@@ -42,14 +42,20 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     }
   }
 
-  // Handle counterparty dropdown change
+  // Handle counterparty dropdown change (remove any business prefix)
   const handleCounterpartyDropdownChange = (counterparty: string) => {
     console.log('Counterparty dropdown changed:', counterparty)
     
-    if (counterparty === "All counterparties") {
+    // Clean the counterparty name by removing any business prefix
+    let cleanCounterparty = counterparty
+    if (counterparty.startsWith('business ')) {
+      cleanCounterparty = counterparty.replace('business ', '')
+    }
+    
+    if (cleanCounterparty === "All counterparties") {
       updateFilter('selectedCounterparty', undefined)
     } else {
-      updateFilter('selectedCounterparty', counterparty)
+      updateFilter('selectedCounterparty', cleanCounterparty)
     }
   }
 
@@ -63,7 +69,7 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     return transactions
   }
 
-  // Get filter display text
+  // Get filter display text (clean without prefix)
   const getFilterDisplayText = () => {
     const parts = []
     
@@ -74,7 +80,7 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     return parts.join(', ')
   }
 
-  // Get counterparty dropdown display text
+  // Get counterparty dropdown display text (clean without prefix)
   const getCounterpartyDropdownDisplayText = () => {
     if (filters.selectedCounterparty && filters.selectedCounterparty !== "all") {
       return filters.selectedCounterparty
