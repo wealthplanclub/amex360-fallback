@@ -11,6 +11,7 @@ import { DashboardLoader } from "@/components/dashboard/DashboardLoader"
 import { staticSwapData } from "@/data/staticSwapData"
 import { parseSwapData } from "@/utils/swapParser"
 import { useCreditMaxFilters } from "@/hooks/useCreditMaxFilters"
+import Lottie from "lottie-react"
 
 const CreditMax = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -70,7 +71,12 @@ const CreditMax = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           {animationData && showLottie && (
-            <DashboardLoader animationData={animationData} />
+            <Lottie
+              animationData={animationData}
+              className="w-40 h-40 mx-auto"
+              loop={true}
+              autoplay={true}
+            />
           )}
         </div>
       </div>
