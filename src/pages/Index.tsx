@@ -29,7 +29,7 @@ const Index = () => {
       setIsLoading(false);
       // Start showing content with staggered animations
       setTimeout(() => setShowContent(true), 100);
-    }, 500);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
