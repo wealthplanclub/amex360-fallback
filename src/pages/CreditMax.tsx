@@ -1,16 +1,42 @@
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
+import { DashboardLoader } from "@/components/dashboard/DashboardLoader"
 import { staticSwapData } from "@/data/staticSwapData"
 import { parseSwapData } from "@/utils/swapParser"
 import { useCreditMaxFilters } from "@/hooks/useCreditMaxFilters"
 
 const CreditMax = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [animationData, setAnimationData] = useState(null)
+
+  useEffect(() => {
+    // Load the triple-card animation
+    const loadAnimation = async () => {
+      try {
+        const response = await fetch('/triple-card.json')
+        const data = await response.json()
+        setAnimationData(data)
+      } catch (error) {
+        console.error('Failed to load animation:', error)
+      }
+    }
+
+    loadAnimation()
+
+    // Show loading for 2 seconds like other pages
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   // Parse the static swap data into proper format
   const swapTransactions = parseSwapData(staticSwapData)
 
@@ -27,6 +53,10 @@ const CreditMax = () => {
     handleClearAllFilters,
     updateFilter
   } = useCreditMaxFilters(swapTransactions)
+
+  if (isLoading) {
+    return <DashboardLoader animationData={animationData} />
+  }
 
   return (
     <SidebarProvider>
