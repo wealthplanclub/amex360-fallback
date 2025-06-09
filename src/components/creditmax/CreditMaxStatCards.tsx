@@ -2,6 +2,7 @@
 import React from "react"
 import { TrendingUp, TrendingDown, ArrowUpDown, BarChart3 } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
+import { formatPointMultiple } from "@/utils/pointMultipleUtils"
 
 interface SwapTransaction {
   date: string
@@ -42,12 +43,14 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     const totalPointsEarned = outboundTransactions.reduce((sum, t) => sum + (t.amount * t.multiple), 0)
     const actualSpend = totalCardSpend * 0.03
     const truePointMultiple = actualSpend > 0 ? totalPointsEarned / actualSpend : 0
+    const pointsEarnedMultiple = totalCardSpend > 0 ? totalPointsEarned / totalCardSpend : 0
 
     return {
       totalPointsEarned: Math.round(totalPointsEarned),
       totalCardSpend,
       actualSpend,
-      truePointMultiple
+      truePointMultiple,
+      pointsEarnedMultiple
     }
   }, [swapTransactions])
 
@@ -55,7 +58,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     {
       title: "Total Points Earned",
       value: metrics.totalPointsEarned,
-      badge: "100%",
+      badge: formatPointMultiple(metrics.pointsEarnedMultiple),
       icon: TrendingUp,
       footer: "Points earned",
       description: "Total points earned on outbound transactions",
