@@ -53,13 +53,24 @@ export function CounterpartyList({ selectedCounterparty, onCounterpartyClick, tr
       .sort((a, b) => b.outboundTotal - a.outboundTotal)
   }, [transactions])
 
-  // Filter counterparties based on search
+  // Filter counterparties based on selection and search
   const filteredCounterparties = React.useMemo(() => {
-    if (!searchFilter) return counterpartyData
-    return counterpartyData.filter(counterparty =>
-      counterparty.name.toLowerCase().includes(searchFilter.toLowerCase())
-    )
-  }, [counterpartyData, searchFilter])
+    let filtered = counterpartyData
+
+    // If a specific counterparty is selected from dropdown, only show that one
+    if (selectedCounterparty && selectedCounterparty !== "all") {
+      filtered = filtered.filter(counterparty => counterparty.name === selectedCounterparty)
+    }
+
+    // Apply search filter only if no specific counterparty is selected
+    if ((!selectedCounterparty || selectedCounterparty === "all") && searchFilter) {
+      filtered = filtered.filter(counterparty =>
+        counterparty.name.toLowerCase().includes(searchFilter.toLowerCase())
+      )
+    }
+
+    return filtered
+  }, [counterpartyData, searchFilter, selectedCounterparty])
 
   // Clear search when counterparty is selected
   React.useEffect(() => {
