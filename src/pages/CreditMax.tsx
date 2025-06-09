@@ -50,10 +50,10 @@ const CreditMax = () => {
             />
           </div>
           
-          {/* CreditMax Stat Cards */}
+          {/* CreditMax Stat Cards - now using filtered transactions */}
           <div className="mt-8">
             <CreditMaxStatCards 
-              swapTransactions={swapTransactions}
+              swapTransactions={filteredTransactions}
             />
           </div>
 
