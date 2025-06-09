@@ -4,7 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
-import { CreditMaxQuickMetrics } from "@/components/creditmax/CreditMaxQuickMetrics"
+import { CreditMaxVerticalMetrics } from "@/components/creditmax/CreditMaxVerticalMetrics"
 import { CreditMaxChartDisplay } from "@/components/creditmax/CreditMaxChartDisplay"
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
@@ -134,25 +134,27 @@ const CreditMax = () => {
             />
           </div>
 
-          {/* Quick Metrics Cards */}
-          <div className="mt-8">
-            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
-          </div>
+          {/* Main Layout with Vertical Metrics */}
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Left Column - Vertical Metrics */}
+            <div className="lg:col-span-1">
+              <CreditMaxVerticalMetrics swapTransactions={counterpartyFilteredTransactions} />
+            </div>
 
-          {/* Main Content - Transaction Table and Counterparty List */}
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Transaction Table */}
-            <SwapTransactionSection
-              filteredTransactions={tableFilteredTransactions}
-              hasAnyFilter={hasAnyFilter}
-              getFilterDisplayText={getFilterDisplayText}
-              handleClearAllFilters={handleClearAllFilters}
-              selectedCounterparty={filters.selectedCard || "all"}
-              uniqueCounterparties={uniqueCounterparties}
-              handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
-            />
+            {/* Middle Column - Transaction Table */}
+            <div className="lg:col-span-2">
+              <SwapTransactionSection
+                filteredTransactions={tableFilteredTransactions}
+                hasAnyFilter={hasAnyFilter}
+                getFilterDisplayText={getFilterDisplayText}
+                handleClearAllFilters={handleClearAllFilters}
+                selectedCounterparty={filters.selectedCard || "all"}
+                uniqueCounterparties={uniqueCounterparties}
+                handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
+              />
+            </div>
 
-            {/* Counterparty List */}
+            {/* Right Column - Counterparty List */}
             <div className="lg:col-span-1">
               <CounterpartyList 
                 selectedCounterparty={filters.selectedCard}
