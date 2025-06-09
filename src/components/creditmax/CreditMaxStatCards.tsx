@@ -1,6 +1,6 @@
 
 import React from "react"
-import { TrendingUp, TrendingDown, ArrowUpDown, Users } from "lucide-react"
+import { TrendingUp, TrendingDown, ArrowUpDown, BarChart3 } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 
 interface SwapTransaction {
@@ -42,13 +42,13 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     const totalSwapIn = swapInTransactions.reduce((sum, t) => sum + t.amount, 0)
     const totalSwapOut = swapOutTransactions.reduce((sum, t) => sum + t.amount, 0)
     const netFlow = totalSwapIn - totalSwapOut
-    const uniqueMembers = new Set(swapTransactions.map(t => t.counterparty)).size
+    const averageVolume = swapOutTransactions.length > 0 ? totalSwapOut / swapOutTransactions.length : 0
 
     return {
       totalSwapIn,
       totalSwapOut,
       netFlow,
-      uniqueMembers
+      averageVolume
     }
   }, [swapTransactions])
 
@@ -81,13 +81,13 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       formatAsPoints: false
     },
     {
-      title: "Active Members",
-      value: metrics.uniqueMembers,
-      badge: "Members",
-      icon: Users,
-      footer: "Unique participants",
-      description: "Total active members",
-      formatAsPoints: true
+      title: "Average Volume",
+      value: metrics.averageVolume,
+      badge: "Per Transaction",
+      icon: BarChart3,
+      footer: "Outbound average",
+      description: "Average outbound amount",
+      formatAsPoints: false
     }
   ]
 
