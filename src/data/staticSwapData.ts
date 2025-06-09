@@ -1,5 +1,5 @@
 
-export const staticSwapData = `date	member	amount	direction	multiple	card
+export const staticSwapData = `date	counterparty	amount	direction	multiple	card
 2024-12-07 05:00:00+00	Lee Williams	8000	SWAP_IN		
 2024-12-07 05:00:00+00	Lee Williams	4000	SWAP_OUT	1	Platinum
 2024-12-07 05:00:00+00	Lee Williams	5000	SWAP_OUT	1.5	Platinum
