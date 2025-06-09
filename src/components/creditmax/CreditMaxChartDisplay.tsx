@@ -36,36 +36,12 @@ export function CreditMaxChartDisplay({
     }
   }
 
-  const getAverageDailyPoints = () => {
+  const getCumulativePoints = () => {
     if (chartData.length === 0) return 0
     
+    // Return the final cumulative points value from the chart data
     const totalPoints = chartData[chartData.length - 1]?.cumulativePoints || 0
-    
-    // Calculate number of days based on time range
-    let numberOfDays: number
-    const today = new Date()
-    
-    switch (selectedTimeRange) {
-      case "ytd":
-        const startOfYear = new Date(today.getFullYear(), 0, 1)
-        numberOfDays = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1
-        break
-      case "90d":
-        numberOfDays = 90
-        break
-      case "30d":
-        numberOfDays = 30
-        break
-      case "7d":
-        numberOfDays = 7
-        break
-      default:
-        numberOfDays = chartData.length
-    }
-    
-    if (numberOfDays === 0) return 0
-    
-    return Math.round(totalPoints / numberOfDays)
+    return Math.round(totalPoints)
   }
 
   return (
@@ -74,7 +50,7 @@ export function CreditMaxChartDisplay({
         <div className="space-y-1">
           <CardTitle className="text-xl font-semibold">CreditMax cumulative metrics</CardTitle>
           <CardDescription>
-            Average daily points {getTimeRangeLabel()}: {getAverageDailyPoints().toLocaleString()} pts
+            Cumulative points {getTimeRangeLabel()}: {getCumulativePoints().toLocaleString()} pts
           </CardDescription>
         </div>
         
