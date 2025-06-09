@@ -7,32 +7,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Accept any credentials and redirect to dashboard
-    console.log("Auth attempt:", { email, password, isLogin });
+    console.log("Auth attempt:", { email, password });
     navigate("/dashboard");
   };
 
   const currentYear = new Date().getFullYear();
 
   return (
-    <div 
-      className="min-h-screen p-6 flex items-center justify-center"
-      style={{
-        backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-        backgroundRepeat: 'repeat',
-        backgroundAttachment: 'fixed'
-      }}
-    >
-      <Card className="bg-gradient-to-b from-white to-gray-100 animate-fade-in w-full max-w-md">
-        <CardHeader className="text-center px-12">
-          <div className="mb-4 mt-6">
+    <div className="min-h-screen flex items-center justify-center p-6">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <div className="mb-4">
             <img 
               src="https://i.imgur.com/1fFddP4.png" 
               alt="Amex Logo" 
@@ -41,7 +32,7 @@ const Auth = () => {
             />
           </div>
         </CardHeader>
-        <CardContent className="px-12">
+        <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">User ID</Label>
