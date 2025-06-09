@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import Auth from "./pages/Auth";
@@ -43,7 +43,7 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
   }, [onLoadingComplete]);
 
   return (
-    <div className="min-h-screen flex items-start justify-center pt-32">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         {animationData && showLottie && (
           <Lottie
@@ -58,7 +58,10 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
   );
 };
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation();
+  const isDashboardRoute = location.pathname === '/dashboard';
+  
   // All useState hooks must be at the top level and unconditional
   const [animationComplete, setAnimationComplete] = useState(() => {
     // Check if animation has been shown before in this session
@@ -83,30 +86,36 @@ const App = () => {
   }, [dashboardReady]);
 
   return (
+    <div className={`min-h-screen w-full ${isDashboardRoute ? 'flex' : ''}`}>
+      <Routes>
+        <Route path="/" element={<Auth />} />
+        <Route 
+          path="/dashboard" 
+          element={
+            !animationComplete ? (
+              <DashboardLoader onLoadingComplete={handleLoadingComplete} />
+            ) : (
+              <Suspense fallback={null}>
+                {dashboardReady && <Dashboard />}
+              </Suspense>
+            )
+          } 
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
           <SidebarProvider>
-            <div className="min-h-screen w-full">
-              <Routes>
-                <Route path="/" element={<Auth />} />
-                <Route 
-                  path="/dashboard" 
-                  element={
-                    !animationComplete ? (
-                      <DashboardLoader onLoadingComplete={handleLoadingComplete} />
-                    ) : (
-                      <Suspense fallback={null}>
-                        {dashboardReady && <Dashboard />}
-                      </Suspense>
-                    )
-                  } 
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
+            <AppContent />
           </SidebarProvider>
         </BrowserRouter>
       </TooltipProvider>
