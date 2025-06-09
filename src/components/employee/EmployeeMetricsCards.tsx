@@ -41,15 +41,6 @@ export function EmployeeMetricsCards({
 
   const cardData = [
     {
-      title: "Total Spend",
-      value: metrics.totalSpend,
-      badge: "100%",
-      icon: TrendingUp,
-      footer: "Employee spending",
-      description: "Total amount spent",
-      formatAsPoints: false
-    },
-    {
       title: "Total Points",
       value: metrics.totalPoints,
       badge: "Points",
@@ -57,6 +48,15 @@ export function EmployeeMetricsCards({
       footer: "Points earned",
       description: "Total points accumulated",
       formatAsPoints: true
+    },
+    {
+      title: "Total Spend",
+      value: metrics.totalSpend,
+      badge: "100%",
+      icon: TrendingUp,
+      footer: "Employee spending",
+      description: "Total amount spent",
+      formatAsPoints: false
     },
     {
       title: "Avg Points/Dollar",
