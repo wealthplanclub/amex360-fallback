@@ -8,7 +8,7 @@ interface DashboardLoaderProps {
 
 export const DashboardLoader = ({ animationData }: DashboardLoaderProps) => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-start justify-center pt-32">
       <div className="text-center">
         {animationData && (
           <Lottie
