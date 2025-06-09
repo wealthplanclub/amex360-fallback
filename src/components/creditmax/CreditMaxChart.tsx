@@ -18,7 +18,7 @@ const chartConfig = {
   },
   actualSpent: {
     label: "Actual Spend:",
-    color: "hsl(var(--chart-3))",
+    color: "#86efac", // green-300
   },
 } satisfies ChartConfig
 
@@ -80,12 +80,12 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           <linearGradient id="fillActualSpent" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="#00175a"
-              stopOpacity={0.4}
+              stopColor="#86efac"
+              stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="#00175a"
+              stopColor="#86efac"
               stopOpacity={0.1}
             />
           </linearGradient>
@@ -150,7 +150,7 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           dataKey="actualSpent"
           type="monotone"
           fill="url(#fillActualSpent)"
-          stroke="#00175a"
+          stroke="#86efac"
           strokeWidth={0}
           stackId="c"
         />
