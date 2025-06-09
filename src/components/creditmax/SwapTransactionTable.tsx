@@ -58,6 +58,18 @@ export function SwapTransactionTable({
     },
   })
 
+  const handleShowAll = () => {
+    setShowAll(true)
+    table.setPageSize(table.getFilteredRowModel().rows.length)
+  }
+
+  const handleShowPaginated = () => {
+    setShowAll(false)
+    table.setPageSize(10)
+  }
+
+  const filteredRowCount = table.getFilteredRowModel().rows.length
+
   return (
     <div className="w-full">
       <SwapTransactionTableContent 
@@ -68,7 +80,9 @@ export function SwapTransactionTable({
       <SwapTransactionPagination 
         table={table}
         showAll={showAll}
-        setShowAll={setShowAll}
+        filteredRowCount={filteredRowCount}
+        onShowAll={handleShowAll}
+        onShowPaginated={handleShowPaginated}
       />
     </div>
   )
