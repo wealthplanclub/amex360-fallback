@@ -49,7 +49,7 @@ const Index = () => {
   // Early return after all hooks have been called
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         <div className="text-center">
           {animationData && showLottie && (
             <DashboardLoader animationData={animationData} />

@@ -43,7 +43,7 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
   }, [onLoadingComplete]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center">
       <div className="text-center">
         {animationData && showLottie && (
           <Lottie
@@ -86,7 +86,7 @@ const AppContent = () => {
   }, [dashboardReady]);
 
   return (
-    <div className={`min-h-screen w-full ${isDashboardRoute ? 'flex' : ''}`}>
+    <div className={`h-screen w-full ${isDashboardRoute ? 'flex' : ''}`}>
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route 
