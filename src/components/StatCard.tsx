@@ -62,6 +62,13 @@ export function StatCard({
       // Add 'pts' suffix for other point-related cards
       return `${formattedValue} pts`;
     }
+    
+    // Special case for "Total Cards" - just display the number
+    if (title === "Total Cards") {
+      return val.toString();
+    }
+    
+    // Default to dollar formatting for other non-points metrics
     return `$${val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
 
