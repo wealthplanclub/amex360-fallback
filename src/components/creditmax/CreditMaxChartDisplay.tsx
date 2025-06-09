@@ -1,0 +1,91 @@
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { TimeRangeSelector } from "@/components/chart/TimeRangeSelector"
+import { CreditMaxChart } from "./CreditMaxChart"
+import { useCreditMaxChartData } from "@/hooks/useCreditMaxChartData"
+import { SwapTransaction } from "@/utils/swapParser"
+
+interface CreditMaxChartDisplayProps {
+  swapTransactions: SwapTransaction[]
+  selectedTimeRange: string
+  onTimeRangeChange: (timeRange: string) => void
+  onDateClick?: (date: string) => void
+}
+
+export function CreditMaxChartDisplay({ 
+  swapTransactions, 
+  selectedTimeRange, 
+  onTimeRangeChange, 
+  onDateClick 
+}: CreditMaxChartDisplayProps) {
+  const chartData = useCreditMaxChartData(swapTransactions, selectedTimeRange)
+
+  const getTimeRangeLabel = () => {
+    switch (selectedTimeRange) {
+      case "ytd": return "(YTD)"
+      case "90d": return "(90d)"
+      case "30d": return "(30d)"
+      case "7d": return "(7d)"
+      default: return "(YTD)"
+    }
+  }
+
+  const getAverageDailyPoints = () => {
+    if (chartData.length === 0) return 0
+    
+    const totalPoints = chartData[chartData.length - 1]?.cumulativePoints || 0
+    
+    // Calculate number of days based on time range
+    let numberOfDays: number
+    const today = new Date()
+    
+    switch (selectedTimeRange) {
+      case "ytd":
+        const startOfYear = new Date(today.getFullYear(), 0, 1)
+        numberOfDays = Math.ceil((today.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24)) + 1
+        break
+      case "90d":
+        numberOfDays = 90
+        break
+      case "30d":
+        numberOfDays = 30
+        break
+      case "7d":
+        numberOfDays = 7
+        break
+      default:
+        numberOfDays = chartData.length
+    }
+    
+    if (numberOfDays === 0) return 0
+    
+    return Math.round(totalPoints / numberOfDays)
+  }
+
+  return (
+    <Card className="bg-gradient-to-b from-white to-gray-100">
+      <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
+        <div className="space-y-1">
+          <CardTitle className="text-xl font-semibold">CreditMax cumulative metrics</CardTitle>
+          <CardDescription>
+            Average daily points {getTimeRangeLabel()}: {getAverageDailyPoints().toLocaleString()} pts
+          </CardDescription>
+        </div>
+        
+        <TimeRangeSelector 
+          timeRange={selectedTimeRange}
+          onTimeRangeChange={onTimeRangeChange}
+        />
+      </CardHeader>
+      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+        <CreditMaxChart data={chartData} onDateClick={onDateClick} />
+      </CardContent>
+    </Card>
+  )
+}

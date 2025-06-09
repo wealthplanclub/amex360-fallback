@@ -5,6 +5,7 @@ import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
 import { CreditMaxQuickMetrics } from "@/components/creditmax/CreditMaxQuickMetrics"
+import { CreditMaxChartDisplay } from "@/components/creditmax/CreditMaxChartDisplay"
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
 import { DashboardLoader } from "@/components/dashboard/DashboardLoader"
@@ -17,6 +18,7 @@ const CreditMax = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [animationData, setAnimationData] = useState(null)
   const [showLottie, setShowLottie] = useState(false)
+  const [selectedTimeRange, setSelectedTimeRange] = useState("ytd")
 
   useEffect(() => {
     // Load the loading-circle-sm animation
@@ -65,6 +67,15 @@ const CreditMax = () => {
     handleClearAllFilters,
     updateFilter
   } = useCreditMaxFilters(swapTransactions)
+
+  const handleTimeRangeChange = (timeRange: string) => {
+    setSelectedTimeRange(timeRange)
+  }
+
+  const handleDateClick = (date: string) => {
+    console.log("Date clicked:", date)
+    // You can add date filtering logic here if needed
+  }
 
   if (isLoading) {
     return (
@@ -116,6 +127,16 @@ const CreditMax = () => {
           {/* Quick Metrics Cards */}
           <div className="mt-8">
             <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
+          </div>
+
+          {/* Chart */}
+          <div className="mt-8">
+            <CreditMaxChartDisplay
+              swapTransactions={counterpartyFilteredTransactions}
+              selectedTimeRange={selectedTimeRange}
+              onTimeRangeChange={handleTimeRangeChange}
+              onDateClick={handleDateClick}
+            />
           </div>
 
           {/* Main Content - Transaction Table and Counterparty List */}
