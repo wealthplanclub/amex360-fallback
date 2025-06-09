@@ -16,10 +16,10 @@ const CreditMax = () => {
   const [animationData, setAnimationData] = useState(null)
 
   useEffect(() => {
-    // Load the loader-diamond-spin animation
+    // Load the loading-circle-sm animation
     const loadAnimation = async () => {
       try {
-        const response = await fetch('/loader-diamond-spin.json')
+        const response = await fetch('/loading-circle-sm.json')
         const data = await response.json()
         setAnimationData(data)
       } catch (error) {
