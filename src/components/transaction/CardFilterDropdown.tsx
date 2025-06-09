@@ -13,15 +13,9 @@ interface CardFilterDropdownProps {
   selectedCard: string | undefined
   creditCards: string[]
   onCardChange: (card: string) => void
-  showBusinessPrefix?: boolean
 }
 
-export function CardFilterDropdown({ 
-  selectedCard, 
-  creditCards, 
-  onCardChange,
-  showBusinessPrefix = true 
-}: CardFilterDropdownProps) {
+export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: CardFilterDropdownProps) {
   const getDisplayText = () => {
     if (!selectedCard || selectedCard === "all") {
       return "All Cards"
@@ -29,10 +23,10 @@ export function CardFilterDropdown({
     // Check if it's a combined format like "Card Type (12345)"
     if (selectedCard.includes('(') && selectedCard.includes(')')) {
       const [cardType, lastFive] = selectedCard.split(' (')
-      return showBusinessPrefix ? `Business ${cardType} (${lastFive}` : `${cardType} (${lastFive}`
+      return `Business ${cardType} (${lastFive}`
     }
-    // Add Business prefix conditionally
-    return showBusinessPrefix ? `Business ${selectedCard}` : selectedCard
+    // For employee page, add Business prefix to card type
+    return `Business ${selectedCard}`
   }
 
   return (
@@ -57,7 +51,7 @@ export function CardFilterDropdown({
             checked={selectedCard === card}
             onCheckedChange={() => onCardChange(card)}
           >
-            {showBusinessPrefix ? `Business ${card}` : card}
+            Business {card}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

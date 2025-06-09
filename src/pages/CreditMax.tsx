@@ -4,30 +4,12 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
-import { CreditMaxTransactionSection } from "@/components/creditmax/CreditMaxTransactionSection"
-import { CreditMaxCounterpartySection } from "@/components/creditmax/CreditMaxCounterpartySection"
 import { staticSwapData } from "@/data/staticSwapData"
 import { parseSwapData } from "@/utils/swapParser"
-import { useCreditMaxFilters } from "@/hooks/useCreditMaxFilters"
 
 const CreditMax = () => {
   // Parse the static swap data into proper format
   const swapTransactions = parseSwapData(staticSwapData)
-
-  // Use the custom hook for all filter logic
-  const {
-    filters,
-    updateFilter,
-    uniqueCounterparties,
-    filteredTransactions,
-    hasAnyFilter,
-    handleClearAllFilters,
-    handleCounterpartyDropdownChange,
-    handleCounterpartyClick,
-    getTransactionsToShow,
-    getFilterDisplayText,
-    getCounterpartyDropdownDisplayText
-  } = useCreditMaxFilters(swapTransactions)
 
   return (
     <SidebarProvider>
@@ -56,27 +38,6 @@ const CreditMax = () => {
           <div className="mt-8">
             <CreditMaxStatCards 
               swapTransactions={swapTransactions}
-            />
-          </div>
-
-          {/* Transaction Section and Counterparty Section */}
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <CreditMaxTransactionSection
-              filteredTransactions={filteredTransactions}
-              hasAnyFilter={hasAnyFilter}
-              getFilterDisplayText={getFilterDisplayText}
-              handleClearAllFilters={handleClearAllFilters}
-              globalFilter={filters.globalFilter}
-              onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-              getCounterpartyDropdownDisplayText={getCounterpartyDropdownDisplayText}
-              uniqueCounterparties={uniqueCounterparties}
-              handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
-            />
-            
-            <CreditMaxCounterpartySection
-              selectedCounterparty={filters.selectedCounterparty}
-              handleCounterpartyClick={handleCounterpartyClick}
-              transactionsToShow={getTransactionsToShow()}
             />
           </div>
         </div>
