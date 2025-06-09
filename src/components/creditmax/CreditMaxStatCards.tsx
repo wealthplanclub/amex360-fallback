@@ -1,6 +1,6 @@
 
 import React from "react"
-import { TrendingUp, TrendingDown, BarChart3 } from "lucide-react"
+import { TrendingUp, TrendingDown, ChartColumnIncreasing } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { formatPointMultiple } from "@/utils/pointMultipleUtils"
 
@@ -89,7 +89,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       title: "True Point Multiple",
       value: metrics.truePointMultiple,
       badge: `${metrics.truePointMultiple.toFixed(1)}x`,
-      icon: BarChart3,
+      icon: ChartColumnIncreasing,
       footer: "Point efficiency",
       description: "Effective points per dollar of actual spend",
       formatAsPoints: false,
