@@ -94,7 +94,7 @@ export function EmployeeCardItem({
                     className="w-4 h-4"
                   />
                 )}
-                <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
+                <div className="text-lg font-bold tabular-nums">
                   ${card.amount.toFixed(2)}
                 </div>
               </div>
