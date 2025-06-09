@@ -74,7 +74,7 @@ export function EmployeeMetricsCards({
       icon: CreditCard,
       footer: "Unique cards",
       description: "Total unique employee cards",
-      formatAsPoints: true
+      formatAsPoints: false
     }
   ]
 
