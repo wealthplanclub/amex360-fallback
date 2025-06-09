@@ -80,7 +80,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       badge: metrics.totalCardSpend > 0 ? `${Math.round((metrics.actualSpend / metrics.totalCardSpend) * 100)}%` : "0%",
       icon: TrendingDown,
       footer: "Actual cost",
-      description: "Actual cost (3% of card spend)",
+      description: "Card processing (3%)",
       formatAsPoints: false,
       isPointMultiple: false
     },
