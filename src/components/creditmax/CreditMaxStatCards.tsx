@@ -54,21 +54,21 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
 
   const cardData = [
     {
-      title: "Total Swap In",
-      value: metrics.totalSwapIn,
-      badge: "Inflow",
-      icon: TrendingUp,
-      footer: "Credit received",
-      description: "Total amount swapped in",
-      formatAsPoints: false
-    },
-    {
       title: "Total Swap Out",
       value: metrics.totalSwapOut,
       badge: "Outflow",
       icon: TrendingDown,
       footer: "Credit distributed",
       description: "Total amount swapped out",
+      formatAsPoints: false
+    },
+    {
+      title: "Total Swap In",
+      value: metrics.totalSwapIn,
+      badge: "Inflow",
+      icon: TrendingUp,
+      footer: "Credit received",
+      description: "Total amount swapped in",
       formatAsPoints: false
     },
     {
