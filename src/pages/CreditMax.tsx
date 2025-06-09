@@ -15,6 +15,7 @@ import { useCreditMaxFilters } from "@/hooks/useCreditMaxFilters"
 const CreditMax = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [animationData, setAnimationData] = useState(null)
+  const [showLottie, setShowLottie] = useState(false)
 
   useEffect(() => {
     // Load the loading-circle-sm animation
@@ -30,12 +31,21 @@ const CreditMax = () => {
 
     loadAnimation()
 
-    // Show loading for 2 seconds like other pages
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
+    // a. delay loading by .5 seconds
+    const initialDelay = setTimeout(() => {
+      // b. start lottie
+      setShowLottie(true)
+      
+      // c. load page for 2 seconds while lottie plays
+      // d. only render page after lottie plays for 2 seconds
+      const lottieTimer = setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
 
-    return () => clearTimeout(timer)
+      return () => clearTimeout(lottieTimer)
+    }, 500)
+
+    return () => clearTimeout(initialDelay)
   }, [])
 
   // Parse the static swap data into proper format
@@ -56,7 +66,15 @@ const CreditMax = () => {
   } = useCreditMaxFilters(swapTransactions)
 
   if (isLoading) {
-    return <DashboardLoader animationData={animationData} />
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          {animationData && showLottie && (
+            <DashboardLoader animationData={animationData} />
+          )}
+        </div>
+      </div>
+    )
   }
 
   return (

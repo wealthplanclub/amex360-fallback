@@ -17,6 +17,7 @@ const Rewards = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [animationData, setAnimationData] = React.useState(null);
   const [showContent, setShowContent] = React.useState(false);
+  const [showLottie, setShowLottie] = React.useState(false);
 
   React.useEffect(() => {
     // Load the loading-geo-b animation
@@ -25,15 +26,24 @@ const Rewards = () => {
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      setIsVisible(true);
-      // Start showing content with staggered animations
-      setTimeout(() => setShowContent(true), 100);
-    }, 2000);
+    // a. delay loading by .5 seconds
+    const initialDelay = setTimeout(() => {
+      // b. start lottie
+      setShowLottie(true);
+      
+      // c. load page for 2 seconds while lottie plays
+      // d. only render page after lottie plays for 2 seconds
+      const lottieTimer = setTimeout(() => {
+        setIsLoading(false);
+        setIsVisible(true);
+        // Start showing content with staggered animations
+        setTimeout(() => setShowContent(true), 100);
+      }, 2000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(lottieTimer);
+    }, 500);
+
+    return () => clearTimeout(initialDelay);
   }, []);
 
   React.useEffect(() => {
@@ -44,7 +54,7 @@ const Rewards = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          {animationData && (
+          {animationData && showLottie && (
             <Lottie
               animationData={animationData}
               className="w-32 h-32 mx-auto"

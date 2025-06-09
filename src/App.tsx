@@ -20,25 +20,36 @@ const queryClient = new QueryClient();
 // Enhanced loading component with controlled timing
 const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void }) => {
   const [animationData, setAnimationData] = useState(null);
+  const [showLottie, setShowLottie] = useState(false);
 
   useEffect(() => {
+    // Load animation data
     fetch("/loading-geo-c.json")
       .then(response => response.json())
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Let animation run for 5 seconds, then signal completion
-    const timer = setTimeout(() => {
-      onLoadingComplete();
-    }, 5000);
+    // a. delay loading by .5 seconds
+    const initialDelay = setTimeout(() => {
+      // b. start lottie
+      setShowLottie(true);
+      
+      // c. load page for 2 seconds while lottie plays
+      // d. only render page after lottie plays for 2 seconds
+      const lottieTimer = setTimeout(() => {
+        onLoadingComplete();
+      }, 2000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(lottieTimer);
+    }, 500);
+
+    return () => clearTimeout(initialDelay);
   }, [onLoadingComplete]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
-        {animationData && (
+        {animationData && showLottie && (
           <Lottie
             animationData={animationData}
             className="w-24 h-24 mx-auto mb-4"
