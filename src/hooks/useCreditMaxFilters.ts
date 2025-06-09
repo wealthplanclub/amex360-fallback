@@ -8,7 +8,14 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
 
   // Get unique counterparties for dropdown (clean names without prefix)
   const uniqueCounterparties = useMemo(() => {
-    const counterparties = [...new Set(transactions.map(t => t.counterparty))]
+    const counterparties = [...new Set(transactions.map(t => {
+      // Clean counterparty names by removing "Business " prefix
+      let cleanName = t.counterparty
+      if (cleanName.startsWith('Business ')) {
+        cleanName = cleanName.replace('Business ', '')
+      }
+      return cleanName
+    }))]
     return ["All counterparties", ...counterparties.sort()]
   }, [transactions])
 
@@ -18,7 +25,14 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
 
     // Filter by selected counterparty
     if (filters.selectedCounterparty && filters.selectedCounterparty !== "all") {
-      filtered = filtered.filter(t => t.counterparty === filters.selectedCounterparty)
+      filtered = filtered.filter(t => {
+        // Clean the transaction counterparty name for comparison
+        let cleanName = t.counterparty
+        if (cleanName.startsWith('Business ')) {
+          cleanName = cleanName.replace('Business ', '')
+        }
+        return cleanName === filters.selectedCounterparty
+      })
     }
 
     return filtered
@@ -42,20 +56,14 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     }
   }
 
-  // Handle counterparty dropdown change (remove any business prefix)
+  // Handle counterparty dropdown change (names are already cleaned)
   const handleCounterpartyDropdownChange = (counterparty: string) => {
     console.log('Counterparty dropdown changed:', counterparty)
     
-    // Clean the counterparty name by removing any business prefix
-    let cleanCounterparty = counterparty
-    if (counterparty.startsWith('business ')) {
-      cleanCounterparty = counterparty.replace('business ', '')
-    }
-    
-    if (cleanCounterparty === "All counterparties") {
+    if (counterparty === "All counterparties") {
       updateFilter('selectedCounterparty', undefined)
     } else {
-      updateFilter('selectedCounterparty', cleanCounterparty)
+      updateFilter('selectedCounterparty', counterparty)
     }
   }
 
