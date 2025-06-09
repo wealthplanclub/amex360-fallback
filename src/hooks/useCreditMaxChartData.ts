@@ -4,11 +4,8 @@ import { SwapTransaction } from '@/utils/swapParser'
 
 export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeRange: string) {
   return useMemo(() => {
-    console.log('Processing swap transactions:', swapTransactions.length)
-    
     // Get outbound transactions only
     const outboundTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
-    console.log('Outbound transactions:', outboundTransactions.length)
     
     // Sort by date
     const sortedTransactions = outboundTransactions.sort((a, b) => a.date.localeCompare(b.date))
@@ -37,18 +34,13 @@ export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeR
       return acc
     }, {} as Record<string, any>)
     
-    console.log('Daily data:', dailyData)
-    
     // Convert to array and sort by date
     const dailyArray = Object.values(dailyData).sort((a: any, b: any) => 
       a.date.localeCompare(b.date)
     )
     
-    console.log('Daily array length:', dailyArray.length)
-    
     // Filter by time range
     const filteredData = filterByTimeRange(dailyArray, timeRange)
-    console.log('Filtered data length:', filteredData.length)
     
     // Calculate cumulative values
     let cumulativePoints = 0
@@ -60,41 +52,21 @@ export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeR
       cumulativeSpent += item.cardSpend
       cumulativeActual += item.actualSpend
       
-      // Parse the date string more safely
-      const dateStr = item.date
-      let displayDate = dateStr
-      
-      try {
-        // Try to parse the date - handle different formats
-        const dateParts = dateStr.split('-')
-        if (dateParts.length === 3) {
-          const [year, month, day] = dateParts.map(Number)
-          const date = new Date(year, month - 1, day)
-          
-          // Check if date is valid
-          if (!isNaN(date.getTime())) {
-            displayDate = date.toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric'
-            })
-          }
-        }
-      } catch (error) {
-        console.log('Date parsing error for:', dateStr, error)
-        // Fallback to original date string
-        displayDate = dateStr
-      }
+      const [year, month, day] = item.date.split('-').map(Number)
+      const date = new Date(year, month - 1, day)
       
       return {
         date: item.date,
-        displayDate: displayDate,
+        displayDate: date.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric'
+        }),
         cumulativePoints: Math.round(cumulativePoints),
         cumulativeSpent: Math.round(cumulativeSpent * 100) / 100,
         actualSpent: Math.round(cumulativeActual * 100) / 100
       }
     })
     
-    console.log('Final chart data:', chartData)
     return chartData
   }, [swapTransactions, timeRange])
 }
@@ -103,20 +75,7 @@ function filterByTimeRange(data: any[], timeRange: string) {
   if (data.length === 0) return []
   
   const latestDate = data[data.length - 1].date
-  
-  // Parse the latest date more safely
-  let today: Date
-  try {
-    const dateParts = latestDate.split('-')
-    if (dateParts.length === 3) {
-      const [year, month, day] = dateParts.map(Number)
-      today = new Date(year, month - 1, day)
-    } else {
-      today = new Date()
-    }
-  } catch (error) {
-    today = new Date()
-  }
+  const today = new Date(latestDate)
   
   let startDate: string
   

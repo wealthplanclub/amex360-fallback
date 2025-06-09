@@ -34,13 +34,9 @@ interface CreditMaxChartProps {
 }
 
 export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
-  console.log('CreditMaxChart received data:', data)
-  
   // Calculate the maximum value to set an optimal Y-axis domain
   const maxValue = Math.max(...data.map(d => Math.max(d.cumulativePoints, d.cumulativeSpent, d.actualSpent)))
   const yAxisMax = maxValue > 0 ? Math.ceil(maxValue * 1.05) : 100
-
-  console.log('Chart max value:', maxValue, 'Y-axis max:', yAxisMax)
 
   const handleChartClick = (chartData: any) => {
     if (chartData && chartData.activePayload && chartData.activePayload[0] && onDateClick) {
@@ -48,14 +44,6 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
       console.log("CreditMax chart clicked, date:", clickedDate);
       onDateClick(clickedDate);
     }
-  }
-
-  if (data.length === 0) {
-    return (
-      <div className="aspect-auto h-[250px] w-full flex items-center justify-center text-muted-foreground">
-        No data available for the selected time range
-      </div>
-    )
   }
 
   return (
@@ -68,36 +56,36 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           <linearGradient id="fillCumulativePoints" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="hsl(var(--chart-1))"
+              stopColor="#00175a"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="hsl(var(--chart-1))"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
           <linearGradient id="fillCumulativeSpent" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="hsl(var(--chart-2))"
+              stopColor="#00175a"
               stopOpacity={0.6}
             />
             <stop
               offset="95%"
-              stopColor="hsl(var(--chart-2))"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
           <linearGradient id="fillActualSpent" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="hsl(var(--chart-3))"
+              stopColor="#00175a"
               stopOpacity={0.4}
             />
             <stop
               offset="95%"
-              stopColor="hsl(var(--chart-3))"
+              stopColor="#00175a"
               stopOpacity={0.1}
             />
           </linearGradient>
@@ -143,25 +131,28 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           }
         />
         <Area
-          dataKey="cumulativePoints"
+          dataKey="actualSpent"
           type="monotone"
-          fill="url(#fillCumulativePoints)"
-          stroke="hsl(var(--chart-1))"
-          strokeWidth={2}
+          fill="url(#fillActualSpent)"
+          stroke="#00175a"
+          strokeWidth={0}
+          stackId="a"
         />
         <Area
           dataKey="cumulativeSpent"
           type="monotone"
           fill="url(#fillCumulativeSpent)"
-          stroke="hsl(var(--chart-2))"
-          strokeWidth={2}
+          stroke="#00175a"
+          strokeWidth={0}
+          stackId="b"
         />
         <Area
-          dataKey="actualSpent"
+          dataKey="cumulativePoints"
           type="monotone"
-          fill="url(#fillActualSpent)"
-          stroke="hsl(var(--chart-3))"
-          strokeWidth={2}
+          fill="url(#fillCumulativePoints)"
+          stroke="#00175a"
+          strokeWidth={0}
+          stackId="c"
         />
       </AreaChart>
     </ChartContainer>
