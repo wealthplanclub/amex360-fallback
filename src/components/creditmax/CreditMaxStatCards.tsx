@@ -55,12 +55,12 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
 
   const cardData = [
     {
-      title: "Total Points Earned",
+      title: "Total Points",
       value: metrics.totalPointsEarned,
       badge: formatPointMultiple(metrics.pointsEarnedMultiple),
       icon: () => <img src="https://i.imgur.com/dTz9vVm.png" alt="Points" className="h-4 w-4" />,
       footer: "Points earned",
-      description: "Total points earned on outbound swaps",
+      description: "Total points from outbound swaps",
       formatAsPoints: true,
       isPointMultiple: false
     },
