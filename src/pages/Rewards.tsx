@@ -1,4 +1,3 @@
-
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
 import { AppHeader } from "@/components/AppHeader";
@@ -31,7 +30,7 @@ const Rewards = () => {
       setIsVisible(true);
       // Start showing content with staggered animations
       setTimeout(() => setShowContent(true), 100);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,10 +26,10 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Let animation run for 5 seconds, then signal completion
+    // Let animation run for 0.5 seconds, then signal completion
     const timer = setTimeout(() => {
       onLoadingComplete();
-    }, 5000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);

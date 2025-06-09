@@ -1,5 +1,3 @@
-
-
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -31,7 +29,7 @@ const Employee = () => {
       setIsLoading(false)
       // Start showing content with staggered animations
       setTimeout(() => setShowContent(true), 100)
-    }, 2000)
+    }, 500)
 
     return () => clearTimeout(timer)
   }, [])
