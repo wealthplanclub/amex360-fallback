@@ -4,8 +4,11 @@ import { SwapTransaction } from '@/utils/swapParser'
 
 export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeRange: string) {
   return useMemo(() => {
+    console.log('Processing swap transactions:', swapTransactions.length)
+    
     // Get outbound transactions only
     const outboundTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
+    console.log('Outbound transactions:', outboundTransactions.length)
     
     // Sort by date
     const sortedTransactions = outboundTransactions.sort((a, b) => a.date.localeCompare(b.date))
@@ -34,13 +37,18 @@ export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeR
       return acc
     }, {} as Record<string, any>)
     
+    console.log('Daily data:', dailyData)
+    
     // Convert to array and sort by date
     const dailyArray = Object.values(dailyData).sort((a: any, b: any) => 
       a.date.localeCompare(b.date)
     )
     
+    console.log('Daily array length:', dailyArray.length)
+    
     // Filter by time range
     const filteredData = filterByTimeRange(dailyArray, timeRange)
+    console.log('Filtered data length:', filteredData.length)
     
     // Calculate cumulative values
     let cumulativePoints = 0
@@ -86,6 +94,7 @@ export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeR
       }
     })
     
+    console.log('Final chart data:', chartData)
     return chartData
   }, [swapTransactions, timeRange])
 }
