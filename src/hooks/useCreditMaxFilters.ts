@@ -6,16 +6,13 @@ import { SwapTransaction } from '@/utils/swapParser'
 export function useCreditMaxFilters(transactions: SwapTransaction[]) {
   const { filters, updateFilter, clearAllFilters } = useFilterState()
 
-  // Get unique counterparties for dropdown (clean names without prefix)
+  // Debug: Log raw transaction data
+  console.log('Raw transactions counterparties:', transactions.map(t => t.counterparty))
+
+  // Get unique counterparties for dropdown (should already be clean)
   const uniqueCounterparties = useMemo(() => {
-    const counterparties = [...new Set(transactions.map(t => {
-      // Clean counterparty names by removing "Business " prefix
-      let cleanName = t.counterparty
-      if (cleanName.startsWith('Business ')) {
-        cleanName = cleanName.replace('Business ', '')
-      }
-      return cleanName
-    }))]
+    const counterparties = [...new Set(transactions.map(t => t.counterparty))]
+    console.log('Unique counterparties for dropdown:', counterparties)
     return ["All counterparties", ...counterparties.sort()]
   }, [transactions])
 
@@ -25,13 +22,10 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
 
     // Filter by selected counterparty
     if (filters.selectedCounterparty && filters.selectedCounterparty !== "all") {
+      console.log('Filtering by counterparty:', filters.selectedCounterparty)
       filtered = filtered.filter(t => {
-        // Clean the transaction counterparty name for comparison
-        let cleanName = t.counterparty
-        if (cleanName.startsWith('Business ')) {
-          cleanName = cleanName.replace('Business ', '')
-        }
-        return cleanName === filters.selectedCounterparty
+        console.log('Comparing:', t.counterparty, 'with:', filters.selectedCounterparty)
+        return t.counterparty === filters.selectedCounterparty
       })
     }
 
@@ -56,7 +50,7 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     }
   }
 
-  // Handle counterparty dropdown change (names are already cleaned)
+  // Handle counterparty dropdown change
   const handleCounterpartyDropdownChange = (counterparty: string) => {
     console.log('Counterparty dropdown changed:', counterparty)
     
@@ -77,7 +71,7 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     return transactions
   }
 
-  // Get filter display text (clean without prefix)
+  // Get filter display text
   const getFilterDisplayText = () => {
     const parts = []
     
@@ -88,7 +82,7 @@ export function useCreditMaxFilters(transactions: SwapTransaction[]) {
     return parts.join(', ')
   }
 
-  // Get counterparty dropdown display text (clean without prefix)
+  // Get counterparty dropdown display text
   const getCounterpartyDropdownDisplayText = () => {
     if (filters.selectedCounterparty && filters.selectedCounterparty !== "all") {
       return filters.selectedCounterparty
