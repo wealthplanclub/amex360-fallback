@@ -52,6 +52,7 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
 };
 
 const App = () => {
+  // All useState hooks must be at the top level and unconditional
   const [animationComplete, setAnimationComplete] = useState(() => {
     // Check if animation has been shown before in this session
     return sessionStorage.getItem('lottieShown') === 'true';
