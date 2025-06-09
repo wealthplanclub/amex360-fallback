@@ -9,6 +9,7 @@ import { CreditMaxChartDisplay } from "@/components/creditmax/CreditMaxChartDisp
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
 import { DashboardLoader } from "@/components/dashboard/DashboardLoader"
+import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
 import { staticSwapData } from "@/data/staticSwapData"
 import { parseSwapData } from "@/utils/swapParser"
 import { useCreditMaxFilters } from "@/hooks/useCreditMaxFilters"
@@ -67,6 +68,9 @@ const CreditMax = () => {
     handleClearAllFilters,
     updateFilter
   } = useCreditMaxFilters(swapTransactions)
+
+  // Check if a specific counterparty is selected (not "all")
+  const isSpecificCounterpartySelected = filters.selectedCard && filters.selectedCard !== "all"
 
   const handleTimeRangeChange = (timeRange: string) => {
     setSelectedTimeRange(timeRange)
@@ -129,15 +133,17 @@ const CreditMax = () => {
             <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
           </div>
 
-          {/* Chart */}
-          <div className="mt-8">
-            <CreditMaxChartDisplay
-              swapTransactions={counterpartyFilteredTransactions}
-              selectedTimeRange={selectedTimeRange}
-              onTimeRangeChange={handleTimeRangeChange}
-              onDateClick={handleDateClick}
-            />
-          </div>
+          {/* Chart with Accordion Animation */}
+          <Collapsible open={!isSpecificCounterpartySelected} className="mt-8">
+            <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+              <CreditMaxChartDisplay
+                swapTransactions={counterpartyFilteredTransactions}
+                selectedTimeRange={selectedTimeRange}
+                onTimeRangeChange={handleTimeRangeChange}
+                onDateClick={handleDateClick}
+              />
+            </CollapsibleContent>
+          </Collapsible>
 
           {/* Main Content - Transaction Table and Counterparty List */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
