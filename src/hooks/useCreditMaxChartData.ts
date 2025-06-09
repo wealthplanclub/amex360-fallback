@@ -52,15 +52,34 @@ export function useCreditMaxChartData(swapTransactions: SwapTransaction[], timeR
       cumulativeSpent += item.cardSpend
       cumulativeActual += item.actualSpend
       
-      const [year, month, day] = item.date.split('-').map(Number)
-      const date = new Date(year, month - 1, day)
+      // Parse the date string more safely
+      const dateStr = item.date
+      let displayDate = dateStr
+      
+      try {
+        // Try to parse the date - handle different formats
+        const dateParts = dateStr.split('-')
+        if (dateParts.length === 3) {
+          const [year, month, day] = dateParts.map(Number)
+          const date = new Date(year, month - 1, day)
+          
+          // Check if date is valid
+          if (!isNaN(date.getTime())) {
+            displayDate = date.toLocaleDateString('en-US', { 
+              month: 'short', 
+              day: 'numeric'
+            })
+          }
+        }
+      } catch (error) {
+        console.log('Date parsing error for:', dateStr, error)
+        // Fallback to original date string
+        displayDate = dateStr
+      }
       
       return {
         date: item.date,
-        displayDate: date.toLocaleDateString('en-US', { 
-          month: 'short', 
-          day: 'numeric'
-        }),
+        displayDate: displayDate,
         cumulativePoints: Math.round(cumulativePoints),
         cumulativeSpent: Math.round(cumulativeSpent * 100) / 100,
         actualSpent: Math.round(cumulativeActual * 100) / 100
@@ -75,7 +94,20 @@ function filterByTimeRange(data: any[], timeRange: string) {
   if (data.length === 0) return []
   
   const latestDate = data[data.length - 1].date
-  const today = new Date(latestDate)
+  
+  // Parse the latest date more safely
+  let today: Date
+  try {
+    const dateParts = latestDate.split('-')
+    if (dateParts.length === 3) {
+      const [year, month, day] = dateParts.map(Number)
+      today = new Date(year, month - 1, day)
+    } else {
+      today = new Date()
+    }
+  } catch (error) {
+    today = new Date()
+  }
   
   let startDate: string
   
