@@ -1,5 +1,6 @@
+
 import React from "react"
-import { Award, TrendingDown, ArrowUpDown, BarChart3 } from "lucide-react"
+import { TrendingUp, TrendingDown, ArrowUpDown, BarChart3 } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { formatPointMultiple } from "@/utils/pointMultipleUtils"
 
@@ -58,7 +59,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       title: "Total Points Earned",
       value: metrics.totalPointsEarned,
       badge: formatPointMultiple(metrics.pointsEarnedMultiple),
-      icon: Award,
+      icon: TrendingUp,
       footer: "Points earned",
       description: "Total points earned on outbound transactions",
       formatAsPoints: true,

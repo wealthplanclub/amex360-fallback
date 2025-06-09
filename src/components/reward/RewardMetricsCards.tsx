@@ -1,5 +1,5 @@
 
-import { CreditCard, Users, UserPlus } from "lucide-react"
+import { TrendingUp, Users, UserPlus } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { useRewardCalculations } from "@/hooks/useRewardCalculations"
 import { FilterState } from "@/hooks/useFilterState"
@@ -33,7 +33,7 @@ export function RewardMetricsCards({
       value: calculations.totalRewardPoints,
       badge: "+100%",
       icon: () => <img src="https://i.imgur.com/dTz9vVm.png" alt="Points" className="h-4 w-4" />,
-      footer: "Bonuses earned",
+      footer: "Points earned",
       description: `Total bonus points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: false,
       showHover: true,
@@ -63,7 +63,7 @@ export function RewardMetricsCards({
       title: "Top Bonus Card",
       value: calculations.topCardRewards,
       badge: `${calculations.topCardPercentage}%`,
-      icon: CreditCard,
+      icon: TrendingUp,
       footer: calculations.topCardDisplayName,
       description: `Highest earning card ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: true,
