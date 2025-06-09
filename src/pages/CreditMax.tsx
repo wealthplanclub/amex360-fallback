@@ -17,7 +17,8 @@ const CreditMax = () => {
   // Use custom hook for filtering
   const {
     filters,
-    filteredTransactions,
+    counterpartyFilteredTransactions,
+    tableFilteredTransactions,
     uniqueCounterparties,
     hasAnyFilter,
     getFilterDisplayText,
@@ -50,10 +51,10 @@ const CreditMax = () => {
             />
           </div>
           
-          {/* CreditMax Stat Cards - now using filtered transactions */}
+          {/* CreditMax Stat Cards - using counterparty filtered transactions only */}
           <div className="mt-8">
             <CreditMaxStatCards 
-              swapTransactions={filteredTransactions}
+              swapTransactions={counterpartyFilteredTransactions}
             />
           </div>
 
@@ -61,7 +62,7 @@ const CreditMax = () => {
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Transaction Table */}
             <SwapTransactionSection
-              filteredTransactions={filteredTransactions}
+              filteredTransactions={tableFilteredTransactions}
               hasAnyFilter={hasAnyFilter}
               getFilterDisplayText={getFilterDisplayText}
               handleClearAllFilters={handleClearAllFilters}
