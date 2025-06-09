@@ -43,7 +43,10 @@ export function AppSidebar() {
 
   const handleItemClick = (url: string) => {
     if (url !== "#") {
-      navigate(url)
+      // Add a small delay to allow the smooth close animation to start
+      setTimeout(() => {
+        navigate(url)
+      }, 100)
     }
     close()
   }
@@ -63,7 +66,9 @@ export function AppSidebar() {
   }
 
   const handleLogout = () => {
-    navigate("/")
+    setTimeout(() => {
+      navigate("/")
+    }, 100)
     close()
   }
 
