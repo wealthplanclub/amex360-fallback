@@ -36,58 +36,57 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
 
   // Calculate metrics from swap transactions
   const metrics = React.useMemo(() => {
-    const swapInTransactions = swapTransactions.filter(t => t.direction === 'SWAP_IN')
-    const swapOutTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
-    
-    const totalSwapIn = swapInTransactions.reduce((sum, t) => sum + t.amount, 0)
-    const totalSwapOut = swapOutTransactions.reduce((sum, t) => sum + t.amount, 0)
-    const netFlow = totalSwapIn - totalSwapOut
-    const averageVolume = swapOutTransactions.length > 0 ? totalSwapOut / swapOutTransactions.length : 0
+    const outboundTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
+    const outboundWithCard = swapTransactions.filter(t => t.direction === 'SWAP_OUT' && t.card && t.card.trim() !== '')
+    const totalCardSpend = outboundWithCard.reduce((sum, t) => sum + t.amount, 0)
+    const totalPointsEarned = outboundTransactions.reduce((sum, t) => sum + (t.amount * t.multiple), 0)
+    const actualSpend = totalCardSpend * 0.03
+    const truePointMultiple = actualSpend > 0 ? totalPointsEarned / actualSpend : 0
 
     return {
-      totalSwapIn,
-      totalSwapOut,
-      netFlow,
-      averageVolume
+      totalPointsEarned: Math.round(totalPointsEarned),
+      totalCardSpend,
+      actualSpend,
+      truePointMultiple
     }
   }, [swapTransactions])
 
   const cardData = [
     {
-      title: "Total Swaps Out",
-      value: metrics.totalSwapOut,
+      title: "Total Points Earned",
+      value: metrics.totalPointsEarned,
+      badge: "100%",
+      icon: TrendingUp,
+      footer: "Points earned",
+      description: "Total points earned on outbound transactions",
+      formatAsPoints: true
+    },
+    {
+      title: "Total Card Spend",
+      value: metrics.totalCardSpend,
       badge: "100%",
       icon: TrendingDown,
-      footer: "Credit distributed",
-      description: "Total amount swapped out",
+      footer: "Card spend",
+      description: "Total amount spent on outbound swap transactions with a card attached",
       formatAsPoints: false
     },
     {
-      title: "Total Swaps In",
-      value: metrics.totalSwapIn,
-      badge: metrics.totalSwapOut > 0 ? `${Math.round((metrics.totalSwapIn / metrics.totalSwapOut) * 100)}%` : "0%",
-      icon: TrendingUp,
-      footer: "Credit received",
-      description: "Total amount swapped in",
-      formatAsPoints: false
-    },
-    {
-      title: "Net Flow",
-      value: Math.abs(metrics.netFlow),
-      badge: metrics.totalSwapOut > 0 ? `${Math.round((Math.abs(metrics.netFlow) / metrics.totalSwapOut) * 100)}%` : "0%",
+      title: "Actual Spend",
+      value: metrics.actualSpend,
+      badge: metrics.totalCardSpend > 0 ? `${Math.round((metrics.actualSpend / metrics.totalCardSpend) * 100)}%` : "0%",
       icon: ArrowUpDown,
-      footer: metrics.netFlow > 0 ? "Net inflow" : metrics.netFlow < 0 ? "Net outflow" : "Net outflow",
-      description: "Net swap activity",
+      footer: "Actual cost",
+      description: "Actual cost (3% of total card spend)",
       formatAsPoints: false
     },
     {
-      title: "Average Volume",
-      value: metrics.averageVolume,
-      badge: metrics.totalSwapOut > 0 ? `${Math.round((metrics.averageVolume / metrics.totalSwapOut) * 100)}%` : "0%",
+      title: "True Point Multiple",
+      value: metrics.truePointMultiple,
+      badge: `${metrics.truePointMultiple.toFixed(1)}x`,
       icon: BarChart3,
-      footer: "Outbound average",
-      description: "Average outbound amount",
-      formatAsPoints: false
+      footer: "Point efficiency",
+      description: "Effective points per dollar of actual spend",
+      formatAsPoints: true
     }
   ]
 

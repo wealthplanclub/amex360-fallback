@@ -1,3 +1,4 @@
+
 import React, { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
@@ -57,55 +58,56 @@ export function CreditMaxQuickMetrics({ swapTransactions }: CreditMaxQuickMetric
 
   // Calculate metrics from swap transactions
   const metrics = React.useMemo(() => {
-    const outboundTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
-    const outboundWithCard = swapTransactions.filter(t => t.direction === 'SWAP_OUT' && t.card && t.card.trim() !== '')
-    const totalCardSpend = outboundWithCard.reduce((sum, t) => sum + t.amount, 0)
-    const totalPointsEarned = outboundTransactions.reduce((sum, t) => sum + (t.amount * t.multiple), 0)
-    const actualSpend = totalCardSpend * 0.03
-    const truePointMultiple = actualSpend > 0 ? totalPointsEarned / actualSpend : 0
+    const swapInTransactions = swapTransactions.filter(t => t.direction === 'SWAP_IN')
+    const swapOutTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
+    
+    const totalSwapOut = swapOutTransactions.reduce((sum, t) => sum + t.amount, 0)
+    const totalSwapIn = swapInTransactions.reduce((sum, t) => sum + t.amount, 0)
+    const netFlow = totalSwapIn - totalSwapOut
+    const averageVolume = swapOutTransactions.length > 0 ? totalSwapOut / swapOutTransactions.length : 0
     const totalCounterparties = new Set(swapTransactions.map(t => t.counterparty)).size
 
     return {
-      totalPointsEarned: Math.round(totalPointsEarned),
-      totalCardSpend,
-      actualSpend,
-      truePointMultiple,
+      totalSwapOut,
+      totalSwapIn,
+      netFlow,
+      averageVolume,
       totalCounterparties
     }
   }, [swapTransactions])
 
   const metricsData = [
     {
-      title: "Total Points Earned",
-      value: `${metrics.totalPointsEarned.toLocaleString()} pts`,
-      description: "Total points earned on outbound transactions",
+      title: "Total Swaps Out",
+      value: `$${metrics.totalSwapOut.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+      description: "Total amount swapped out to counterparties",
       dataSource: "CreditMax Transaction System",
       lastUpdated: "Real-time",
-      calculationMethod: "Sum of (amount × multiple) for all SWAP_OUT transactions"
+      calculationMethod: "Sum of all SWAP_OUT transaction amounts"
     },
     {
-      title: "Total Card Spend",
-      value: `$${metrics.totalCardSpend.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
-      description: "Total amount spent on outbound swap transactions with a card attached",
+      title: "Total Swaps In",
+      value: `$${metrics.totalSwapIn.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+      description: "Total amount swapped in from counterparties",
       dataSource: "CreditMax Transaction System",
       lastUpdated: "Real-time",
-      calculationMethod: "Sum of all SWAP_OUT transaction amounts where card field is not empty"
+      calculationMethod: "Sum of all SWAP_IN transaction amounts"
     },
     {
-      title: "Actual Spend",
-      value: `$${metrics.actualSpend.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-      description: "Actual cost (3% of total card spend)",
+      title: "Net Flow",
+      value: `$${Math.abs(metrics.netFlow).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+      description: `Net ${metrics.netFlow > 0 ? 'inflow' : metrics.netFlow < 0 ? 'outflow' : 'neutral'} of swap activity`,
       dataSource: "CreditMax Transaction System",
       lastUpdated: "Real-time",
-      calculationMethod: "Total card spend × 0.03"
+      calculationMethod: "Total swaps in minus total swaps out"
     },
     {
-      title: "True Point Multiple",
-      value: `${metrics.truePointMultiple.toFixed(1)}x`,
-      description: "Effective points per dollar of actual spend",
+      title: "Average Volume",
+      value: `$${metrics.averageVolume.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+      description: "Average outbound transaction amount",
       dataSource: "CreditMax Transaction System",
       lastUpdated: "Real-time",
-      calculationMethod: "Total points earned ÷ actual spend"
+      calculationMethod: "Total swaps out ÷ number of outbound transactions"
     },
     {
       title: "Total Counterparties",
