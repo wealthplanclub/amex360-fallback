@@ -1,7 +1,5 @@
 
 import React from "react";
-import { AppHeader } from "@/components/AppHeader";
-import { AppSidebar } from "@/components/AppSidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFilterState } from "@/hooks/useFilterState";
 import { DashboardLoader } from "@/components/dashboard/DashboardLoader";
@@ -62,33 +60,24 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen flex w-full">
-      <AppSidebar />
-      
-      <div className="flex-1 flex flex-col">
-        {/* Header with Reset and Logout buttons */}
-        <AppHeader />
+    <div 
+      className="flex-1"
+      style={{
+        backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+        backgroundRepeat: 'repeat'
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        {/* Header with Logo */}
+        <DashboardHeader />
         
-        <div 
-          className="flex-1"
-          style={{
-            backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-            backgroundRepeat: 'repeat'
-          }}
-        >
-          <div className="max-w-7xl mx-auto px-6 mb-8">
-            {/* Header with Logo */}
-            <DashboardHeader />
-            
-            {/* Main Dashboard Content */}
-            <DashboardContent
-              filters={filters}
-              showContent={showContent}
-              updateFilter={updateFilter}
-              updateMultipleFilters={updateMultipleFilters}
-            />
-          </div>
-        </div>
+        {/* Main Dashboard Content */}
+        <DashboardContent
+          filters={filters}
+          showContent={showContent}
+          updateFilter={updateFilter}
+          updateMultipleFilters={updateMultipleFilters}
+        />
       </div>
     </div>
   );

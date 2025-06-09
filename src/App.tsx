@@ -9,12 +9,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
-
-// Lazy load the dashboard, rewards, employee, and creditmax pages
-const Dashboard = lazy(() => import("./pages/Index"));
-const Rewards = lazy(() => import("./pages/Rewards"));
-const Employee = lazy(() => import("./pages/Employee"));
-const CreditMax = lazy(() => import("./pages/CreditMax"));
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -81,7 +76,7 @@ const App = () => {
   useEffect(() => {
     if (!dashboardReady) {
       // Preload the dashboard component
-      import("./pages/Index").then(() => {
+      import("./pages/Dashboard").then(() => {
         setDashboardReady(true);
       });
     }
@@ -94,46 +89,24 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <SidebarProvider>
-            <Routes>
-              <Route path="/" element={<Auth />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  !animationComplete ? (
-                    <DashboardLoader onLoadingComplete={handleLoadingComplete} />
-                  ) : (
-                    <Suspense fallback={null}>
-                      {dashboardReady && <Dashboard />}
-                    </Suspense>
-                  )
-                } 
-              />
-              <Route 
-                path="/rewards" 
-                element={
-                  <Suspense fallback={null}>
-                    <Rewards />
-                  </Suspense>
-                } 
-              />
-              <Route 
-                path="/employee" 
-                element={
-                  <Suspense fallback={null}>
-                    <Employee />
-                  </Suspense>
-                } 
-              />
-              <Route 
-                path="/creditmax" 
-                element={
-                  <Suspense fallback={null}>
-                    <CreditMax />
-                  </Suspense>
-                } 
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <div className="min-h-screen flex w-full">
+              <Routes>
+                <Route path="/" element={<Auth />} />
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    !animationComplete ? (
+                      <DashboardLoader onLoadingComplete={handleLoadingComplete} />
+                    ) : (
+                      <Suspense fallback={null}>
+                        {dashboardReady && <Dashboard />}
+                      </Suspense>
+                    )
+                  } 
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </SidebarProvider>
         </BrowserRouter>
       </TooltipProvider>

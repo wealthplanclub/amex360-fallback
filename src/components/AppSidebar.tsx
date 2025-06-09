@@ -13,41 +13,42 @@ import {
   SidebarMenuButton,
   useSidebar
 } from "@/components/ui/sidebar"
+import { DashboardSection } from "@/pages/Dashboard"
+
+interface AppSidebarProps {
+  activeSection: DashboardSection
+  setActiveSection: (section: DashboardSection) => void
+}
 
 const menuItems = [
   {
     title: "Dashboard",
     icon: ChartNoAxesColumn,
-    url: "/dashboard",
+    section: "dashboard" as DashboardSection,
   },
   {
     title: "Bonus Awards",
     icon: Award,
-    url: "/rewards",
+    section: "rewards" as DashboardSection,
   },
   {
     title: "Employee Cards",
     icon: CreditCard,
-    url: "/employee",
+    section: "employee" as DashboardSection,
   },
   {
     title: "CreditMax",
     icon: Crown,
-    url: "/creditmax",
+    section: "creditmax" as DashboardSection,
   },
 ]
 
-export function AppSidebar() {
+export function AppSidebar({ activeSection, setActiveSection }: AppSidebarProps) {
   const navigate = useNavigate()
   const { close } = useSidebar()
 
-  const handleItemClick = (url: string) => {
-    if (url !== "#") {
-      // Add a small delay to allow the smooth close animation to start
-      setTimeout(() => {
-        navigate(url)
-      }, 100)
-    }
+  const handleItemClick = (section: DashboardSection) => {
+    setActiveSection(section)
     close()
   }
 
@@ -82,8 +83,8 @@ export function AppSidebar() {
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton 
-                  onClick={() => handleItemClick(item.url)}
-                  className="gap-3"
+                  onClick={() => handleItemClick(item.section)}
+                  className={`gap-3 ${activeSection === item.section ? 'bg-gray-100' : ''}`}
                 >
                   <item.icon className="h-4 w-4" />
                   <span>{item.title}</span>
