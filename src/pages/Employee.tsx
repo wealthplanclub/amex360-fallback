@@ -1,6 +1,5 @@
 
 import React from "react"
-import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
@@ -81,55 +80,53 @@ const Employee = () => {
   }
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <AppSidebar />
-        <div className="flex-1 flex flex-col">
-          <AppHeader />
-          
-          <EmployeeBonusProvider>
-            <div className="max-w-7xl mx-auto px-6 mb-8">
-              <EmployeeHeader />
-              
-              {/* Employee Metrics Cards */}
-              <div className="mt-8">
-                <EmployeeMetricsCards 
+    <div className="min-h-screen flex w-full">
+      <AppSidebar />
+      <div className="flex-1 flex flex-col">
+        <AppHeader />
+        
+        <EmployeeBonusProvider>
+          <div className="max-w-7xl mx-auto px-6 mb-8">
+            <EmployeeHeader />
+            
+            {/* Employee Metrics Cards */}
+            <div className="mt-8">
+              <EmployeeMetricsCards 
+                filteredTransactions={filteredTransactions}
+                selectedCardType={filters.selectedCardType}
+                selectedLastFive={filters.selectedLastFive}
+              />
+            </div>
+            
+            {/* Transaction Section and Card Section with staggered fade-in animations */}
+            <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className={`lg:col-span-2 transition-all duration-700 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <EmployeeTransactionSection
                   filteredTransactions={filteredTransactions}
-                  selectedCardType={filters.selectedCardType}
-                  selectedLastFive={filters.selectedLastFive}
+                  hasAnyFilter={hasAnyFilter}
+                  getFilterDisplayText={getFilterDisplayText}
+                  handleClearAllFilters={handleClearAllFilters}
+                  globalFilter={filters.globalFilter}
+                  onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+                  getCardDropdownDisplayText={getCardDropdownDisplayText}
+                  uniqueCardTypes={uniqueCardTypes}
+                  handleCardDropdownChange={handleCardDropdownChange}
                 />
               </div>
               
-              {/* Transaction Section and Card Section with staggered fade-in animations */}
-              <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className={`lg:col-span-2 transition-all duration-700 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                  <EmployeeTransactionSection
-                    filteredTransactions={filteredTransactions}
-                    hasAnyFilter={hasAnyFilter}
-                    getFilterDisplayText={getFilterDisplayText}
-                    handleClearAllFilters={handleClearAllFilters}
-                    globalFilter={filters.globalFilter}
-                    onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                    getCardDropdownDisplayText={getCardDropdownDisplayText}
-                    uniqueCardTypes={uniqueCardTypes}
-                    handleCardDropdownChange={handleCardDropdownChange}
-                  />
-                </div>
-                
-                <div className={`lg:col-span-1 transition-all duration-700 delay-400 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                  <EmployeeCardSection
-                    selectedLastFive={filters.selectedLastFive}
-                    handleCardClick={handleCardClick}
-                    cardsToShow={getCardsToShow()}
-                    selectedCardType={filters.selectedCardType}
-                  />
-                </div>
+              <div className={`lg:col-span-1 transition-all duration-700 delay-400 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <EmployeeCardSection
+                  selectedLastFive={filters.selectedLastFive}
+                  handleCardClick={handleCardClick}
+                  cardsToShow={getCardsToShow()}
+                  selectedCardType={filters.selectedCardType}
+                />
               </div>
             </div>
-          </EmployeeBonusProvider>
-        </div>
+          </div>
+        </EmployeeBonusProvider>
       </div>
-    </SidebarProvider>
+    </div>
   )
 }
 
