@@ -84,6 +84,9 @@ export function StatCard({
     return baseClasses;
   };
 
+  // Determine if this card should use blue color styling
+  const shouldUseBlueColor = formatAsPoints && title !== "Avg Points/Dollar";
+
   return (
     <Card 
       className={getCardClasses()}
@@ -103,7 +106,7 @@ export function StatCard({
           className={`text-2xl font-semibold tabular-nums lg:text-3xl transition-opacity duration-1000 ease-in-out ${
             isVisible ? 'animate-fade-in' : 'opacity-0'
           }`}
-          style={formatAsPoints ? { color: '#00175a' } : undefined}
+          style={shouldUseBlueColor ? { color: '#00175a' } : undefined}
         >
           {formatValue(value)}
         </CardTitle>
