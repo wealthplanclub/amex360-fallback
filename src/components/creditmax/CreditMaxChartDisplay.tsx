@@ -44,6 +44,23 @@ export function CreditMaxChartDisplay({
     return Math.round(totalPoints)
   }
 
+  // Check which time ranges have data
+  const getAvailableTimeRanges = () => {
+    const ranges = ["ytd", "90d", "30d", "7d"]
+    const availableRanges: string[] = []
+
+    ranges.forEach(range => {
+      const testData = useCreditMaxChartData(swapTransactions, range)
+      if (testData.length > 0) {
+        availableRanges.push(range)
+      }
+    })
+
+    return availableRanges
+  }
+
+  const availableTimeRanges = getAvailableTimeRanges()
+
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">
       <CardHeader className="flex flex-col space-y-4 pb-2 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -54,10 +71,13 @@ export function CreditMaxChartDisplay({
           </CardDescription>
         </div>
         
-        <TimeRangeSelector 
-          timeRange={selectedTimeRange}
-          onTimeRangeChange={onTimeRangeChange}
-        />
+        {availableTimeRanges.length > 1 && (
+          <TimeRangeSelector 
+            timeRange={selectedTimeRange}
+            onTimeRangeChange={onTimeRangeChange}
+            availableRanges={availableTimeRanges}
+          />
+        )}
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <CreditMaxChart data={chartData} onDateClick={onDateClick} />
