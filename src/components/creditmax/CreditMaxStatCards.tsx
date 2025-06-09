@@ -89,7 +89,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       value: metrics.truePointMultiple,
       badge: `${metrics.truePointMultiple.toFixed(1)}x`,
       icon: Crown,
-      footer: "CreditMax multiplier",
+      footer: "CreditMax multiple",
       description: "Points earned/actual spend (fees)",
       formatAsPoints: false,
       isPointMultiple: true
