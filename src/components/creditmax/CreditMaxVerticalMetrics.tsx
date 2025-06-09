@@ -43,7 +43,15 @@ export function CreditMaxVerticalMetrics({ swapTransactions }: CreditMaxVertical
 
   return (
     <div className="space-y-3">
-      {/* Row 1: Swaps In & Out */}
+      {/* Row 1: Total Counterparties */}
+      <div className="grid grid-cols-1">
+        <MetricCard 
+          title="Total Counterparties"
+          value={metrics.totalCounterparties.toString()}
+        />
+      </div>
+
+      {/* Row 2: Swaps In & Out */}
       <div className="grid grid-cols-2 gap-3">
         <MetricCard 
           title="Total Swaps In"
@@ -55,7 +63,7 @@ export function CreditMaxVerticalMetrics({ swapTransactions }: CreditMaxVertical
         />
       </div>
 
-      {/* Row 2: Net Flow & Average Volume */}
+      {/* Row 3: Net Flow & Average Volume */}
       <div className="grid grid-cols-2 gap-3">
         <MetricCard 
           title="Net Flow"
@@ -64,14 +72,6 @@ export function CreditMaxVerticalMetrics({ swapTransactions }: CreditMaxVertical
         <MetricCard 
           title="Average Volume"
           value={`$${metrics.averageVolume.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`}
-        />
-      </div>
-
-      {/* Row 3: Total Counterparties */}
-      <div className="grid grid-cols-1">
-        <MetricCard 
-          title="Total Counterparties"
-          value={metrics.totalCounterparties.toString()}
         />
       </div>
     </div>
