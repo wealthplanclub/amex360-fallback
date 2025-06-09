@@ -68,9 +68,6 @@ const CreditMax = () => {
     updateFilter
   } = useCreditMaxFilters(swapTransactions)
 
-  // Check if a specific counterparty is selected (not "all")
-  const isSpecificCounterpartySelected = filters.selectedCard && filters.selectedCard !== "all"
-
   const handleTimeRangeChange = (timeRange: string) => {
     setSelectedTimeRange(timeRange)
   }
@@ -132,14 +129,8 @@ const CreditMax = () => {
             <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
           </div>
 
-          {/* Chart with Smooth Slide Animation */}
-          <div 
-            className={`mt-8 transition-all duration-500 ease-in-out transform ${
-              isSpecificCounterpartySelected 
-                ? 'opacity-0 -translate-y-4 max-h-0 overflow-hidden' 
-                : 'opacity-100 translate-y-0 max-h-[1000px]'
-            }`}
-          >
+          {/* Chart */}
+          <div className="mt-8">
             <CreditMaxChartDisplay
               swapTransactions={counterpartyFilteredTransactions}
               selectedTimeRange={selectedTimeRange}

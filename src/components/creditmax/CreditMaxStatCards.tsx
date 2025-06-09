@@ -55,12 +55,12 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
 
   const cardData = [
     {
-      title: "Total Points",
+      title: "Total Points Earned",
       value: metrics.totalPointsEarned,
       badge: formatPointMultiple(metrics.pointsEarnedMultiple),
       icon: () => <img src="https://i.imgur.com/dTz9vVm.png" alt="Points" className="h-4 w-4" />,
       footer: "Points earned",
-      description: "Total points from outbound swaps",
+      description: "Total points earned on outbound swaps",
       formatAsPoints: true,
       isPointMultiple: false
     },
@@ -79,7 +79,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       value: metrics.actualSpend,
       badge: metrics.totalCardSpend > 0 ? `${Math.round((metrics.actualSpend / metrics.totalCardSpend) * 100)}%` : "0%",
       icon: TrendingDown,
-      footer: "Processing fees",
+      footer: "Actual cost",
       description: "Actual cost (3% of card spend)",
       formatAsPoints: false,
       isPointMultiple: false
@@ -90,7 +90,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       badge: `${metrics.truePointMultiple.toFixed(1)}x`,
       icon: Crown,
       footer: "CreditMax multiple",
-      description: "Points earned/actual spend",
+      description: "Points earned/actual spend (fees)",
       formatAsPoints: false,
       isPointMultiple: true
     }
