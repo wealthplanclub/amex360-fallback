@@ -39,6 +39,7 @@ export const SidebarProvider = ({ children }: SidebarProviderProps) => {
     
     if (isOpen) {
       document.addEventListener("keydown", handleEscape)
+      // Prevent body scroll when sidebar is open
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = "unset"

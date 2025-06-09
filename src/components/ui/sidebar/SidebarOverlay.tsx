@@ -13,7 +13,7 @@ export const SidebarOverlay = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "fixed inset-0 bg-black/50 z-40 transition-all duration-300 ease-out",
+        "fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ease-in-out",
         isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none",
         className
       )}

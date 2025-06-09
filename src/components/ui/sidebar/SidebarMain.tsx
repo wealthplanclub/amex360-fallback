@@ -17,8 +17,8 @@ export const Sidebar = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-all duration-300 ease-out",
-          isOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-95",
+          "fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full",
           className
         )}
         {...props}
