@@ -2,7 +2,7 @@
 export interface SwapTransaction {
   id: string
   date: string
-  counterparty: string
+  member: string
   amount: number
   direction: string
   multiple: number
@@ -18,7 +18,7 @@ export function parseSwapData(rawData: string): SwapTransaction[] {
     return {
       id: `swap-${index + 1}`,
       date: values[0] || '',
-      counterparty: values[1] || '',
+      member: values[1] || '',
       amount: parseFloat(values[2]) || 0,
       direction: values[3] || '',
       multiple: parseFloat(values[4]) || 0,
