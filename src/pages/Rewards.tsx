@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useFilterState } from "@/hooks/useFilterState";
 import { RewardsLoader } from "@/components/reward/RewardsLoader";
@@ -54,13 +53,7 @@ const Rewards = () => {
   }
 
   return (
-    <div 
-      className="flex-1"
-      style={{
-        backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-        backgroundRepeat: 'repeat'
-      }}
-    >
+    <div className="flex-1">
       <RewardsContent
         filters={filters}
         updateFilter={updateFilter}
