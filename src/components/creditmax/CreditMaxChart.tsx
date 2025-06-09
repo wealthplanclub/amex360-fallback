@@ -18,7 +18,7 @@ const chartConfig = {
   },
   actualSpent: {
     label: "Actual Spend:",
-    color: "#86efac", // green-300
+    color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig
 
