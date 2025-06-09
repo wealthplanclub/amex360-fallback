@@ -1,5 +1,6 @@
+
 import React from "react"
-import { TrendingDown, ArrowUpDown, BarChart3 } from "lucide-react"
+import { TrendingUp, TrendingDown, BarChart3 } from "lucide-react"
 import { StatCard } from "@/components/StatCard"
 import { formatPointMultiple } from "@/utils/pointMultipleUtils"
 
@@ -68,7 +69,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       title: "Total Card Spend",
       value: metrics.totalCardSpend,
       badge: "100%",
-      icon: TrendingDown,
+      icon: TrendingUp,
       footer: "Card spend",
       description: "Total amount spent on outbound swap transactions with a card attached",
       formatAsPoints: false,
@@ -78,7 +79,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       title: "Actual Spend",
       value: metrics.actualSpend,
       badge: metrics.totalCardSpend > 0 ? `${Math.round((metrics.actualSpend / metrics.totalCardSpend) * 100)}%` : "0%",
-      icon: ArrowUpDown,
+      icon: TrendingDown,
       footer: "Actual cost",
       description: "Actual cost (3% of total card spend)",
       formatAsPoints: false,
