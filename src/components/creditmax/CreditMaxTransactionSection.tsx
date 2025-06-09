@@ -82,6 +82,7 @@ export function CreditMaxTransactionSection({
                 selectedCard={getCounterpartyDropdownDisplayText()}
                 creditCards={uniqueCounterparties}
                 onCardChange={handleCounterpartyDropdownChange}
+                showBusinessPrefix={false}
               />
             </div>
           </div>
