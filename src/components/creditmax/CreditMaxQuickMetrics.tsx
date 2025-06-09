@@ -58,7 +58,8 @@ export function CreditMaxQuickMetrics({ swapTransactions }: CreditMaxQuickMetric
   // Calculate metrics from swap transactions
   const metrics = React.useMemo(() => {
     const outboundTransactions = swapTransactions.filter(t => t.direction === 'SWAP_OUT')
-    const totalCardSpend = outboundTransactions.reduce((sum, t) => sum + t.amount, 0)
+    const outboundWithCard = swapTransactions.filter(t => t.direction === 'SWAP_OUT' && t.card && t.card.trim() !== '')
+    const totalCardSpend = outboundWithCard.reduce((sum, t) => sum + t.amount, 0)
     const totalPointsEarned = outboundTransactions.reduce((sum, t) => sum + (t.amount * t.multiple), 0)
     const actualSpend = totalCardSpend * 0.03
     const truePointMultiple = actualSpend > 0 ? totalPointsEarned / actualSpend : 0
@@ -85,10 +86,10 @@ export function CreditMaxQuickMetrics({ swapTransactions }: CreditMaxQuickMetric
     {
       title: "Total Card Spend",
       value: `$${metrics.totalCardSpend.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
-      description: "Total amount spent on outbound swap transactions",
+      description: "Total amount spent on outbound swap transactions with a card attached",
       dataSource: "CreditMax Transaction System",
       lastUpdated: "Real-time",
-      calculationMethod: "Sum of all SWAP_OUT transaction amounts"
+      calculationMethod: "Sum of all SWAP_OUT transaction amounts where card field is not empty"
     },
     {
       title: "Actual Spend",
