@@ -24,12 +24,12 @@ const Index = () => {
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Simulate loading time
+    // Reduced loading time to 0.5 seconds
     const timer = setTimeout(() => {
       setIsLoading(false);
       // Start showing content with staggered animations
       setTimeout(() => setShowContent(true), 100);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
