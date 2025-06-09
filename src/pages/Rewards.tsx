@@ -1,9 +1,6 @@
 
 import React from "react";
 import { RewardCard } from "@/components/RewardCard";
-import { AppHeader } from "@/components/AppHeader";
-import { AppSidebar } from "@/components/AppSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { useFilterState } from "@/hooks/useFilterState";
 import { RewardMetricsCards } from "@/components/reward/RewardMetricsCards";
 import { RewardChartDisplay } from "@/components/reward/RewardChartDisplay";
@@ -140,73 +137,67 @@ const Rewards = () => {
   };
 
   return (
-    <SidebarProvider>
-      <div 
-        className="min-h-screen w-full"
-        style={{
-          backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
-          backgroundRepeat: 'repeat'
-        }}
-      >
-        <AppSidebar />
+    <div 
+      className="flex-1"
+      style={{
+        backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+        backgroundRepeat: 'repeat'
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        {/* Header with Logo */}
+        <div className="flex justify-center items-center">
+          <img 
+            src="https://i.imgur.com/1fFddP4.png" 
+            alt="Amex Logo" 
+            className="mx-auto"
+            style={{ width: '276px' }}
+          />
+        </div>
         
-        <AppHeader />
+        {/* Metrics Cards */}
+        <div className="mt-8 px-4 lg:px-6">
+          <RewardMetricsCards
+            filters={filters}
+            isVisible={isVisible}
+            numbersKey={numbersKey}
+            onCardClick={handleCardClick}
+          />
+        </div>
         
-        <div className="max-w-7xl mx-auto px-6 mb-8">
-          {/* Header with Logo */}
-          <div className="flex justify-center items-center">
-            <img 
-              src="https://i.imgur.com/1fFddP4.png" 
-              alt="Amex Logo" 
-              className="mx-auto"
-              style={{ width: '276px' }}
-            />
-          </div>
-          
-          {/* Metrics Cards */}
-          <div className="mt-8 px-4 lg:px-6">
-            <RewardMetricsCards
+        {/* Chart - Full Width Row with fade-in animation */}
+        <div className={`mt-8 px-4 lg:px-6 transition-all duration-700 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <RewardChartDisplay
+            filters={filters}
+            onTimeRangeChange={handleTimeRangeChange}
+            onDateClick={handleDateClick}
+          />
+        </div>
+        
+        {/* Table and Card List Row with staggered fade-in animations */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
+          <div 
+            className={`lg:col-span-2 transition-all duration-700 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} 
+            data-testid="reward-table"
+          >
+            <RewardCard 
               filters={filters}
-              isVisible={isVisible}
-              numbersKey={numbersKey}
-              onCardClick={handleCardClick}
+              onClearDateFilter={clearDateFilter}
+              onClearTimeRangeFilter={clearTimeRangeFilter}
+              onDropdownChange={handleTransactionDropdownChange}
+              onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
+              onClearCardFilter={clearCardFilter}
             />
           </div>
-          
-          {/* Chart - Full Width Row with fade-in animation */}
-          <div className={`mt-8 px-4 lg:px-6 transition-all duration-700 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <RewardChartDisplay
-              filters={filters}
-              onTimeRangeChange={handleTimeRangeChange}
-              onDateClick={handleDateClick}
+          <div className={`lg:col-span-1 transition-all duration-700 delay-400 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <RewardCardList 
+              filters={filters} 
+              onCardClick={handleRewardCardClick}
             />
-          </div>
-          
-          {/* Table and Card List Row with staggered fade-in animations */}
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 lg:px-6">
-            <div 
-              className={`lg:col-span-2 transition-all duration-700 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} 
-              data-testid="reward-table"
-            >
-              <RewardCard 
-                filters={filters}
-                onClearDateFilter={clearDateFilter}
-                onClearTimeRangeFilter={clearTimeRangeFilter}
-                onDropdownChange={handleTransactionDropdownChange}
-                onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
-                onClearCardFilter={clearCardFilter}
-              />
-            </div>
-            <div className={`lg:col-span-1 transition-all duration-700 delay-400 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              <RewardCardList 
-                filters={filters} 
-                onCardClick={handleRewardCardClick}
-              />
-            </div>
           </div>
         </div>
       </div>
-    </SidebarProvider>
+    </div>
   );
 };
 
