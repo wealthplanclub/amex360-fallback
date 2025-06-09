@@ -5,7 +5,7 @@ import { StatCard } from "@/components/StatCard"
 
 interface SwapTransaction {
   date: string
-  member: string
+  counterparty: string
   amount: number
   direction: 'SWAP_IN' | 'SWAP_OUT'
   multiple?: number
@@ -42,7 +42,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     const totalSwapIn = swapInTransactions.reduce((sum, t) => sum + t.amount, 0)
     const totalSwapOut = swapOutTransactions.reduce((sum, t) => sum + t.amount, 0)
     const netFlow = totalSwapIn - totalSwapOut
-    const uniqueMembers = new Set(swapTransactions.map(t => t.member)).size
+    const uniqueMembers = new Set(swapTransactions.map(t => t.counterparty)).size
 
     return {
       totalSwapIn,
