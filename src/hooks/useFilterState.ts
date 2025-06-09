@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react'
 
 export interface FilterState {
@@ -12,6 +11,7 @@ export interface FilterState {
   lowestCardFilter?: string
   selectedCardType?: string
   selectedLastFive?: string
+  selectedCounterparty?: string
 }
 
 export function useFilterState(initialTimeRange: string = "ytd") {
