@@ -37,7 +37,7 @@ export function SwapTransactionSection({
         <div className="p-6 pb-2">
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
-              <h2 className="text-xl font-semibold">Swap transactions</h2>
+              <h2 className="text-xl font-semibold">CreditMax transactions</h2>
               
               {hasAnyFilter && (
                 <div className="mt-2">
