@@ -17,7 +17,7 @@ export function parseSwapData(rawData: string): SwapTransaction[] {
     const values = line.split('\t')
     return {
       id: `swap-${index + 1}`,
-      date: values[0] || '',
+      date: values[0].split(' ')[0] || '', // Extract just YYYY-MM-DD from timestamp
       counterparty: values[1] || '',
       amount: parseFloat(values[2]) || 0,
       direction: values[3] as 'SWAP_IN' | 'SWAP_OUT',
