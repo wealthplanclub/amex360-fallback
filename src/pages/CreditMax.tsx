@@ -13,28 +13,32 @@ const CreditMax = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
+      <div 
+        className="min-h-screen w-full"
+        style={{
+          backgroundImage: 'url(https://i.imgur.com/MsHNAik.png)',
+          backgroundRepeat: 'repeat'
+        }}
+      >
         <AppSidebar />
-        <div className="flex-1 flex flex-col">
-          <AppHeader />
+        <AppHeader />
+        
+        <div className="max-w-7xl mx-auto px-6 mb-8">
+          {/* Amex Logo */}
+          <div className="flex flex-col items-center gap-6">
+            <img 
+              src="https://i.imgur.com/1fFddP4.png" 
+              alt="Amex Logo" 
+              className="mx-auto"
+              style={{ width: '276px' }}
+            />
+          </div>
           
-          <div className="mb-8">
-            {/* Amex Logo */}
-            <div className="flex flex-col items-center gap-6">
-              <img 
-                src="https://i.imgur.com/1fFddP4.png" 
-                alt="Amex Logo" 
-                className="mx-auto"
-                style={{ width: '276px' }}
-              />
-            </div>
-            
-            {/* CreditMax Stat Cards */}
-            <div className="mt-8">
-              <CreditMaxStatCards 
-                swapTransactions={swapTransactions}
-              />
-            </div>
+          {/* CreditMax Stat Cards */}
+          <div className="mt-8">
+            <CreditMaxStatCards 
+              swapTransactions={swapTransactions}
+            />
           </div>
         </div>
       </div>
