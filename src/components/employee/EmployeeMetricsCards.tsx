@@ -47,7 +47,8 @@ export function EmployeeMetricsCards({
       icon: () => <img src="https://i.imgur.com/dTz9vVm.png" alt="Points" className="h-4 w-4" />,
       footer: "Points earned",
       description: "Total points accumulated",
-      formatAsPoints: true
+      formatAsPoints: true,
+      isPointMultiple: false
     },
     {
       title: "Total Spend",
@@ -56,7 +57,8 @@ export function EmployeeMetricsCards({
       icon: TrendingUp,
       footer: "Employee spending",
       description: "Total amount spent",
-      formatAsPoints: false
+      formatAsPoints: false,
+      isPointMultiple: false
     },
     {
       title: "Avg Points/Dollar",
@@ -65,7 +67,8 @@ export function EmployeeMetricsCards({
       icon: TrendingUp,
       footer: "Points per dollar",
       description: "Average points earned per dollar",
-      formatAsPoints: true
+      formatAsPoints: false,
+      isPointMultiple: true
     },
     {
       title: "Total Cards",
@@ -74,7 +77,8 @@ export function EmployeeMetricsCards({
       icon: CreditCard,
       footer: "Unique cards",
       description: "Total unique employee cards",
-      formatAsPoints: false
+      formatAsPoints: false,
+      isPointMultiple: false
     }
   ]
 
@@ -93,6 +97,7 @@ export function EmployeeMetricsCards({
           isVisible={isVisible}
           numbersKey={numbersKey}
           formatAsPoints={card.formatAsPoints}
+          isPointMultiple={card.isPointMultiple}
           showBadge={false}
           showHover={true}
         />

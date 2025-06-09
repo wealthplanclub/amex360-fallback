@@ -59,7 +59,8 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       icon: TrendingUp,
       footer: "Points earned",
       description: "Total points earned on outbound transactions",
-      formatAsPoints: true
+      formatAsPoints: true,
+      isPointMultiple: false
     },
     {
       title: "Total Card Spend",
@@ -68,7 +69,8 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       icon: TrendingDown,
       footer: "Card spend",
       description: "Total amount spent on outbound swap transactions with a card attached",
-      formatAsPoints: false
+      formatAsPoints: false,
+      isPointMultiple: false
     },
     {
       title: "Actual Spend",
@@ -77,7 +79,8 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       icon: ArrowUpDown,
       footer: "Actual cost",
       description: "Actual cost (3% of total card spend)",
-      formatAsPoints: false
+      formatAsPoints: false,
+      isPointMultiple: false
     },
     {
       title: "True Point Multiple",
@@ -86,7 +89,8 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       icon: BarChart3,
       footer: "Point efficiency",
       description: "Effective points per dollar of actual spend",
-      formatAsPoints: true
+      formatAsPoints: false,
+      isPointMultiple: true
     }
   ]
 
@@ -105,6 +109,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
           isVisible={isVisible}
           numbersKey={numbersKey}
           formatAsPoints={card.formatAsPoints}
+          isPointMultiple={card.isPointMultiple}
           showBadge={true}
           showHover={true}
         />

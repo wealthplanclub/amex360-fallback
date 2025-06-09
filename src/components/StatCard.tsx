@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { formatPointMultiple } from "@/utils/pointMultipleUtils"
 
 interface StatCardProps {
   title: string
@@ -26,6 +27,7 @@ interface StatCardProps {
   onClick?: (cardType: string, topCardAccount?: string) => void
   formatAsPoints?: boolean
   showBadge?: boolean
+  isPointMultiple?: boolean
 }
 
 export function StatCard({
@@ -44,7 +46,8 @@ export function StatCard({
   topCardAccount,
   onClick,
   formatAsPoints = false,
-  showBadge = true
+  showBadge = true,
+  isPointMultiple = false
 }: StatCardProps) {
   const handleClick = () => {
     if (clickable && cardType && onClick) {
@@ -53,13 +56,14 @@ export function StatCard({
   };
 
   const formatValue = (val: number) => {
+    // Use point multiple formatting for designated cards
+    if (isPointMultiple) {
+      return formatPointMultiple(val);
+    }
+    
     if (formatAsPoints) {
       const formattedValue = val.toLocaleString('en-US');
-      // Add 'x' suffix for "Avg Points/Dollar" card
-      if (title === "Avg Points/Dollar") {
-        return `${formattedValue}x`;
-      }
-      // Add 'pts' suffix for other point-related cards
+      // Add 'pts' suffix for point-related cards
       return `${formattedValue} pts`;
     }
     
@@ -84,8 +88,8 @@ export function StatCard({
     return baseClasses;
   };
 
-  // Determine if this card should use blue color styling
-  const shouldUseBlueColor = formatAsPoints && title !== "Avg Points/Dollar";
+  // Determine if this card should use blue color styling (no longer used for point multiples)
+  const shouldUseBlueColor = formatAsPoints && !isPointMultiple;
 
   return (
     <Card 
