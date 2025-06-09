@@ -69,8 +69,8 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       value: metrics.totalCardSpend,
       badge: "100%",
       icon: TrendingUp,
-      footer: "Card spend",
-      description: "Total outbound spend via card",
+      footer: "Spend n'Lend transactions",
+      description: "Total outbound swaps via card",
       formatAsPoints: false,
       isPointMultiple: false
     },
