@@ -54,7 +54,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
 
   const cardData = [
     {
-      title: "Total Swap Out",
+      title: "Total Swaps Out",
       value: metrics.totalSwapOut,
       badge: "100%",
       icon: TrendingDown,
@@ -63,7 +63,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       formatAsPoints: false
     },
     {
-      title: "Total Swap In",
+      title: "Total Swaps In",
       value: metrics.totalSwapIn,
       badge: metrics.totalSwapOut > 0 ? `${Math.round((metrics.totalSwapIn / metrics.totalSwapOut) * 100)}%` : "0%",
       icon: TrendingUp,
