@@ -131,9 +131,9 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           }
         />
         <Area
-          dataKey="actualSpent"
+          dataKey="cumulativePoints"
           type="monotone"
-          fill="url(#fillActualSpent)"
+          fill="url(#fillCumulativePoints)"
           stroke="#00175a"
           strokeWidth={0}
           stackId="a"
@@ -147,9 +147,9 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           stackId="b"
         />
         <Area
-          dataKey="cumulativePoints"
+          dataKey="actualSpent"
           type="monotone"
-          fill="url(#fillCumulativePoints)"
+          fill="url(#fillActualSpent)"
           stroke="#00175a"
           strokeWidth={0}
           stackId="c"
