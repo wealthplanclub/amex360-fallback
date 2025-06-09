@@ -18,7 +18,7 @@ const CreditMax = () => {
         <div className="flex-1 flex flex-col">
           <AppHeader />
           
-          <div className="max-w-7xl mx-auto px-6 mb-8">
+          <div className="max-w-7xl mx-auto mb-8">
             {/* Amex Logo */}
             <div className="flex flex-col items-center gap-6">
               <img 
