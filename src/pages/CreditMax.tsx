@@ -129,30 +129,31 @@ const CreditMax = () => {
             />
           </div>
 
-          {/* Chart */}
-          <div className="mt-8">
-            <CreditMaxChartDisplay
-              swapTransactions={counterpartyFilteredTransactions}
-              selectedTimeRange={selectedTimeRange}
-              onTimeRangeChange={handleTimeRangeChange}
-              onDateClick={handleDateClick}
-            />
-          </div>
-
-          {/* Main Content - Transaction Table and Counterparty List */}
+          {/* Main Content - Two Column Layout */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Transaction Table */}
-            <SwapTransactionSection
-              filteredTransactions={tableFilteredTransactions}
-              hasAnyFilter={hasAnyFilter}
-              getFilterDisplayText={getFilterDisplayText}
-              handleClearAllFilters={handleClearAllFilters}
-              selectedCounterparty={filters.selectedCard || "all"}
-              uniqueCounterparties={uniqueCounterparties}
-              handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
-            />
+            {/* Left Column - Chart and Transactions */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Chart */}
+              <CreditMaxChartDisplay
+                swapTransactions={counterpartyFilteredTransactions}
+                selectedTimeRange={selectedTimeRange}
+                onTimeRangeChange={handleTimeRangeChange}
+                onDateClick={handleDateClick}
+              />
 
-            {/* Counterparty List */}
+              {/* Transaction Table */}
+              <SwapTransactionSection
+                filteredTransactions={tableFilteredTransactions}
+                hasAnyFilter={hasAnyFilter}
+                getFilterDisplayText={getFilterDisplayText}
+                handleClearAllFilters={handleClearAllFilters}
+                selectedCounterparty={filters.selectedCard || "all"}
+                uniqueCounterparties={uniqueCounterparties}
+                handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
+              />
+            </div>
+
+            {/* Right Column - Counterparty List */}
             <div className="lg:col-span-1">
               <CounterpartyList 
                 selectedCounterparty={filters.selectedCard}
