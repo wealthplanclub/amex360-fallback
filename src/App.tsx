@@ -89,7 +89,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <SidebarProvider>
-            <div className="min-h-screen flex w-full">
+            <div className="min-h-screen w-full">
               <Routes>
                 <Route path="/" element={<Auth />} />
                 <Route 
