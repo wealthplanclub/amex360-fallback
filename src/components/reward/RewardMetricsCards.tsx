@@ -33,7 +33,7 @@ export function RewardMetricsCards({
       value: calculations.totalRewardPoints,
       badge: "+100%",
       icon: () => <img src="https://i.imgur.com/dTz9vVm.png" alt="Points" className="h-4 w-4" />,
-      footer: "Points earned",
+      footer: "Bonuses earned",
       description: `Total bonus points ${getTimeRangeDescription(filters.selectedTimeRange)}`,
       clickable: false,
       showHover: true,
