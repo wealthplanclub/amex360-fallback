@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
+import { CreditMaxQuickMetrics } from "@/components/creditmax/CreditMaxQuickMetrics"
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
 import { DashboardLoader } from "@/components/dashboard/DashboardLoader"
@@ -79,6 +80,11 @@ const CreditMax = () => {
               className="mx-auto"
               style={{ width: '276px' }}
             />
+          </div>
+          
+          {/* Quick Metrics Cards */}
+          <div className="mt-8">
+            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
           </div>
           
           {/* CreditMax Stat Cards - using counterparty filtered transactions only */}
