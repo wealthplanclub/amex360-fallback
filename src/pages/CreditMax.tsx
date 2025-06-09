@@ -124,11 +124,6 @@ const CreditMax = () => {
             />
           </div>
 
-          {/* Quick Metrics Cards */}
-          <div className="mt-8">
-            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
-          </div>
-
           {/* Chart */}
           <div className="mt-8">
             <CreditMaxChartDisplay
@@ -137,6 +132,11 @@ const CreditMax = () => {
               onTimeRangeChange={handleTimeRangeChange}
               onDateClick={handleDateClick}
             />
+          </div>
+
+          {/* Quick Metrics Cards */}
+          <div className="mt-8">
+            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
           </div>
 
           {/* Main Content - Transaction Table and Counterparty List */}
