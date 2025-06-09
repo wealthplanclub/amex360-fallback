@@ -23,7 +23,7 @@ export function useCreditMaxFilters(swapTransactions: SwapTransaction[]) {
     return filtered
   }, [swapTransactions, filters.selectedCard])
 
-  // Filter transactions for table (includes both counterparty and global search)
+  // Filter transactions for table (includes only counterparty filter)
   const tableFilteredTransactions = useMemo(() => {
     let filtered = swapTransactions
 
@@ -31,7 +31,6 @@ export function useCreditMaxFilters(swapTransactions: SwapTransaction[]) {
       filtered = filtered.filter(t => t.counterparty === filters.selectedCard)
     }
 
-    // Global filter is applied at the table level, not here
     return filtered
   }, [swapTransactions, filters.selectedCard])
 

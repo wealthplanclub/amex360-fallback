@@ -1,5 +1,5 @@
 
-import React from "react"
+import React, { useState } from "react"
 import { SwapTransactionTable } from "./SwapTransactionTable"
 import { Input } from "@/components/ui/input"
 import { CounterpartyFilterDropdown } from "./CounterpartyFilterDropdown"
@@ -11,8 +11,6 @@ interface SwapTransactionSectionProps {
   hasAnyFilter: boolean
   getFilterDisplayText: () => string
   handleClearAllFilters: () => void
-  globalFilter: string
-  onGlobalFilterChange: (value: string) => void
   selectedCounterparty: string
   uniqueCounterparties: string[]
   handleCounterpartyDropdownChange: (counterparty: string) => void
@@ -23,12 +21,13 @@ export function SwapTransactionSection({
   hasAnyFilter,
   getFilterDisplayText,
   handleClearAllFilters,
-  globalFilter,
-  onGlobalFilterChange,
   selectedCounterparty,
   uniqueCounterparties,
   handleCounterpartyDropdownChange
 }: SwapTransactionSectionProps) {
+  // Local state for search input
+  const [globalFilter, setGlobalFilter] = useState("")
+  
   const filterText = getFilterDisplayText()
 
   return (
@@ -67,7 +66,7 @@ export function SwapTransactionSection({
               <Input
                 placeholder="Search transactions..."
                 value={globalFilter ?? ""}
-                onChange={(event) => onGlobalFilterChange(event.target.value)}
+                onChange={(event) => setGlobalFilter(event.target.value)}
                 className="max-w-sm"
               />
             </div>
@@ -86,7 +85,7 @@ export function SwapTransactionSection({
           <SwapTransactionTable
             transactions={filteredTransactions}
             globalFilter={globalFilter}
-            onGlobalFilterChange={onGlobalFilterChange}
+            onGlobalFilterChange={setGlobalFilter}
           />
         </div>
       </div>

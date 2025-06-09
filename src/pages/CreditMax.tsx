@@ -66,8 +66,6 @@ const CreditMax = () => {
               hasAnyFilter={hasAnyFilter}
               getFilterDisplayText={getFilterDisplayText}
               handleClearAllFilters={handleClearAllFilters}
-              globalFilter={filters.globalFilter}
-              onGlobalFilterChange={(value) => updateFilter('globalFilter', value)}
               selectedCounterparty={filters.selectedCard || "all"}
               uniqueCounterparties={uniqueCounterparties}
               handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
