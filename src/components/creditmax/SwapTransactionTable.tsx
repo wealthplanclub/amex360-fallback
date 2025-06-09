@@ -25,7 +25,7 @@ export function SwapTransactionTable({
   globalFilter,
   onGlobalFilterChange,
 }: SwapTransactionTableProps) {
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([{ id: "date", desc: true }])
   const [showAll, setShowAll] = useState(false)
   
   const columns = useSwapTransactionColumns()
