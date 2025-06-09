@@ -4,7 +4,7 @@ export interface SwapTransaction {
   date: string
   member: string
   amount: number
-  direction: string
+  direction: 'SWAP_IN' | 'SWAP_OUT'
   multiple: number
   card: string
 }
@@ -20,7 +20,7 @@ export function parseSwapData(rawData: string): SwapTransaction[] {
       date: values[0] || '',
       member: values[1] || '',
       amount: parseFloat(values[2]) || 0,
-      direction: values[3] || '',
+      direction: values[3] as 'SWAP_IN' | 'SWAP_OUT',
       multiple: parseFloat(values[4]) || 0,
       card: values[5] || ''
     }
