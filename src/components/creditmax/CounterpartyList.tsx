@@ -119,7 +119,7 @@ export function CounterpartyList({ selectedCounterparty, onCounterpartyClick, tr
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-semibold">Counterparties</CardTitle>
         <CardDescription>
-          Total outbound spending by counterparty
+          Total outflow by counterparty
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
