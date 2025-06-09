@@ -16,10 +16,10 @@ const CreditMax = () => {
   const [animationData, setAnimationData] = useState(null)
 
   useEffect(() => {
-    // Load the triple-card animation
+    // Load the circle-loader animation
     const loadAnimation = async () => {
       try {
-        const response = await fetch('/triple-card.json')
+        const response = await fetch('/circle-loader.json')
         const data = await response.json()
         setAnimationData(data)
       } catch (error) {
