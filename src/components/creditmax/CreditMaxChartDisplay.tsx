@@ -50,7 +50,7 @@ export function CreditMaxChartDisplay({
         <div className="space-y-1">
           <CardTitle className="text-xl font-semibold">CreditMax cumulative metrics</CardTitle>
           <CardDescription>
-            Cumulative points {getTimeRangeLabel()}: {getCumulativePoints().toLocaleString()} pts
+            Points accumulated {getTimeRangeLabel()}: {getCumulativePoints().toLocaleString()} pts
           </CardDescription>
         </div>
         
