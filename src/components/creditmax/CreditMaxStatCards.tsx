@@ -85,7 +85,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       isPointMultiple: false
     },
     {
-      title: "CreditMax Multiple",
+      title: "True Point Multiple",
       value: metrics.truePointMultiple,
       badge: `${metrics.truePointMultiple.toFixed(1)}x`,
       icon: Crown,
