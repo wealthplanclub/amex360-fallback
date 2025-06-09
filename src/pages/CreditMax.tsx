@@ -116,6 +116,11 @@ const CreditMax = () => {
               style={{ width: '276px' }}
             />
           </div>
+
+          {/* Quick Metrics Cards */}
+          <div className="mt-8">
+            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
+          </div>
           
           {/* CreditMax Stat Cards - using counterparty filtered transactions only */}
           <div className="mt-8">
@@ -132,11 +137,6 @@ const CreditMax = () => {
               onTimeRangeChange={handleTimeRangeChange}
               onDateClick={handleDateClick}
             />
-          </div>
-
-          {/* Quick Metrics Cards */}
-          <div className="mt-8">
-            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
           </div>
 
           {/* Main Content - Transaction Table and Counterparty List */}
