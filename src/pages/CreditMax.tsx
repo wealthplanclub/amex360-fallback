@@ -125,8 +125,8 @@ const CreditMax = () => {
           </div>
 
           {/* Chart and Vertical Metrics */}
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <div className="lg:col-span-3">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
               <CreditMaxChartDisplay
                 swapTransactions={counterpartyFilteredTransactions}
                 selectedTimeRange={selectedTimeRange}
