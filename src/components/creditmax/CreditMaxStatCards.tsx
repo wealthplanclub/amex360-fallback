@@ -79,7 +79,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       value: metrics.actualSpend,
       badge: metrics.totalCardSpend > 0 ? `${Math.round((metrics.actualSpend / metrics.totalCardSpend) * 100)}%` : "0%",
       icon: TrendingDown,
-      footer: "Actual cost",
+      footer: "Processing fees",
       description: "Actual cost (3% of card spend)",
       formatAsPoints: false,
       isPointMultiple: false
@@ -90,7 +90,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
       badge: `${metrics.truePointMultiple.toFixed(1)}x`,
       icon: Crown,
       footer: "CreditMax multiple",
-      description: "Points earned/actual spend (fees)",
+      description: "Points earned/actual spend",
       formatAsPoints: false,
       isPointMultiple: true
     }
