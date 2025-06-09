@@ -4,7 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
-import { CreditMaxQuickMetrics } from "@/components/creditmax/CreditMaxQuickMetrics"
+import { CreditMaxVerticalMetrics } from "@/components/creditmax/CreditMaxVerticalMetrics"
 import { CreditMaxChartDisplay } from "@/components/creditmax/CreditMaxChartDisplay"
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
@@ -124,19 +124,19 @@ const CreditMax = () => {
             />
           </div>
 
-          {/* Chart */}
-          <div className="mt-8">
-            <CreditMaxChartDisplay
-              swapTransactions={counterpartyFilteredTransactions}
-              selectedTimeRange={selectedTimeRange}
-              onTimeRangeChange={handleTimeRangeChange}
-              onDateClick={handleDateClick}
-            />
-          </div>
-
-          {/* Quick Metrics Cards */}
-          <div className="mt-8">
-            <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
+          {/* Chart and Vertical Metrics */}
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="lg:col-span-3">
+              <CreditMaxChartDisplay
+                swapTransactions={counterpartyFilteredTransactions}
+                selectedTimeRange={selectedTimeRange}
+                onTimeRangeChange={handleTimeRangeChange}
+                onDateClick={handleDateClick}
+              />
+            </div>
+            <div className="lg:col-span-1">
+              <CreditMaxVerticalMetrics swapTransactions={counterpartyFilteredTransactions} />
+            </div>
           </div>
 
           {/* Main Content - Transaction Table and Counterparty List */}
