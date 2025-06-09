@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -16,10 +15,10 @@ const CreditMax = () => {
   const [animationData, setAnimationData] = useState(null)
 
   useEffect(() => {
-    // Load the loader-cube-scale animation
+    // Load the loader-cube-twist animation
     const loadAnimation = async () => {
       try {
-        const response = await fetch('/loader-cube-scale.json')
+        const response = await fetch('/loader-cube-twist.json')
         const data = await response.json()
         setAnimationData(data)
       } catch (error) {
