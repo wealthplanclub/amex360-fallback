@@ -56,7 +56,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     {
       title: "Total Swap Out",
       value: metrics.totalSwapOut,
-      badge: "Outflow",
+      badge: "100%",
       icon: TrendingDown,
       footer: "Credit distributed",
       description: "Total amount swapped out",
@@ -65,7 +65,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     {
       title: "Total Swap In",
       value: metrics.totalSwapIn,
-      badge: "Inflow",
+      badge: metrics.totalSwapOut > 0 ? `${Math.round((metrics.totalSwapIn / metrics.totalSwapOut) * 100)}%` : "0%",
       icon: TrendingUp,
       footer: "Credit received",
       description: "Total amount swapped in",
@@ -74,7 +74,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     {
       title: "Net Flow",
       value: Math.abs(metrics.netFlow),
-      badge: metrics.netFlow >= 0 ? "Positive" : "Negative",
+      badge: metrics.totalSwapOut > 0 ? `${Math.round((Math.abs(metrics.netFlow) / metrics.totalSwapOut) * 100)}%` : "0%",
       icon: ArrowUpDown,
       footer: metrics.netFlow >= 0 ? "Net inflow" : "Net outflow",
       description: "Net swap activity",
@@ -83,7 +83,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
     {
       title: "Average Volume",
       value: metrics.averageVolume,
-      badge: "Per Transaction",
+      badge: metrics.totalSwapOut > 0 ? `${Math.round((metrics.averageVolume / metrics.totalSwapOut) * 100)}%` : "0%",
       icon: BarChart3,
       footer: "Outbound average",
       description: "Average outbound amount",
@@ -106,7 +106,7 @@ export function CreditMaxStatCards({ swapTransactions }: CreditMaxStatCardsProps
           isVisible={isVisible}
           numbersKey={numbersKey}
           formatAsPoints={card.formatAsPoints}
-          showBadge={false}
+          showBadge={true}
           showHover={true}
         />
       ))}
