@@ -16,10 +16,10 @@ const CreditMax = () => {
   const [animationData, setAnimationData] = useState(null)
 
   useEffect(() => {
-    // Load the circle-loader animation
+    // Load the loader-cube-scale animation
     const loadAnimation = async () => {
       try {
-        const response = await fetch('/circle-loader.json')
+        const response = await fetch('/loader-cube-scale.json')
         const data = await response.json()
         setAnimationData(data)
       } catch (error) {
