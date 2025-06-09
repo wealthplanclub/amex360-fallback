@@ -25,6 +25,7 @@ export function CreditMaxChartDisplay({
   onDateClick 
 }: CreditMaxChartDisplayProps) {
   const chartData = useCreditMaxChartData(swapTransactions, selectedTimeRange)
+  const hasData = chartData.length > 0
 
   const getTimeRangeLabel = () => {
     switch (selectedTimeRange) {
@@ -54,10 +55,12 @@ export function CreditMaxChartDisplay({
           </CardDescription>
         </div>
         
-        <TimeRangeSelector 
-          timeRange={selectedTimeRange}
-          onTimeRangeChange={onTimeRangeChange}
-        />
+        {hasData && (
+          <TimeRangeSelector 
+            timeRange={selectedTimeRange}
+            onTimeRangeChange={onTimeRangeChange}
+          />
+        )}
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <CreditMaxChart data={chartData} onDateClick={onDateClick} />
