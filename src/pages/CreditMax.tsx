@@ -57,17 +57,8 @@ const CreditMax = () => {
             />
           </div>
 
-          {/* Main Content - Counterparty List and Transaction Table */}
+          {/* Main Content - Transaction Table and Counterparty List */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Counterparty List */}
-            <div className="lg:col-span-1">
-              <CounterpartyList 
-                selectedCounterparty={filters.selectedCard}
-                onCounterpartyClick={handleCounterpartyClick}
-                transactions={swapTransactions}
-              />
-            </div>
-
             {/* Transaction Table */}
             <SwapTransactionSection
               filteredTransactions={filteredTransactions}
@@ -80,6 +71,15 @@ const CreditMax = () => {
               uniqueCounterparties={uniqueCounterparties}
               handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
             />
+
+            {/* Counterparty List */}
+            <div className="lg:col-span-1">
+              <CounterpartyList 
+                selectedCounterparty={filters.selectedCard}
+                onCounterpartyClick={handleCounterpartyClick}
+                transactions={swapTransactions}
+              />
+            </div>
           </div>
         </div>
       </div>
