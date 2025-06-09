@@ -1,3 +1,5 @@
+
+
 import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
@@ -24,12 +26,12 @@ const Employee = () => {
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error))
 
-    // Reduced loading time to 0.5 seconds
+    // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false)
       // Start showing content with staggered animations
       setTimeout(() => setShowContent(true), 100)
-    }, 500)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [])

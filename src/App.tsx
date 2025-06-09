@@ -27,10 +27,10 @@ const DashboardLoader = ({ onLoadingComplete }: { onLoadingComplete: () => void 
       .then(data => setAnimationData(data))
       .catch(error => console.error("Failed to load animation:", error));
 
-    // Extended animation time - let animation run for 3 seconds, then signal completion
+    // Let animation run for 5 seconds, then signal completion
     const timer = setTimeout(() => {
       onLoadingComplete();
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);

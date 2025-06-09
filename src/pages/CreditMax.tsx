@@ -30,10 +30,10 @@ const CreditMax = () => {
 
     loadAnimation()
 
-    // Reduced loading time to 0.5 seconds
+    // Show loading for 2 seconds like other pages
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 500)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [])
