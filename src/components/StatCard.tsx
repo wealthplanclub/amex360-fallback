@@ -59,7 +59,8 @@ export function StatCard({
       if (title === "Avg Points/Dollar") {
         return `${formattedValue}x`;
       }
-      return formattedValue;
+      // Add 'pts' suffix for other point-related cards
+      return `${formattedValue} pts`;
     }
     return `$${val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
