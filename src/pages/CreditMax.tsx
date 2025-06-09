@@ -9,7 +9,6 @@ import { CreditMaxChartDisplay } from "@/components/creditmax/CreditMaxChartDisp
 import { CounterpartyList } from "@/components/creditmax/CounterpartyList"
 import { SwapTransactionSection } from "@/components/creditmax/SwapTransactionSection"
 import { DashboardLoader } from "@/components/dashboard/DashboardLoader"
-import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
 import { staticSwapData } from "@/data/staticSwapData"
 import { parseSwapData } from "@/utils/swapParser"
 import { useCreditMaxFilters } from "@/hooks/useCreditMaxFilters"
@@ -133,17 +132,21 @@ const CreditMax = () => {
             <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
           </div>
 
-          {/* Chart with Accordion Animation */}
-          <Collapsible open={!isSpecificCounterpartySelected} className="mt-8">
-            <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-              <CreditMaxChartDisplay
-                swapTransactions={counterpartyFilteredTransactions}
-                selectedTimeRange={selectedTimeRange}
-                onTimeRangeChange={handleTimeRangeChange}
-                onDateClick={handleDateClick}
-              />
-            </CollapsibleContent>
-          </Collapsible>
+          {/* Chart with Smooth Slide Animation */}
+          <div 
+            className={`mt-8 transition-all duration-500 ease-in-out transform ${
+              isSpecificCounterpartySelected 
+                ? 'opacity-0 -translate-y-4 max-h-0 overflow-hidden' 
+                : 'opacity-100 translate-y-0 max-h-[1000px]'
+            }`}
+          >
+            <CreditMaxChartDisplay
+              swapTransactions={counterpartyFilteredTransactions}
+              selectedTimeRange={selectedTimeRange}
+              onTimeRangeChange={handleTimeRangeChange}
+              onDateClick={handleDateClick}
+            />
+          </div>
 
           {/* Main Content - Transaction Table and Counterparty List */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
