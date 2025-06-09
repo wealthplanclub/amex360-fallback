@@ -14,7 +14,7 @@ const chartConfig = {
   },
   cumulativeSpent: {
     label: "Cumulative Card Spend:",
-    color: "hsl(var(--chart-2))",
+    color: "#86efac", // green-300
   },
   actualSpent: {
     label: "Actual Spend:",
@@ -68,12 +68,12 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           <linearGradient id="fillCumulativeSpent" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="#00175a"
+              stopColor="#86efac"
               stopOpacity={0.6}
             />
             <stop
               offset="95%"
-              stopColor="#00175a"
+              stopColor="#86efac"
               stopOpacity={0.1}
             />
           </linearGradient>
@@ -142,7 +142,7 @@ export function CreditMaxChart({ data, onDateClick }: CreditMaxChartProps) {
           dataKey="cumulativeSpent"
           type="monotone"
           fill="url(#fillCumulativeSpent)"
-          stroke="#00175a"
+          stroke="#86efac"
           strokeWidth={0}
           stackId="b"
         />
