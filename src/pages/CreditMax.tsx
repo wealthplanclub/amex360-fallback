@@ -3,9 +3,14 @@ import React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
 import { AppHeader } from "@/components/AppHeader"
-import { CreditMaxHeader } from "@/components/creditmax/CreditMaxHeader"
+import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
+import { staticSwapData } from "@/data/staticSwapData"
+import { parseSwapData } from "@/utils/swapParser"
 
 const CreditMax = () => {
+  // Parse the static swap data into proper format
+  const swapTransactions = parseSwapData(staticSwapData)
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -14,11 +19,21 @@ const CreditMax = () => {
           <AppHeader />
           
           <div className="max-w-7xl mx-auto px-6 mb-8">
-            <CreditMaxHeader />
+            {/* Amex Logo */}
+            <div className="flex flex-col items-center gap-6">
+              <img 
+                src="https://i.imgur.com/1fFddP4.png" 
+                alt="Amex Logo" 
+                className="mx-auto"
+                style={{ width: '276px' }}
+              />
+            </div>
             
-            {/* Main content area - ready for components */}
+            {/* CreditMax Stat Cards */}
             <div className="mt-8">
-              <p className="text-gray-600">CreditMax page ready for development</p>
+              <CreditMaxStatCards 
+                swapTransactions={swapTransactions}
+              />
             </div>
           </div>
         </div>
