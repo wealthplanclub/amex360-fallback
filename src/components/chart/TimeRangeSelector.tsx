@@ -1,6 +1,7 @@
 
 import * as React from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useAvailableTimeRanges } from "@/hooks/useAvailableTimeRanges"
 import {
   Select,
   SelectContent,
@@ -20,10 +21,44 @@ interface TimeRangeSelectorProps {
 
 export function TimeRangeSelector({ timeRange, onTimeRangeChange }: TimeRangeSelectorProps) {
   const isMobile = useIsMobile()
+  const availableRanges = useAvailableTimeRanges()
 
   const handleTimeRangeChange = (newTimeRange: string) => {
     onTimeRangeChange(newTimeRange)
   }
+
+  // If no ranges are available, don't render the component
+  if (availableRanges.length === 0) {
+    return null
+  }
+
+  // If current time range is not available, switch to YTD (which should always be available if component renders)
+  React.useEffect(() => {
+    if (!availableRanges.includes(timeRange) && availableRanges.includes("ytd")) {
+      onTimeRangeChange("ytd")
+    }
+  }, [availableRanges, timeRange, onTimeRangeChange])
+
+  const getTimeRangeOptions = () => {
+    const options = []
+    
+    if (availableRanges.includes("ytd")) {
+      options.push({ value: "ytd", label: "YTD" })
+    }
+    if (availableRanges.includes("90d")) {
+      options.push({ value: "90d", label: "Last 90 days" })
+    }
+    if (availableRanges.includes("30d")) {
+      options.push({ value: "30d", label: "Last 30 days" })
+    }
+    if (availableRanges.includes("7d")) {
+      options.push({ value: "7d", label: "Last 7 days" })
+    }
+    
+    return options
+  }
+
+  const options = getTimeRangeOptions()
 
   return (
     <div className="flex justify-start md:justify-end">
@@ -34,10 +69,11 @@ export function TimeRangeSelector({ timeRange, onTimeRangeChange }: TimeRangeSel
         variant="outline"
         className="hidden *:data-[slot=toggle-group-item]:!px-4 md:flex"
       >
-        <ToggleGroupItem value="ytd">YTD</ToggleGroupItem>
-        <ToggleGroupItem value="90d">Last 90 days</ToggleGroupItem>
-        <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
-        <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
+        {options.map(option => (
+          <ToggleGroupItem key={option.value} value={option.value}>
+            {option.label}
+          </ToggleGroupItem>
+        ))}
       </ToggleGroup>
       <Select value={timeRange} onValueChange={handleTimeRangeChange}>
         <SelectTrigger
@@ -47,18 +83,11 @@ export function TimeRangeSelector({ timeRange, onTimeRangeChange }: TimeRangeSel
           <SelectValue placeholder="YTD" />
         </SelectTrigger>
         <SelectContent className="rounded-xl">
-          <SelectItem value="ytd" className="rounded-lg">
-            YTD
-          </SelectItem>
-          <SelectItem value="90d" className="rounded-lg">
-            Last 90 days
-          </SelectItem>
-          <SelectItem value="30d" className="rounded-lg">
-            Last 30 days
-          </SelectItem>
-          <SelectItem value="7d" className="rounded-lg">
-            Last 7 days
-          </SelectItem>
+          {options.map(option => (
+            <SelectItem key={option.value} value={option.value} className="rounded-lg">
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>
