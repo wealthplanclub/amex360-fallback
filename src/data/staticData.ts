@@ -1,5 +1,10 @@
 
 export const staticTxnData = `Date	Description	Amount	Account	Category
+2025-06-08	Chargebee Walnut CA	-$1,474.00	Blue Business Plus Card (-1009)	
+2025-06-08	Online Payment - Thank You	$1,474.00	Blue Business Plus Card (-1009)	
+2025-06-08	Twilio Inc San Francisco CA	-$631.16	Business Gold Card (-1002)	
+2025-06-08	Twilio Inc San Francisco CA	-$612.32	Business Gold Card (-1002)	
+2025-06-08	Twilio Inc San Francisco CA	-$590.07	Business Gold Card (-1002)	
 2025-06-07	Twilio Inc San Francisco CA	-$592.85	Blue Business Plus Card (-1000)	
 2025-06-07	Twilio Inc San Francisco CA	-$270.69	Blue Business Plus Card (-1000)	
 2025-06-07	Twilio Inc San Francisco CA	-$590.83	Blue Business Plus Card (-1000)	
