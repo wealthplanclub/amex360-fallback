@@ -108,7 +108,7 @@ export const DashboardContent = ({
   return (
     <>
       {/* Quick Metrics Cards - reduced top margin */}
-      <div className="mt-4">
+      <div className="mt-2">
         <QuickMetricsCards />
       </div>
 

@@ -102,7 +102,7 @@ export function RewardsContent({
       <RewardsHeader />
       
       {/* Metrics Cards - reduced top margin */}
-      <div className="mt-4 px-4 lg:px-6">
+      <div className="mt-2 px-4 lg:px-6">
         <RewardMetricsCards
           filters={filters}
           isVisible={isVisible}
