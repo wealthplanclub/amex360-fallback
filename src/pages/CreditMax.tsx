@@ -69,6 +69,10 @@ const CreditMax = () => {
     setSelectedTimeRange(timeRange)
   }
 
+  const handleTimeRangeClear = () => {
+    setSelectedTimeRange("ytd")
+  }
+
   const handleDateClick = (date: string) => {
     console.log("Date clicked:", date)
     // You can add date filtering logic here if needed
@@ -137,6 +141,7 @@ const CreditMax = () => {
             selectedCounterparty={filters.selectedCard || "all"}
             uniqueCounterparties={uniqueCounterparties}
             handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
+            onTimeRangeClear={handleTimeRangeClear}
           />
 
           {/* Counterparty List - now using time-filtered transactions */}

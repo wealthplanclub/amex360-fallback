@@ -14,6 +14,7 @@ interface SwapTransactionSectionProps {
   selectedCounterparty: string
   uniqueCounterparties: string[]
   handleCounterpartyDropdownChange: (counterparty: string) => void
+  onTimeRangeClear?: () => void
 }
 
 export function SwapTransactionSection({
@@ -23,12 +24,20 @@ export function SwapTransactionSection({
   handleClearAllFilters,
   selectedCounterparty,
   uniqueCounterparties,
-  handleCounterpartyDropdownChange
+  handleCounterpartyDropdownChange,
+  onTimeRangeClear
 }: SwapTransactionSectionProps) {
   // Local state for search input
   const [globalFilter, setGlobalFilter] = useState("")
   
   const filterText = getFilterDisplayText()
+
+  const handleClearClick = () => {
+    handleClearAllFilters()
+    if (onTimeRangeClear) {
+      onTimeRangeClear()
+    }
+  }
 
   return (
     <div className="lg:col-span-2">
@@ -43,7 +52,7 @@ export function SwapTransactionSection({
                   <span className="inline-flex items-center gap-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
                     Filtered by: {filterText}
                     <button 
-                      onClick={handleClearAllFilters}
+                      onClick={handleClearClick}
                       className="hover:bg-gray-200 rounded p-0.5"
                       title="Clear all filters"
                     >
