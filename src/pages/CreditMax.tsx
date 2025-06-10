@@ -50,7 +50,7 @@ const CreditMax = () => {
   // Parse the static swap data into proper format
   const swapTransactions = parseSwapData(staticSwapData)
 
-  // Use custom hook for filtering
+  // Use custom hook for filtering - now includes time range
   const {
     filters,
     counterpartyFilteredTransactions,
@@ -62,7 +62,7 @@ const CreditMax = () => {
     handleCounterpartyDropdownChange,
     handleClearAllFilters,
     updateFilter
-  } = useCreditMaxFilters(swapTransactions)
+  } = useCreditMaxFilters(swapTransactions, selectedTimeRange)
 
   const handleTimeRangeChange = (timeRange: string) => {
     setSelectedTimeRange(timeRange)
@@ -103,14 +103,14 @@ const CreditMax = () => {
           />
         </div>
         
-        {/* CreditMax Stat Cards - using counterparty filtered transactions only */}
+        {/* CreditMax Stat Cards - now using time-filtered transactions */}
         <div className="mt-8">
           <CreditMaxStatCards 
             swapTransactions={counterpartyFilteredTransactions}
           />
         </div>
 
-        {/* Quick Metrics Cards */}
+        {/* Quick Metrics Cards - now using time-filtered transactions */}
         <div className="mt-8">
           <CreditMaxQuickMetrics swapTransactions={counterpartyFilteredTransactions} />
         </div>
