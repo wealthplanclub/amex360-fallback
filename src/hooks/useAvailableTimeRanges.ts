@@ -1,10 +1,12 @@
 
 import * as React from "react"
 import { transactionFilterService } from "@/services/transactionFilterService"
+import { SwapTransaction } from "@/utils/swapParser"
 
-export const useAvailableTimeRanges = () => {
+export const useAvailableTimeRanges = (swapTransactions?: SwapTransaction[]) => {
   return React.useMemo(() => {
-    const allTransactions = transactionFilterService.getAllTransactions()
+    // If swap transactions are provided, use those; otherwise use regular transactions
+    const allTransactions = swapTransactions || transactionFilterService.getAllTransactions()
     
     if (allTransactions.length === 0) {
       return []
@@ -55,5 +57,5 @@ export const useAvailableTimeRanges = () => {
     }
 
     return availableRanges
-  }, [])
+  }, [swapTransactions])
 }

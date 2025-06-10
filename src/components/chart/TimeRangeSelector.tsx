@@ -2,6 +2,7 @@
 import * as React from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useAvailableTimeRanges } from "@/hooks/useAvailableTimeRanges"
+import { SwapTransaction } from "@/utils/swapParser"
 import {
   Select,
   SelectContent,
@@ -17,11 +18,12 @@ import {
 interface TimeRangeSelectorProps {
   timeRange: string
   onTimeRangeChange: (timeRange: string) => void
+  swapTransactions?: SwapTransaction[]
 }
 
-export function TimeRangeSelector({ timeRange, onTimeRangeChange }: TimeRangeSelectorProps) {
+export function TimeRangeSelector({ timeRange, onTimeRangeChange, swapTransactions }: TimeRangeSelectorProps) {
   const isMobile = useIsMobile()
-  const availableRanges = useAvailableTimeRanges()
+  const availableRanges = useAvailableTimeRanges(swapTransactions)
 
   const handleTimeRangeChange = (newTimeRange: string) => {
     onTimeRangeChange(newTimeRange)
