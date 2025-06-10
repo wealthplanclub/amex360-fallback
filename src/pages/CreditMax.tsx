@@ -61,7 +61,8 @@ const CreditMax = () => {
     handleCounterpartyClick,
     handleCounterpartyDropdownChange,
     handleClearAllFilters,
-    updateFilter
+    updateFilter,
+    timeFilteredTransactions
   } = useCreditMaxFilters(swapTransactions, selectedTimeRange)
 
   const handleTimeRangeChange = (timeRange: string) => {
@@ -138,12 +139,12 @@ const CreditMax = () => {
             handleCounterpartyDropdownChange={handleCounterpartyDropdownChange}
           />
 
-          {/* Counterparty List */}
+          {/* Counterparty List - now using time-filtered transactions */}
           <div className="lg:col-span-1">
             <CounterpartyList 
               selectedCounterparty={filters.selectedCard}
               onCounterpartyClick={handleCounterpartyClick}
-              transactions={swapTransactions}
+              transactions={timeFilteredTransactions}
             />
           </div>
         </div>

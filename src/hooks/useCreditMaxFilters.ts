@@ -106,6 +106,7 @@ export function useCreditMaxFilters(swapTransactions: SwapTransaction[], selecte
     filters,
     counterpartyFilteredTransactions,
     tableFilteredTransactions,
+    timeFilteredTransactions,
     uniqueCounterparties,
     hasAnyFilter,
     getFilterDisplayText,
