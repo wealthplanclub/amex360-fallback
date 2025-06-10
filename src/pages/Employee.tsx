@@ -1,4 +1,3 @@
-
 import React from "react"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
@@ -82,8 +81,8 @@ const Employee = () => {
       <div className="max-w-7xl mx-auto px-6 mb-8">
         <EmployeeHeader />
         
-        {/* Employee Metrics Cards */}
-        <div className="mt-8">
+        {/* Employee Metrics Cards - reduced top margin */}
+        <div className="mt-2">
           <EmployeeMetricsCards 
             filteredTransactions={filteredTransactions}
             selectedCardType={filters.selectedCardType}
