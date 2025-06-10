@@ -8,9 +8,10 @@ export const AppHeader = () => {
         <SidebarTrigger />
       </div>
       <img 
-        src="https://i.imgur.com/fCxU0In.png" 
-        alt="Logo" 
-        className="h-8"
+        src="https://i.imgur.com/1fFddP4.png" 
+        alt="Amex Logo" 
+        className="mx-auto"
+        style={{ width: '276px' }}
       />
       <div className="w-[40px]"></div>
     </div>
