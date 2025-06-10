@@ -82,7 +82,7 @@ const Employee = () => {
         <EmployeeHeader />
         
         {/* Employee Metrics Cards - reduced top margin */}
-        <div className="mt-2">
+        <div className="mt-0">
           <EmployeeMetricsCards 
             filteredTransactions={filteredTransactions}
             selectedCardType={filters.selectedCardType}
