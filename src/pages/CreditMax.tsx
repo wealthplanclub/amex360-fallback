@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react"
 import { CreditMaxStatCards } from "@/components/creditmax/CreditMaxStatCards"
 import { CreditMaxQuickMetrics } from "@/components/creditmax/CreditMaxQuickMetrics"
@@ -99,8 +100,8 @@ const CreditMax = () => {
       <div className="max-w-7xl mx-auto px-6 mb-8">
         {/* Logo removed - now in persistent app header */}
         
-        {/* CreditMax Stat Cards - now using time-filtered transactions */}
-        <div className="mt-8">
+        {/* CreditMax Stat Cards - reduced top margin */}
+        <div className="mt-4">
           <CreditMaxStatCards 
             swapTransactions={counterpartyFilteredTransactions}
           />
