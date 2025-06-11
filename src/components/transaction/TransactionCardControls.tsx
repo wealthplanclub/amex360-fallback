@@ -29,7 +29,6 @@ export function TransactionCardControls({
         selectedCard={selectedCard}
         creditCards={creditCards}
         onCardChange={onCardChange}
-        showBusinessPrefix={false}
       />
     </div>
   )
