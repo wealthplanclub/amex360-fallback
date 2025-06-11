@@ -1,5 +1,6 @@
 
 import { TrendingDown, TrendingUp } from "lucide-react"
+import { getPrimaryCardByType, generateDisplayNameWithLastFive } from "@/data/staticPrimaryCards"
 
 export const getTimeRangeDescription = (selectedTimeRange: string) => {
   if (selectedTimeRange === "ytd") return "(YTD)";
@@ -10,6 +11,15 @@ export const getTimeRangeDescription = (selectedTimeRange: string) => {
 };
 
 export const generateCardData = (calculations: any, selectedTimeRange: string) => {
+  // Get proper display names for top and lowest cards
+  const topCardDisplayName = calculations.topCardAccount 
+    ? getPrimaryCardByType(calculations.topCardAccount)?.displayName || calculations.topCardDisplayName
+    : calculations.topCardDisplayName;
+
+  const lowestCardDisplayName = calculations.lowestCardAccount 
+    ? getPrimaryCardByType(calculations.lowestCardAccount)?.displayName || calculations.lowestCardDisplayName
+    : calculations.lowestCardDisplayName;
+
   return [
     {
       title: "Total Expenses",
@@ -36,7 +46,7 @@ export const generateCardData = (calculations: any, selectedTimeRange: string) =
       value: calculations.topCardSpend,
       badge: `${calculations.topCardPercentage}%`,
       icon: TrendingUp,
-      footer: calculations.topCardDisplayName,
+      footer: topCardDisplayName,
       description: `Account with most expenses ${getTimeRangeDescription(selectedTimeRange)}`,
       clickable: true,
       cardType: "top-card",
@@ -47,7 +57,7 @@ export const generateCardData = (calculations: any, selectedTimeRange: string) =
       value: calculations.lowestCardSpend,
       badge: `${calculations.lowestCardPercentage}%`,
       icon: TrendingDown,
-      footer: calculations.lowestCardDisplayName,
+      footer: lowestCardDisplayName,
       description: `Account with least expenses ${getTimeRangeDescription(selectedTimeRange)}`,
       clickable: true,
       cardType: "lowest-card",
