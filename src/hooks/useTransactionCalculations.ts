@@ -41,8 +41,10 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
 
         console.log("Card expenses by account:", cardExpenses);
 
-        const topCardSpend = Object.keys(cardExpenses).length > 0 ? Math.max(...Object.values(cardExpenses)) : 0;
-        const lowestCardSpend = Object.keys(cardExpenses).length > 0 ? Math.min(...Object.values(cardExpenses)) : 0;
+        // Fix: Explicitly type the values as number[] to avoid 'unknown' type issues
+        const cardExpenseValues = Object.values(cardExpenses) as number[];
+        const topCardSpend = cardExpenseValues.length > 0 ? Math.max(...cardExpenseValues) : 0;
+        const lowestCardSpend = cardExpenseValues.length > 0 ? Math.min(...cardExpenseValues) : 0;
         const topCardPercentage = totalExpenses > 0 ? ((topCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
         const lowestCardPercentage = totalExpenses > 0 ? ((lowestCardSpend / totalExpenses) * 100).toFixed(1) : "0.0";
 

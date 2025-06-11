@@ -5,4 +5,4 @@ export { TransactionFilters } from "./TransactionFilters"
 export { TransactionCalculations } from "./TransactionCalculations"
 
 // Export singleton instance
-export const transactionFilterService = TransactionFilterService.getInstance()
+export const transactionFilterService = new TransactionFilterService()
