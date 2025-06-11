@@ -7,6 +7,7 @@ import Employee from "./Employee";
 import Rewards from "./Rewards";
 import CreditMax from "./CreditMax";
 import { AccountExtractorComponent } from "@/components/account/AccountExtractorComponent";
+import { AccountConfigurationManager } from "@/components/account/AccountConfigurationManager";
 import { TransactionImportComponent } from "@/components/transaction/TransactionImporter";
 
 export type DashboardSection = "dashboard" | "rewards" | "employee" | "creditmax" | "admin";
@@ -31,6 +32,7 @@ const Dashboard = () => {
             <div className="grid gap-6">
               <TransactionImportComponent />
               <AccountExtractorComponent />
+              <AccountConfigurationManager />
             </div>
           </div>
         );

@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client"
 
 export interface AccountInfo {
@@ -7,6 +8,17 @@ export interface AccountInfo {
   display_name: string
   is_primary: boolean
   is_employee: boolean
+}
+
+export interface AccountConfiguration {
+  id: string
+  account_type: string
+  last_five: string
+  is_primary: boolean
+  is_employee: boolean
+  notes?: string
+  created_at: string
+  updated_at: string
 }
 
 export class AccountExtractor {
@@ -39,28 +51,6 @@ export class AccountExtractor {
 
       console.log('Current user ID:', session.user_id)
 
-      // First, let's see what user_id values actually exist in the database
-      const { data: userIds, error: userIdsError } = await supabase
-        .from('master_transactions')
-        .select('user_id')
-        .limit(10)
-
-      console.log('Sample user_id values in database:', userIds)
-      
-      if (userIdsError) {
-        console.error('Error fetching sample user IDs:', userIdsError)
-      }
-
-      // Get all user_ids to see what values exist (using distinct)
-      const { data: allTransactions, error: allError } = await supabase
-        .from('master_transactions')
-        .select('user_id')
-
-      if (allTransactions && !allError) {
-        const uniqueUserIds = [...new Set(allTransactions.map(t => t.user_id))]
-        console.log('All unique user_id values:', uniqueUserIds)
-      }
-
       // Query transactions for this specific user
       const { data: transactions, error, count } = await supabase
         .from('master_transactions')
@@ -80,34 +70,48 @@ export class AccountExtractor {
 
       if (!transactions || transactions.length === 0) {
         console.log('No transactions found for user. Total count:', count)
-        
-        // Check if there are any transactions in the table at all (admin check)
-        const { count: totalCount } = await supabase
-          .from('master_transactions')
-          .select('*', { count: 'exact', head: true })
-        
-        console.log('Total transactions in database:', totalCount)
-        
         return { 
           success: false, 
-          message: `No transactions found for current user. Database contains ${totalCount || 0} total transactions. Check console for debugging info about user_id values.` 
+          message: `No transactions found for current user.` 
         }
       }
 
-      // Create unique combinations
+      // Get account configurations from the database
+      const { data: configurations, error: configError } = await supabase
+        .from('account_configurations')
+        .select('*')
+
+      if (configError) {
+        console.error('Error fetching account configurations:', configError)
+        return { 
+          success: false, 
+          message: `Failed to fetch account configurations: ${configError.message}` 
+        }
+      }
+
+      // Create a map for quick lookup of configurations
+      const configMap = new Map<string, AccountConfiguration>()
+      configurations?.forEach(config => {
+        const key = `${config.account_type}-${config.last_five}`
+        configMap.set(key, config)
+      })
+
+      // Create unique combinations with configuration-based classification
       const uniqueAccounts = new Map<string, AccountInfo>()
       
       transactions.forEach(transaction => {
         const cardKey = `${transaction.account_type}-${transaction.last_five}`
         
         if (!uniqueAccounts.has(cardKey)) {
+          const config = configMap.get(cardKey)
+          
           const accountInfo: AccountInfo = {
             account_type: transaction.account_type,
             last_five: transaction.last_five,
             card_key: cardKey,
             display_name: this.generateDisplayName(transaction.account_type),
-            is_primary: this.classifyAsPrimary(transaction.account_type),
-            is_employee: this.classifyAsEmployee(transaction.account_type)
+            is_primary: config?.is_primary || false,
+            is_employee: config?.is_employee || false
           }
           
           uniqueAccounts.set(cardKey, accountInfo)
@@ -141,22 +145,6 @@ export class AccountExtractor {
       .replace(/\s+/g, ' ')
   }
 
-  private static classifyAsPrimary(accountType: string): boolean {
-    // Business rules for primary classification
-    const primaryKeywords = ['platinum', 'gold', 'business']
-    const accountLower = accountType.toLowerCase()
-    
-    return primaryKeywords.some(keyword => accountLower.includes(keyword))
-  }
-
-  private static classifyAsEmployee(accountType: string): boolean {
-    // Business rules for employee classification
-    const employeeKeywords = ['green', 'everyday', 'basic']
-    const accountLower = accountType.toLowerCase()
-    
-    return employeeKeywords.some(keyword => accountLower.includes(keyword))
-  }
-
   public static async getAccountStats(): Promise<{ total: number; primary: number; employee: number }> {
     const result = await this.extractAccountsFromTransactions()
     
@@ -170,5 +158,40 @@ export class AccountExtractor {
     const employee = accounts.filter(account => account.is_employee).length
 
     return { total, primary, employee }
+  }
+
+  // New methods for managing account configurations
+  public static async getAllConfigurations(): Promise<{ success: boolean; configurations?: AccountConfiguration[]; message: string }> {
+    try {
+      const { data, error } = await supabase
+        .from('account_configurations')
+        .select('*')
+        .order('account_type, last_five')
+
+      if (error) {
+        return { success: false, message: `Failed to fetch configurations: ${error.message}` }
+      }
+
+      return { success: true, configurations: data || [], message: 'Configurations fetched successfully' }
+    } catch (error) {
+      return { success: false, message: `Failed to fetch configurations: ${error instanceof Error ? error.message : 'Unknown error'}` }
+    }
+  }
+
+  public static async updateConfiguration(id: string, updates: Partial<Pick<AccountConfiguration, 'is_primary' | 'is_employee' | 'notes'>>): Promise<{ success: boolean; message: string }> {
+    try {
+      const { error } = await supabase
+        .from('account_configurations')
+        .update({ ...updates, updated_at: new Date().toISOString() })
+        .eq('id', id)
+
+      if (error) {
+        return { success: false, message: `Failed to update configuration: ${error.message}` }
+      }
+
+      return { success: true, message: 'Configuration updated successfully' }
+    } catch (error) {
+      return { success: false, message: `Failed to update configuration: ${error instanceof Error ? error.message : 'Unknown error'}` }
+    }
   }
 }
