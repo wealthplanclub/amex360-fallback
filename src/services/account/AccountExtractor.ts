@@ -12,33 +12,38 @@ export interface AccountInfo {
 export class AccountExtractor {
   public static async extractAccountsFromTransactions(): Promise<{ success: boolean; accounts?: AccountInfo[]; message: string }> {
     try {
-      // First, let's check if we have a current user session
-      const { data: { user }, error: userError } = await supabase.auth.getUser()
-      
-      if (userError || !user) {
-        console.error('No authenticated user found:', userError)
+      // Get the current user from the auth context
+      const sessionToken = localStorage.getItem('session_token');
+      if (!sessionToken) {
+        console.error('No session token found')
         return { 
           success: false, 
           message: 'User authentication required to access transaction data' 
         }
       }
 
-      console.log('Current user ID:', user.id)
+      // Get user session to find user_id
+      const { data: session, error: sessionError } = await supabase
+        .from('user_sessions')
+        .select('user_id')
+        .eq('session_token', sessionToken)
+        .single();
 
-      // Set the user context for RLS
-      const { error: setUserError } = await supabase.rpc('set_config', {
-        setting_name: 'app.current_user_id', 
-        setting_value: user.id
-      })
-
-      if (setUserError) {
-        console.log('Could not set user context, proceeding anyway:', setUserError)
+      if (sessionError || !session) {
+        console.error('Invalid session:', sessionError)
+        return { 
+          success: false, 
+          message: 'Invalid session. Please log in again.' 
+        }
       }
 
-      // Get unique account_type and last_five combinations from transactions
+      console.log('Current user ID:', session.user_id)
+
+      // Query transactions for this specific user
       const { data: transactions, error, count } = await supabase
         .from('master_transactions')
         .select('account_type, last_five', { count: 'exact' })
+        .eq('user_id', session.user_id)
         .order('account_type, last_five')
       
       console.log('Query result:', { transactions, error, count })
