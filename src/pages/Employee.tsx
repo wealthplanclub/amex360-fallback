@@ -6,7 +6,7 @@ import { EmployeeTransactionSection } from "@/components/employee/EmployeeTransa
 import { EmployeeCardSection } from "@/components/employee/EmployeeCardSection"
 import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
-import { staticData } from "@/data/staticData"
+import { staticTxnData } from "@/data/staticData"
 import { parseEmployeeData } from "@/utils/employeeParser"
 import { primaryCardsConfig } from "@/data/staticPrimaryCards"
 import Lottie from "lottie-react"
@@ -44,7 +44,7 @@ const Employee = () => {
   }, [])
 
   // Parse the static data into proper format
-  const allEmployeeTransactions = parseEmployeeData(staticData)
+  const allEmployeeTransactions = parseEmployeeData(staticTxnData)
   
   // Filter out transactions for cards that are primary
   const employeeTransactions = React.useMemo(() => {
