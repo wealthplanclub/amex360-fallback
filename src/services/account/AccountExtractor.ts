@@ -7,7 +7,6 @@ export interface AccountInfo {
   card_key: string
   display_name: string
   is_primary: boolean
-  is_employee: boolean
 }
 
 export interface AccountConfiguration {
@@ -15,7 +14,6 @@ export interface AccountConfiguration {
   account_type: string
   last_five: string
   is_primary: boolean
-  is_employee: boolean
   notes?: string
   created_at: string
   updated_at: string
@@ -110,8 +108,7 @@ export class AccountExtractor {
             last_five: transaction.last_five,
             card_key: cardKey,
             display_name: this.generateDisplayName(transaction.account_type),
-            is_primary: config?.is_primary || false,
-            is_employee: config?.is_employee || false
+            is_primary: config?.is_primary || false
           }
           
           uniqueAccounts.set(cardKey, accountInfo)
@@ -155,7 +152,7 @@ export class AccountExtractor {
     const accounts = result.accounts
     const total = accounts.length
     const primary = accounts.filter(account => account.is_primary).length
-    const employee = accounts.filter(account => account.is_employee).length
+    const employee = total - primary // All non-primary accounts are employee cards
 
     return { total, primary, employee }
   }
@@ -178,7 +175,7 @@ export class AccountExtractor {
     }
   }
 
-  public static async updateConfiguration(id: string, updates: Partial<Pick<AccountConfiguration, 'is_primary' | 'is_employee' | 'notes'>>): Promise<{ success: boolean; message: string }> {
+  public static async updateConfiguration(id: string, updates: Partial<Pick<AccountConfiguration, 'is_primary' | 'notes'>>): Promise<{ success: boolean; message: string }> {
     try {
       const { error } = await supabase
         .from('account_configurations')

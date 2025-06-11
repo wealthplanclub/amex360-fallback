@@ -80,13 +80,12 @@ export function AccountExtractorComponent() {
                       <span className="font-medium">{account.display_name}</span>
                       <span className="text-muted-foreground ml-2">({account.last_five})</span>
                     </div>
-                    <div className="flex gap-2">
-                      {account.is_primary && (
+                    <div>
+                      {account.is_primary ? (
                         <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
                           Primary
                         </span>
-                      )}
-                      {account.is_employee && (
+                      ) : (
                         <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">
                           Employee
                         </span>

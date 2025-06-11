@@ -33,15 +33,15 @@ export function AccountConfigurationManager() {
     }
   }
 
-  const updateConfiguration = async (id: string, field: 'is_primary' | 'is_employee', value: boolean) => {
+  const updateConfiguration = async (id: string, isPrimary: boolean) => {
     try {
-      const result = await AccountExtractor.updateConfiguration(id, { [field]: value })
+      const result = await AccountExtractor.updateConfiguration(id, { is_primary: isPrimary })
       if (result.success) {
         // Update local state
         setConfigurations(prev => 
           prev.map(config => 
             config.id === id 
-              ? { ...config, [field]: value }
+              ? { ...config, is_primary: isPrimary }
               : config
           )
         )
@@ -63,7 +63,7 @@ export function AccountConfigurationManager() {
   const stats = {
     total: configurations.length,
     primary: configurations.filter(c => c.is_primary).length,
-    employee: configurations.filter(c => c.is_employee).length
+    employee: configurations.filter(c => !c.is_primary).length
   }
 
   return (
@@ -71,7 +71,7 @@ export function AccountConfigurationManager() {
       <CardHeader>
         <CardTitle>Account Configuration Manager</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Configure which account types and last 5 digits should be classified as primary or employee cards
+          Configure which account types and last 5 digits should be classified as primary cards (unchecked = employee cards)
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -107,39 +107,33 @@ export function AccountConfigurationManager() {
         {/* Configuration List */}
         <div className="space-y-2 max-h-96 overflow-y-auto">
           <div className="grid grid-cols-12 gap-2 p-2 bg-gray-100 rounded text-sm font-medium">
-            <div className="col-span-5">Account Type</div>
+            <div className="col-span-6">Account Type</div>
             <div className="col-span-2">Last 5</div>
-            <div className="col-span-2 text-center">Primary</div>
-            <div className="col-span-2 text-center">Employee</div>
-            <div className="col-span-1"></div>
+            <div className="col-span-2 text-center">Primary Card</div>
+            <div className="col-span-2 text-center">Status</div>
           </div>
           
           {filteredConfigurations.map((config) => (
             <div key={config.id} className="grid grid-cols-12 gap-2 p-2 bg-white border rounded text-sm items-center">
-              <div className="col-span-5 font-medium">{config.account_type}</div>
+              <div className="col-span-6 font-medium">{config.account_type}</div>
               <div className="col-span-2 text-muted-foreground">({config.last_five})</div>
               <div className="col-span-2 flex justify-center">
                 <Checkbox
                   checked={config.is_primary}
                   onCheckedChange={(checked) => 
-                    updateConfiguration(config.id, 'is_primary', checked as boolean)
+                    updateConfiguration(config.id, checked as boolean)
                   }
                 />
               </div>
-              <div className="col-span-2 flex justify-center">
-                <Checkbox
-                  checked={config.is_employee}
-                  onCheckedChange={(checked) => 
-                    updateConfiguration(config.id, 'is_employee', checked as boolean)
-                  }
-                />
-              </div>
-              <div className="col-span-1">
-                {config.is_primary && (
-                  <span className="px-1 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">P</span>
-                )}
-                {config.is_employee && (
-                  <span className="px-1 py-0.5 bg-green-100 text-green-700 rounded text-xs">E</span>
+              <div className="col-span-2 text-center">
+                {config.is_primary ? (
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
+                    Primary
+                  </span>
+                ) : (
+                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">
+                    Employee
+                  </span>
                 )}
               </div>
             </div>

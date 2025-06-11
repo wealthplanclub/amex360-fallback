@@ -14,7 +14,6 @@ export type Database = {
           account_type: string
           created_at: string | null
           id: string
-          is_employee: boolean
           is_primary: boolean
           last_five: string
           notes: string | null
@@ -24,7 +23,6 @@ export type Database = {
           account_type: string
           created_at?: string | null
           id?: string
-          is_employee?: boolean
           is_primary?: boolean
           last_five: string
           notes?: string | null
@@ -34,7 +32,6 @@ export type Database = {
           account_type?: string
           created_at?: string | null
           id?: string
-          is_employee?: boolean
           is_primary?: boolean
           last_five?: string
           notes?: string | null
