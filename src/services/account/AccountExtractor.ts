@@ -51,13 +51,15 @@ export class AccountExtractor {
         console.error('Error fetching sample user IDs:', userIdsError)
       }
 
-      // Get unique user_ids to see all available users
-      const { data: uniqueUserIds, error: uniqueError } = await supabase
+      // Get all user_ids to see what values exist (using distinct)
+      const { data: allTransactions, error: allError } = await supabase
         .from('master_transactions')
         .select('user_id')
-        .group('user_id')
 
-      console.log('All unique user_id values:', uniqueUserIds)
+      if (allTransactions && !allError) {
+        const uniqueUserIds = [...new Set(allTransactions.map(t => t.user_id))]
+        console.log('All unique user_id values:', uniqueUserIds)
+      }
 
       // Query transactions for this specific user
       const { data: transactions, error, count } = await supabase
