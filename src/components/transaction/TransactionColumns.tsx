@@ -70,17 +70,20 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
     }
 
     // Add remaining columns - these should show for ALL users
-    console.log("Adding card_type and last_five columns for all users");
+    console.log("Adding account_type and last_five columns for all users");
     columns.push(
       {
-        accessorKey: "card_type",
+        accessorKey: "account_type",
         header: "Card Type",
         cell: ({ row }) => {
+          // Support both new account_type and legacy card_type fields
+          const accountType = row.getValue("account_type") as string | undefined;
           const cardType = row.getValue("card_type") as string | undefined;
-          console.log("Rendering card_type:", cardType);
+          const displayValue = accountType || cardType;
+          console.log("Rendering account_type:", displayValue);
           return (
             <div className="text-sm text-muted-foreground">
-              {cardType || "N/A"}
+              {displayValue || "N/A"}
             </div>
           );
         },
@@ -122,7 +125,7 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
           const multiple = row.getValue("point_multiple") as number | undefined
           return (
             <div className="text-right font-medium">
-              {multiple ? `${multiple}x` : "N/A"}
+              {multiple ? `${multiple}x` : "1.0x"}
             </div>
           )
         },
