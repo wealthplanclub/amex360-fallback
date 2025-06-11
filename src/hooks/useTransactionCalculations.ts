@@ -4,13 +4,45 @@ import { transactionFilterService } from "@/services/transaction"
 import { transactionCacheService } from "@/services/calculationsCache"
 
 export const useTransactionCalculations = (selectedTimeRange: string) => {
-  // Get filtered transactions from the centralized service
-  const filteredTransactions = React.useMemo(() => {
-    return transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
-  }, [selectedTimeRange]);
+  const [filteredTransactions, setFilteredTransactions] = React.useState<any[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  // Load filtered transactions from the centralized service
+  React.useEffect(() => {
+    const loadTransactions = async () => {
+      setIsLoading(true)
+      try {
+        const transactions = await transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
+        setFilteredTransactions(transactions)
+      } catch (error) {
+        console.error('Error loading transactions for calculations:', error)
+        setFilteredTransactions([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadTransactions()
+  }, [selectedTimeRange])
 
   // Calculate totals based on filtered transactions only - with page-specific caching
   const calculations = React.useMemo(() => {
+    if (isLoading || filteredTransactions.length === 0) {
+      return {
+        totalExpenses: 0,
+        totalCredits: 0,
+        paymentsToExpensesRatio: "0.0",
+        topCardSpend: 0,
+        lowestCardSpend: 0,
+        topCardPercentage: "0.0",
+        lowestCardPercentage: "0.0",
+        topCardDisplayName: "",
+        lowestCardDisplayName: "",
+        topCardAccount: "",
+        lowestCardAccount: ""
+      }
+    }
+
     return transactionCacheService.getCachedCalculations(
       'transaction',
       { selectedTimeRange },
@@ -82,7 +114,7 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
         };
       }
     )
-  }, [filteredTransactions, selectedTimeRange]);
+  }, [filteredTransactions, selectedTimeRange, isLoading]);
 
   return calculations;
 }

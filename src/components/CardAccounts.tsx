@@ -1,5 +1,4 @@
 
-import { staticTxnData } from "@/data/staticData";
 import { getTimeRangeDescription } from "@/utils/cardDataUtils";
 import {
   Card,
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CardAccountItem } from "@/components/CardAccountItem";
-import { transactionFilterService } from "@/services/transactionFilterService";
+import { transactionFilterService } from "@/services/transaction";
 import { FilterState } from "@/hooks/useFilterState";
 import * as React from "react";
 
@@ -27,62 +26,77 @@ export function CardAccounts({
   transactionDropdownSelection = "all",
   filters
 }: CardAccountsProps) {
-  // Use the centralized filtering service to get filtered transactions
-  const allCardData = React.useMemo(() => {
-    // Create filter state for card calculations (don't include card filter itself to show all cards)
-    const cardFilters: FilterState = {
-      ...filters,
-      selectedCard: "all" // Always show all cards, but apply other filters
-    };
-    
-    const filteredTransactions = transactionFilterService.getFilteredTransactions(cardFilters);
-    
-    // Calculate card amounts based on active filters
-    const cardAmounts = filteredTransactions.reduce((acc, transaction) => {
-      const account = transaction.account;
-      
-      // Include transaction based on active filters
-      let shouldInclude = false;
-      
-      if (filters.expenseFilter && transaction.amount < 0) {
-        // Include expenses when expense filter is active
-        shouldInclude = true;
-      } else if (filters.creditFilter && transaction.amount > 0) {
-        // Include credits when credit filter is active
-        shouldInclude = true;
-      } else if (!filters.expenseFilter && !filters.creditFilter && transaction.amount < 0) {
-        // Default behavior: show expenses when no specific filter is active
-        shouldInclude = true;
-      }
-      
-      if (shouldInclude) {
-        if (!acc[account]) {
-          acc[account] = 0;
-        }
-        acc[account] += Math.abs(transaction.amount);
-      }
-      
-      return acc;
-    }, {} as Record<string, number>);
+  const [allCardData, setAllCardData] = React.useState<Array<{ name: string; fullName: string; amount: number }>>([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
-    // Process card data using default logic for all cards
-    const cardData = Object.entries(cardAmounts)
-      .map(([account, amount]: [string, number]) => {
-        let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
-        if (account.toLowerCase().includes('amazon business prime')) {
-          displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
-        }
-        
-        return {
-          name: displayName,
-          fullName: account,
-          amount
+  // Load and calculate card data based on active filters
+  React.useEffect(() => {
+    const loadCardData = async () => {
+      setIsLoading(true)
+      try {
+        // Create filter state for card calculations (don't include card filter itself to show all cards)
+        const cardFilters: FilterState = {
+          ...filters,
+          selectedCard: "all" // Always show all cards, but apply other filters
         };
-      })
-      .sort((a, b) => b.amount - a.amount);
+        
+        const filteredTransactions = await transactionFilterService.getFilteredTransactions(cardFilters);
+        
+        // Calculate card amounts based on active filters
+        const cardAmounts = filteredTransactions.reduce((acc, transaction) => {
+          const account = transaction.account;
+          
+          // Include transaction based on active filters
+          let shouldInclude = false;
+          
+          if (filters.expenseFilter && transaction.amount < 0) {
+            // Include expenses when expense filter is active
+            shouldInclude = true;
+          } else if (filters.creditFilter && transaction.amount > 0) {
+            // Include credits when credit filter is active
+            shouldInclude = true;
+          } else if (!filters.expenseFilter && !filters.creditFilter && transaction.amount < 0) {
+            // Default behavior: show expenses when no specific filter is active
+            shouldInclude = true;
+          }
+          
+          if (shouldInclude) {
+            if (!acc[account]) {
+              acc[account] = 0;
+            }
+            acc[account] += Math.abs(transaction.amount);
+          }
+          
+          return acc;
+        }, {} as Record<string, number>);
 
-    return cardData;
-  }, [filters]);
+        // Process card data using default logic for all cards
+        const cardData = Object.entries(cardAmounts)
+          .map(([account, amount]: [string, number]) => {
+            let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
+            if (account.toLowerCase().includes('amazon business prime')) {
+              displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
+            }
+            
+            return {
+              name: displayName,
+              fullName: account,
+              amount
+            };
+          })
+          .sort((a, b) => b.amount - a.amount);
+
+        setAllCardData(cardData);
+      } catch (error) {
+        console.error('Error loading card data:', error)
+        setAllCardData([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadCardData()
+  }, [filters])
 
   // Filter cards based on transaction dropdown selection only
   const cardData = React.useMemo(() => {
@@ -125,6 +139,20 @@ export function CardAccounts({
     }
     return getTimeRangeDescription(selectedTimeRange);
   };
+
+  if (isLoading) {
+    return (
+      <Card className="bg-gradient-to-b from-white to-gray-100 flex flex-col" style={{ height: "400px" }}>
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold">Card accounts</CardTitle>
+          <CardDescription>Loading card data...</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-1 flex items-center justify-center">
+          <div className="text-sm text-muted-foreground">Loading...</div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card 
