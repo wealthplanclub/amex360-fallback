@@ -76,11 +76,11 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
         accessorKey: "card_type",
         header: "Card Type",
         cell: ({ row }) => {
-          const cardType = row.getValue("card_type");
+          const cardType = row.getValue("card_type") as string | undefined;
           console.log("Rendering card_type:", cardType);
           return (
             <div className="text-sm text-muted-foreground">
-              {cardType}
+              {cardType || "N/A"}
             </div>
           );
         },
@@ -89,11 +89,11 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
         accessorKey: "last_five",
         header: "Last 5",
         cell: ({ row }) => {
-          const lastFive = row.getValue("last_five");
+          const lastFive = row.getValue("last_five") as string | undefined;
           console.log("Rendering last_five:", lastFive);
           return (
             <div className="text-sm font-mono">
-              {lastFive}
+              {lastFive || "N/A"}
             </div>
           );
         },
@@ -119,10 +119,10 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
         accessorKey: "point_multiple",
         header: () => <div className="text-right">Multiple</div>,
         cell: ({ row }) => {
-          const multiple = row.getValue("point_multiple") as number
+          const multiple = row.getValue("point_multiple") as number | undefined
           return (
             <div className="text-right font-medium">
-              {multiple}x
+              {multiple ? `${multiple}x` : "N/A"}
             </div>
           )
         },

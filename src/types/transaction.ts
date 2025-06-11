@@ -6,4 +6,7 @@ export type Transaction = {
   amount: number
   account: string
   category: string
+  card_type?: string
+  last_five?: string
+  point_multiple?: number
 }
