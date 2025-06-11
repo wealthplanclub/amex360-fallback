@@ -23,7 +23,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      // Fetch transactions from the database for this user
+      // Fetch ALL transactions from the database for this user (no limit)
       const { data: transactions, error } = await supabase
         .from('master_transactions')
         .select('*')
