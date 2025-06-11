@@ -6,9 +6,6 @@ import Index from "./Index";
 import Employee from "./Employee";
 import Rewards from "./Rewards";
 import CreditMax from "./CreditMax";
-import { AccountExtractorComponent } from "@/components/account/AccountExtractorComponent";
-import { AccountConfigurationManager } from "@/components/account/AccountConfigurationManager";
-import { TransactionImportComponent } from "@/components/transaction/TransactionImporter";
 
 export type DashboardSection = "dashboard" | "rewards" | "employee" | "creditmax" | "admin";
 
@@ -28,10 +25,9 @@ const Dashboard = () => {
       case "admin":
         return (
           <div className="p-6 space-y-6">
-            <div className="grid gap-6">
-              <TransactionImportComponent />
-              <AccountExtractorComponent />
-              <AccountConfigurationManager />
+            <div className="text-center py-12">
+              <h2 className="text-2xl font-semibold text-muted-foreground">Admin Panel</h2>
+              <p className="text-muted-foreground mt-2">Admin functionality will be added here.</p>
             </div>
           </div>
         );
