@@ -16,7 +16,7 @@ export const generateCardData = (calculations: any, selectedTimeRange: string) =
       value: calculations.totalExpenses,
       badge: "+100%",
       icon: TrendingUp,
-      footer: "Trending up this month",
+      footer: "Charges and fees",
       description: `Total spend ${getTimeRangeDescription(selectedTimeRange)}`,
       clickable: true,
       cardType: "expenses"
@@ -26,7 +26,7 @@ export const generateCardData = (calculations: any, selectedTimeRange: string) =
       value: calculations.totalCredits,
       badge: `${calculations.paymentsToExpensesRatio}%`,
       icon: TrendingUp,
-      footer: "Steady incoming payments",
+      footer: "Balance reductions",
       description: `Payments and credits ${getTimeRangeDescription(selectedTimeRange)}`,
       clickable: true,
       cardType: "credits"
