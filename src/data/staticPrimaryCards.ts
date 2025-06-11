@@ -12,79 +12,79 @@ export interface PrimaryCard {
 export const primaryCardsConfig: PrimaryCard[] = [
   {
     cardType: "Amazon Business Prime",
-    lastFive: "00001", // TODO: Update with actual primary card last 5 digits
+    lastFive: "52003", // TODO: Update with actual primary card last 5 digits
     displayName: "Amazon Business Prime (00001)",
     isPrimary: true
   },
   {
     cardType: "Bonvoy Business Amex", 
-    lastFive: "00002", // TODO: Update with actual primary card last 5 digits
-    displayName: "Marriott Bonvoy Business (00002)",
+    lastFive: "31009", // TODO: Update with actual primary card last 5 digits
+    displayName: "Marriott Bonvoy Business (-31009)",
     isPrimary: true
   },
   {
     cardType: "Business Blue Plus I",
-    lastFive: "00003", // TODO: Update with actual primary card last 5 digits
+    lastFive: "01000", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Blue Plus I (00003)",
     isPrimary: true
   },
   {
     cardType: "Business Blue Plus II",
-    lastFive: "00004", // TODO: Update with actual primary card last 5 digits
+    lastFive: "11009", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Blue Plus II (00004)",
     isPrimary: true
   },
   {
     cardType: "Business Classic Gold",
-    lastFive: "00005", // TODO: Update with actual primary card last 5 digits
+    lastFive: "71002", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Classic Gold (00005)",
     isPrimary: true
   },
   {
     cardType: "Business Green",
-    lastFive: "00006", // TODO: Update with actual primary card last 5 digits
+    lastFive: "82007", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Green (00006)",
     isPrimary: true
   },
   {
     cardType: "Business Platinum Card",
-    lastFive: "00007", // TODO: Update with actual primary card last 5 digits
+    lastFive: "52007", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Platinum Card (00007)",
     isPrimary: true
   },
   {
     cardType: "Business Rose Gold",
-    lastFive: "00008", // TODO: Update with actual primary card last 5 digits
+    lastFive: "02008", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Rose Gold (00008)",
     isPrimary: true
   },
   {
     cardType: "Business White Gold",
-    lastFive: "00009", // TODO: Update with actual primary card last 5 digits
+    lastFive: "41000", // TODO: Update with actual primary card last 5 digits
     displayName: "Business White Gold (00009)",
     isPrimary: true
   },
   {
     cardType: "Charles Schwab Platinum Card",
-    lastFive: "00010", // TODO: Update with actual primary card last 5 digits
+    lastFive: "71000", // TODO: Update with actual primary card last 5 digits
     displayName: "Charles Schwab Platinum Card (00010)",
     isPrimary: true
   },
   {
     cardType: "Delta Skymiles Reserve",
-    lastFive: "00011", // TODO: Update with actual primary card last 5 digits
+    lastFive: "41006", // TODO: Update with actual primary card last 5 digits
     displayName: "Delta Skymiles Reserve (00011)",
     isPrimary: true
   },
   {
     cardType: "Hilton Honors Business",
-    lastFive: "00012", // TODO: Update with actual primary card last 5 digits
+    lastFive: "91003", // TODO: Update with actual primary card last 5 digits
     displayName: "Hilton Honors Business (00012)",
     isPrimary: true
   },
   {
     cardType: "Platinum Card",
-    lastFive: "00013", // TODO: Update with actual primary card last 5 digits
+    lastFive: "71003", // TODO: Update with actual primary card last 5 digits
     displayName: "Platinum Card (00013)",
     isPrimary: true
   }
