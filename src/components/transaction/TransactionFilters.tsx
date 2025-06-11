@@ -2,17 +2,28 @@
 import * as React from "react"
 import { Transaction } from "@/types/transaction"
 import { FilterState } from "@/hooks/useFilterState"
-import { transactionFilterService } from "@/services/transactionFilterService"
+import { transactionFilterService } from "@/services/transaction"
 
-interface TransactionFiltersProps {
-  allTransactions: Transaction[]
-  filters: FilterState
-}
+export function useTransactionFilters({ filters }: { filters: FilterState }): Transaction[] {
+  const [transactions, setTransactions] = React.useState<Transaction[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
-export function useTransactionFilters({
-  filters
-}: Omit<TransactionFiltersProps, 'allTransactions'>) {
-  return React.useMemo(() => {
-    return transactionFilterService.getFilteredTransactions(filters)
+  React.useEffect(() => {
+    const loadTransactions = async () => {
+      setIsLoading(true)
+      try {
+        const filteredTransactions = await transactionFilterService.getFilteredTransactions(filters)
+        setTransactions(filteredTransactions)
+      } catch (error) {
+        console.error('Error loading filtered transactions:', error)
+        setTransactions([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadTransactions()
   }, [filters])
+
+  return transactions
 }
