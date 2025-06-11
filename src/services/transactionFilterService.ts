@@ -209,5 +209,3 @@ export class TransactionFilterService {
 
 // Export singleton instance
 export const transactionFilterService = TransactionFilterService.getInstance()
-
-}
