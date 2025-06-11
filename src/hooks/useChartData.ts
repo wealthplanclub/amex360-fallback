@@ -1,27 +1,11 @@
 
 import * as React from "react"
-import { transactionFilterService } from "@/services/transaction"
+import { transactionFilterService } from "@/services/transactionFilterService"
 
 export const useChartData = (timeRange: string) => {
-  const [processedData, setProcessedData] = React.useState<Array<{ date: string; totalSpend: number }>>([])
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  // Load daily spending data from the centralized service
-  React.useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true)
-      try {
-        const data = await transactionFilterService.getDailySpendingData("ytd") // Get all YTD data first
-        setProcessedData(data)
-      } catch (error) {
-        console.error('Error loading chart data:', error)
-        setProcessedData([])
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    loadData()
+  // Get daily spending data from the centralized service
+  const processedData = React.useMemo(() => {
+    return transactionFilterService.getDailySpendingData("ytd") // Get all YTD data first
   }, [])
 
   const filteredData = React.useMemo(() => {
@@ -60,7 +44,6 @@ export const useChartData = (timeRange: string) => {
 
   return {
     filteredData,
-    averageDailySpend,
-    isLoading
+    averageDailySpend
   }
 }

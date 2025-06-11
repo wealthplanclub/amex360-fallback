@@ -4,45 +4,13 @@ import { transactionFilterService } from "@/services/transaction"
 import { transactionCacheService } from "@/services/calculationsCache"
 
 export const useTransactionCalculations = (selectedTimeRange: string) => {
-  const [filteredTransactions, setFilteredTransactions] = React.useState<any[]>([])
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  // Load filtered transactions from the centralized service
-  React.useEffect(() => {
-    const loadTransactions = async () => {
-      setIsLoading(true)
-      try {
-        const transactions = await transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
-        setFilteredTransactions(transactions)
-      } catch (error) {
-        console.error('Error loading transactions for calculations:', error)
-        setFilteredTransactions([])
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    loadTransactions()
-  }, [selectedTimeRange])
+  // Get filtered transactions from the centralized service
+  const filteredTransactions = React.useMemo(() => {
+    return transactionFilterService.getTransactionsForCalculations(selectedTimeRange)
+  }, [selectedTimeRange]);
 
   // Calculate totals based on filtered transactions only - with page-specific caching
   const calculations = React.useMemo(() => {
-    if (isLoading || filteredTransactions.length === 0) {
-      return {
-        totalExpenses: 0,
-        totalCredits: 0,
-        paymentsToExpensesRatio: "0.0",
-        topCardSpend: 0,
-        lowestCardSpend: 0,
-        topCardPercentage: "0.0",
-        lowestCardPercentage: "0.0",
-        topCardDisplayName: "",
-        lowestCardDisplayName: "",
-        topCardAccount: "",
-        lowestCardAccount: ""
-      }
-    }
-
     return transactionCacheService.getCachedCalculations(
       'transaction',
       { selectedTimeRange },
@@ -50,24 +18,24 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
       () => {
         console.log("Calculating stats from filtered transactions:", filteredTransactions.length);
         
-        // Calculate expenses (positive amounts - actual spending)
-        const expenses = filteredTransactions.filter(transaction => transaction.amount > 0);
-        const totalExpenses = expenses.reduce((sum, transaction) => sum + transaction.amount, 0);
+        // Calculate expenses (negative amounts)
+        const expenses = filteredTransactions.filter(transaction => transaction.amount < 0);
+        const totalExpenses = expenses.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
         
-        // Calculate credits/payments (negative amounts - payments made)
-        const credits = filteredTransactions.filter(transaction => transaction.amount < 0);
-        const totalCredits = credits.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
+        // Calculate credits (positive amounts)
+        const credits = filteredTransactions.filter(transaction => transaction.amount > 0);
+        const totalCredits = credits.reduce((sum, transaction) => sum + transaction.amount, 0);
 
         // Calculate payments to expenses ratio
         const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
-        // Calculate card expenses grouped by account (only positive amounts for spending)
+        // Calculate card expenses grouped by account
         const cardExpenses = expenses.reduce((acc, transaction) => {
-          const account = transaction.account_type || transaction.account;
+          const account = transaction.account;
           if (!acc[account]) {
             acc[account] = 0;
           }
-          acc[account] += transaction.amount;
+          acc[account] += Math.abs(transaction.amount);
           return acc;
         }, {} as Record<string, number>);
 
@@ -114,7 +82,7 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
         };
       }
     )
-  }, [filteredTransactions, selectedTimeRange, isLoading]);
+  }, [filteredTransactions, selectedTimeRange]);
 
   return calculations;
 }

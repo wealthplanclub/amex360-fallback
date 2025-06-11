@@ -50,27 +50,22 @@ export function TransactionTable({ transactions, globalFilter, onGlobalFilterCha
     },
     initialState: {
       pagination: {
-        pageSize: 50, // Increase from 10 to 50 to show more records per page
+        pageSize: 10,
       },
     },
   })
 
   const handleShowAll = () => {
     setShowAll(true)
-    table.setPageSize(table.getFilteredRowModel().rows.length) // Show all filtered rows
+    table.setPageSize(table.getFilteredRowModel().rows.length) // Show all rows in scroll area
   }
 
   const handleShowPaginated = () => {
     setShowAll(false)
-    table.setPageSize(50) // Reset to 50 rows per page
+    table.setPageSize(10) // Reset to 10 rows per page
   }
 
   const filteredRowCount = table.getFilteredRowModel().rows.length
-
-  // Add console log to track transaction counts
-  React.useEffect(() => {
-    console.log(`TransactionTable: Total transactions: ${transactions.length}, Filtered: ${filteredRowCount}`)
-  }, [transactions.length, filteredRowCount])
 
   return (
     <>

@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -9,6 +8,7 @@ import {
 import { Transaction } from "@/types/transaction"
 import { TransactionCardHeader } from "@/components/transaction/TransactionCardHeader"
 import { TransactionCardControls } from "@/components/transaction/TransactionCardControls"
+import { useTransactionFilters } from "@/components/transaction/TransactionFilters"
 import { TransactionTable } from "@/components/transaction/TransactionTable"
 import { FilterState } from "@/hooks/useFilterState"
 import { transactionFilterService } from "@/services/transaction"
@@ -30,31 +30,10 @@ export function TransactionCard({
   onClearStatCardFilter,
   onGlobalFilterChange
 }: TransactionCardProps) {
-  const [transactions, setTransactions] = React.useState<Transaction[]>([])
-  const [creditCards, setCreditCards] = React.useState<string[]>([])
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  // Load data when component mounts or filters change
-  React.useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true)
-      try {
-        // Load filtered transactions
-        const filteredTransactions = await transactionFilterService.getFilteredTransactions(filters)
-        setTransactions(filteredTransactions)
-        
-        // Load unique card accounts
-        const cards = await transactionFilterService.getUniqueCardAccounts()
-        setCreditCards(cards)
-      } catch (error) {
-        console.error('Error loading transaction data:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    loadData()
-  }, [filters])
+  // Get unique credit cards from the service
+  const creditCards = React.useMemo(() => {
+    return transactionFilterService.getUniqueCardAccounts()
+  }, []);
 
   const handleCardChange = (card: string) => {
     if (onDropdownChange) {
@@ -62,20 +41,11 @@ export function TransactionCard({
     }
   };
 
+  // Filter transactions using the centralized service
+  const transactions = useTransactionFilters({ filters })
+
   // Determine what filters are active for the header
   const hasStatCardFilter = !!(filters.expenseFilter || filters.creditFilter || filters.topCardFilter || filters.lowestCardFilter);
-
-  if (isLoading) {
-    return (
-      <Card className="bg-gradient-to-b from-white to-gray-100">
-        <CardContent>
-          <div className="flex items-center justify-center py-8">
-            <div className="text-sm text-muted-foreground">Loading transactions...</div>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
 
   return (
     <Card className="bg-gradient-to-b from-white to-gray-100">

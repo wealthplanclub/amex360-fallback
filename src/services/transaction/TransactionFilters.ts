@@ -62,27 +62,27 @@ export class TransactionFilters {
   public static applyExpenseCreditFilters(transactions: Transaction[], filters: FilterState): Transaction[] {
     let filtered = transactions
     
-    // Apply expense filter (positive amounts - actual spending)
+    // Apply expense filter
     if (filters.expenseFilter) {
-      filtered = filtered.filter(transaction => transaction.amount > 0)
-    }
-    
-    // Apply credit filter (negative amounts - payments made)
-    if (filters.creditFilter) {
       filtered = filtered.filter(transaction => transaction.amount < 0)
     }
     
-    // Apply top card filter (only for expenses - positive amounts)
+    // Apply credit filter
+    if (filters.creditFilter) {
+      filtered = filtered.filter(transaction => transaction.amount > 0)
+    }
+    
+    // Apply top card filter
     if (filters.topCardFilter) {
       filtered = filtered.filter(transaction => 
-        transaction.amount > 0 && (transaction.account === filters.topCardFilter || transaction.account_type === filters.topCardFilter)
+        transaction.amount < 0 && (transaction.account === filters.topCardFilter || transaction.account_type === filters.topCardFilter)
       )
     }
     
-    // Apply lowest card filter (only for expenses - positive amounts)
+    // Apply lowest card filter
     if (filters.lowestCardFilter) {
       filtered = filtered.filter(transaction => 
-        transaction.amount > 0 && (transaction.account === filters.lowestCardFilter || transaction.account_type === filters.lowestCardFilter)
+        transaction.amount < 0 && (transaction.account === filters.lowestCardFilter || transaction.account_type === filters.lowestCardFilter)
       )
     }
     
