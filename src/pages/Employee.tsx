@@ -1,4 +1,5 @@
 
+
 import React from "react"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
@@ -8,6 +9,7 @@ import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
+import { primaryCardsConfig } from "@/data/staticPrimaryCards"
 import Lottie from "lottie-react"
 
 const Employee = () => {
@@ -45,7 +47,19 @@ const Employee = () => {
   // Parse the static transaction data and map to employee transaction format
   const employeeTransactions = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData)
-    return rawTransactions.map((transaction, index) => ({
+    
+    // Filter out primary cards
+    const filteredTransactions = rawTransactions.filter(transaction => {
+      // Check if this card type and last five combination is a primary card
+      const isPrimary = primaryCardsConfig.some(primaryCard => 
+        primaryCard.cardType === transaction.account_type && 
+        primaryCard.lastFive === transaction.last_five &&
+        primaryCard.isPrimary
+      )
+      return !isPrimary // Only include non-primary cards
+    })
+    
+    return filteredTransactions.map((transaction, index) => ({
       date: transaction.date,
       description: transaction.description,
       card_type: transaction.account_type, // Map account_type to card_type
@@ -132,3 +146,4 @@ const Employee = () => {
 }
 
 export default Employee
+
