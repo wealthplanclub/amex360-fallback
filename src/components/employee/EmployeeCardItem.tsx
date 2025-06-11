@@ -57,10 +57,6 @@ export function EmployeeCardItem({
     onCardClick(card)
   }
 
-  // Remove leading dash from lastFive for display
-  const displayLastFive = card.lastFive.replace(/^-/, '')
-  const displayName = card.displayName.replace(/\(-\d+\)/, `(${displayLastFive})`)
-
   return (
     <Card 
       key={card.cardKey}
@@ -82,7 +78,7 @@ export function EmployeeCardItem({
               className="w-16 h-10 object-cover rounded"
             />
             <div className="text-sm font-medium leading-tight whitespace-pre-line">
-              {displayName}
+              {card.displayName}
             </div>
           </div>
           <div className="flex items-center justify-end sm:justify-end">
