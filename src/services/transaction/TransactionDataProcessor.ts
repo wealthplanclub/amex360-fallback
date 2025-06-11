@@ -14,27 +14,13 @@ export class TransactionDataProcessor {
         description: transaction.description,
         amount: transaction.amount,
         account_type: transaction.account, // Map legacy account to account_type
-        last_five: this.extractLastFive(transaction.account), // Extract or generate last_five
+        last_five: transaction.last_five, // Use the actual last_five from transaction data
         category: transaction.category,
         point_multiple: 1.0, // Default point multiple
         // Keep legacy fields for backward compatibility
         account: transaction.account,
         card_type: transaction.account
       }))
-  }
-
-  private static extractLastFive(account: string): string {
-    // Try to extract last 5 digits from account name, or generate a mock one
-    const match = account.match(/\((-?\d+)\)/)
-    if (match) {
-      return match[1]
-    }
-    // Generate a mock last_five based on account name hash
-    const hash = account.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0)
-      return a & a
-    }, 0)
-    return Math.abs(hash % 10000).toString().padStart(4, '0')
   }
 
   public static getUniqueCardAccounts(transactions: Transaction[]): string[] {
