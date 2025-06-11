@@ -34,10 +34,30 @@ export function EmployeeMetricsCards({
     setNumbersKey(prev => prev + 1)
   }, [filteredTransactions])
 
-  // Calculate metrics from filtered transactions using the bonus context with filter state
+  // Calculate metrics from filtered transactions - negative amounts are charges/expenses
   const metrics = React.useMemo(() => {
-    return getAdjustedMetrics(filteredTransactions, selectedCardType, selectedLastFive)
-  }, [filteredTransactions, getAdjustedMetrics, selectedCardType, selectedLastFive])
+    // Filter for charges (negative amounts)
+    const charges = filteredTransactions.filter(t => t.amount < 0)
+    
+    // Calculate total spend (absolute value of negative amounts)
+    const totalSpend = charges.reduce((sum, t) => sum + Math.abs(t.amount), 0)
+    
+    // Calculate total points (from charges only)
+    const totalPoints = charges.reduce((sum, t) => sum + (Math.abs(t.amount) * t.point_multiple), 0)
+    
+    // Calculate average points per dollar
+    const avgPointsPerDollar = totalSpend > 0 ? totalPoints / totalSpend : 0
+    
+    // Calculate unique cards
+    const uniqueCards = new Set(filteredTransactions.map(t => `${t.card_type}-${t.last_five}`)).size
+    
+    return {
+      totalPoints: Math.round(totalPoints),
+      totalSpend,
+      avgPointsPerDollar,
+      totalCards: uniqueCards
+    }
+  }, [filteredTransactions])
 
   const cardData = [
     {

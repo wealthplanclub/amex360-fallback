@@ -1,3 +1,4 @@
+
 import React from "react"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
@@ -5,8 +6,8 @@ import { EmployeeTransactionSection } from "@/components/employee/EmployeeTransa
 import { EmployeeCardSection } from "@/components/employee/EmployeeCardSection"
 import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
-import { staticEmpData } from "@/data/staticEmpData"
-import { parseEmployeeData } from "@/utils/employeeParser"
+import { staticTxnData } from "@/data/staticData"
+import { parseTransactionData } from "@/utils/transactionParser"
 import Lottie from "lottie-react"
 
 const Employee = () => {
@@ -41,8 +42,18 @@ const Employee = () => {
     return () => clearTimeout(initialDelay)
   }, [])
 
-  // Parse the static employee data into proper format
-  const employeeTransactions = parseEmployeeData(staticEmpData)
+  // Parse the static transaction data and map to employee transaction format
+  const employeeTransactions = React.useMemo(() => {
+    const rawTransactions = parseTransactionData(staticTxnData)
+    return rawTransactions.map((transaction, index) => ({
+      date: transaction.date,
+      description: transaction.description,
+      card_type: transaction.account_type, // Map account_type to card_type
+      last_five: transaction.last_five,
+      amount: transaction.amount,
+      point_multiple: transaction.point_multiple || 1.0
+    }))
+  }, [])
   
   // Use the custom hook for all filter logic
   const {
