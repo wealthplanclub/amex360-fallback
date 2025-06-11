@@ -1,4 +1,3 @@
-
 import React from "react"
 import { EmployeeTransactionTable } from "./EmployeeTransactionTable"
 import { Input } from "@/components/ui/input"
@@ -6,7 +5,6 @@ import { CardFilterDropdown } from "@/components/transaction/CardFilterDropdown"
 import { X } from "lucide-react"
 import { EmployeeTransaction } from "./EmployeeTransactionColumns"
 import { getCardImage } from "@/utils/cardImageUtils"
-import { primaryCardsConfig } from "@/data/staticPrimaryCards"
 
 interface EmployeeTransactionSectionProps {
   filteredTransactions: EmployeeTransaction[]
@@ -51,33 +49,6 @@ export function EmployeeTransactionSection({
   
   // Use the last valid card type during fade-out to prevent rose gold flash
   const cardTypeToShow = showCardImage ? baseCardType : lastValidCardType
-
-  // Generate dropdown options using primary card display names
-  const dropdownOptions = React.useMemo(() => {
-    // Get unique card types from transactions
-    const transactionCardTypes = Array.from(new Set(filteredTransactions.map(t => t.card_type)))
-    
-    // Map to primary card display names, keeping only those that exist in primary config
-    return transactionCardTypes
-      .map(cardType => {
-        const primaryCard = primaryCardsConfig.find(pc => pc.cardType === cardType)
-        return primaryCard ? primaryCard.displayName : null
-      })
-      .filter(Boolean) as string[]
-  }, [filteredTransactions])
-
-  // Create a wrapper function to handle display name to card type conversion
-  const handleCardDropdownChangeWithConversion = (selectedDisplayName: string) => {
-    if (selectedDisplayName === "all") {
-      handleCardDropdownChange("all")
-      return
-    }
-    
-    // Extract card type from display name (remove the last five part)
-    // Display names are in format: "Card Type (-12345)"
-    const cardType = selectedDisplayName.replace(/\s*\(-\d+\)$/, '')
-    handleCardDropdownChange(cardType)
-  }
 
   return (
     <div className="lg:col-span-2">
@@ -158,8 +129,8 @@ export function EmployeeTransactionSection({
             <div className="flex justify-end">
               <CardFilterDropdown
                 selectedCard={getCardDropdownDisplayText()}
-                creditCards={dropdownOptions}
-                onCardChange={handleCardDropdownChangeWithConversion}
+                creditCards={uniqueCardTypes}
+                onCardChange={handleCardDropdownChange}
               />
             </div>
           </div>
