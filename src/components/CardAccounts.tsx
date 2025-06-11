@@ -1,6 +1,7 @@
 
 import { staticTxnData } from "@/data/staticData";
 import { getTimeRangeDescription } from "@/utils/cardDataUtils";
+import { getPrimaryCardByType, generateDisplayNameWithLastFive } from "@/data/staticPrimaryCards";
 import {
   Card,
   CardContent,
@@ -65,12 +66,21 @@ export function CardAccounts({
       return acc;
     }, {} as Record<string, number>);
 
-    // Process card data using default logic for all cards
+    // Process card data using primary card display names
     const cardData = Object.entries(cardAmounts)
       .map(([account, amount]: [string, number]) => {
+        // Try to get the primary card display name first
+        const primaryCard = getPrimaryCardByType(account);
         let displayName = account.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
-        if (account.toLowerCase().includes('amazon business prime')) {
-          displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
+        
+        if (primaryCard) {
+          // Use the configured display name from primary cards
+          displayName = primaryCard.displayName.replace(/\bcard\b/gi, '').trim().replace(/\s*(\([^)]+\))/, '\n$1');
+        } else {
+          // Fallback to existing logic for cards not in primary config
+          if (account.toLowerCase().includes('amazon business prime')) {
+            displayName = displayName.replace(/\bbusiness\b/gi, '').trim().replace(/\s+/g, ' ');
+          }
         }
         
         return {
