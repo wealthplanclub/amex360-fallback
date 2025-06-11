@@ -7,14 +7,15 @@ export class TransactionCalculations {
     timeRange: string
   ): Array<{ date: string; totalSpend: number }> {
     // Group transactions by date and calculate daily spending
+    // Note: negative amounts are expenses/charges in staticTxnData format
     const dailySpending = transactions
-      .filter(transaction => transaction.amount < 0) // Only expenses
+      .filter(transaction => transaction.amount < 0) // Only expenses (negative amounts)
       .reduce((acc, transaction) => {
         const date = transaction.date
         if (!acc[date]) {
           acc[date] = 0
         }
-        acc[date] += Math.abs(transaction.amount)
+        acc[date] += Math.abs(transaction.amount) // Convert to positive for display
         return acc
       }, {} as Record<string, number>)
 
