@@ -111,11 +111,4 @@ export class TransactionDataProcessor {
     console.warn('processStaticData is deprecated, use processTransactions instead')
     return []
   }
-
-  public static getUniqueCardAccounts(transactions: Transaction[]): string[] {
-    console.warn('getUniqueCardAccounts with transactions parameter is deprecated, use getUniqueCardAccounts() instead')
-    return Array.from(new Set(transactions.map(t => t.account_type || t.account)))
-      .filter(card => card && card.length > 0)
-      .sort()
-  }
 }
