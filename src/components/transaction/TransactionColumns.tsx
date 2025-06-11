@@ -118,14 +118,20 @@ export const useTransactionColumns = (options: UseTransactionColumnsOptions = {}
         header: () => <div className="text-right">Amount</div>,
         cell: ({ row }) => {
           const amount = parseFloat(row.getValue("amount"))
+          const absAmount = Math.abs(amount)
+          
+          // Format the absolute amount
           const formatted = new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
-          }).format(amount)
+          }).format(absAmount)
+          
+          // Add prefix based on whether it's positive (credit/payment) or negative (charge/debit)
+          const displayAmount = amount >= 0 ? `+${formatted}` : formatted
 
           return (
             <div className="text-right font-medium tabular-nums text-sm">
-              {formatted}
+              {displayAmount}
             </div>
           )
         },
