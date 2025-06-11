@@ -1,5 +1,6 @@
+
 import { Transaction } from "@/types/transaction"
-import { staticTxnData } from "@/data/staticData"
+import { staticTxnData } from "@/data/staticTxnData"
 import { parseTransactionData } from "@/utils/transactionParser"
 
 export class TransactionDataProcessor {

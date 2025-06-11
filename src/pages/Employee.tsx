@@ -6,7 +6,7 @@ import { EmployeeTransactionSection } from "@/components/employee/EmployeeTransa
 import { EmployeeCardSection } from "@/components/employee/EmployeeCardSection"
 import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
-import { staticTxnData } from "@/data/staticData"
+import { staticTxnData } from "@/data/staticTxnData"
 import { parseTransactionData } from "@/utils/transactionParser"
 import { primaryCardsConfig } from "@/data/staticPrimaryCards"
 import Lottie from "lottie-react"
