@@ -1,4 +1,3 @@
-
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
@@ -68,8 +67,8 @@ export function EmployeeCardItem({
     return amount >= 0 ? `+${formatted}` : formatted
   }
 
-  // Remove leading dash from lastFive for display
-  const displayLastFive = card.lastFive.replace(/^-/, '')
+  // Keep the dash in the display for card names
+  const displayLastFive = card.lastFive
 
   // Determine text color for amount
   const amountTextColor = card.amount >= 0 ? "text-[#008767]" : ""
