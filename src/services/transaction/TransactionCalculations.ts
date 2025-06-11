@@ -6,15 +6,15 @@ export class TransactionCalculations {
     transactions: Transaction[], 
     timeRange: string
   ): Array<{ date: string; totalSpend: number }> {
-    // Group transactions by date and calculate daily spending (positive amounts only)
+    // Group transactions by date and calculate daily spending (negative amounts only - expenses)
     const dailySpending = transactions
-      .filter(transaction => transaction.amount > 0) // Only expenses (positive amounts)
+      .filter(transaction => transaction.amount < 0) // Only expenses (negative amounts)
       .reduce((acc, transaction) => {
         const date = transaction.date
         if (!acc[date]) {
           acc[date] = 0
         }
-        acc[date] += transaction.amount
+        acc[date] += Math.abs(transaction.amount) // Convert to positive for display
         return acc
       }, {} as Record<string, number>)
 
