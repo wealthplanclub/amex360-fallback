@@ -57,6 +57,23 @@ export function EmployeeCardItem({
     onCardClick(card)
   }
 
+  // Format the amount similar to transaction table - remove "-" and add "+" for positive
+  const formatAmount = (amount: number) => {
+    const absAmount = Math.abs(amount)
+    const formatted = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(absAmount)
+    
+    return amount >= 0 ? `+${formatted}` : formatted
+  }
+
+  // Remove leading dash from lastFive for display
+  const displayLastFive = card.lastFive.replace(/^-/, '')
+
+  // Determine text color for amount
+  const amountTextColor = card.amount >= 0 ? "text-[#008767]" : ""
+
   return (
     <Card 
       key={card.cardKey}
@@ -78,7 +95,8 @@ export function EmployeeCardItem({
               className="w-16 h-10 object-cover rounded"
             />
             <div className="text-sm font-medium leading-tight whitespace-pre-line">
-              {card.displayName}
+              {card.cardType}
+              {'\n'}({displayLastFive})
             </div>
           </div>
           <div className="flex items-center justify-end sm:justify-end">
@@ -94,8 +112,8 @@ export function EmployeeCardItem({
                     className="w-4 h-4"
                   />
                 )}
-                <div className="text-lg font-bold tabular-nums">
-                  ${card.amount.toFixed(2)}
+                <div className={`text-lg font-bold tabular-nums ${amountTextColor}`}>
+                  {formatAmount(card.amount)}
                 </div>
               </div>
             </div>
