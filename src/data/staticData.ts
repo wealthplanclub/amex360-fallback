@@ -1,5 +1,6 @@
 
 export const staticTxnData = `date	description	amount	account_type	last_five	category	point_multiple
+2025-06-11	TWILIO INC          SAN FRANCISCO       CA	-230	Business Blue Plus I	-01109		
 2025-06-08	CHARGEBEE           WALNUT              CA	-1474	Business Blue Plus II	-11041		2
 2025-06-08	ONLINE PAYMENT - THANK YOU	1474	Business Blue Plus II	-11009		
 2025-06-07	LOVABLE             DOVER               DE	-148.8	Business Blue Plus II	-11041		2
