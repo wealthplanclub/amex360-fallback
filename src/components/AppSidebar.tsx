@@ -3,6 +3,7 @@ import React from "react"
 import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw, CircleCheck } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "@/components/ui/sonner"
+import { useAuth } from "@/contexts/AuthContext"
 import {
   Sidebar,
   SidebarContent,
@@ -46,6 +47,7 @@ const menuItems = [
 export function AppSidebar({ activeSection, setActiveSection }: AppSidebarProps) {
   const navigate = useNavigate()
   const { close } = useSidebar()
+  const { signOut } = useAuth()
 
   const handleItemClick = (section: DashboardSection) => {
     setActiveSection(section)
@@ -66,11 +68,10 @@ export function AppSidebar({ activeSection, setActiveSection }: AppSidebarProps)
     close()
   }
 
-  const handleLogout = () => {
-    setTimeout(() => {
-      navigate("/")
-    }, 100)
+  const handleLogout = async () => {
+    await signOut()
     close()
+    navigate("/")
   }
 
   return (
