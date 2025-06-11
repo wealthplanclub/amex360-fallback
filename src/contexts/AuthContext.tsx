@@ -73,12 +73,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return;
       }
 
-      // Set user context for RLS
-      await supabase.rpc('set_config', {
-        setting_name: 'app.current_user_id',
-        setting_value: session.user_id
-      });
-
       // Get user profile
       const { data: profile } = await supabase
         .from('profiles')
@@ -146,12 +140,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Store session token
       localStorage.setItem('session_token', sessionToken);
-
-      // Set user context for RLS
-      await supabase.rpc('set_config', {
-        setting_name: 'app.current_user_id',
-        setting_value: userId
-      });
 
       // Get user profile
       const { data: profile } = await supabase
