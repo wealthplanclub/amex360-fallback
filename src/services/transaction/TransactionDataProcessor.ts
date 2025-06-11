@@ -23,12 +23,13 @@ export class TransactionDataProcessor {
         return []
       }
 
-      // Fetch ALL transactions from the database for this user (no limit)
+      // Fetch ALL transactions from the database for this user (no limit at all)
       const { data: transactions, error } = await supabase
         .from('master_transactions')
         .select('*')
         .eq('user_id', session.user_id)
         .order('date', { ascending: false })
+        // Removed any .limit() to get all rows
 
       if (error) {
         console.error('Error fetching transactions:', error)
@@ -40,7 +41,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      console.log(`TransactionDataProcessor: Loaded ${transactions.length} transactions from database`)
+      console.log(`TransactionDataProcessor: Loaded ${transactions.length} transactions from database (no limit)`)
 
       // Transform database transactions to match our Transaction type
       return transactions.map((transaction, index) => ({
