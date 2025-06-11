@@ -1,6 +1,7 @@
 
 import { Input } from "@/components/ui/input"
 import { CardFilterDropdown } from "./CardFilterDropdown"
+import { getAllPrimaryCards } from "@/data/staticPrimaryCards"
 
 interface TransactionCardControlsProps {
   globalFilter: string
@@ -17,6 +18,40 @@ export function TransactionCardControls({
   creditCards,
   onCardChange
 }: TransactionCardControlsProps) {
+  // Get primary cards data for display names
+  const primaryCards = getAllPrimaryCards()
+  
+  // Map card types to display names
+  const getDisplayNames = (cardTypes: string[]) => {
+    return cardTypes.map(cardType => {
+      const primaryCard = primaryCards.find(card => card.cardType === cardType)
+      return primaryCard ? primaryCard.displayName : cardType
+    })
+  }
+  
+  // Handle card change by extracting card type from display name
+  const handleCardChange = (selectedDisplayName: string) => {
+    if (selectedDisplayName === "all") {
+      onCardChange("all")
+      return
+    }
+    
+    // Find the card type that matches this display name
+    const primaryCard = primaryCards.find(card => card.displayName === selectedDisplayName)
+    const cardType = primaryCard ? primaryCard.cardType : selectedDisplayName
+    onCardChange(cardType)
+  }
+  
+  // Get current selected display name
+  const getSelectedDisplayName = () => {
+    if (!selectedCard || selectedCard === "all") {
+      return "all"
+    }
+    
+    const primaryCard = primaryCards.find(card => card.cardType === selectedCard)
+    return primaryCard ? primaryCard.displayName : selectedCard
+  }
+
   return (
     <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center">
       <Input
@@ -26,9 +61,9 @@ export function TransactionCardControls({
         className="max-w-sm"
       />
       <CardFilterDropdown
-        selectedCard={selectedCard}
-        creditCards={creditCards}
-        onCardChange={onCardChange}
+        selectedCard={getSelectedDisplayName()}
+        creditCards={getDisplayNames(creditCards)}
+        onCardChange={handleCardChange}
         showBusinessPrefix={false}
       />
     </div>
