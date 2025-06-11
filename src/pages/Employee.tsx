@@ -1,5 +1,3 @@
-
-
 import React from "react"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
@@ -48,6 +46,9 @@ const Employee = () => {
   const employeeTransactions = React.useMemo(() => {
     const rawTransactions = parseTransactionData(staticTxnData)
     
+    console.log('Raw transactions count:', rawTransactions.length)
+    console.log('Primary cards config:', primaryCardsConfig)
+    
     // Filter out primary cards
     const filteredTransactions = rawTransactions.filter(transaction => {
       // Check if this card type and last five combination is a primary card
@@ -56,8 +57,13 @@ const Employee = () => {
         primaryCard.lastFive === transaction.last_five &&
         primaryCard.isPrimary
       )
+      
+      console.log(`Transaction: ${transaction.account_type} - ${transaction.last_five}, isPrimary: ${isPrimary}`)
+      
       return !isPrimary // Only include non-primary cards
     })
+    
+    console.log('Filtered transactions count:', filteredTransactions.length)
     
     return filteredTransactions.map((transaction, index) => ({
       date: transaction.date,
@@ -146,4 +152,3 @@ const Employee = () => {
 }
 
 export default Employee
-
