@@ -35,7 +35,7 @@ export function useEmployeeCardData(
         displayName: `${data.cardType}\n(${data.lastFive})`,
         cardKey: cardKey // unique identifier combining type and last five
       }))
-      .sort((a, b) => b.amount - a.amount)
+      .sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount)) // Sort by absolute amount in descending order
   }, [transactions])
 
   // Filter cards based on selected card type from dropdown and last 5 filter
