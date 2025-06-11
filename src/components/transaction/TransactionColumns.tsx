@@ -76,14 +76,11 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
         accessorKey: "account_type",
         header: "Card Type",
         cell: ({ row }) => {
-          // Support both new account_type and legacy card_type fields
           const accountType = row.getValue("account_type") as string | undefined;
-          const cardType = row.getValue("card_type") as string | undefined;
-          const displayValue = accountType || cardType;
-          console.log("Rendering account_type:", displayValue);
+          console.log("Rendering account_type:", accountType);
           return (
             <div className="text-sm text-muted-foreground">
-              {displayValue || "N/A"}
+              {accountType || "N/A"}
             </div>
           );
         },
