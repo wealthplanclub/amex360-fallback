@@ -33,7 +33,7 @@ export const primaryCardsConfig: PrimaryCard[] = [
     lastFive: "01000", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Blue Plus I (-01000)",
     isPrimary: true,
-    creditLimit: 15000,
+    creditLimit: 5900,
     isBrandPartner: false
   },
   {
@@ -41,7 +41,7 @@ export const primaryCardsConfig: PrimaryCard[] = [
     lastFive: "11009", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Blue Plus II (-11009)",
     isPrimary: true,
-    creditLimit: 12000,
+    creditLimit: 4000,
     isBrandPartner: false
   },
   {
@@ -65,7 +65,7 @@ export const primaryCardsConfig: PrimaryCard[] = [
     lastFive: "52007", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Platinum Card (-52007)",
     isPrimary: true,
-    creditLimit: 25000,
+    creditLimit: 5000,
     isBrandPartner: false
   },
   {
@@ -73,7 +73,7 @@ export const primaryCardsConfig: PrimaryCard[] = [
     lastFive: "02008", // TODO: Update with actual primary card last 5 digits
     displayName: "Business Rose Gold (-02008)",
     isPrimary: true,
-    creditLimit: 8000,
+    creditLimit: 10000,
     isBrandPartner: false
   },
   {
@@ -89,7 +89,7 @@ export const primaryCardsConfig: PrimaryCard[] = [
     lastFive: "71000", // TODO: Update with actual primary card last 5 digits
     displayName: "Charles Schwab Platinum Card (-71000)",
     isPrimary: true,
-    creditLimit: 20000,
+    creditLimit: 5500,
     isBrandPartner: false
   },
   {
@@ -113,7 +113,7 @@ export const primaryCardsConfig: PrimaryCard[] = [
     lastFive: "71003", // TODO: Update with actual primary card last 5 digits
     displayName: "Platinum Card (-71003)",
     isPrimary: true,
-    creditLimit: 18000,
+    creditLimit: 25000,
     isBrandPartner: false
   }
 ]
