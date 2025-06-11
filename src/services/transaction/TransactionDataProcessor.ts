@@ -29,7 +29,7 @@ export class TransactionDataProcessor {
         description: transaction.description,
         amount: transaction.amount,
         account_type: transaction.account, // Map legacy account to account_type
-        last_five: transaction.last_five || this.extractLastFive(transaction.account), // Use actual last_five or fallback
+        last_five: transaction.last_five || this.extractLastFive(transaction.account), // Use parsed last_five or fallback
         category: transaction.category,
         point_multiple: 1.0, // Default point multiple
         // Keep legacy fields for backward compatibility
