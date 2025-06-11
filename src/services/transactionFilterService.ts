@@ -14,8 +14,32 @@ export class TransactionFilterService {
       .sort((a, b) => b.date.localeCompare(a.date))
       .map((transaction, index) => ({
         id: `txn-${index}`,
-        ...transaction
+        user_id: 'static-user', // Mock user_id for static data
+        date: transaction.date,
+        description: transaction.description,
+        amount: transaction.amount,
+        account_type: transaction.account, // Map legacy account to account_type
+        last_five: this.extractLastFive(transaction.account), // Extract or generate last_five
+        category: transaction.category,
+        point_multiple: 1.0, // Default point multiple
+        // Keep legacy fields for backward compatibility
+        account: transaction.account,
+        card_type: transaction.account
       }))
+  }
+
+  private extractLastFive(account: string): string {
+    // Try to extract last 5 digits from account name, or generate a mock one
+    const match = account.match(/\((-?\d+)\)/)
+    if (match) {
+      return match[1]
+    }
+    // Generate a mock last_five based on account name hash
+    const hash = account.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0)
+      return a & a
+    }, 0)
+    return Math.abs(hash % 10000).toString().padStart(4, '0')
   }
 
   public static getInstance(): TransactionFilterService {
@@ -92,12 +116,12 @@ export class TransactionFilterService {
     
     if (selectedCard === 'BUSINESS_GREEN_COMBINED') {
       return transactions.filter(transaction => 
-        transaction.account.toLowerCase().includes('business green rewards')
+        (transaction.account || transaction.account_type)?.toLowerCase().includes('business green rewards')
       )
     }
     
     return transactions.filter(transaction => 
-      transaction.account === selectedCard
+      transaction.account === selectedCard || transaction.account_type === selectedCard
     )
   }
 
@@ -129,14 +153,14 @@ export class TransactionFilterService {
     // Apply top card filter
     if (filters.topCardFilter) {
       filtered = filtered.filter(transaction => 
-        transaction.amount < 0 && transaction.account === filters.topCardFilter
+        transaction.amount < 0 && (transaction.account === filters.topCardFilter || transaction.account_type === filters.topCardFilter)
       )
     }
     
     // Apply lowest card filter
     if (filters.lowestCardFilter) {
       filtered = filtered.filter(transaction => 
-        transaction.amount < 0 && transaction.account === filters.lowestCardFilter
+        transaction.amount < 0 && (transaction.account === filters.lowestCardFilter || transaction.account_type === filters.lowestCardFilter)
       )
     }
     
@@ -144,8 +168,8 @@ export class TransactionFilterService {
   }
 
   public getUniqueCardAccounts(): string[] {
-    const uniqueCards = Array.from(new Set(this.allTransactions.map(t => t.account)))
-      .filter(card => card.length > 0)
+    const uniqueCards = Array.from(new Set(this.allTransactions.map(t => t.account || t.account_type)))
+      .filter(card => card && card.length > 0)
       .sort()
     return uniqueCards
   }
@@ -185,3 +209,5 @@ export class TransactionFilterService {
 
 // Export singleton instance
 export const transactionFilterService = TransactionFilterService.getInstance()
+
+}
