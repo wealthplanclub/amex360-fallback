@@ -1,6 +1,6 @@
 
 import * as React from "react"
-import { transactionFilterService } from "@/services/transactionFilterService"
+import { transactionFilterService } from "@/services/transaction"
 import { transactionCacheService } from "@/services/calculationsCache"
 
 export const useTransactionCalculations = (selectedTimeRange: string) => {

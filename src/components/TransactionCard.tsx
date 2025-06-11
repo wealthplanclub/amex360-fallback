@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -12,7 +11,7 @@ import { TransactionCardControls } from "@/components/transaction/TransactionCar
 import { useTransactionFilters } from "@/components/transaction/TransactionFilters"
 import { TransactionTable } from "@/components/transaction/TransactionTable"
 import { FilterState } from "@/hooks/useFilterState"
-import { transactionFilterService } from "@/services/transactionFilterService"
+import { transactionFilterService } from "@/services/transaction"
 
 interface TransactionCardProps {
   filters: FilterState;
