@@ -1,6 +1,7 @@
 
 export const staticTxnData = `date	description	amount	account_type	last_five	category	point_multiple
 2025-06-11	TWILIO INC          SAN FRANCISCO       CA	-230	Business Blue Plus I	-01109		
+2025-06-10	LOVABLE             DOVER               DE	-180	Business Blue Plus II	-11041		2
 2025-06-09	TWILIO INC          SAN FRANCISCO       CA	-20.04	Business Classic Gold	-72158
 2025-06-08	PAYPAL *XKEYZ AI 4029357733 IL	-351.62	Business Blue Plus II	-11041	commissions	2
 2025-06-08	TWILIO INC          SAN FRANCISCO       CA	-50	Business Blue Plus II	-11058		2
