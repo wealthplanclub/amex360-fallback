@@ -10,6 +10,8 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
   const { isAdmin } = useAuth()
 
   return React.useMemo(() => {
+    console.log("Building transaction columns, isAdmin:", isAdmin());
+    
     const columns: ColumnDef<Transaction>[] = [
       {
         accessorKey: "date",
@@ -42,6 +44,7 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
 
     // Only show description column for admin users
     if (isAdmin()) {
+      console.log("Adding description column for admin user");
       columns.push({
         accessorKey: "description",
         header: ({ column }) => {
@@ -62,27 +65,38 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
         ),
         filterFn: "includesString",
       });
+    } else {
+      console.log("Skipping description column for non-admin user");
     }
 
-    // Add remaining columns
+    // Add remaining columns - these should show for ALL users
+    console.log("Adding card_type and last_five columns for all users");
     columns.push(
       {
         accessorKey: "card_type",
         header: "Card Type",
-        cell: ({ row }) => (
-          <div className="text-sm text-muted-foreground">
-            {row.getValue("card_type")}
-          </div>
-        ),
+        cell: ({ row }) => {
+          const cardType = row.getValue("card_type");
+          console.log("Rendering card_type:", cardType);
+          return (
+            <div className="text-sm text-muted-foreground">
+              {cardType}
+            </div>
+          );
+        },
       },
       {
         accessorKey: "last_five",
         header: "Last 5",
-        cell: ({ row }) => (
-          <div className="text-sm font-mono">
-            {row.getValue("last_five")}
-          </div>
-        ),
+        cell: ({ row }) => {
+          const lastFive = row.getValue("last_five");
+          console.log("Rendering last_five:", lastFive);
+          return (
+            <div className="text-sm font-mono">
+              {lastFive}
+            </div>
+          );
+        },
       },
       {
         accessorKey: "amount",
@@ -115,6 +129,7 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
       }
     );
 
+    console.log("Final columns array length:", columns.length);
     return columns;
   }, [isAdmin]);
 }
