@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Info } from "lucide-react"
 import { getCardImage } from "@/utils/cardImageUtils"
+import { transactionFilterService } from "@/services/transaction"
 
 const cardDetails = {
   highestCreditLimit: [
@@ -81,55 +82,7 @@ const cardDetails = {
   ]
 }
 
-const metricsData = [
-  {
-    title: "Active Card Accounts",
-    value: "13",
-    description: "Total number of active card accounts",
-    dataSource: "Card Management System",
-    lastUpdated: "Real-time",
-    calculationMethod: "Count of active card accounts with non-zero limits",
-    cardData: null
-  },
-  {
-    title: "Highest Credit Limit",
-    value: "$30K",
-    description: "The highest credit limit among all active cards",
-    dataSource: "Credit Management System",
-    lastUpdated: "Updated daily",
-    calculationMethod: "Maximum credit limit across all active accounts",
-    cardData: cardDetails.highestCreditLimit
-  },
-  {
-    title: "Lowest Pay Over Time Limit",
-    value: "$2K",
-    description: "The lowest pay over time limit across all accounts",
-    dataSource: "Credit Management System", 
-    lastUpdated: "Updated daily",
-    calculationMethod: "Minimum pay over time limit for active accounts",
-    cardData: cardDetails.lowestCreditLimit
-  },
-  {
-    title: "Available Line of Credit",
-    value: "$2M",
-    description: "Total available business line of credit",
-    dataSource: "Underwriting System",
-    lastUpdated: "Real-time",
-    calculationMethod: "Sum of (credit limit - current balance)",
-    cardData: cardDetails.businessCreditLimit
-  },
-  {
-    title: "Brand Partner Cards",
-    value: "4",
-    description: "Number of active brand partner card programs",
-    dataSource: "Partner Management System",
-    lastUpdated: "Updated weekly", 
-    calculationMethod: "Count of active brand partnership agreements",
-    cardData: cardDetails.brandPartners
-  }
-]
-
-const MetricTooltipContent = ({ metric }: { metric: typeof metricsData[0] }) => (
+const MetricTooltipContent = ({ metric }: { metric: any }) => (
   <div className="space-y-3 max-w-xs">
     <div className="font-medium">{metric.title}</div>
     <div className="text-sm text-muted-foreground">{metric.description}</div>
@@ -161,7 +114,7 @@ const MetricTooltipContent = ({ metric }: { metric: typeof metricsData[0] }) => 
   </div>
 )
 
-const MetricSheetContent = ({ metric }: { metric: typeof metricsData[0] }) => (
+const MetricSheetContent = ({ metric }: { metric: any }) => (
   <div className="space-y-4">
     <div>
       <h3 className="text-lg font-semibold">{metric.title}</h3>
@@ -213,6 +166,59 @@ const MetricSheetContent = ({ metric }: { metric: typeof metricsData[0] }) => (
 export function QuickMetricsCards() {
   const isMobile = useIsMobile()
   const [openSheet, setOpenSheet] = useState<string | null>(null)
+
+  // Get dynamic card count from transaction filter service
+  const activeCardCount = React.useMemo(() => {
+    return transactionFilterService.getUniqueCardAccounts().length
+  }, [])
+
+  const metricsData = [
+    {
+      title: "Active Card Accounts",
+      value: activeCardCount.toString(),
+      description: "Total number of active card accounts",
+      dataSource: "Transaction Data System",
+      lastUpdated: "Real-time",
+      calculationMethod: "Count of unique card accounts from transaction data",
+      cardData: null
+    },
+    {
+      title: "Highest Credit Limit",
+      value: "$30K",
+      description: "The highest credit limit among all active cards",
+      dataSource: "Credit Management System",
+      lastUpdated: "Updated daily",
+      calculationMethod: "Maximum credit limit across all active accounts",
+      cardData: cardDetails.highestCreditLimit
+    },
+    {
+      title: "Lowest Pay Over Time Limit",
+      value: "$2K",
+      description: "The lowest pay over time limit across all accounts",
+      dataSource: "Credit Management System", 
+      lastUpdated: "Updated daily",
+      calculationMethod: "Minimum pay over time limit for active accounts",
+      cardData: cardDetails.lowestCreditLimit
+    },
+    {
+      title: "Available Line of Credit",
+      value: "$2M",
+      description: "Total available business line of credit",
+      dataSource: "Underwriting System",
+      lastUpdated: "Real-time",
+      calculationMethod: "Sum of (credit limit - current balance)",
+      cardData: cardDetails.businessCreditLimit
+    },
+    {
+      title: "Brand Partner Cards",
+      value: "4",
+      description: "Number of active brand partner card programs",
+      dataSource: "Partner Management System",
+      lastUpdated: "Updated weekly", 
+      calculationMethod: "Count of active brand partnership agreements",
+      cardData: cardDetails.brandPartners
+    }
+  ]
 
   const renderMetricCard = (metric: typeof metricsData[0], index: number) => {
     const cardContent = (
