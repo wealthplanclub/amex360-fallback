@@ -1,15 +1,23 @@
 
 import * as React from "react"
-import { X } from "lucide-react"
+import { X, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useSidebar } from "./SidebarContext"
 import { SidebarOverlay } from "./SidebarOverlay"
+import { useAuth } from "@/contexts/AuthContext"
+import { Button } from "@/components/ui/button"
 
 export const Sidebar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
   const { isOpen, close } = useSidebar()
+  const { user, signOut } = useAuth()
+
+  const handleSignOut = async () => {
+    await signOut()
+    close()
+  }
 
   return (
     <>
@@ -42,6 +50,23 @@ export const Sidebar = React.forwardRef<
         <div className="flex-1 overflow-y-auto">
           {children}
         </div>
+        {user && (
+          <div className="p-4 border-t">
+            <div className="mb-3">
+              <p className="text-sm font-medium">Welcome, {user.display_name || user.user_id}</p>
+              <p className="text-xs text-gray-500">{user.email}</p>
+            </div>
+            <Button 
+              onClick={handleSignOut}
+              variant="outline" 
+              size="sm" 
+              className="w-full"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
+        )}
       </div>
     </>
   )
