@@ -1,4 +1,3 @@
-
 export interface PrimaryCardConfig {
   id: string
   cardType: string
@@ -34,6 +33,69 @@ export const staticPrimaryCards: PrimaryCardConfig[] = [
     cardType: "Amazon Prime",
     lastFive: "22222", // Update with actual last 5 digits
     displayName: "Amazon Business Prime",
+    isActive: true
+  },
+  {
+    id: "amex-platinum-primary",
+    cardType: "Amex Platinum",
+    lastFive: "33333", // Update with actual last 5 digits
+    displayName: "Amex Platinum",
+    isActive: true
+  },
+  {
+    id: "chase-freedom-primary",
+    cardType: "Chase Freedom",
+    lastFive: "44444", // Update with actual last 5 digits
+    displayName: "Chase Freedom",
+    isActive: true
+  },
+  {
+    id: "citi-costco-primary",
+    cardType: "Citi Costco",
+    lastFive: "55555", // Update with actual last 5 digits
+    displayName: "Citi Costco",
+    isActive: true
+  },
+  {
+    id: "discover-it-primary",
+    cardType: "Discover It",
+    lastFive: "66666", // Update with actual last 5 digits
+    displayName: "Discover It",
+    isActive: true
+  },
+  {
+    id: "capital-one-venture-primary",
+    cardType: "Capital One Venture",
+    lastFive: "77777", // Update with actual last 5 digits
+    displayName: "Capital One Venture",
+    isActive: true
+  },
+  {
+    id: "wells-fargo-propel-primary",
+    cardType: "Wells Fargo Propel",
+    lastFive: "88888", // Update with actual last 5 digits
+    displayName: "Wells Fargo Propel",
+    isActive: true
+  },
+  {
+    id: "bank-of-america-travel-primary",
+    cardType: "Bank of America Travel",
+    lastFive: "99999", // Update with actual last 5 digits
+    displayName: "Bank of America Travel",
+    isActive: true
+  },
+  {
+    id: "us-bank-altitude-primary",
+    cardType: "US Bank Altitude",
+    lastFive: "10101", // Update with actual last 5 digits
+    displayName: "US Bank Altitude",
+    isActive: true
+  },
+  {
+    id: "barclays-arrival-primary",
+    cardType: "Barclays Arrival",
+    lastFive: "12121", // Update with actual last 5 digits
+    displayName: "Barclays Arrival",
     isActive: true
   }
 ]
