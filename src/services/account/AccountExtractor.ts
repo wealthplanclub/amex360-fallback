@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client"
 
 export interface AccountInfo {
@@ -13,11 +12,36 @@ export interface AccountInfo {
 export class AccountExtractor {
   public static async extractAccountsFromTransactions(): Promise<{ success: boolean; accounts?: AccountInfo[]; message: string }> {
     try {
+      // First, let's check if we have a current user session
+      const { data: { user }, error: userError } = await supabase.auth.getUser()
+      
+      if (userError || !user) {
+        console.error('No authenticated user found:', userError)
+        return { 
+          success: false, 
+          message: 'User authentication required to access transaction data' 
+        }
+      }
+
+      console.log('Current user ID:', user.id)
+
+      // Set the user context for RLS
+      const { error: setUserError } = await supabase.rpc('set_config', {
+        setting_name: 'app.current_user_id', 
+        setting_value: user.id
+      })
+
+      if (setUserError) {
+        console.log('Could not set user context, proceeding anyway:', setUserError)
+      }
+
       // Get unique account_type and last_five combinations from transactions
-      const { data: transactions, error } = await supabase
+      const { data: transactions, error, count } = await supabase
         .from('master_transactions')
-        .select('account_type, last_five')
+        .select('account_type, last_five', { count: 'exact' })
         .order('account_type, last_five')
+      
+      console.log('Query result:', { transactions, error, count })
       
       if (error) {
         console.error('Error fetching transactions:', error)
@@ -28,9 +52,18 @@ export class AccountExtractor {
       }
 
       if (!transactions || transactions.length === 0) {
+        console.log('No transactions found for user. Total count:', count)
+        
+        // Check if there are any transactions in the table at all (admin check)
+        const { count: totalCount } = await supabase
+          .from('master_transactions')
+          .select('*', { count: 'exact', head: true })
+        
+        console.log('Total transactions in database:', totalCount)
+        
         return { 
           success: false, 
-          message: 'No transactions found in database' 
+          message: `No transactions found for current user. Database contains ${totalCount || 0} total transactions.` 
         }
       }
 
