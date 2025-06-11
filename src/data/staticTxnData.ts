@@ -2,6 +2,7 @@
 export const staticTxnData = `date	description	amount	account_type	last_five	category	point_multiple
 2025-06-11	TWILIO INC          SAN FRANCISCO       CA	-230	Business Blue Plus I	-01109		
 2025-06-09	TWILIO INC          SAN FRANCISCO       CA	-20.04	Business Classic Gold	-72158
+2025-06-08	TWILIO INC          SAN FRANCISCO       CA	-50	Business Blue Plus I	-01158
 2025-06-08	CHARGEBEE           WALNUT              CA	-1474	Business Blue Plus II	-11041		2
 2025-06-08	ONLINE PAYMENT - THANK YOU	1474	Business Blue Plus II	-11009		
 2025-06-07	TWILIO INC          SAN FRANCISCO       CA	-590.58	Business Classic Gold	-72158
