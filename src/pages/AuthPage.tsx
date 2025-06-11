@@ -128,6 +128,7 @@ const AuthPage = () => {
             </Button>
           </form>
           
+          {/* Commented out for now - may use later
           <div className="mt-4 text-center">
             <button
               type="button"
@@ -137,6 +138,7 @@ const AuthPage = () => {
               {isLogin ? "Need an account? Sign up" : "Already have an account? Log in"}
             </button>
           </div>
+          */}
 
           <div className="mt-8 text-center">
             <p className="text-xs text-muted-foreground">
