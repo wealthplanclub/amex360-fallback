@@ -97,21 +97,14 @@ export const useEmployeeTransactionColumns = (): ColumnDef<EmployeeTransaction>[
         header: () => <div className="text-right">Amount</div>,
         cell: ({ row }) => {
           const amount = parseFloat(row.getValue("amount"))
-          const absAmount = Math.abs(amount)
-          
-          // Format the absolute amount
           const formatted = new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
-          }).format(absAmount)
-          
-          // Add prefix based on whether it's positive (payment) or negative (charge)
-          const displayAmount = amount >= 0 ? `+${formatted}` : formatted
-          const textColor = amount >= 0 ? "text-[#008767]" : ""
+          }).format(amount)
 
           return (
-            <div className={`text-right font-medium tabular-nums text-sm ${textColor}`}>
-              {displayAmount}
+            <div className="text-right font-medium tabular-nums text-sm">
+              {formatted}
             </div>
           )
         },
