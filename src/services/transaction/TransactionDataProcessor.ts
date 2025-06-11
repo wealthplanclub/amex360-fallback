@@ -40,7 +40,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      console.log(`Loaded ${transactions.length} transactions from database`)
+      console.log(`TransactionDataProcessor: Loaded ${transactions.length} transactions from database`)
 
       // Transform database transactions to match our Transaction type
       return transactions.map((transaction, index) => ({
