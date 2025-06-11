@@ -39,6 +39,26 @@ export class AccountExtractor {
 
       console.log('Current user ID:', session.user_id)
 
+      // First, let's see what user_id values actually exist in the database
+      const { data: userIds, error: userIdsError } = await supabase
+        .from('master_transactions')
+        .select('user_id')
+        .limit(10)
+
+      console.log('Sample user_id values in database:', userIds)
+      
+      if (userIdsError) {
+        console.error('Error fetching sample user IDs:', userIdsError)
+      }
+
+      // Get unique user_ids to see all available users
+      const { data: uniqueUserIds, error: uniqueError } = await supabase
+        .from('master_transactions')
+        .select('user_id')
+        .group('user_id')
+
+      console.log('All unique user_id values:', uniqueUserIds)
+
       // Query transactions for this specific user
       const { data: transactions, error, count } = await supabase
         .from('master_transactions')
@@ -68,7 +88,7 @@ export class AccountExtractor {
         
         return { 
           success: false, 
-          message: `No transactions found for current user. Database contains ${totalCount || 0} total transactions.` 
+          message: `No transactions found for current user. Database contains ${totalCount || 0} total transactions. Check console for debugging info about user_id values.` 
         }
       }
 
