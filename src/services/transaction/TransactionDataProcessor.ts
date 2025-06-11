@@ -1,4 +1,3 @@
-
 import { Transaction } from "@/types/transaction"
 import { staticTxnData } from "@/data/staticData"
 import { parseTransactionData } from "@/utils/transactionParser"
@@ -28,18 +27,18 @@ export class TransactionDataProcessor {
         date: transaction.date,
         description: transaction.description,
         amount: transaction.amount,
-        account_type: transaction.account, // Map legacy account to account_type
-        last_five: transaction.last_five || this.extractLastFive(transaction.account), // Use parsed last_five or fallback
+        account_type: transaction.account_type, // Use new account_type field
+        last_five: transaction.last_five || this.extractLastFive(transaction.account_type), // Use parsed last_five or fallback
         category: transaction.category,
-        point_multiple: 1.0, // Default point multiple
+        point_multiple: transaction.point_multiple || 1.0, // Use parsed point_multiple or default
         // Keep legacy fields for backward compatibility
-        account: transaction.account,
-        card_type: transaction.account
+        account: transaction.account_type, // Map account_type to legacy account field
+        card_type: transaction.account_type
       }))
   }
 
   public static getUniqueCardAccounts(transactions: Transaction[]): string[] {
-    const uniqueCards = Array.from(new Set(transactions.map(t => t.account || t.account_type)))
+    const uniqueCards = Array.from(new Set(transactions.map(t => t.account_type)))
       .filter(card => card && card.length > 0)
       .sort()
     return uniqueCards

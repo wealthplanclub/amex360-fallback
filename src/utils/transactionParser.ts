@@ -9,9 +9,10 @@ export const parseTransactionData = (data: string) => {
       date: values[0], // Date is already in YYYY-MM-DD format from static data
       description: values[1],
       amount: parseFloat(values[2].replace(/[$,]/g, '')),
-      account: values[3],
-      category: values[4] || "",
-      last_five: values[5] || "" // Extract last_five from the data
+      account_type: values[3], // Use account_type instead of account
+      last_five: values[4] || "", // Extract last_five from the data
+      category: values[5] || "", // Category field
+      point_multiple: parseFloat(values[6]) || 1.0 // Parse point_multiple or default to 1.0
     };
   });
 };
