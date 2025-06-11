@@ -7,19 +7,29 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { formatAccountName } from "@/utils/transactionUtils"
 
 interface CardFilterDropdownProps {
   selectedCard: string | undefined
   creditCards: string[]
   onCardChange: (card: string) => void
+  showBusinessPrefix?: boolean // New prop to control business prefix
 }
 
-export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: CardFilterDropdownProps) {
+export function CardFilterDropdown({ selectedCard, creditCards, onCardChange, showBusinessPrefix = false }: CardFilterDropdownProps) {
   const getDisplayText = () => {
     if (!selectedCard || selectedCard === "all") {
       return "All Cards"
     }
-    return selectedCard
+    // Check if it's a combined format like "Card Type (12345)"
+    if (selectedCard.includes('(') && selectedCard.includes(')')) {
+      const [cardType, lastFive] = selectedCard.split(' (')
+      const prefix = showBusinessPrefix ? "Business " : ""
+      return `${prefix}${cardType} (${lastFive}`
+    }
+    // Add Business prefix only when showBusinessPrefix is true
+    const prefix = showBusinessPrefix ? "Business " : ""
+    return `${prefix}${selectedCard}`
   }
 
   return (
@@ -44,7 +54,7 @@ export function CardFilterDropdown({ selectedCard, creditCards, onCardChange }: 
             checked={selectedCard === card}
             onCheckedChange={() => onCardChange(card)}
           >
-            {card}
+            {showBusinessPrefix ? `Business ${card}` : card}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
