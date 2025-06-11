@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -71,6 +72,7 @@ export function TransactionCard({
             transactions={transactions}
             globalFilter={filters.globalFilter}
             onGlobalFilterChange={onGlobalFilterChange || (() => {})}
+            hideLastFive={true}
           />
         </div>
       </CardContent>

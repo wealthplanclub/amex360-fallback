@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import {
   useReactTable,
@@ -20,11 +19,17 @@ interface TransactionTableProps {
   transactions: Transaction[]
   globalFilter: string
   onGlobalFilterChange: (value: string) => void
+  hideLastFive?: boolean
 }
 
-export function TransactionTable({ transactions, globalFilter, onGlobalFilterChange }: TransactionTableProps) {
+export function TransactionTable({ 
+  transactions, 
+  globalFilter, 
+  onGlobalFilterChange,
+  hideLastFive = false 
+}: TransactionTableProps) {
   const [showAll, setShowAll] = React.useState(false)
-  const columns = useTransactionColumns()
+  const columns = useTransactionColumns({ hideLastFive })
   
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])

@@ -6,8 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Transaction } from "@/types/transaction"
 import { useAuth } from "@/contexts/AuthContext"
 
-export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
+interface UseTransactionColumnsOptions {
+  hideLastFive?: boolean
+}
+
+export const useTransactionColumns = (options: UseTransactionColumnsOptions = {}): ColumnDef<Transaction>[] => {
   const { isAdmin } = useAuth()
+  const { hideLastFive = false } = options
 
   return React.useMemo(() => {
     console.log("Building transaction columns, isAdmin:", isAdmin());
@@ -70,25 +75,28 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
     }
 
     // Add remaining columns - these should show for ALL users
-    console.log("Adding account_type and last_five columns for all users");
-    columns.push(
-      {
-        accessorKey: "account_type",
-        header: "Card Type",
-        cell: ({ row }) => {
-          // Support both new account_type and legacy card_type fields
-          const accountType = row.getValue("account_type") as string | undefined;
-          const cardType = row.getValue("card_type") as string | undefined;
-          const displayValue = accountType || cardType;
-          console.log("Rendering account_type:", displayValue);
-          return (
-            <div className="text-sm text-muted-foreground">
-              {displayValue || "N/A"}
-            </div>
-          );
-        },
+    console.log("Adding account_type column for all users");
+    columns.push({
+      accessorKey: "account_type",
+      header: "Card Type",
+      cell: ({ row }) => {
+        // Support both new account_type and legacy card_type fields
+        const accountType = row.getValue("account_type") as string | undefined;
+        const cardType = row.getValue("card_type") as string | undefined;
+        const displayValue = accountType || cardType;
+        console.log("Rendering account_type:", displayValue);
+        return (
+          <div className="text-sm text-muted-foreground">
+            {displayValue || "N/A"}
+          </div>
+        );
       },
-      {
+    });
+
+    // Only add last_five column if not hidden
+    if (!hideLastFive) {
+      console.log("Adding last_five column");
+      columns.push({
         accessorKey: "last_five",
         header: "Last 5",
         cell: ({ row }) => {
@@ -100,7 +108,11 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
             </div>
           );
         },
-      },
+      });
+    }
+
+    // Add amount and point_multiple columns
+    columns.push(
       {
         accessorKey: "amount",
         header: () => <div className="text-right">Amount</div>,
@@ -134,5 +146,5 @@ export const useTransactionColumns = (): ColumnDef<Transaction>[] => {
 
     console.log("Final columns array length:", columns.length);
     return columns;
-  }, [isAdmin]);
+  }, [isAdmin, hideLastFive]);
 }
