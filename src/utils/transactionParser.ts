@@ -10,7 +10,8 @@ export const parseTransactionData = (data: string) => {
       description: values[1],
       amount: parseFloat(values[2].replace(/[$,]/g, '')),
       account: values[3],
-      category: values[4] || ""
+      category: values[4] || "",
+      last_five: values[5] || "" // Extract last_five from the data
     };
   });
 };
