@@ -82,11 +82,11 @@ export function AccountConfigurationManager() {
             <div className="text-sm text-muted-foreground">Total Configs</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{stats.primary}</div>
+            <div className="text-2xl font-bold">{stats.primary}</div>
             <div className="text-sm text-muted-foreground">Primary Cards</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{stats.employee}</div>
+            <div className="text-2xl font-bold" style={{ color: '#00175a' }}>{stats.employee}</div>
             <div className="text-sm text-muted-foreground">Employee Cards</div>
           </div>
         </div>
@@ -127,11 +127,11 @@ export function AccountConfigurationManager() {
               </div>
               <div className="col-span-2 text-center">
                 {config.is_primary ? (
-                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
+                  <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">
                     Primary
                   </span>
                 ) : (
-                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">
+                  <span className="px-2 py-1 bg-blue-100 rounded-full text-xs" style={{ color: '#00175a' }}>
                     Employee
                   </span>
                 )}
