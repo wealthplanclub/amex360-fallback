@@ -1,4 +1,3 @@
-
 import React from "react"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
@@ -6,9 +5,8 @@ import { EmployeeTransactionSection } from "@/components/employee/EmployeeTransa
 import { EmployeeCardSection } from "@/components/employee/EmployeeCardSection"
 import { EmployeeBonusProvider } from "@/hooks/useEmployeeBonusContext"
 import { useEmployeeFilters } from "@/hooks/useEmployeeFilters"
-import { staticTxnData } from "@/data/staticData"
+import { staticEmpData } from "@/data/staticEmpData"
 import { parseEmployeeData } from "@/utils/employeeParser"
-import { primaryCardsConfig } from "@/data/staticPrimaryCards"
 import Lottie from "lottie-react"
 
 const Employee = () => {
@@ -43,18 +41,8 @@ const Employee = () => {
     return () => clearTimeout(initialDelay)
   }, [])
 
-  // Parse the static data into proper format
-  const allEmployeeTransactions = parseEmployeeData(staticTxnData)
-  
-  // Filter out transactions for cards that are primary
-  const employeeTransactions = React.useMemo(() => {
-    const primaryCardKeys = primaryCardsConfig.map(card => `${card.cardType}--${card.lastFive}`)
-    
-    return allEmployeeTransactions.filter(transaction => {
-      const cardKey = `${transaction.card_type}--${transaction.last_five}`
-      return !primaryCardKeys.includes(cardKey)
-    })
-  }, [allEmployeeTransactions])
+  // Parse the static employee data into proper format
+  const employeeTransactions = parseEmployeeData(staticEmpData)
   
   // Use the custom hook for all filter logic
   const {
