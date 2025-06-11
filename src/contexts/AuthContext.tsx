@@ -9,6 +9,7 @@ interface User {
   first_name?: string;
   last_name?: string;
   avatar_url?: string;
+  role?: string;
 }
 
 interface AuthContextType {
@@ -17,6 +18,8 @@ interface AuthContextType {
   signUp: (userId: string, password: string, email?: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
   loading: boolean;
+  hasRole: (role: string) => boolean;
+  isAdmin: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -40,6 +43,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     checkSession();
   }, []);
+
+  const getUserWithRole = async (userId: string) => {
+    // Get user profile
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    // Get user role
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId)
+      .single();
+
+    return {
+      user_id: userId,
+      ...profile,
+      role: roleData?.role || 'user'
+    };
+  };
 
   const checkSession = async () => {
     try {
@@ -73,17 +98,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return;
       }
 
-      // Get user profile
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', session.user_id)
-        .single();
-
-      setUser({
-        user_id: session.user_id,
-        ...profile
-      });
+      // Get user with role
+      const userData = await getUserWithRole(session.user_id);
+      setUser(userData);
     } catch (error) {
       console.error('Session check error:', error);
     } finally {
@@ -141,17 +158,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Store session token
       localStorage.setItem('session_token', sessionToken);
 
-      // Get user profile
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', userId)
-        .single();
-
-      setUser({
-        user_id: userId,
-        ...profile
-      });
+      // Get user with role
+      const userData = await getUserWithRole(userId);
+      setUser(userData);
 
       return {};
     } catch (error) {
@@ -230,8 +239,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const hasRole = (role: string): boolean => {
+    return user?.role === role;
+  };
+
+  const isAdmin = (): boolean => {
+    return hasRole('admin');
+  };
+
   return (
-    <AuthContext.Provider value={{ user, signIn, signUp, signOut, loading }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      signIn, 
+      signUp, 
+      signOut, 
+      loading, 
+      hasRole, 
+      isAdmin 
+    }}>
       {children}
     </AuthContext.Provider>
   );

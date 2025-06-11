@@ -6,6 +6,7 @@ import { useSidebar } from "./SidebarContext"
 import { SidebarOverlay } from "./SidebarOverlay"
 import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 
 export const Sidebar = React.forwardRef<
   HTMLDivElement,
@@ -53,7 +54,14 @@ export const Sidebar = React.forwardRef<
         {user && (
           <div className="p-4 border-t">
             <div className="mb-3">
-              <p className="text-sm font-medium">Welcome, {user.display_name || user.user_id}</p>
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-sm font-medium">Welcome, {user.display_name || user.user_id}</p>
+                {user.role && (
+                  <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
+                    {user.role}
+                  </Badge>
+                )}
+              </div>
               <p className="text-xs text-gray-500">{user.email}</p>
             </div>
             <Button 
