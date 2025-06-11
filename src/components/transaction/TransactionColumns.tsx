@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { ChevronsUpDown } from "lucide-react"
@@ -128,9 +127,10 @@ export const useTransactionColumns = (options: UseTransactionColumnsOptions = {}
           
           // Add prefix based on whether it's positive (credit/payment) or negative (charge/debit)
           const displayAmount = amount >= 0 ? `+${formatted}` : formatted
+          const textColor = amount >= 0 ? "text-[#008767]" : ""
 
           return (
-            <div className="text-right font-medium tabular-nums text-sm">
+            <div className={`text-right font-medium tabular-nums text-sm ${textColor}`}>
               {displayAmount}
             </div>
           )
