@@ -3,6 +3,7 @@ export const staticTxnData = `date	description	amount	account_type	last_five	cat
 2025-06-11	TWILIO INC          SAN FRANCISCO       CA	-230	Business Blue Plus I	-01109		
 2025-06-08	CHARGEBEE           WALNUT              CA	-1474	Business Blue Plus II	-11041		2
 2025-06-08	ONLINE PAYMENT - THANK YOU	1474	Business Blue Plus II	-11009		
+2025-06-07	TWILIO INC          SAN FRANCISCO       CA	-590.58	Business Classic Gold	-72158
 2025-06-07	LOVABLE             DOVER               DE	-148.8	Business Blue Plus II	-11041		2
 2025-06-06	TWILIO INC          SAN FRANCISCO       CA	-193.06	Business Classic Gold	-72158		
 2025-06-06	TWILIO INC          SAN FRANCISCO       CA	-590.07	Business Classic Gold	-72158		
