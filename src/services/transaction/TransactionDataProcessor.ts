@@ -24,13 +24,24 @@ export class TransactionDataProcessor {
         return []
       }
 
-      // Fetch ALL transactions without range limit - use limit() instead
+      // First, get the total count of transactions
+      const { count, error: countError } = await supabase
+        .from('master_transactions')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', session.user_id);
+
+      if (countError) {
+        console.error('Error getting transaction count:', countError)
+      }
+
+      console.log(`Total transactions in database for user: ${count}`)
+
+      // Fetch ALL transactions - try without any limit first
       const { data: transactions, error } = await supabase
         .from('master_transactions')
         .select('*')
         .eq('user_id', session.user_id)
         .order('date', { ascending: false })
-        .limit(10000) // Set a high limit to get all records
 
       if (error) {
         console.error('Error fetching transactions:', error)
@@ -42,7 +53,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      console.log(`TransactionDataProcessor: Successfully loaded ${transactions.length} transactions from database (limit: 10000)`)
+      console.log(`TransactionDataProcessor: Successfully loaded ${transactions.length} transactions from database (no limit specified, total available: ${count})`)
 
       // Transform database transactions to match our Transaction type
       return transactions.map((transaction, index) => ({
