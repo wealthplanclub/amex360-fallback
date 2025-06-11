@@ -1,4 +1,3 @@
-
 import { Transaction } from "@/types/transaction"
 import { supabase } from "@/integrations/supabase/client"
 
@@ -24,28 +23,13 @@ export class TransactionDataProcessor {
         return []
       }
 
-      // First get the total count to determine how many records we need to fetch
-      const { count, error: countError } = await supabase
-        .from('master_transactions')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', session.user_id);
-
-      if (countError) {
-        console.error('Error getting transaction count:', countError)
-        // Fallback to a large range if count fails
-      }
-
-      const totalRecords = count || 2000; // Use count or fallback to 2000
-      console.log(`TransactionDataProcessor: Found ${totalRecords} total transactions for user`);
-
-      // Fetch ALL transactions using range to override the default limit
-      // Use a range that's larger than the actual count to ensure we get everything
+      // Fetch ALL transactions using range to get 2000 rows
       const { data: transactions, error } = await supabase
         .from('master_transactions')
         .select('*')
         .eq('user_id', session.user_id)
         .order('date', { ascending: false })
-        .range(0, Math.max(totalRecords - 1, 1999)) // Ensure we get at least 2000 rows
+        .range(0, 1999) // Gets 2000 rows
 
       if (error) {
         console.error('Error fetching transactions:', error)
@@ -57,7 +41,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      console.log(`TransactionDataProcessor: Successfully loaded ${transactions.length} transactions from database (range: 0-${Math.max(totalRecords - 1, 1999)})`)
+      console.log(`TransactionDataProcessor: Successfully loaded ${transactions.length} transactions from database (range: 0-1999)`)
 
       // Transform database transactions to match our Transaction type
       return transactions.map((transaction, index) => ({
