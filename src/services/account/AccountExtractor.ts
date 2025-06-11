@@ -1,5 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client"
+import { TransactionDataProcessor } from "@/services/transaction/TransactionDataProcessor"
 
 export interface AccountInfo {
   account_type: string
@@ -13,24 +14,36 @@ export interface AccountInfo {
 export class AccountExtractor {
   public static async extractAccountsFromTransactions(): Promise<{ success: boolean; accounts?: AccountInfo[]; message: string }> {
     try {
-      // Get unique account_type and last_five combinations from transactions
-      const { data: transactions, error } = await supabase
+      // First try to get transactions from Supabase database
+      const { data: dbTransactions, error } = await supabase
         .from('master_transactions')
         .select('account_type, last_five')
         .order('account_type, last_five')
       
       if (error) {
-        console.error('Error fetching transactions:', error)
+        console.error('Error fetching transactions from database:', error)
         return { 
           success: false, 
           message: `Failed to fetch transactions: ${error.message}` 
         }
       }
 
-      if (!transactions || transactions.length === 0) {
+      let transactions = dbTransactions || []
+
+      // If no transactions in database, fall back to static data
+      if (transactions.length === 0) {
+        console.log('No transactions found in database, using static data')
+        const staticTransactions = TransactionDataProcessor.processStaticData()
+        transactions = staticTransactions.map(tx => ({
+          account_type: tx.account_type,
+          last_five: tx.last_five
+        }))
+      }
+
+      if (transactions.length === 0) {
         return { 
           success: false, 
-          message: 'No transactions found in database' 
+          message: 'No transactions found in database or static data' 
         }
       }
 
@@ -58,10 +71,12 @@ export class AccountExtractor {
       
       console.log(`Extracted ${accounts.length} unique accounts:`, accounts)
       
+      const dataSource = dbTransactions && dbTransactions.length > 0 ? 'database' : 'static data'
+      
       return { 
         success: true, 
         accounts,
-        message: `Successfully extracted ${accounts.length} unique accounts` 
+        message: `Successfully extracted ${accounts.length} unique accounts from ${dataSource}` 
       }
       
     } catch (error) {
