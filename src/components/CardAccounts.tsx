@@ -44,19 +44,19 @@ export function CardAccounts({
         
         // Calculate card amounts based on active filters
         const cardAmounts = filteredTransactions.reduce((acc, transaction) => {
-          const account = transaction.account;
+          const account = transaction.account_type || transaction.account;
           
           // Include transaction based on active filters
           let shouldInclude = false;
           
-          if (filters.expenseFilter && transaction.amount < 0) {
-            // Include expenses when expense filter is active
+          if (filters.expenseFilter && transaction.amount > 0) {
+            // Include expenses when expense filter is active (positive amounts)
             shouldInclude = true;
-          } else if (filters.creditFilter && transaction.amount > 0) {
-            // Include credits when credit filter is active
+          } else if (filters.creditFilter && transaction.amount < 0) {
+            // Include credits when credit filter is active (negative amounts)
             shouldInclude = true;
-          } else if (!filters.expenseFilter && !filters.creditFilter && transaction.amount < 0) {
-            // Default behavior: show expenses when no specific filter is active
+          } else if (!filters.expenseFilter && !filters.creditFilter && transaction.amount > 0) {
+            // Default behavior: show expenses when no specific filter is active (positive amounts)
             shouldInclude = true;
           }
           

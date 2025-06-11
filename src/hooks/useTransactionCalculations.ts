@@ -50,24 +50,24 @@ export const useTransactionCalculations = (selectedTimeRange: string) => {
       () => {
         console.log("Calculating stats from filtered transactions:", filteredTransactions.length);
         
-        // Calculate expenses (negative amounts)
-        const expenses = filteredTransactions.filter(transaction => transaction.amount < 0);
-        const totalExpenses = expenses.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
+        // Calculate expenses (positive amounts - actual spending)
+        const expenses = filteredTransactions.filter(transaction => transaction.amount > 0);
+        const totalExpenses = expenses.reduce((sum, transaction) => sum + transaction.amount, 0);
         
-        // Calculate credits (positive amounts)
-        const credits = filteredTransactions.filter(transaction => transaction.amount > 0);
-        const totalCredits = credits.reduce((sum, transaction) => sum + transaction.amount, 0);
+        // Calculate credits/payments (negative amounts - payments made)
+        const credits = filteredTransactions.filter(transaction => transaction.amount < 0);
+        const totalCredits = credits.reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
 
         // Calculate payments to expenses ratio
         const paymentsToExpensesRatio = totalExpenses > 0 ? ((totalCredits / totalExpenses) * 100).toFixed(1) : "0.0";
 
-        // Calculate card expenses grouped by account
+        // Calculate card expenses grouped by account (only positive amounts for spending)
         const cardExpenses = expenses.reduce((acc, transaction) => {
-          const account = transaction.account;
+          const account = transaction.account_type || transaction.account;
           if (!acc[account]) {
             acc[account] = 0;
           }
-          acc[account] += Math.abs(transaction.amount);
+          acc[account] += transaction.amount;
           return acc;
         }, {} as Record<string, number>);
 
