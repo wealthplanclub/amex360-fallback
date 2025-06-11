@@ -1,6 +1,6 @@
 
 import * as React from "react"
-import { transactionFilterService } from "@/services/transaction"
+import { transactionFilterService } from "@/services/transactionFilterService"
 import { SwapTransaction } from "@/utils/swapParser"
 
 export const useAvailableTimeRanges = (swapTransactions?: SwapTransaction[]) => {

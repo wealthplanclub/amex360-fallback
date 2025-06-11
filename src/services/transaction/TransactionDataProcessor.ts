@@ -1,4 +1,3 @@
-
 import { Transaction } from "@/types/transaction"
 import { supabase } from "@/integrations/supabase/client"
 
@@ -24,24 +23,13 @@ export class TransactionDataProcessor {
         return []
       }
 
-      // First, get the total count of transactions
-      const { count, error: countError } = await supabase
-        .from('master_transactions')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', session.user_id);
-
-      if (countError) {
-        console.error('Error getting transaction count:', countError)
-      }
-
-      console.log(`Total transactions in database for user: ${count}`)
-
-      // Fetch ALL transactions - try without any limit first
+      // Fetch ALL transactions from the database for this user (no limit at all)
       const { data: transactions, error } = await supabase
         .from('master_transactions')
         .select('*')
         .eq('user_id', session.user_id)
         .order('date', { ascending: false })
+        // Removed any .limit() to get all rows
 
       if (error) {
         console.error('Error fetching transactions:', error)
@@ -53,7 +41,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      console.log(`TransactionDataProcessor: Successfully loaded ${transactions.length} transactions from database (no limit specified, total available: ${count})`)
+      console.log(`TransactionDataProcessor: Loaded ${transactions.length} transactions from database (no limit)`)
 
       // Transform database transactions to match our Transaction type
       return transactions.map((transaction, index) => ({
@@ -122,5 +110,12 @@ export class TransactionDataProcessor {
   public static processStaticData(): Transaction[] {
     console.warn('processStaticData is deprecated, use processTransactions instead')
     return []
+  }
+
+  public static getUniqueCardAccounts(transactions: Transaction[]): string[] {
+    console.warn('getUniqueCardAccounts with transactions parameter is deprecated, use getUniqueCardAccounts() instead')
+    return Array.from(new Set(transactions.map(t => t.account_type || t.account)))
+      .filter(card => card && card.length > 0)
+      .sort()
   }
 }
