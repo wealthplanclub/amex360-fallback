@@ -23,13 +23,13 @@ export class TransactionDataProcessor {
         return []
       }
 
-      // Fetch ALL transactions from the database for this user (no limit at all)
+      // Fetch ALL transactions using range() to override the 1000 row default limit
       const { data: transactions, error } = await supabase
         .from('master_transactions')
         .select('*')
         .eq('user_id', session.user_id)
         .order('date', { ascending: false })
-        // Removed any .limit() to get all rows
+        .range(0, 1500) // Explicitly fetch up to 1500 rows to ensure we get all 1410
 
       if (error) {
         console.error('Error fetching transactions:', error)
@@ -41,7 +41,7 @@ export class TransactionDataProcessor {
         return []
       }
 
-      console.log(`TransactionDataProcessor: Loaded ${transactions.length} transactions from database (no limit)`)
+      console.log(`TransactionDataProcessor: Loaded ${transactions.length} transactions from database (using range 0-1500)`)
 
       // Transform database transactions to match our Transaction type
       return transactions.map((transaction, index) => ({
