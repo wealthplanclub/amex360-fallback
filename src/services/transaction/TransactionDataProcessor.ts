@@ -27,13 +27,13 @@ export class TransactionDataProcessor {
         date: transaction.date,
         description: transaction.description,
         amount: transaction.amount,
-        account_type: transaction.account_type, // Use new account_type field
-        last_five: transaction.last_five || this.extractLastFive(transaction.account_type), // Use parsed last_five or fallback
+        account_type: transaction.account_type, // This should be the card type
+        last_five: transaction.last_five || this.extractLastFive(transaction.account_type), // This should be the last five digits
         category: transaction.category,
-        point_multiple: transaction.point_multiple || 1.0, // Use parsed point_multiple or default
+        point_multiple: transaction.point_multiple || 1.0,
         // Keep legacy fields for backward compatibility
-        account: transaction.account_type, // Map account_type to legacy account field
-        card_type: transaction.account_type
+        account: transaction.account_type,
+        card_type: transaction.account_type // Map account_type to card_type for employee components
       }))
   }
 
