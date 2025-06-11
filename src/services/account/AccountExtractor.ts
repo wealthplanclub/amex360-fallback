@@ -1,0 +1,114 @@
+
+import { supabase } from "@/integrations/supabase/client"
+
+export interface AccountInfo {
+  account_type: string
+  last_five: string
+  card_key: string
+  display_name: string
+  is_primary: boolean
+  is_employee: boolean
+}
+
+export class AccountExtractor {
+  public static async extractAccountsFromTransactions(): Promise<{ success: boolean; accounts?: AccountInfo[]; message: string }> {
+    try {
+      // Get unique account_type and last_five combinations from transactions
+      const { data: transactions, error } = await supabase
+        .from('master_transactions')
+        .select('account_type, last_five')
+        .order('account_type, last_five')
+      
+      if (error) {
+        console.error('Error fetching transactions:', error)
+        return { 
+          success: false, 
+          message: `Failed to fetch transactions: ${error.message}` 
+        }
+      }
+
+      if (!transactions || transactions.length === 0) {
+        return { 
+          success: false, 
+          message: 'No transactions found in database' 
+        }
+      }
+
+      // Create unique combinations
+      const uniqueAccounts = new Map<string, AccountInfo>()
+      
+      transactions.forEach(transaction => {
+        const cardKey = `${transaction.account_type}-${transaction.last_five}`
+        
+        if (!uniqueAccounts.has(cardKey)) {
+          const accountInfo: AccountInfo = {
+            account_type: transaction.account_type,
+            last_five: transaction.last_five,
+            card_key: cardKey,
+            display_name: this.generateDisplayName(transaction.account_type),
+            is_primary: this.classifyAsPrimary(transaction.account_type),
+            is_employee: this.classifyAsEmployee(transaction.account_type)
+          }
+          
+          uniqueAccounts.set(cardKey, accountInfo)
+        }
+      })
+
+      const accounts = Array.from(uniqueAccounts.values())
+      
+      console.log(`Extracted ${accounts.length} unique accounts:`, accounts)
+      
+      return { 
+        success: true, 
+        accounts,
+        message: `Successfully extracted ${accounts.length} unique accounts` 
+      }
+      
+    } catch (error) {
+      console.error('Account extraction error:', error)
+      return { 
+        success: false, 
+        message: `Failed to extract accounts: ${error instanceof Error ? error.message : 'Unknown error'}` 
+      }
+    }
+  }
+
+  private static generateDisplayName(accountType: string): string {
+    // Clean up the account type name for display
+    return accountType
+      .replace(/\b(card|rewards)\b/gi, '')
+      .trim()
+      .replace(/\s+/g, ' ')
+  }
+
+  private static classifyAsPrimary(accountType: string): boolean {
+    // Business rules for primary classification
+    const primaryKeywords = ['platinum', 'gold', 'business']
+    const accountLower = accountType.toLowerCase()
+    
+    return primaryKeywords.some(keyword => accountLower.includes(keyword))
+  }
+
+  private static classifyAsEmployee(accountType: string): boolean {
+    // Business rules for employee classification
+    const employeeKeywords = ['green', 'everyday', 'basic']
+    const accountLower = accountType.toLowerCase()
+    
+    return employeeKeywords.some(keyword => accountLower.includes(keyword))
+  }
+
+  public static async getAccountStats(): Promise<{ total: number; primary: number; employee: number }> {
+    const result = await this.extractAccountsFromTransactions()
+    
+    if (!result.success || !result.accounts) {
+      return { total: 0, primary: 0, employee: 0 }
+    }
+
+    const accounts = result.accounts
+    const total = accounts.length
+    const primary = accounts.filter(account => account.is_primary).length
+    const employee = accounts.filter(account => account.is_employee).length
+
+    return { total, primary, employee }
+  }
+}
