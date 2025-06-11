@@ -1,3 +1,4 @@
+
 import React from "react"
 import { EmployeeTransactionTable } from "./EmployeeTransactionTable"
 import { Input } from "@/components/ui/input"
@@ -64,6 +65,19 @@ export function EmployeeTransactionSection({
       })
       .filter(Boolean) as string[]
   }, [filteredTransactions])
+
+  // Create a wrapper function to handle display name to card type conversion
+  const handleCardDropdownChangeWithConversion = (selectedDisplayName: string) => {
+    if (selectedDisplayName === "all") {
+      handleCardDropdownChange("all")
+      return
+    }
+    
+    // Extract card type from display name (remove the last five part)
+    // Display names are in format: "Card Type (-12345)"
+    const cardType = selectedDisplayName.replace(/\s*\(-\d+\)$/, '')
+    handleCardDropdownChange(cardType)
+  }
 
   return (
     <div className="lg:col-span-2">
@@ -145,7 +159,7 @@ export function EmployeeTransactionSection({
               <CardFilterDropdown
                 selectedCard={getCardDropdownDisplayText()}
                 creditCards={dropdownOptions}
-                onCardChange={handleCardDropdownChange}
+                onCardChange={handleCardDropdownChangeWithConversion}
               />
             </div>
           </div>
