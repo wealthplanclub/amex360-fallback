@@ -1,6 +1,6 @@
 
 import React from "react"
-import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw, CircleCheck } from "lucide-react"
+import { ChartNoAxesColumn, Award, CreditCard, Crown, LogOut, RotateCw, CircleCheck, Settings } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "@/components/ui/sonner"
 import { useAuth } from "@/contexts/AuthContext"
@@ -47,7 +47,7 @@ const menuItems = [
 export function AppSidebar({ activeSection, setActiveSection }: AppSidebarProps) {
   const navigate = useNavigate()
   const { close } = useSidebar()
-  const { signOut } = useAuth()
+  const { signOut, isAdmin } = useAuth()
 
   const handleItemClick = (section: DashboardSection) => {
     setActiveSection(section)
@@ -65,6 +65,11 @@ export function AppSidebar({ activeSection, setActiveSection }: AppSidebarProps)
       icon: <CircleCheck size={16} style={{ color: '#006fcf' }} />
     })
     
+    close()
+  }
+
+  const handleAdminClick = () => {
+    setActiveSection("admin")
     close()
   }
 
@@ -115,6 +120,17 @@ export function AppSidebar({ activeSection, setActiveSection }: AppSidebarProps)
         <SidebarGroup>
           <SidebarGroupLabel>Account</SidebarGroupLabel>
           <SidebarMenu>
+            {isAdmin() && (
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={handleAdminClick}
+                  className={`gap-3 ${activeSection === 'admin' ? 'bg-gray-100' : ''}`}
+                >
+                  <Settings className="h-4 w-4" />
+                  <span>Admin</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
             <SidebarMenuItem>
               <SidebarMenuButton 
                 onClick={handleLogout}
