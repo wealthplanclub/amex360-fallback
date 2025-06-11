@@ -1,3 +1,4 @@
+
 import React from "react"
 import { EmployeeHeader } from "@/components/employee/EmployeeHeader"
 import { EmployeeMetricsCards } from "@/components/employee/EmployeeMetricsCards"
@@ -51,14 +52,17 @@ const Employee = () => {
     
     // Filter out primary cards
     const filteredTransactions = rawTransactions.filter(transaction => {
+      // Normalize last five digits by removing any leading dash
+      const normalizedLastFive = transaction.last_five.replace(/^-/, '')
+      
       // Check if this card type and last five combination is a primary card
       const isPrimary = primaryCardsConfig.some(primaryCard => 
         primaryCard.cardType === transaction.account_type && 
-        primaryCard.lastFive === transaction.last_five &&
+        primaryCard.lastFive === normalizedLastFive &&
         primaryCard.isPrimary
       )
       
-      console.log(`Transaction: ${transaction.account_type} - ${transaction.last_five}, isPrimary: ${isPrimary}`)
+      console.log(`Transaction: ${transaction.account_type} - ${transaction.last_five}, normalized: ${normalizedLastFive}, isPrimary: ${isPrimary}`)
       
       return !isPrimary // Only include non-primary cards
     })
