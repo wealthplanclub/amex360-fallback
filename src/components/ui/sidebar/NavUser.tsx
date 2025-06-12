@@ -13,7 +13,7 @@ export function NavUser() {
 
   if (!user) return null
 
-  const displayRole = user.role === 'user' ? 'guest' : user.role
+  const displayRole = user.role === 'user' ? 'Guest' : user.role === 'admin' ? 'Admin' : user.role
 
   return (
     <SidebarMenu>
