@@ -1,4 +1,5 @@
 
+
 import * as React from "react"
 import { LogOut } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
@@ -25,7 +26,14 @@ export function NavUser() {
         <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
           <div className="grid flex-1 text-left text-sm leading-tight">
             <div className="flex items-center justify-between">
-              <span className="truncate font-medium">{user.display_name || user.user_id}</span>
+              <div className="flex items-center gap-2">
+                <span className="truncate font-medium">{user.display_name || user.user_id}</span>
+                {user.role && (
+                  <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
+                    {user.role}
+                  </Badge>
+                )}
+              </div>
               <Button 
                 onClick={handleSignOut}
                 variant="ghost" 
@@ -39,14 +47,10 @@ export function NavUser() {
             <span className="text-muted-foreground truncate text-xs">
               {user.email}
             </span>
-            {user.role && (
-              <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs mt-1 w-fit">
-                {user.role}
-              </Badge>
-            )}
           </div>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
   )
 }
+
