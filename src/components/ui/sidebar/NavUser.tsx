@@ -14,6 +14,7 @@ export function NavUser() {
   if (!user) return null
 
   const displayRole = user.role === 'user' ? 'Guest' : user.role === 'admin' ? 'Admin' : user.role
+  const isGuest = user.role === 'user'
 
   return (
     <SidebarMenu>
@@ -22,7 +23,9 @@ export function NavUser() {
           <div className="grid flex-1 text-left text-sm leading-tight">
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground text-xs">Logged in as:</span>
-              <span className="truncate font-normal">{user.display_name || user.user_id}</span>
+              {!isGuest && (
+                <span className="truncate font-normal">{user.display_name || user.user_id}</span>
+              )}
               {displayRole && (
                 <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light border-0">
                   {displayRole}
