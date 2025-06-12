@@ -35,6 +35,12 @@ export function CounterpartyListItem({
     onClick(counterparty)
   }
 
+  // Format the outbound total with comma separators
+  const formattedOutboundTotal = counterparty.outboundTotal.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+
   return (
     <Card 
       className="bg-gradient-to-b from-white to-gray-50 transition-all hover:shadow-md animate-fade-in cursor-pointer"
@@ -66,7 +72,7 @@ export function CounterpartyListItem({
               Outbound Total
             </div>
             <div className="text-lg font-bold tabular-nums" style={{ color: '#00175a' }}>
-              ${counterparty.outboundTotal.toFixed(2)}
+              ${formattedOutboundTotal}
             </div>
           </div>
         </div>
