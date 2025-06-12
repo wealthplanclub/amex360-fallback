@@ -1,3 +1,4 @@
+
 import React from "react"
 import { EmployeeTransactionTable } from "./EmployeeTransactionTable"
 import { Input } from "@/components/ui/input"
@@ -30,7 +31,10 @@ export function EmployeeTransactionSection({
   handleCardDropdownChange
 }: EmployeeTransactionSectionProps) {
   const selectedCardType = getCardDropdownDisplayText()
-  const filterText = getFilterDisplayText()
+  const rawFilterText = getFilterDisplayText()
+  
+  // Remove "Business" prefix from filter text since card types already contain it
+  const filterText = rawFilterText.replace(/^Business\s+/, '')
   
   // Show card image when there's any card type filter active (State B or C)
   const showCardImage = hasAnyFilter && filterText !== ""
