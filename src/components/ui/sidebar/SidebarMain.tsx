@@ -43,7 +43,7 @@ export const Sidebar = React.forwardRef<
         <div className="flex-1 overflow-y-auto">
           {children}
         </div>
-        <div className="p-4 border-t">
+        <div className="p-4">
           <NavUser />
         </div>
       </div>
