@@ -109,7 +109,7 @@ const AuthPage = () => {
               <div className="space-y-4 mt-4">
                 <div className="text-sm text-muted-foreground text-center leading-relaxed px-4 py-4">
                   To request read-only access to R's Amex 360º dashboard, please send a direct message to <span className="font-medium">@wealthplan</span> via discord and guest login credentials will be provisioned.<br></br>
-                  Due to the sensitive nature of transaction data, IP addresses and user sessions will be logged.</p>
+                  Due to the sensitive nature of transaction data, IP addresses and user sessions will be logged.
                 </div>
                 <Button 
                   asChild 
