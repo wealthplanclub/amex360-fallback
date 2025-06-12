@@ -29,7 +29,7 @@ export function NavUser() {
                 <span className="text-muted-foreground text-xs">Logged in as:</span>
                 <span className="truncate font-normal">{user.display_name || user.user_id}</span>
                 {user.role && (
-                  <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
+                  <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700">
                     {user.role}
                   </Badge>
                 )}
