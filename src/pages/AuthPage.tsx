@@ -112,7 +112,7 @@ const AuthPage = () => {
                     To request read-only access to R's Amex 360º dashboard, please send a direct message to <span className="font-medium">@wealthplan</span> via discord and guest login credentials will be provisioned.
                   </p>
                   <p>
-                    Due to the sensitive nature of transaction data, IP addresses and user sessions will be logged.
+                    IP addresses and user sessions will be logged.
                   </p>
                 </div>
                 <Button 
