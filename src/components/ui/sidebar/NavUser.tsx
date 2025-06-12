@@ -1,5 +1,4 @@
 
-
 import * as React from "react"
 import { LogOut } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
@@ -28,7 +27,7 @@ export function NavUser() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-muted-foreground text-xs">Logged in as:</span>
-                <span className="truncate font-medium">{user.display_name || user.user_id}</span>
+                <span className="truncate font-normal">{user.display_name || user.user_id}</span>
                 {user.role && (
                   <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
                     {user.role}
@@ -53,4 +52,3 @@ export function NavUser() {
     </SidebarMenu>
   )
 }
-
