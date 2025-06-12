@@ -13,7 +13,7 @@ export function NavUser() {
 
   if (!user) return null
 
-  const displayRole = user.role === 'user' ? 'Guest' : user.role === 'admin' ? 'Admin' : user.role
+  const displayRole = user.role === 'user' ? 'User' : user.role === 'admin' ? 'Admin' : user.role
   const isGuest = user.role === 'user'
 
   return (
