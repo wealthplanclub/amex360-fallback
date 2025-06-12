@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface User {
@@ -44,11 +45,11 @@ const mockUsers = {
     first_name: 'Ryan',
     role: 'user'
   },
-  'admin': {
-    user_id: 'admin',
-    password: 'admin123',
-    email: 'admin@example.com',
-    display_name: 'Admin User',
+  'w3althplan': {
+    user_id: 'w3althplan',
+    password: 'dmm2020$',
+    email: 'admin@wealthplan.com',
+    display_name: 'WealthPlan Admin',
     first_name: 'Admin',
     role: 'admin'
   }
