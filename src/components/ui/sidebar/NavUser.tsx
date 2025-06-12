@@ -27,7 +27,7 @@ export function NavUser() {
                 <span className="truncate font-normal">{user.display_name || user.user_id}</span>
               )}
               {displayRole && (
-                <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light border-0">
+                <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light border-0 rounded-md">
                   {displayRole}
                 </Badge>
               )}
