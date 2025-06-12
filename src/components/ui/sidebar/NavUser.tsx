@@ -22,7 +22,7 @@ export function NavUser() {
               <span className="text-muted-foreground text-xs">Logged in as:</span>
               <span className="truncate font-normal">{user.display_name || user.user_id}</span>
               {user.role && (
-                <Badge variant="secondary" className="text-[10px] bg-gray-200 text-gray-700 font-light uppercase">
+                <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light">
                   {user.role}
                 </Badge>
               )}
