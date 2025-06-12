@@ -1,24 +1,16 @@
 
 import * as React from "react"
-import { X, LogOut } from "lucide-react"
+import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useSidebar } from "./SidebarContext"
 import { SidebarOverlay } from "./SidebarOverlay"
-import { useAuth } from "@/contexts/AuthContext"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { NavUser } from "./NavUser"
 
 export const Sidebar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
   const { isOpen, close } = useSidebar()
-  const { user, signOut } = useAuth()
-
-  const handleSignOut = async () => {
-    await signOut()
-    close()
-  }
 
   return (
     <>
@@ -26,7 +18,7 @@ export const Sidebar = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out",
+          "fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col",
           isOpen ? "translate-x-0" : "-translate-x-full",
           className
         )}
@@ -51,30 +43,9 @@ export const Sidebar = React.forwardRef<
         <div className="flex-1 overflow-y-auto">
           {children}
         </div>
-        {user && (
-          <div className="p-4 border-t">
-            <div className="mb-3">
-              <div className="flex items-center justify-between mb-1">
-                <p className="text-sm font-medium">Welcome, {user.display_name || user.user_id}</p>
-                {user.role && (
-                  <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
-                    {user.role}
-                  </Badge>
-                )}
-              </div>
-              <p className="text-xs text-gray-500">{user.email}</p>
-            </div>
-            <Button 
-              onClick={handleSignOut}
-              variant="outline" 
-              size="sm" 
-              className="w-full"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        )}
+        <div className="p-4 border-t">
+          <NavUser />
+        </div>
       </div>
     </>
   )

@@ -11,3 +11,4 @@ export {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "./sidebar/SidebarMenu"
+export { NavUser } from "./sidebar/NavUser"
