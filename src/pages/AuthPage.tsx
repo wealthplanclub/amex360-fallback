@@ -59,7 +59,7 @@ const AuthPage = () => {
       }}
     >
       <Card className="bg-gradient-to-b from-white to-gray-100 animate-fade-in w-full max-w-md">
-        <CardHeader className="text-center px-12">
+        <CardHeader className="text-center px-6 sm:px-12">
           <div className="mb-4 mt-6">
             <img 
               src="https://i.imgur.com/1fFddP4.png" 
@@ -68,7 +68,7 @@ const AuthPage = () => {
             />
           </div>
         </CardHeader>
-        <CardContent className="px-12">
+        <CardContent className="px-6 sm:px-12">
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
