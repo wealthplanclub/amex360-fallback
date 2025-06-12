@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -12,11 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 const AuthPage = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [requestEmail, setRequestEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { signIn, signUp } = useAuth();
+  const { signIn } = useAuth();
   const { toast } = useToast();
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -49,29 +46,6 @@ const AuthPage = () => {
     }
   };
 
-  const handleRequestLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      // For now, just show a success message
-      // This could be extended to send an email or create a request
-      toast({
-        title: "Access Request Submitted",
-        description: "Your access request has been submitted for review.",
-      });
-      setRequestEmail("");
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to submit access request. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const currentYear = new Date().getFullYear();
 
   return (
@@ -89,7 +63,7 @@ const AuthPage = () => {
             <img 
               src="https://i.imgur.com/1fFddP4.png" 
               alt="Amex Logo" 
-              className="mx-auto w-full max-w-[276px] h-auto"
+              className="mx-auto w-full max-w-[276px] h-auto object-contain"
             />
           </div>
         </CardHeader>
@@ -131,25 +105,11 @@ const AuthPage = () => {
             </TabsContent>
             
             <TabsContent value="request">
-              <form onSubmit={handleRequestLogin} className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label htmlFor="requestEmail">Email Address</Label>
-                  <Input
-                    id="requestEmail"
-                    type="email"
-                    value={requestEmail}
-                    onChange={(e) => setRequestEmail(e.target.value)}
-                    placeholder="Enter your email address"
-                    required
-                  />
+              <div className="space-y-4 mt-4">
+                <div className="text-sm text-muted-foreground text-center leading-relaxed">
+                  To request read-only access to R's Amex 360º dashboard, please send a direct message to <span className="font-medium">@wealthplan</span> via discord and guest login credentials will be provisioned.
                 </div>
-                <div className="text-sm text-muted-foreground mb-4">
-                  Submit your email to request access. Your request will be reviewed and you'll receive login credentials if approved.
-                </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Submitting..." : "Request Access"}
-                </Button>
-              </form>
+              </div>
             </TabsContent>
           </Tabs>
 
