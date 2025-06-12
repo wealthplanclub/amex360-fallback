@@ -57,14 +57,14 @@ const AuthPage = () => {
       // For now, just show a success message
       // This could be extended to send an email or create a request
       toast({
-        title: "Login Request Submitted",
-        description: "Your login request has been submitted for review.",
+        title: "Access Request Submitted",
+        description: "Your access request has been submitted for review.",
       });
       setRequestEmail("");
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to submit login request. Please try again.",
+        description: "Failed to submit access request. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -97,7 +97,7 @@ const AuthPage = () => {
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="request">Request Login</TabsTrigger>
+              <TabsTrigger value="request">Request Access</TabsTrigger>
             </TabsList>
             
             <TabsContent value="signin">
@@ -144,10 +144,10 @@ const AuthPage = () => {
                   />
                 </div>
                 <div className="text-sm text-muted-foreground mb-4">
-                  Submit your email to request login access. Your request will be reviewed and you'll receive login credentials if approved.
+                  Submit your email to request access. Your request will be reviewed and you'll receive login credentials if approved.
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Submitting..." : "Request Login Access"}
+                  {loading ? "Submitting..." : "Request Access"}
                 </Button>
               </form>
             </TabsContent>
