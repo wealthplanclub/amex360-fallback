@@ -14,15 +14,18 @@ export function NavUser() {
   if (!user) return null
 
   const displayRole = user.role === 'user' ? 'Viewer' : user.role === 'admin' ? 'Admin' : user.role
+  const isAdmin = user.role === 'admin'
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-default hover:bg-transparent px-2 py-1.5">
+        <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-default hover:bg-transparent px-1 py-1.5">
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               <span className="text-muted-foreground text-xs">Logged in as:</span>
-              <span className="truncate font-normal">{user.display_name || user.user_id}</span>
+              {isAdmin && (
+                <span className="truncate font-normal">{user.display_name || user.user_id}</span>
+              )}
               {displayRole && (
                 <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light border-0 rounded-md px-1.5 py-0.5">
                   {displayRole}
