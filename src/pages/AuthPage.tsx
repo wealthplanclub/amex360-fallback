@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -133,7 +132,8 @@ const AuthPage = () => {
 
           <div className="mt-8 text-center">
             <p className="text-xs text-muted-foreground">
-              © {currentYear} WealthPlan™ by Ryan Leslie. All rights reserved.
+              © {currentYear} WealthPlan™ by Ryan Leslie.{" "}
+              <span className="sm:inline block">All rights reserved.</span>
             </p>
           </div>
         </CardContent>
