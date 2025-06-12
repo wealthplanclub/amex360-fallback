@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -109,6 +110,18 @@ const AuthPage = () => {
                 <div className="text-sm text-muted-foreground text-center leading-relaxed">
                   To request read-only access to R's Amex 360º dashboard, please send a direct message to <span className="font-medium">@wealthplan</span> via discord and guest login credentials will be provisioned.
                 </div>
+                <Button 
+                  asChild 
+                  className="w-full"
+                >
+                  <a 
+                    href="https://wplan.co/discord" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    Request Access
+                  </a>
+                </Button>
               </div>
             </TabsContent>
           </Tabs>
