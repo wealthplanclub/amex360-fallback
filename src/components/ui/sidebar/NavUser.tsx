@@ -1,8 +1,6 @@
 
 import * as React from "react"
-import { LogOut } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
   SidebarMenu,
@@ -11,11 +9,7 @@ import {
 } from "./SidebarMenu"
 
 export function NavUser() {
-  const { user, signOut } = useAuth()
-
-  const handleSignOut = async () => {
-    await signOut()
-  }
+  const { user } = useAuth()
 
   if (!user) return null
 
@@ -24,24 +18,14 @@ export function NavUser() {
       <SidebarMenuItem>
         <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-xs">Logged in as:</span>
-                <span className="truncate font-normal">{user.display_name || user.user_id}</span>
-                {user.role && (
-                  <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light">
-                    {user.role}
-                  </Badge>
-                )}
-              </div>
-              <Button 
-                onClick={handleSignOut}
-                variant="ghost" 
-                className="ml-auto h-8 w-8 p-0"
-              >
-                <LogOut className="h-4 w-4" />
-                <span className="sr-only">Sign Out</span>
-              </Button>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground text-xs">Logged in as:</span>
+              <span className="truncate font-normal">{user.display_name || user.user_id}</span>
+              {user.role && (
+                <Badge variant="secondary" className="text-xs bg-gray-200 text-gray-700 font-light">
+                  {user.role}
+                </Badge>
+              )}
             </div>
             <span className="text-muted-foreground truncate text-xs">
               {user.email}
