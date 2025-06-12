@@ -18,7 +18,7 @@ export function NavUser() {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+        <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-default hover:bg-transparent">
           <div className="grid flex-1 text-left text-sm leading-tight">
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground text-xs">Logged in as:</span>
